@@ -8,8 +8,11 @@ class Scan
 {
 private:
 	L_R_Dist Distancelist[FULL_SCAN_NUM];
+
+		Scan();
 public:
-	Scan();
+
+	static Scan& getInstanceScan();
 
 	void Init(void);
 	/*Scan 360 degree while staying in the same coordinates*/
