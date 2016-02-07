@@ -5,12 +5,13 @@
 #include "MOVH.h"
 using namespace std;
 
-Scan::Scan(void)
+Scan& Scan::getInstanceScan()
 {
+	static Scan scan;
 	for (uint8 i = 0; i < FULL_SCAN_NUM; i++)
 	{
-		Distancelist[i].L_Distance = 0;
-		Distancelist[i].R_Distance = 0;
+		scan.Distancelist[i].L_Distance = 0;
+		scan.Distancelist[i].R_Distance = 0;
 	}
 }
 
@@ -23,7 +24,7 @@ void Scan::Init(void)
 	}
 }
 
-void Scan::ScanRoutine(Robot rob, L_R_Dist* scanlist)
+void Scan::CirclScanRoutine(Robot rob, L_R_Dist* scanlist)
 {
 	MOVE::MoveInitAngle(&rob);
 

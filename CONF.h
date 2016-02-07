@@ -50,6 +50,12 @@ enum CELL_STATE
 #define SCAN_120_ANGLE 4
 #define SCAN_150_ANGLE 5
 
+typedef struct
+{
+	uint16 L_Distance;
+	uint16 R_Distance;
+}L_R_Dist;
+
 /*--------------------CONTROLS-------------------------*/
 #define ENABLE_SIMULATION
 #undef DEBUG
