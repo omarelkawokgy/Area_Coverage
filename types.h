@@ -61,12 +61,13 @@ typedef struct
 }StraightLinePos;
 
 /*-------------Robot types---------------*/
+#if 0 
 typedef struct
 {
 	uint8 Direction;
 	uint16 Target;
 }Heading;
-
+#endif
 typedef struct
 {
 	uint8 X_pos;

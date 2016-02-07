@@ -13,6 +13,7 @@ Scan& Scan::getInstanceScan()
 		scan.Distancelist[i].L_Distance = 0;
 		scan.Distancelist[i].R_Distance = 0;
 	}
+	return scan;
 }
 
 void Scan::Init(void)

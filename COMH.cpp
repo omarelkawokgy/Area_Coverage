@@ -1,5 +1,6 @@
 #include "COMH.h"
 #include<iostream>
+using namespace std;
 
 
 Comp::Comp()
@@ -7,9 +8,9 @@ Comp::Comp()
 
 }
 
-Heading Comp::ReadComp(void)
+Heading Comp::ReadComp(uint16 Temp_angle)
 {
-	uint16 Temp_angle;
+
 	Heading Angle;
 
 #ifdef ENABLE_SIMULATION

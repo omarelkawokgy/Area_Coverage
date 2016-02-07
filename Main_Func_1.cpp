@@ -13,7 +13,7 @@ void main()
 {
 	/*-----------------Intialize project-------------*/
 	Map RoomMap;
-	Scan scan;
+	Scan scan = Scan::getInstanceScan();
 	ULSH uls;
 	RobotPos robposition;
 	RobotPos robPosInRect;
@@ -31,7 +31,7 @@ void main()
 
 	/*-----------start implementing------------*/
 	/*apply the scan routine and update rob theta and get list of diagonals*/
-	scan.ScanRoutine(cleaner, diagonalList);
+	scan.CirclScanRoutine(cleaner, diagonalList);
 #ifdef DEBUG
 	cout << "diagonal out of the scan rountine:" << diagonalList[5].L_Distance << endl;
 #endif

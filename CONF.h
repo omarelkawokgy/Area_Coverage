@@ -35,6 +35,12 @@ enum CELL_STATE
 	EMPTY
 };
 
+typedef enum 
+{
+	LEFT_SENSOR,
+	RIGHT_SENSOR
+}SensorSide;
+
 /*-----------Robot conf--------------*/
 #define ROBOT_INIT_X		(MAP_ROW/2)
 #define ROBOT_INIT_Y		(MAP_COLUMN/2)

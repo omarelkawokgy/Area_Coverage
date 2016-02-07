@@ -9,7 +9,7 @@ class Scan
 private:
 	L_R_Dist Distancelist[FULL_SCAN_NUM];
 
-		Scan();
+	Scan(){}
 public:
 
 	static Scan& getInstanceScan();
