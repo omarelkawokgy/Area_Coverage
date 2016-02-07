@@ -1,15 +1,11 @@
 #include "OBJD.h"
 #include "ULSH.h"
 #include "COMH.h"
-#include "Scan.h"
 
-Point::Point(
-	RobotPos robPos)
+
+Point::Point(SensorSide side, RobotPos robPos, L_R_Dist distance)
 {
-	//uint16 distance;
 	Heading heading;
-	Scan scan = Scan::getInstance();
-	L_R_Dist distance = scan.getInstanceScan();
 
 	heading = Comp::ReadComp(robPos.theta);
 
@@ -66,8 +62,9 @@ void Point::setPointPos(PointPos pos)
 }
 
 /*filtering using average between the position of 2 points*/
-void Point::FilteredPointReading(Point oldPoint)
+void Point::FilteredPointReading(SensorSide side, RobotPos robPos, L_R_Dist distance)
 {
+
 	PointPos oldPointPos = oldPoint.getPointPos();
 	pointPos.X_Column = (uint8)((oldPointPos.X_Column + pointPos.X_Column) / 2);
 	pointPos.Y_Row = (uint8)((oldPointPos.Y_Row + pointPos.Y_Row) / 2);
