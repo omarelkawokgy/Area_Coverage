@@ -11,6 +11,14 @@ using namespace std;
 
 //soinsdvndkjvnd
 void main()
+sdvcsd
+vd
+fv
+sdv
+sd
+fv
+df
+v
 {
 	/*-----------------Intialize project-------------*/
 	Map RoomMap;
