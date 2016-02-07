@@ -16,8 +16,10 @@ class Point
 {
 private:
 	PointPos pointPos;
+
+	void CalPointPos();
 public:
-	Point(SensorSide side, RobotPos robPos);
+	Point(SensorSide side, RobotPos robPos, L_R_Dist distance);
 
 	PointPos getPointPos(void);
 
