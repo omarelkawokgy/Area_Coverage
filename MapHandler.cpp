@@ -7,12 +7,7 @@ Map::Map()
 {
 	//Rectangle R1(20, 30);
 }
-
-sv
-sdv
-sdv
-sdv
-
+//sdcvsdvdsfvdf
 void Map::initMap(void)
 {
 	for (uint8 i = 0; i < MAP_ROW; i++)
