@@ -17,7 +17,7 @@ class Point
 private:
 	PointPos pointPos;
 
-	void CalPointPos();
+	void CalPointPos(SensorSide side, RobotPos robPos, L_R_Dist distance);
 public:
 	Point(SensorSide side, RobotPos robPos, L_R_Dist distance);
 
@@ -25,7 +25,7 @@ public:
 
 	void setPointPos(PointPos pos);
 
-	void FilteredPointReading(Point point);
+	void FilteredPointReading(SensorSide side, RobotPos robPos, L_R_Dist newdistance);
 
 };
 
