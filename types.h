@@ -60,6 +60,8 @@ typedef struct
 	PointPos end;
 }StraightLinePos;
 
+typedef Point L_R_Points[2];
+
 /*-------------Robot types---------------*/
 #if 0 
 typedef struct

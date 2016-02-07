@@ -48,7 +48,10 @@ typedef enum
 
 /*----------Scan conf-------------*/
 #define SCAN_ANGLE 30
+/*for circular scans only temp. closed*/
 #define FULL_SCAN_NUM (360/(SCAN_ANGLE*2))
+/*scan 3 times in each block*/
+#define STEP_LINEAR_SCAN ((int)(ROBOT_SIZE/3))
 #define SCAN_0_ANGLE 0
 #define SCAN_30_ANGLE 1
 #define SCAN_60_ANGLE 2

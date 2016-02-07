@@ -25,7 +25,7 @@ public:
 	static Robot& initRobotPosition(RobotPos position);
 
 	//getting position of the robot
-	void GetRobotPosition(RobotPos* position);
+	RobotPos GetRobotPosition(void);
 
 	//updating the position of the robot
 	void UpdateRobotPosition(RobotPos* position);

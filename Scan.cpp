@@ -3,6 +3,7 @@
 #include "Scan.h"
 #include "ULSH.h"
 #include "MOVH.h"
+#include "OBJD.h"
 using namespace std;
 
 Scan& Scan::getInstanceScan()
@@ -37,4 +38,13 @@ void Scan::CirclScanRoutine(Robot rob, L_R_Dist* scanlist)
 #ifdef DEBUG
 	cout << "Distance list [0] in scanroutine:" << scanlist[4].L_Distance << endl;
 #endif
+}
+
+L_R_Points* LinearScanRoutine(Robot rob)
+{
+	L_R_Dist scanlist;
+
+	scanlist = ULSH::ULS_getDistanceboth();
+	static Point oldLeftPoint(LEFT_SENSOR,rob.GetRobotPosition(), scanlist);
+	static Point oldrightPoint(RIGHT_SENSOR, rob.GetRobotPosition(), scanlist);
 }
