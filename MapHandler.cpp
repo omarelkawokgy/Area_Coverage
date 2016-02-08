@@ -50,5 +50,12 @@ void Map::AddRectangle(Rectangle rect, RobotPos* position)
 
 void Map::addRobotOnMap(RobotPos robPosition)
 {
-	Map::room[robPosition.X_pos][robPosition.Y_pos] = 'X';
+	Map::room[robPosition.X_pos][robPosition.Y_pos] = 5;
+}
+
+void Map::addPointOnMap(Point newpoint)
+{
+	PointPos position;
+	position = newpoint.getPointPos();
+	room[position.X_Column][position.Y_Row] = 1;
 }
