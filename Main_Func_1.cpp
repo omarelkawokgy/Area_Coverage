@@ -23,6 +23,7 @@ void main()
 	robposition.theta = ROBOT_INIT_THETA;
 	robposition.X_pos = ROBOT_INIT_X;
 	robposition.Y_pos = ROBOT_INIT_Y;
+	return_type Error_Check = RET_NOT_OK;
 	Robot cleaner = Robot::initRobotPosition(robposition);
 #ifdef RECTANGLE
 	L_R_Dist diagonalList[FULL_SCAN_NUM];
@@ -59,7 +60,11 @@ void main()
 #endif
 	RoomMap.addRobotOnMap(robposition);
 	
-	scan.LinearScan(Pointlist[0], LEFT_SENSOR, cleaner);
+	Error_Check = scan.LinearScan(Pointlist[0], LEFT_SENSOR, cleaner);
+	if (Error_Check == RET_OK)
+	{
+		RoomMap.addPointOnMap(Pointlist[0]);
+	}
 
 #ifdef ENABLE_SIMULATION
 	cout << (int)Pointlist[0].getPointPos().X_Column << endl;
