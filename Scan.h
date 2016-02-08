@@ -20,7 +20,7 @@ public:
 	/*Scan 360 degree while staying in the same coordinates*/
 	void CirclScanRoutine(Robot rob, L_R_Dist* scanlist);
 	/*taking the reading while moving linearly and Calculating average*/
-	void LinearScan(Point& newpoint, SensorID side, Robot rob);
+	return_type LinearScan(Point& newpoint, SensorID side, Robot rob);
 };
 
 #endif
