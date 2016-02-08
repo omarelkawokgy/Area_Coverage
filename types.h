@@ -59,9 +59,13 @@ typedef struct
 	PointPos start;
 	PointPos end;
 }StraightLinePos;
-
-typedef Point L_R_Points[2];
-
+#if 0
+typedef struct
+{
+	Point L_Point;
+	Point R_Point;
+}L_R_Points;
+#endif
 /*-------------Robot types---------------*/
 #if 0 
 typedef struct
@@ -77,12 +81,13 @@ typedef struct
 	uint16 theta;
 }RobotPos;
 
+#if 0
 typedef struct
 {
 	fint32 X_Dist;
 	fint32 Y_Dist;
 }RectSize;
-
+#endif
 
 /*-----------------Global Variables------------------*/
 //uint8 isrFrontSensorFlag;
