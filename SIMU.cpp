@@ -24,7 +24,7 @@ void simu::wheelTurn(Robot r)
 {
 	RobotPos position;
 
-	r.GetRobotPosition(&position);
+	position = r.GetRobotPosition();
 
 	if ((position.theta >= (NORTH_VALUE - ALLOWED_ANGLE_ERROR)) || (position.theta <= (NORTH_VALUE + ALLOWED_ANGLE_ERROR)))
 	{
@@ -54,7 +54,7 @@ void simu::robotTurn(Robot r)
 {
 	RobotPos position;
 
-	r.GetRobotPosition(&position);
+	position = r.GetRobotPosition();
 
 	position.theta++;
 
