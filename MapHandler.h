@@ -3,6 +3,7 @@
 
 #include "rectangle.h"
 #include "CONF.h"
+#include "OBJD.h"
 
 
 class Map : public Rectangle
@@ -25,8 +26,8 @@ public:
 	void AddRectangle(Rectangle rect, RobotPos* position);
 
 	void addRobotOnMap(RobotPos robPosition);
-
-
+	
+	void addPointOnMap(Point newpoint);
 };
 
 #endif
