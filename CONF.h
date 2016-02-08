@@ -16,7 +16,8 @@ typedef enum
 NORTH = 1,
 WEST,
 SOUTH,
-EAST
+EAST,
+INVALID_DIRECTION = 0
 }Heading;
 
 /*values of directions*/
@@ -76,3 +77,4 @@ typedef struct
 #define RET_OK 1
 
 #endif
+
