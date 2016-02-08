@@ -39,7 +39,7 @@ typedef enum
 {
 	LEFT_SENSOR,
 	RIGHT_SENSOR
-}SensorSide;
+}SensorID;
 
 /*-----------Robot conf--------------*/
 #define ROBOT_INIT_X		(MAP_ROW/2)
@@ -76,4 +76,3 @@ typedef struct
 #define RET_OK 1
 
 #endif
-
