@@ -48,13 +48,14 @@ Heading Comp::ReadComp(uint16 Temp_angle)
 	{
 		Angle = SOUTH;
 	}
-	else if((Temp_angle > (NORTH_VALUE - ALLOWED_ANGLE_ERROR)) && (Temp_angle < (NORTH_VALUE + ALLOWED_ANGLE_ERROR)))
+	else if ((Temp_angle >(EAST_VALUE - ALLOWED_ANGLE_ERROR)) && (Temp_angle < (EAST_VALUE + ALLOWED_ANGLE_ERROR)))
 	{
 		Angle = EAST;
 	}
 	else
 	{
 		/*TODO handling wrong calling while not being in 4 directions*/
+		Angle = INVALID_DIRECTION;
 	}
 	return Angle;
 }
