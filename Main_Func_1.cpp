@@ -2,12 +2,16 @@
 #include "MapHandler.h"
 #include "SIMU.h"
 #include "Scan.h"
+#include "OBJD.h"
 #include "ULSH.h"
+
 
 #ifdef ENABLE_SIMULATION
 #include <iostream>
 using namespace std;
 #endif
+
+Point Pointlist[20];
 
 void main()
 {
@@ -16,22 +20,21 @@ void main()
 	Scan scan = Scan::getInstanceScan();
 	ULSH uls;
 	RobotPos robposition;
-	RobotPos robPosInRect;
 	robposition.theta = ROBOT_INIT_THETA;
 	robposition.X_pos = ROBOT_INIT_X;
 	robposition.Y_pos = ROBOT_INIT_Y;
 	Robot cleaner = Robot::initRobotPosition(robposition);
-	L_R_Dist diagonalList[FULL_SCAN_NUM];
 #ifdef RECTANGLE
+	L_R_Dist diagonalList[FULL_SCAN_NUM];
 	RectSize rectsize;
 	return_type Error_Check;
 #endif
 	RoomMap.initMap();
-	scan.Init();
+	
 
 	/*-----------start implementing------------*/
 	/*apply the scan routine and update rob theta and get list of diagonals*/
-	scan.CirclScanRoutine(cleaner, diagonalList);
+	
 #ifdef DEBUG
 	cout << "diagonal out of the scan rountine:" << diagonalList[5].L_Distance << endl;
 #endif
@@ -49,14 +52,17 @@ void main()
 	if (Error_Check == RET_OK)
 	{
 #endif
-		cleaner.GetRobotPosition(&robposition);
+		robposition = cleaner.GetRobotPosition();
 #ifdef RECTANGLE
 		RoomMap.AddRectangle(rect1, &robposition);
 	}
 #endif
 	RoomMap.addRobotOnMap(robposition);
+	
+	scan.LinearScan(Pointlist[0], LEFT_SENSOR, cleaner);
 
 #ifdef ENABLE_SIMULATION
+	cout << (int)Pointlist[0].getPointPos().X_Column << endl;
 	simu sim;
 
 	sim.printMap(RoomMap);
