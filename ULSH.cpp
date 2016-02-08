@@ -17,6 +17,7 @@ uint16 ULSH::ULS_getLeftDist(void)
 #else
 	/*take about 3 readings evrytime and return the average*/
 #endif
+	left = (uint16)(left / ROBOT_SIZE);
 	return left;
 }
 
@@ -29,6 +30,7 @@ uint16 ULSH::ULS_getRightDist(void)
 #else
 	/*take about 3 readings evrytime and return the average*/
 #endif
+	right = (uint16)(right / ROBOT_SIZE);
 	return right;
 }
 
