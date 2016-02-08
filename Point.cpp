@@ -24,49 +24,59 @@ void Point::setPointPos(PointPos pos)
 	pointPos.Y_Row = pos.Y_Row;
 }
 
-void Point::CalPointPos(SensorID side, RobotPos robPos, uint16 distance)
+return_type Point::CalPointPos(SensorID side, RobotPos robPos, uint16 distance)
 {
+	return_type ret = RET_NOT_OK;
 	Heading heading = Comp::ReadComp(robPos.theta);
 
-	switch (side)
+	if (heading != INVALID_DIRECTION)
 	{
-	case LEFT_SENSOR:
-		if (heading == NORTH)
+		switch (side)
 		{
-			pointPos.X_Column = robPos.X_pos - distance;
+		case LEFT_SENSOR:
+			if (heading == NORTH)
+			{
+				pointPos.X_Column = robPos.X_pos - distance;
+			}
+			else if (heading == WEST)
+			{
+				pointPos.Y_Row = robPos.Y_pos + distance;
+			}
+			else if (heading == SOUTH)
+			{
+				pointPos.X_Column = robPos.X_pos + distance;
+			}
+			else if (heading == EAST)
+			{
+				pointPos.Y_Row = robPos.Y_pos - distance;
+			}
+			break;
+		case RIGHT_SENSOR:
+			if (heading == NORTH)
+			{
+				pointPos.X_Column = robPos.X_pos + distance;
+			}
+			else if (heading == WEST)
+			{
+				pointPos.Y_Row = robPos.Y_pos - distance;
+			}
+			else if (heading == SOUTH)
+			{
+				pointPos.X_Column = robPos.X_pos - distance;
+			}
+			else if (heading == EAST)
+			{
+				pointPos.Y_Row = robPos.Y_pos + distance;
+			}
+			break;
 		}
-		else if (heading == WEST)
-		{
-			pointPos.Y_Row = robPos.Y_pos + distance;
-		}
-		else if (heading == SOUTH)
-		{
-			pointPos.X_Column = robPos.X_pos + distance;
-		}
-		else if (heading == EAST)
-		{
-			pointPos.Y_Row = robPos.Y_pos - distance;
-		}
-		break;
-	case RIGHT_SENSOR:
-		if (heading == NORTH)
-		{
-			pointPos.X_Column = robPos.X_pos + distance;
-		}
-		else if (heading == WEST)
-		{
-			pointPos.Y_Row = robPos.Y_pos - distance;
-		}
-		else if (heading == SOUTH)
-		{
-			pointPos.X_Column = robPos.X_pos - distance;
-		}
-		else if (heading == EAST)
-		{
-			pointPos.Y_Row = robPos.Y_pos + distance;
-		}
-		break;
+	ret = RET_OK;
 	}
+	else
+	{
+		ret = RET_NOT_OK;
+	}
+	return ret;
 }
 
 /*filtering is done in ULSH itself taking many readings and finding the average*/
