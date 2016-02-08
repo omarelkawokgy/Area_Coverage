@@ -15,7 +15,7 @@ uint16 ULSH::ULS_getLeftDist(void)
 	cout << "Left distance:" << endl;
 	cin >> left;
 #else
-
+	/*take about 3 readings evrytime and return the average*/
 #endif
 	return left;
 }
@@ -27,7 +27,7 @@ uint16 ULSH::ULS_getRightDist(void)
 	cout << "right distance:" << endl;
 	cin >> right;
 #else
-
+	/*take about 3 readings evrytime and return the average*/
 #endif
 	return right;
 }
