@@ -22,7 +22,7 @@ public:
 
 	Point(SensorID side, RobotPos robPos, uint16 distance);
 
-	void CalPointPos(SensorID side, RobotPos robPos, uint16 distance);
+	return_type CalPointPos(SensorID side, RobotPos robPos, uint16 distance);
 
 	PointPos getPointPos(void);
 
