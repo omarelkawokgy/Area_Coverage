@@ -42,23 +42,25 @@ void Scan::CirclScanRoutine(Robot rob, L_R_Dist* scanlist)
 #endif
 }
 
-void Scan::LinearScan(Point& newpoint, SensorID side, Robot rob)
+return_type Scan::LinearScan(Point& newpoint, SensorID side, Robot rob)
 {
 	uint16 ScanDist;
+	return_type ret = RET_NOT_OK;
 
 	if (side == RIGHT_SENSOR)
 	{
 		ScanDist = ULSH::ULS_getRightDist();
-		newpoint.CalPointPos(RIGHT_SENSOR, rob.GetRobotPosition(), ScanDist);
+		ret = newpoint.CalPointPos(RIGHT_SENSOR, rob.GetRobotPosition(), ScanDist);
 	}
 	else if (side == LEFT_SENSOR)
 	{
 		ScanDist = ULSH::ULS_getLeftDist();
-		newpoint.CalPointPos(LEFT_SENSOR, rob.GetRobotPosition(), ScanDist);
+		ret = newpoint.CalPointPos(LEFT_SENSOR, rob.GetRobotPosition(), ScanDist);
 	}
 	else
 	{
 		/*do nothing*/
+		ret = RET_NOT_OK;
 	}
-	//return newPoint();
+	return ret;
 }
