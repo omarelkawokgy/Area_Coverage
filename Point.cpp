@@ -37,17 +37,21 @@ return_type Point::CalPointPos(SensorID side, RobotPos robPos, uint16 distance)
 			if (heading == NORTH)
 			{
 				pointPos.X_Column = robPos.X_pos - distance;
+				pointPos.Y_Row = robPos.Y_pos;
 			}
 			else if (heading == WEST)
 			{
+				pointPos.X_Column = robPos.X_pos;
 				pointPos.Y_Row = robPos.Y_pos + distance;
 			}
 			else if (heading == SOUTH)
 			{
 				pointPos.X_Column = robPos.X_pos + distance;
+				pointPos.Y_Row = robPos.Y_pos;
 			}
 			else if (heading == EAST)
 			{
+				pointPos.X_Column = robPos.X_pos;
 				pointPos.Y_Row = robPos.Y_pos - distance;
 			}
 			break;
@@ -55,17 +59,21 @@ return_type Point::CalPointPos(SensorID side, RobotPos robPos, uint16 distance)
 			if (heading == NORTH)
 			{
 				pointPos.X_Column = robPos.X_pos + distance;
+				pointPos.Y_Row = robPos.Y_pos;
 			}
 			else if (heading == WEST)
 			{
+				pointPos.X_Column = robPos.X_pos;
 				pointPos.Y_Row = robPos.Y_pos - distance;
 			}
 			else if (heading == SOUTH)
 			{
 				pointPos.X_Column = robPos.X_pos - distance;
+				pointPos.Y_Row = robPos.Y_pos;
 			}
 			else if (heading == EAST)
 			{
+				pointPos.X_Column = robPos.X_pos;
 				pointPos.Y_Row = robPos.Y_pos + distance;
 			}
 			break;
