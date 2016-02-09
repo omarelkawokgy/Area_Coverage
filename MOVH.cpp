@@ -59,7 +59,6 @@ return_type MOVE::MoveForward(Robot& rob)
 		{
 			rob.UpdateRobotPosition(robposition);
 		}
-		return Error_Check;
 	}
 #else
 	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, HIGH);
@@ -67,7 +66,7 @@ return_type MOVE::MoveForward(Robot& rob)
 	digitalWrite(LEFT_MOTOR_POSITIVE_PIN, HIGH);
 	digitalWrite(LEFT_MOTOR_GROUND_PIN, LOW);
 #endif
-
+	return Error_Check;
 }
 
 void MOVE::MoveBackward(Robot& rob)
