@@ -28,6 +28,8 @@ public:
 	void addRobotOnMap(RobotPos robPosition);
 	
 	void addPointOnMap(Point newpoint);
+
+	void UpdateRobotPosition(Robot rob);
 };
 
 #endif

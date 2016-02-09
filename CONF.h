@@ -3,8 +3,8 @@
 
 #include "types.h"
 
-#define MAP_ROW 20
-#define MAP_COLUMN 20
+#define MAP_ROW 40
+#define MAP_COLUMN 40
 
 //robot configurations in metres
 #define ROBOT_WHEEL_SIZE 5//in cm
@@ -33,7 +33,8 @@ enum CELL_STATE
 	UNCOVERED = 0,
 	BUSY,
 	CLEANED,
-	EMPTY
+	EMPTY,
+	ROBOT = 5
 };
 
 typedef enum 

@@ -3,9 +3,6 @@
 
 #include "types.h"
 
-#define INTIAL_X 0
-#define INTIAL_Y 0
-#define INTIAL_THETA 0
 
 class Robot
 {

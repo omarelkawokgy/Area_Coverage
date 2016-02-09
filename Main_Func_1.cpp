@@ -32,11 +32,11 @@ void main()
 	return_type Error_Check;
 #endif
 	RoomMap.initMap();
-	
+
 
 	/*-----------start implementing------------*/
 	/*apply the scan routine and update rob theta and get list of diagonals*/
-	
+
 #ifdef DEBUG
 	cout << "diagonal out of the scan rountine:" << diagonalList[5].L_Distance << endl;
 #endif
@@ -59,8 +59,8 @@ void main()
 		RoomMap.AddRectangle(rect1, &robposition);
 	}
 #endif
-	//RoomMap.addRobotOnMap(robposition);
-	
+	RoomMap.addRobotOnMap(cleaner.GetRobotPosition());
+
 	Error_Check = scan.LinearScan(Pointlist[0], LEFT_SENSOR, cleaner);
 	Error_Check &= scan.LinearScan(Pointlist[1], RIGHT_SENSOR, cleaner);
 	if (Error_Check == RET_OK)
@@ -68,14 +68,20 @@ void main()
 		RoomMap.addPointOnMap(Pointlist[0]);
 		RoomMap.addPointOnMap(Pointlist[1]);
 	}
-	
-	MOVE::MoveForward(cleaner);
-	MOVE::MoveForward(cleaner);
-	MOVE::MoveForward(cleaner);
-	RoomMap.addRobotOnMap(robposition);
+
 #ifdef ENABLE_SIMULATION
-	simu sim;
-	sim.printMap(RoomMap);
+	simu sim;	
+	for (int i = 0; i < 9; i++)
+	{
+		Error_Check = MOVE::MoveForward(cleaner);
+		if (Error_Check == RET_OK)
+		{
+			RoomMap.UpdateRobotPosition(cleaner);
+			sim.printMap(RoomMap);
+		}
+	}
+
+
 
 #endif
 	/*--------------end of intialization------------*/

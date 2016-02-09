@@ -50,12 +50,30 @@ void Map::AddRectangle(Rectangle rect, RobotPos* position)
 
 void Map::addRobotOnMap(RobotPos robPosition)
 {
-	Map::room[robPosition.Y_pos][robPosition.X_pos] = 5;
+	Map::room[robPosition.Y_pos][robPosition.X_pos] = ROBOT;
 }
 
 void Map::addPointOnMap(Point newpoint)
 {
 	PointPos position;
 	position = newpoint.getPointPos();
-	room[position.Y_Row][position.X_Column] = 1;
+	room[position.Y_Row][position.X_Column] = BUSY;
+}
+
+void Map::UpdateRobotPosition(Robot rob)
+{
+	for (uint8 i = 0; i < MAP_ROW; i++)
+	{
+		for (uint8 j = 0; j < MAP_COLUMN; j++)
+		{
+			if ((rob.GetRobotPosition().X_pos == i) && (rob.GetRobotPosition().Y_pos == j))
+			{
+				room[j][i] = ROBOT;
+			}
+			else if (room[j][i] == ROBOT)
+			{
+				room[j][i] = CLEANED;
+			}
+		}
+	}
 }

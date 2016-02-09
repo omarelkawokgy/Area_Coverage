@@ -11,7 +11,7 @@ private:
 public:
 	MOVE();
 
-	static void MoveForward(Robot& rob);
+	static return_type MoveForward(Robot& rob);
 
 	static void MoveBackward(Robot& rob);
 

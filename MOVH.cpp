@@ -15,34 +15,37 @@ return_type MOVE::UpdatePosition(RobotPos* robposition)
 {
 	return_type ret = RET_NOT_OK;
 	Heading heading = Comp::ReadComp(robposition->theta);
-	if (heading == NORTH)
+	if (heading != INVALID_DIRECTION)
 	{
-		robposition->Y_pos--;
-		ret = RET_OK;
-	}
-	else if (heading == SOUTH)
-	{
-		robposition->Y_pos++;
-		ret = RET_OK;
-	}
-	else if (heading == WEST)
-	{
-		robposition->X_pos--;
-		ret = RET_OK;
-	}
-	else if (heading == EAST)
-	{
-		robposition->X_pos++;
-		ret = RET_OK;
-	}
-	else
-	{
-		ret = RET_NOT_OK;
+		if (heading == NORTH)
+		{
+			robposition->Y_pos--;
+			ret = RET_OK;
+		}
+		else if (heading == SOUTH)
+		{
+			robposition->Y_pos++;
+			ret = RET_OK;
+		}
+		else if (heading == WEST)
+		{
+			robposition->X_pos--;
+			ret = RET_OK;
+		}
+		else if (heading == EAST)
+		{
+			robposition->X_pos++;
+			ret = RET_OK;
+		}
+		else
+		{
+			ret = RET_NOT_OK;
+		}
 	}
 	return ret;
 }
 
-void MOVE::MoveForward(Robot& rob)
+return_type MOVE::MoveForward(Robot& rob)
 {
 #ifdef ENABLE_SIMULATION
 	static uint8 Stepcounter = 0;
@@ -56,6 +59,7 @@ void MOVE::MoveForward(Robot& rob)
 		{
 			rob.UpdateRobotPosition(robposition);
 		}
+		return Error_Check;
 	}
 #else
 	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, HIGH);

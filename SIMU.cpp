@@ -14,10 +14,11 @@ void simu::printMap(Map m)
 	{
 		for (uint8 j = 0; j < MAP_COLUMN; j++)
 		{
-			cout << (int)m.room[i][j] << " ";
+			cout << (int)m.room[i][j];
 		}
 		cout << endl;
 	}
+	cout << endl;
 }
 
 void simu::wheelTurn(Robot r)
