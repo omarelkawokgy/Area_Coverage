@@ -28,7 +28,7 @@ public:
 	RobotPos GetRobotPosition(void);
 
 	//updating the position of the robot
-	void UpdateRobotPosition(RobotPos* position);
+	void UpdateRobotPosition(RobotPos position);
 
 };
 
