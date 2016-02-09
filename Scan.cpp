@@ -1,68 +1,65 @@
 #include <iostream>
-
-#include "SIMU.h"
-#include "MapHandler.h"
-#include "CONF.h"
+#include "Scan.h"
+#include "ULSH.h"
+#include "MOVH.h"
 
 using namespace std;
 
-
-
-void simu::printMap(Map m)
+Scan& Scan::getInstanceScan()
 {
-	for (uint8 i = 0; i < MAP_ROW; i++)
+	static Scan scan;
+#if 0 
+	for (uint8 i = 0; i < FULL_SCAN_NUM; i++)
 	{
-		for (uint8 j = 0; j < MAP_COLUMN; j++)
-		{
-			cout << (int)m.room[i][j] << " ";
-		}
-		cout << endl;
+		scan.Distancelist[i].L_Distance = 0;
+		scan.Distancelist[i].R_Distance = 0;
+	}
+#endif
+	return scan;
+}
+
+void Scan::Init(void)
+{
+	for (uint8 i = 0; i < FULL_SCAN_NUM; i++)
+	{
+		Distancelist[i].L_Distance = 0;
+		Distancelist[i].R_Distance = 0;
 	}
 }
 
-void simu::RemoveRobfromMap(Robot rob,Map m)
+void Scan::CirclScanRoutine(Robot rob, L_R_Dist* scanlist)
 {
-	RobotPos robpos = rob.GetRobotPosition();
-	m.room[robpos.Y_pos][robpos.X_pos] = CLEANED;
+	MOVE::MoveInitAngle(rob);
+
+	for (uint8 i = 0; i < FULL_SCAN_NUM; i++)
+	{
+		MOVE::MoveTurn_CW(rob, SCAN_ANGLE);
+		scanlist[i] = ULSH::ULS_getDistanceboth();
+	}
+#ifdef DEBUG
+	cout << "Distance list [0] in scanroutine:" << scanlist[4].L_Distance << endl;
+#endif
 }
 
-void simu::wheelTurn(Robot r)
+return_type Scan::LinearScan(Point& newpoint, SensorID side, Robot rob)
 {
-	RobotPos position;
+	uint16 ScanDist;
+	return_type ret = RET_NOT_OK;
 
-	position = r.GetRobotPosition();
-
-	if ((position.theta >= (NORTH_VALUE - ALLOWED_ANGLE_ERROR)) || (position.theta <= (NORTH_VALUE + ALLOWED_ANGLE_ERROR)))
+	if (side == RIGHT_SENSOR)
 	{
-		/*TODO: increment according to orientation*/
+		ScanDist = ULSH::ULS_getRightDist();
+		ret = newpoint.CalPointPos(RIGHT_SENSOR, rob.GetRobotPosition(), ScanDist);
 	}
-	else if ((position.theta >= (WEST_VALUE - ALLOWED_ANGLE_ERROR)) || (position.theta <= (WEST_VALUE + ALLOWED_ANGLE_ERROR)))
+	else if (side == LEFT_SENSOR)
 	{
-		/*TODO: increment according to orientation*/
-	}
-	else if ((position.theta >= (SOUTH_VALUE - ALLOWED_ANGLE_ERROR)) || (position.theta <= (SOUTH_VALUE + ALLOWED_ANGLE_ERROR)))
-	{
-
-	}
-	else if ((position.theta >= (EAST_VALUE - ALLOWED_ANGLE_ERROR)) || (position.theta <= (EAST_VALUE + ALLOWED_ANGLE_ERROR)))
-	{
-		/*TODO: increment according to orientation*/
+		ScanDist = ULSH::ULS_getLeftDist();
+		ret = newpoint.CalPointPos(LEFT_SENSOR, rob.GetRobotPosition(), ScanDist);
 	}
 	else
 	{
-		/*no increment or angle not right..... TODO: print angle recommended*/
+		/*do nothing*/
+		ret = RET_NOT_OK;
 	}
-
-	r.UpdateRobotPosition(position);
-}
-
-void simu::robotTurn(Robot r)
-{
-	RobotPos position;
-
-	position = r.GetRobotPosition();
-
-	position.theta++;
-
-	r.UpdateRobotPosition(position);
+	return ret;
 }

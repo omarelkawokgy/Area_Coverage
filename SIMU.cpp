@@ -47,7 +47,7 @@ void simu::wheelTurn(Robot r)
 		/*no increment or angle not right..... TODO: print angle recommended*/
 	}
 
-	r.UpdateRobotPosition(&position);
+	r.UpdateRobotPosition(position);
 }
 
 void simu::robotTurn(Robot r)
@@ -58,5 +58,5 @@ void simu::robotTurn(Robot r)
 
 	position.theta++;
 
-	r.UpdateRobotPosition(&position);
+	r.UpdateRobotPosition(position);
 }
