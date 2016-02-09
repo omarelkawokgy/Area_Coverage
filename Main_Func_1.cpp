@@ -4,6 +4,7 @@
 #include "Scan.h"
 #include "OBJD.h"
 #include "ULSH.h"
+#include "MOVH.h"
 
 
 #ifdef ENABLE_SIMULATION
@@ -58,18 +59,22 @@ void main()
 		RoomMap.AddRectangle(rect1, &robposition);
 	}
 #endif
-	RoomMap.addRobotOnMap(robposition);
+	//RoomMap.addRobotOnMap(robposition);
 	
 	Error_Check = scan.LinearScan(Pointlist[0], LEFT_SENSOR, cleaner);
+	Error_Check &= scan.LinearScan(Pointlist[1], RIGHT_SENSOR, cleaner);
 	if (Error_Check == RET_OK)
 	{
 		RoomMap.addPointOnMap(Pointlist[0]);
+		RoomMap.addPointOnMap(Pointlist[1]);
 	}
-
+	
+	MOVE::MoveForward(cleaner);
+	MOVE::MoveForward(cleaner);
+	MOVE::MoveForward(cleaner);
+	RoomMap.addRobotOnMap(robposition);
 #ifdef ENABLE_SIMULATION
-	cout << (int)Pointlist[0].getPointPos().X_Column << endl;
 	simu sim;
-
 	sim.printMap(RoomMap);
 
 #endif
