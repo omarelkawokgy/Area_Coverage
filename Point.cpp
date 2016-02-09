@@ -78,7 +78,7 @@ return_type Point::CalPointPos(SensorID side, RobotPos robPos, uint16 distance)
 			}
 			break;
 		}
-	ret = RET_OK;
+		ret = RET_OK;
 	}
 	else
 	{
