@@ -17,6 +17,8 @@ public:
 
 	//robot bearing change
 	void robotTurn(Robot r);
+
+	void RemoveRobfromMap(Robot rob, Map m);
 	
 };
 #endif
