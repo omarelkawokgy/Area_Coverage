@@ -27,11 +27,11 @@ RobotPos Robot::GetRobotPosition(void)
 }
 
 //updating the position of the robot
-void Robot::UpdateRobotPosition(RobotPos* position)
+void Robot::UpdateRobotPosition(RobotPos position)
 {
-	X_Robot = position->X_pos;
-	Y_Robot = position->Y_pos;
-	theta_Robot = position->theta;
+	X_Robot = position.X_pos;
+	Y_Robot = position.Y_pos;
+	theta_Robot = position.theta;
 }
 
 
