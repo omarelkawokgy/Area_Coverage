@@ -60,7 +60,7 @@ void main()
 	}
 #endif
 	RoomMap.addRobotOnMap(cleaner.GetRobotPosition());
-
+	/*check the ID of the point before creating new ones*/
 	Error_Check = scan.LinearScan(Pointlist[0], LEFT_SENSOR, cleaner);
 	Error_Check &= scan.LinearScan(Pointlist[1], RIGHT_SENSOR, cleaner);
 	if (Error_Check == RET_OK)
