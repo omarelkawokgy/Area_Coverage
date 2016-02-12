@@ -27,7 +27,7 @@ void Point::setPointPos(PointPos pos)
 return_type Point::CalPointPos(SensorID side, RobotPos robPos, uint16 distance)
 {
 	return_type ret = RET_NOT_OK;
-	Heading heading = Comp::ReadComp(robPos.theta);
+	Heading heading = Comp::ReadComp();
 
 	if (heading != INVALID_DIRECTION)
 	{

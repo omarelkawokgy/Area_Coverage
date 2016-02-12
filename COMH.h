@@ -12,6 +12,6 @@ private:
 public:
 	Comp();
 
-	static Heading ReadComp(uint16 Temp_angle);
+	static Heading ReadComp(void);
 };
 #endif

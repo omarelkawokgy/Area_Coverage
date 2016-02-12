@@ -44,11 +44,11 @@ return_type Scan::LinearScan(PointPos* leftpoint, PointPos* rightpoint, Robot ro
 	return_type ret = RET_NOT_OK;
 
 		/*scan and cal point pos from right sensor*/
-		ScanDist = ULSH::ULS_getRightDist();
+		ScanDist = ULSH::ULS_getLeftDist();
 		ret = ValidatePointPos(leftpoint, LEFT_SENSOR, rob.GetRobotPosition(), ScanDist);
 
 		/*scan and cal point pos from left sensor*/
-		ScanDist = ULSH::ULS_getLeftDist();
+		ScanDist = ULSH::ULS_getRightDist();
 		ret &= ValidatePointPos(rightpoint, RIGHT_SENSOR, rob.GetRobotPosition(), ScanDist);
 
 	return ret;
@@ -57,7 +57,7 @@ return_type Scan::LinearScan(PointPos* leftpoint, PointPos* rightpoint, Robot ro
 return_type Scan::ValidatePointPos(PointPos* pointPos, SensorID side, RobotPos robPos, uint16 distance)
 {
 	return_type ret = RET_NOT_OK;
-	Heading heading = Comp::ReadComp(robPos.theta);
+	Heading heading = Comp::ReadComp();
 
 	if (heading != INVALID_DIRECTION)
 	{

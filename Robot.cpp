@@ -26,6 +26,13 @@ RobotPos Robot::GetRobotPosition(void)
 	return position;
 }
 
+Heading Robot::GetRobotHeading(void)
+{
+	Heading heading;
+	heading = Comp::ReadComp();
+	return heading;
+}
+
 //updating the position of the robot
 void Robot::UpdateRobotPosition(RobotPos position)
 {

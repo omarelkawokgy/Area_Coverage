@@ -14,7 +14,7 @@ MOVE::MOVE()
 return_type MOVE::UpdatePosition(RobotPos* robposition)
 {
 	return_type ret = RET_NOT_OK;
-	Heading heading = Comp::ReadComp(robposition->theta);
+	Heading heading = Comp::ReadComp();
 	if (heading != INVALID_DIRECTION)
 	{
 		if (heading == NORTH)
@@ -52,7 +52,7 @@ return_type MOVE::MoveForward(Robot& rob)
 	return_type Error_Check = RET_NOT_OK; 
 	RobotPos robposition = rob.GetRobotPosition();
 	Stepcounter++;
-	if((Stepcounter % 3) == 0)
+	if((Stepcounter % STEP_LINEAR_SCAN) == 0)
 	{
 		Error_Check = UpdatePosition(&robposition);
 		if (Error_Check == RET_OK)

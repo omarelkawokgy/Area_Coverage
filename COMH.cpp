@@ -8,10 +8,11 @@ Comp::Comp()
 
 }
 
-Heading Comp::ReadComp(uint16 Temp_angle)
+Heading Comp::ReadComp(void)
 {
 
 	Heading Angle;
+	uint16 Temp_angle;
 
 #ifdef ENABLE_SIMULATION
 	cout << "Angle from compass:" << endl;

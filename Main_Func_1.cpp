@@ -80,7 +80,7 @@ while (1)
 		if (RoomMap.room[LeftTempPointPos.Y_Row][LeftTempPointPos.X_Column] != BUSY)
 		{
 			Pointlist[PointListIndex].setPointPos(LeftTempPointPos);
-			RoomMap.addPointOnMap(Pointlist[PointListIndex]);
+			RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner);
 			PointListIndex++;
 		}
 		else
@@ -92,7 +92,7 @@ while (1)
 		if (RoomMap.room[RightTempPointPos.Y_Row][RightTempPointPos.X_Column] != BUSY)
 		{
 			Pointlist[PointListIndex].setPointPos(RightTempPointPos);
-			RoomMap.addPointOnMap(Pointlist[PointListIndex]);
+			RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner);
 			PointListIndex++;
 		}
 		else
