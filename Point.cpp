@@ -1,29 +1,29 @@
 #include "OBJD.h"
-#include "ULSH.h"
-#include "COMH.h"
 
 Point::Point()
 {
-	pointPos.X_Column = 0;
-	pointPos.Y_Row = 0;
+	ClasspointPos.X_Column = 0;
+	ClasspointPos.Y_Row = 0;
 }
 
-Point::Point(SensorID side, RobotPos robPos, uint16 distance)
+Point::Point(PointPos pointpos)
 {
-	CalPointPos(side, robPos, distance);
+	ClasspointPos.X_Column = pointpos.X_Column;
+	ClasspointPos.Y_Row = pointpos.Y_Row;
 }
 
 PointPos Point::getPointPos(void)
 {
-	return pointPos;
+	return ClasspointPos;
 }
 
 void Point::setPointPos(PointPos pos)
 {
-	pointPos.X_Column = pos.X_Column;
-	pointPos.Y_Row = pos.Y_Row;
+	ClasspointPos.X_Column = pos.X_Column;
+	ClasspointPos.Y_Row = pos.Y_Row;
 }
-
+	
+#ifdef DONE_IN_SCAN
 return_type Point::CalPointPos(SensorID side, RobotPos robPos, uint16 distance)
 {
 	return_type ret = RET_NOT_OK;
@@ -36,45 +36,45 @@ return_type Point::CalPointPos(SensorID side, RobotPos robPos, uint16 distance)
 		case LEFT_SENSOR:
 			if (heading == NORTH)
 			{
-				pointPos.X_Column = robPos.X_pos - distance;
-				pointPos.Y_Row = robPos.Y_pos;
+				ClasspointPos.X_Column = robPos.X_pos - distance;
+				ClasspointPos.Y_Row = robPos.Y_pos;
 			}
 			else if (heading == WEST)
 			{
-				pointPos.X_Column = robPos.X_pos;
-				pointPos.Y_Row = robPos.Y_pos + distance;
+				ClasspointPos.X_Column = robPos.X_pos;
+				ClasspointPos.Y_Row = robPos.Y_pos + distance;
 			}
 			else if (heading == SOUTH)
 			{
-				pointPos.X_Column = robPos.X_pos + distance;
-				pointPos.Y_Row = robPos.Y_pos;
+				ClasspointPos.X_Column = robPos.X_pos + distance;
+				ClasspointPos.Y_Row = robPos.Y_pos;
 			}
 			else if (heading == EAST)
 			{
-				pointPos.X_Column = robPos.X_pos;
-				pointPos.Y_Row = robPos.Y_pos - distance;
+				ClasspointPos.X_Column = robPos.X_pos;
+				ClasspointPos.Y_Row = robPos.Y_pos - distance;
 			}
 			break;
 		case RIGHT_SENSOR:
 			if (heading == NORTH)
 			{
-				pointPos.X_Column = robPos.X_pos + distance;
-				pointPos.Y_Row = robPos.Y_pos;
+				ClasspointPos.X_Column = robPos.X_pos + distance;
+				ClasspointPos.Y_Row = robPos.Y_pos;
 			}
 			else if (heading == WEST)
 			{
-				pointPos.X_Column = robPos.X_pos;
-				pointPos.Y_Row = robPos.Y_pos - distance;
+				ClasspointPos.X_Column = robPos.X_pos;
+				ClasspointPos.Y_Row = robPos.Y_pos - distance;
 			}
 			else if (heading == SOUTH)
 			{
-				pointPos.X_Column = robPos.X_pos - distance;
-				pointPos.Y_Row = robPos.Y_pos;
+				ClasspointPos.X_Column = robPos.X_pos - distance;
+				ClasspointPos.Y_Row = robPos.Y_pos;
 			}
 			else if (heading == EAST)
 			{
-				pointPos.X_Column = robPos.X_pos;
-				pointPos.Y_Row = robPos.Y_pos + distance;
+				ClasspointPos.X_Column = robPos.X_pos;
+				ClasspointPos.Y_Row = robPos.Y_pos + distance;
 			}
 			break;
 		}
@@ -86,15 +86,26 @@ return_type Point::CalPointPos(SensorID side, RobotPos robPos, uint16 distance)
 	}
 	return ret;
 }
-
+#endif
 /*filtering is done in ULSH itself taking many readings and finding the average*/
-#if 0
+#if 1
 /*filtering using average between the position of 2 points*/
-void Point::FilteredPointReading(SensorID side, RobotPos robPos, uint16 newdistance)
+PointPos Point::FilteredPointReading(PointPos* newPointPosList, const uint8 PointListSize)
 {
-	Point oldPoint(side, robPos, newdistance);
-	PointPos oldPointPos = oldPoint.getPointPos();
-	pointPos.X_Column = (uint8)((oldPointPos.X_Column + pointPos.X_Column) / 2);
-	pointPos.Y_Row = (uint8)((oldPointPos.Y_Row + pointPos.Y_Row) / 2);
+	PointPos filteredPointPos;
+	uint8 i;
+
+	filteredPointPos.X_Column = 0;
+	filteredPointPos.Y_Row = 0;
+	for(i = 0; i < PointListSize ; i++)
+	{
+		filteredPointPos.X_Column += newPointPosList[i].X_Column;
+		filteredPointPos.Y_Row += newPointPosList[i].Y_Row;
+	}
+
+	filteredPointPos.X_Column = filteredPointPos.X_Column / PointListSize;
+	filteredPointPos.Y_Row = filteredPointPos.Y_Row / PointListSize;
+
+	return filteredPointPos;
 }
 #endif

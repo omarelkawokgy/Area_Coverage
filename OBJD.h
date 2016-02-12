@@ -3,6 +3,8 @@
 
 #include "CONF.h"
 #include "types.h"
+#include "COMH.h"
+#include "ULSH.h"
 
 class OBJD
 {
@@ -15,12 +17,12 @@ public:
 class Point
 {
 private:
-	PointPos pointPos;
+	PointPos ClasspointPos;
 
 public:
 	Point();
 
-	Point(SensorID side, RobotPos robPos, uint16 distance);
+	Point(PointPos pointpos);
 
 	return_type CalPointPos(SensorID side, RobotPos robPos, uint16 distance);
 
@@ -28,7 +30,7 @@ public:
 
 	void setPointPos(PointPos pos);
 
-	void FilteredPointReading(SensorID side, RobotPos robPos, uint16 newdistance);
+	PointPos Point::FilteredPointReading(PointPos* newPointPosList, const uint8 PointListSize);
 
 };
 

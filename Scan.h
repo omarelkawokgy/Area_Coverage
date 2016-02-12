@@ -2,14 +2,15 @@
 #ifndef SCAN_H
 #define SCAN_H
 
-#include "Robot.h"
-#include "CONF.h"
 #include "OBJD.h"
+#include "MOVH.h"
 
 class Scan
 {
 private:
 	L_R_Dist Distancelist[FULL_SCAN_NUM];
+
+	return_type ValidatePointPos(PointPos* pointPos, SensorID side, RobotPos robPos, uint16 distance);
 
 	Scan(){}
 public:
@@ -20,7 +21,7 @@ public:
 	/*Scan 360 degree while staying in the same coordinates*/
 	void CirclScanRoutine(Robot rob, L_R_Dist* scanlist);
 	/*taking the reading while moving linearly and Calculating average*/
-	return_type LinearScan(Point& newpoint, SensorID side, Robot rob);
+	return_type Scan::LinearScan(PointPos* leftpoint, PointPos* rightpoint, Robot rob);
 };
 
 #endif

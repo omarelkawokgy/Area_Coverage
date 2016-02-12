@@ -16,30 +16,42 @@ Point Pointlist[20];
 
 void main()
 {
-	/*-----------------Intialize project-------------*/
+	/*=============================Intialize project==============================*/
+
+	/*------------------Map Init Data-------------------*/
 	Map RoomMap;
+	RoomMap.initMap();
+
+	/*----------------Scan Init Data--------------------*/
 	Scan scan = Scan::getInstanceScan();
-	ULSH uls;
-	RobotPos robposition;
-	robposition.theta = ROBOT_INIT_THETA;
-	robposition.X_pos = ROBOT_INIT_X;
-	robposition.Y_pos = ROBOT_INIT_Y;
+
+	/*-----------------Point Init Data -----------------*/
+	PointPos LeftTempPointPos;
+	PointPos RightTempPointPos;
+	uint8 PointListIndex = 0;
+
+	/*----------------Robot Init Data------------------*/
+	RobotPos RobTempPosition;
+	RobTempPosition.theta = ROBOT_INIT_THETA;
+	RobTempPosition.X_pos = ROBOT_INIT_X;
+	RobTempPosition.Y_pos = ROBOT_INIT_Y;
+	Robot cleaner = Robot::initRobotPosition(RobTempPosition);
+
+	/*----------------Error Init Data-----------------*/
 	return_type Error_Check = RET_NOT_OK;
-	Robot cleaner = Robot::initRobotPosition(robposition);
+
 #ifdef RECTANGLE
 	L_R_Dist diagonalList[FULL_SCAN_NUM];
 	RectSize rectsize;
 	return_type Error_Check;
 #endif
-	RoomMap.initMap();
+
 
 
 	/*-----------start implementing------------*/
-	/*apply the scan routine and update rob theta and get list of diagonals*/
 
-#ifdef DEBUG
-	cout << "diagonal out of the scan rountine:" << diagonalList[5].L_Distance << endl;
-#endif
+	RobTempPosition = cleaner.GetRobotPosition();
+	RoomMap.addRobotOnMap(RobTempPosition);
 #ifdef RECTANGLE
 	Error_Check = Rectangle::ConstructRect(diagonalList, &rectsize, cleaner, &robPosInRect);
 	Rectangle rect1(rectsize);
@@ -54,44 +66,51 @@ void main()
 	if (Error_Check == RET_OK)
 	{
 #endif
-		robposition = cleaner.GetRobotPosition();
 #ifdef RECTANGLE
-		RoomMap.AddRectangle(rect1, &robposition);
+		RoomMap.AddRectangle(rect1, &RobTempPosition);
 	}
 #endif
-	RoomMap.addRobotOnMap(cleaner.GetRobotPosition());
+while (1)
+{
+
 	/*check the ID of the point before creating new ones*/
-	Error_Check = scan.LinearScan(Pointlist[0], LEFT_SENSOR, cleaner);
-	Error_Check &= scan.LinearScan(Pointlist[1], RIGHT_SENSOR, cleaner);
+	Error_Check = scan.LinearScan(&LeftTempPointPos, &RightTempPointPos, cleaner);
 	if (Error_Check == RET_OK)
 	{
-		RoomMap.addPointOnMap(Pointlist[0]);
-		RoomMap.addPointOnMap(Pointlist[1]);
-	}
-
-#ifdef ENABLE_SIMULATION
-	simu sim;	
-	for (int i = 0; i < 9; i++)
-	{
-		Error_Check = MOVE::MoveForward(cleaner);
-		if (Error_Check == RET_OK)
+		if (RoomMap.room[LeftTempPointPos.Y_Row][LeftTempPointPos.X_Column] != BUSY)
 		{
-			RoomMap.UpdateRobotPosition(cleaner);
-			sim.printMap(RoomMap);
+			Pointlist[PointListIndex].setPointPos(LeftTempPointPos);
+			RoomMap.addPointOnMap(Pointlist[PointListIndex]);
+			PointListIndex++;
+		}
+		else
+		{
+			/*TODO: update point position by checking if theres a point near this remove it,
+			and replace it with updated one*/
+		}
+		
+		if (RoomMap.room[RightTempPointPos.Y_Row][RightTempPointPos.X_Column] != BUSY)
+		{
+			Pointlist[PointListIndex].setPointPos(RightTempPointPos);
+			RoomMap.addPointOnMap(Pointlist[PointListIndex]);
+			PointListIndex++;
+		}
+		else
+		{
+			/*TODO: update point position by checking if theres a point near this remove it,
+			and replace it with updated one*/
 		}
 	}
 
-
-
+	(void)MOVE::MoveForward(cleaner);
+	RoomMap.UpdateRobotPosition(cleaner);
+#ifdef ENABLE_SIMULATION
+	simu sim;
+	sim.printMap(RoomMap);
 #endif
-	/*--------------end of intialization------------*/
-	//while (1)
-	//{
-		//the return of this function is input to rect calculate
-		//rect1.ConstructRect(scan.ScanRoutine(cleaner));
 
-		//TODO: get rectangle
-	//}
+}
 	system("pause");
 	return;
 }
+

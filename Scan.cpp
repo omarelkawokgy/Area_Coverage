@@ -1,7 +1,7 @@
 #include <iostream>
+
 #include "Scan.h"
-#include "ULSH.h"
-#include "MOVH.h"
+
 
 using namespace std;
 
@@ -36,29 +36,82 @@ void Scan::CirclScanRoutine(Robot rob, L_R_Dist* scanlist)
 		MOVE::MoveTurn_CW(rob, SCAN_ANGLE);
 		scanlist[i] = ULSH::ULS_getDistanceboth();
 	}
-#ifdef DEBUG
-	cout << "Distance list [0] in scanroutine:" << scanlist[4].L_Distance << endl;
-#endif
 }
 
-return_type Scan::LinearScan(Point& newpoint, SensorID side, Robot rob)
+return_type Scan::LinearScan(PointPos* leftpoint, PointPos* rightpoint, Robot rob)
 {
 	uint16 ScanDist;
 	return_type ret = RET_NOT_OK;
 
-	if (side == RIGHT_SENSOR)
-	{
+		/*scan and cal point pos from right sensor*/
 		ScanDist = ULSH::ULS_getRightDist();
-		ret = newpoint.CalPointPos(RIGHT_SENSOR, rob.GetRobotPosition(), ScanDist);
-	}
-	else if (side == LEFT_SENSOR)
-	{
+		ret = ValidatePointPos(leftpoint, LEFT_SENSOR, rob.GetRobotPosition(), ScanDist);
+
+		/*scan and cal point pos from left sensor*/
 		ScanDist = ULSH::ULS_getLeftDist();
-		ret = newpoint.CalPointPos(LEFT_SENSOR, rob.GetRobotPosition(), ScanDist);
+		ret &= ValidatePointPos(rightpoint, RIGHT_SENSOR, rob.GetRobotPosition(), ScanDist);
+
+	return ret;
+}
+
+return_type Scan::ValidatePointPos(PointPos* pointPos, SensorID side, RobotPos robPos, uint16 distance)
+{
+	return_type ret = RET_NOT_OK;
+	Heading heading = Comp::ReadComp(robPos.theta);
+
+	if (heading != INVALID_DIRECTION)
+	{
+		switch (side)
+		{
+		case LEFT_SENSOR:
+			if (heading == NORTH)
+			{
+				pointPos->X_Column = robPos.X_pos - distance;
+				pointPos->Y_Row = robPos.Y_pos;
+			}
+			else if (heading == WEST)
+			{
+				pointPos->X_Column = robPos.X_pos;
+				pointPos->Y_Row = robPos.Y_pos + distance;
+			}
+			else if (heading == SOUTH)
+			{
+				pointPos->X_Column = robPos.X_pos + distance;
+				pointPos->Y_Row = robPos.Y_pos;
+			}
+			else if (heading == EAST)
+			{
+				pointPos->X_Column = robPos.X_pos;
+				pointPos->Y_Row = robPos.Y_pos - distance;
+			}
+			break;
+		case RIGHT_SENSOR:
+			if (heading == NORTH)
+			{
+				pointPos->X_Column = robPos.X_pos + distance;
+				pointPos->Y_Row = robPos.Y_pos;
+			}
+			else if (heading == WEST)
+			{
+				pointPos->X_Column = robPos.X_pos;
+				pointPos->Y_Row = robPos.Y_pos - distance;
+			}
+			else if (heading == SOUTH)
+			{
+				pointPos->X_Column = robPos.X_pos - distance;
+				pointPos->Y_Row = robPos.Y_pos;
+			}
+			else if (heading == EAST)
+			{
+				pointPos->X_Column = robPos.X_pos;
+				pointPos->Y_Row = robPos.Y_pos + distance;
+			}
+			break;
+		}
+		ret = RET_OK;
 	}
 	else
 	{
-		/*do nothing*/
 		ret = RET_NOT_OK;
 	}
 	return ret;
