@@ -53,11 +53,10 @@ void Map::addRobotOnMap(RobotPos robPosition)
 	Map::room[robPosition.Y_pos][robPosition.X_pos] = ROBOT;
 }
 
-void Map::addPointOnMap(Point newpoint, Robot rob)
+void Map::addPointOnMap(Point newpoint, Robot rob, Heading heading)
 {
 	PointPos PointPosition;
 	RobotPos RobPosition;
-	Heading heading;
 	uint8 EmptyDistance;
 	uint8 StartSwipe;
 	PointPosition = newpoint.getPointPos();
@@ -65,7 +64,6 @@ void Map::addPointOnMap(Point newpoint, Robot rob)
 
 	/*clearing area between robot and obstical*/
 	RobPosition = rob.GetRobotPosition();
-	heading = rob.GetRobotHeading();
 
 	if ((heading == NORTH) || (heading == SOUTH))
 	{

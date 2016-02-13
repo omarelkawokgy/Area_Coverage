@@ -27,7 +27,7 @@ public:
 
 	void addRobotOnMap(RobotPos robPosition);
 	
-	void addPointOnMap(Point newpoint, Robot rob);
+	void addPointOnMap(Point newpoint, Robot rob, Heading heading);
 
 	void UpdateRobotPosition(Robot rob);
 };

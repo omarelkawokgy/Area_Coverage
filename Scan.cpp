@@ -38,26 +38,25 @@ void Scan::CirclScanRoutine(Robot rob, L_R_Dist* scanlist)
 	}
 }
 
-return_type Scan::LinearScan(PointPos* leftpoint, PointPos* rightpoint, Robot rob)
+return_type Scan::LinearScan(PointPos* leftpoint, PointPos* rightpoint, Robot rob, Heading heading)
 {
 	uint16 ScanDist;
 	return_type ret = RET_NOT_OK;
 
 		/*scan and cal point pos from right sensor*/
 		ScanDist = ULSH::ULS_getLeftDist();
-		ret = ValidatePointPos(leftpoint, LEFT_SENSOR, rob.GetRobotPosition(), ScanDist);
+		ret = ValidatePointPos(leftpoint, LEFT_SENSOR, rob.GetRobotPosition(), ScanDist, heading);
 
 		/*scan and cal point pos from left sensor*/
 		ScanDist = ULSH::ULS_getRightDist();
-		ret &= ValidatePointPos(rightpoint, RIGHT_SENSOR, rob.GetRobotPosition(), ScanDist);
+		ret &= ValidatePointPos(rightpoint, RIGHT_SENSOR, rob.GetRobotPosition(), ScanDist, heading);
 
 	return ret;
 }
 
-return_type Scan::ValidatePointPos(PointPos* pointPos, SensorID side, RobotPos robPos, uint16 distance)
+return_type Scan::ValidatePointPos(PointPos* pointPos, SensorID side, RobotPos robPos, uint16 distance, Heading heading)
 {
 	return_type ret = RET_NOT_OK;
-	Heading heading = Comp::ReadComp();
 
 	if (heading != INVALID_DIRECTION)
 	{

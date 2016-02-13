@@ -32,6 +32,7 @@ void main()
 
 	/*----------------Robot Init Data------------------*/
 	RobotPos RobTempPosition;
+	Heading RobTempHeading;
 	RobTempPosition.theta = ROBOT_INIT_THETA;
 	RobTempPosition.X_pos = ROBOT_INIT_X;
 	RobTempPosition.Y_pos = ROBOT_INIT_Y;
@@ -72,15 +73,15 @@ void main()
 #endif
 while (1)
 {
-
+	RobTempHeading = cleaner.GetRobotHeading();
 	/*check the ID of the point before creating new ones*/
-	Error_Check = scan.LinearScan(&LeftTempPointPos, &RightTempPointPos, cleaner);
+	Error_Check = scan.LinearScan(&LeftTempPointPos, &RightTempPointPos, cleaner, RobTempHeading);
 	if (Error_Check == RET_OK)
 	{
-		if (RoomMap.room[LeftTempPointPos.Y_Row][LeftTempPointPos.X_Column] != BUSY)
+		if ((RoomMap.room[LeftTempPointPos.Y_Row][LeftTempPointPos.X_Column] != BUSY) && (RoomMap.room[LeftTempPointPos.Y_Row][LeftTempPointPos.X_Column] != ROBOT))
 		{
 			Pointlist[PointListIndex].setPointPos(LeftTempPointPos);
-			RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner);
+			RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner, RobTempHeading);
 			PointListIndex++;
 		}
 		else
@@ -89,10 +90,10 @@ while (1)
 			and replace it with updated one*/
 		}
 		
-		if (RoomMap.room[RightTempPointPos.Y_Row][RightTempPointPos.X_Column] != BUSY)
+		if ((RoomMap.room[RightTempPointPos.Y_Row][RightTempPointPos.X_Column] != BUSY) && (RoomMap.room[RightTempPointPos.Y_Row][RightTempPointPos.X_Column] != ROBOT))
 		{
 			Pointlist[PointListIndex].setPointPos(RightTempPointPos);
-			RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner);
+			RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner, RobTempHeading);
 			PointListIndex++;
 		}
 		else
