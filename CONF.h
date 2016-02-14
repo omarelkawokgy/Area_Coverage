@@ -6,9 +6,8 @@
 #define MAP_ROW 40
 #define MAP_COLUMN 40
 
-//robot configurations in metres
-#define ROBOT_WHEEL_SIZE 5//in cm
-#define ROBOT_SIZE 20 //in cm
+/*-------------Map Conf------------*/
+#define POINT_LIST_SIZE 20
 
 /*directions of the vacuum (heading)*/
 typedef enum
@@ -47,6 +46,8 @@ typedef enum
 #define ROBOT_INIT_X		(MAP_ROW/2)
 #define ROBOT_INIT_Y		(MAP_COLUMN/2)
 #define ROBOT_INIT_THETA	0
+#define ROBOT_WHEEL_SIZE 5//in cm
+#define ROBOT_SIZE 20 //in cm
 
 /*----------Scan conf-------------*/
 #define SCAN_ANGLE 30
