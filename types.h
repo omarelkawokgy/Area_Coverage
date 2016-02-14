@@ -26,6 +26,9 @@ most probably it will be included in all modules
 /*standard distances for empty and busy*/
 #define SIZE_OF_SLOT 20
 
+#define TRUE 1
+#define FALSE 0
+
 /*------------Macro functions definition-------------*/
 #define VAR(type, Name_of_Module) type
 #define P2VAR(type, Name_of_Module) type*
@@ -35,6 +38,7 @@ most probably it will be included in all modules
 
 /*-----------------Type definitions------------------*/
 typedef unsigned char uint8;
+typedef unsigned char Boolean;
 typedef signed char int8;
 typedef unsigned short uint16;
 typedef signed short int16;
