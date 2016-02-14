@@ -12,7 +12,12 @@
 using namespace std;
 #endif
 
-Point Pointlist[20];
+/*global variable declaration*/
+Point Pointlist[POINT_LIST_SIZE];
+
+/*static functions declaration*/
+static Boolean CheckPointUpdatePos(PointPos TempPointPos, Heading heading, Map& RoomMap);
+static uint8 NearBusyPointSearch(PointPos TempPointPos);
 
 void main()
 {
@@ -40,7 +45,7 @@ void main()
 
 	/*----------------Error Init Data-----------------*/
 	return_type Error_Check = RET_NOT_OK;
-
+	Boolean UpdatePointCheck;
 #ifdef RECTANGLE
 	L_R_Dist diagonalList[FULL_SCAN_NUM];
 	RectSize rectsize;
@@ -78,29 +83,41 @@ while (1)
 	Error_Check = scan.LinearScan(&LeftTempPointPos, &RightTempPointPos, cleaner, RobTempHeading);
 	if (Error_Check == RET_OK)
 	{
+		
 		if ((RoomMap.room[LeftTempPointPos.Y_Row][LeftTempPointPos.X_Column] != BUSY) && (RoomMap.room[LeftTempPointPos.Y_Row][LeftTempPointPos.X_Column] != ROBOT))
 		{
-			Pointlist[PointListIndex].setPointPos(LeftTempPointPos);
-			RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner, RobTempHeading);
-			PointListIndex++;
+			UpdatePointCheck = CheckPointUpdatePos(LeftTempPointPos, RobTempHeading, RoomMap);
+			if (UpdatePointCheck == FALSE)
+			{
+				Pointlist[PointListIndex].setPointPos(LeftTempPointPos);
+				RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner, RobTempHeading);
+				PointListIndex++;
+			}
 		}
 		else
 		{
-			/*TODO: update point position by checking if theres a point near this remove it,
-			and replace it with updated one*/
+			/*Do nothing*/
+
 		}
 		
 		if ((RoomMap.room[RightTempPointPos.Y_Row][RightTempPointPos.X_Column] != BUSY) && (RoomMap.room[RightTempPointPos.Y_Row][RightTempPointPos.X_Column] != ROBOT))
 		{
-			Pointlist[PointListIndex].setPointPos(RightTempPointPos);
-			RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner, RobTempHeading);
-			PointListIndex++;
+			UpdatePointCheck = CheckPointUpdatePos(RightTempPointPos, RobTempHeading, RoomMap);
+			if (UpdatePointCheck == FALSE)
+			{
+				Pointlist[PointListIndex].setPointPos(RightTempPointPos);
+				RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner, RobTempHeading);
+				PointListIndex++;
+			}
 		}
 		else
 		{
-			/*TODO: update point position by checking if theres a point near this remove it,
-			and replace it with updated one*/
+			/*Do nothing*/
 		}
+	}
+	else
+	{
+		/*TODO: Fix the heading of the robot if its not ok*/
 	}
 
 	(void)MOVE::MoveForward(cleaner);
@@ -115,3 +132,62 @@ while (1)
 	return;
 }
 
+static Boolean CheckPointUpdatePos(PointPos TempPointPos, Heading heading, Map& RoomMap)
+{
+	uint8 PointListIndex;
+	Boolean PosUpdateCheck = FALSE;
+
+	if ((heading == NORTH) && (heading == SOUTH))
+	{
+		if (RoomMap.room[TempPointPos.Y_Row][TempPointPos.X_Column - 1] == BUSY)
+		{
+			TempPointPos.X_Column = TempPointPos.X_Column - 1;
+			PosUpdateCheck = TRUE;
+		}
+		else if (RoomMap.room[TempPointPos.Y_Row][TempPointPos.X_Column + 1] == BUSY)
+		{
+			TempPointPos.X_Column = TempPointPos.X_Column + 1;
+			PosUpdateCheck = TRUE;
+		}
+		else
+		{
+			/*do nothing*/
+		}
+	}
+	else if ((heading == WEST) && (heading == EAST))
+	{
+		if (RoomMap.room[TempPointPos.Y_Row - 1][TempPointPos.X_Column] == BUSY)
+		{
+			TempPointPos.Y_Row = TempPointPos.Y_Row - 1;
+			PosUpdateCheck = TRUE;
+		}
+		else if (RoomMap.room[TempPointPos.Y_Row + 1][TempPointPos.X_Column] == BUSY)
+		{
+			TempPointPos.Y_Row = TempPointPos.Y_Row + 1;
+			PosUpdateCheck = TRUE;
+		}
+		else
+		{
+			/*do nothing*/
+		}
+	}
+	if (PosUpdateCheck == TRUE)
+	{
+		PointListIndex = NearBusyPointSearch(TempPointPos);
+		Pointlist[PointListIndex].setPointPos(TempPointPos);
+		RoomMap.room[TempPointPos.Y_Row][TempPointPos.X_Column] = UNCOVERED;
+	}
+	return PosUpdateCheck;
+}
+
+static uint8 NearBusyPointSearch(PointPos TempPointPos)
+{
+	for (uint8 PointListIndex = 0; PointListIndex < POINT_LIST_SIZE; PointListIndex++)
+	{
+		if ((Pointlist[PointListIndex].getPointPos().X_Column == TempPointPos.X_Column) &&
+			(Pointlist[PointListIndex].getPointPos().Y_Row == TempPointPos.Y_Row))
+		{
+			return PointListIndex;
+		}
+	}
+}
