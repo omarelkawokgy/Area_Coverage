@@ -19,7 +19,7 @@ static Boolean BumperHit;
 /*static functions declaration*/
 static Boolean CheckPointUpdatePos(PointPos TempPointPos, Heading heading, Map& RoomMap);
 static uint8 NearBusyPointSearch(PointPos TempPointPos);
-static void ISR_BumperHit(enu_Direction_req Request)
+static void ISR_BumperHit(enu_Direction_req Request);
 
 
 void main()
@@ -86,11 +86,36 @@ void main()
 	DirectionReq = REQUEST_NORTH;
 while (1)
 {
+	RobTempHeading = cleaner.GetRobotHeading();
 	if (BumperHit)
 	{
 		/*TODO: fix the turn to the requested direction after a hit*/
+		RobTempPosition = cleaner.GetRobotPosition();
+		if (DirectionReq == REQUEST_NORTH)
+		{
+			if (RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY)
+			{
+				/*turn right*/
+			}
+			else if (RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY)
+			{
+				/*turn left*/
+			}
+		}
+		else if (DirectionReq == REQUEST_SOUTH)
+		{
+			if (RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY)
+			{
+				/*turn left*/
+			}
+			else if (RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY)
+			{
+				/*turn right*/
+			}
+		}
+		
 	}
-	RobTempHeading = cleaner.GetRobotHeading();
+	
 	/*check the ID of the point before creating new ones*/
 	Error_Check = scan.LinearScan(&LeftTempPointPos, &RightTempPointPos, cleaner, RobTempHeading);
 	if (Error_Check == RET_OK)
