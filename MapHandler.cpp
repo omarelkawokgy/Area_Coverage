@@ -126,3 +126,10 @@ void Map::UpdateRobotPosition(Robot rob)
 		}
 	}
 }
+
+void Map::MergePointsOnMap(PointPos newPointPos, PointPos oldPointPos)
+{
+	
+	room[oldPointPos.Y_Row][oldPointPos.X_Column] = UNCOVERED;
+	room[newPointPos.Y_Row][newPointPos.X_Column] = BUSY;
+}
