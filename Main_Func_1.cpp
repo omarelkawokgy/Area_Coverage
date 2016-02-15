@@ -14,10 +14,13 @@ using namespace std;
 
 /*global variable declaration*/
 Point Pointlist[POINT_LIST_SIZE];
+static Boolean BumperHit;
 
 /*static functions declaration*/
 static Boolean CheckPointUpdatePos(PointPos TempPointPos, Heading heading, Map& RoomMap);
 static uint8 NearBusyPointSearch(PointPos TempPointPos);
+static void ISR_BumperHit(enu_Direction_req Request)
+
 
 void main()
 {
@@ -46,6 +49,10 @@ void main()
 	/*----------------Error Init Data-----------------*/
 	return_type Error_Check = RET_NOT_OK;
 	Boolean UpdatePointCheck;
+
+	/*----------------Move Init Data-------------------*/
+	enu_Direction_req DirectionReq = REQUEST_NONE;
+	uint8 CompassRawReading;
 #ifdef RECTANGLE
 	L_R_Dist diagonalList[FULL_SCAN_NUM];
 	RectSize rectsize;
@@ -76,14 +83,19 @@ void main()
 		RoomMap.AddRectangle(rect1, &RobTempPosition);
 	}
 #endif
+	DirectionReq = REQUEST_NORTH;
 while (1)
 {
+	if (BumperHit)
+	{
+		/*TODO: fix the turn to the requested direction after a hit*/
+	}
 	RobTempHeading = cleaner.GetRobotHeading();
 	/*check the ID of the point before creating new ones*/
 	Error_Check = scan.LinearScan(&LeftTempPointPos, &RightTempPointPos, cleaner, RobTempHeading);
 	if (Error_Check == RET_OK)
 	{
-		
+
 		if ((RoomMap.room[LeftTempPointPos.Y_Row][LeftTempPointPos.X_Column] != BUSY) && (RoomMap.room[LeftTempPointPos.Y_Row][LeftTempPointPos.X_Column] != ROBOT))
 		{
 			UpdatePointCheck = CheckPointUpdatePos(LeftTempPointPos, RobTempHeading, RoomMap);
@@ -99,7 +111,7 @@ while (1)
 			/*Do nothing*/
 
 		}
-		
+
 		if ((RoomMap.room[RightTempPointPos.Y_Row][RightTempPointPos.X_Column] != BUSY) && (RoomMap.room[RightTempPointPos.Y_Row][RightTempPointPos.X_Column] != ROBOT))
 		{
 			UpdatePointCheck = CheckPointUpdatePos(RightTempPointPos, RobTempHeading, RoomMap);
@@ -118,6 +130,54 @@ while (1)
 	else
 	{
 		/*TODO: Fix the heading of the robot if its not ok*/
+
+		CompassRawReading = Comp::ReadRawData();
+
+		switch (DirectionReq)
+		{
+		case REQUEST_NORTH:
+			if (CompassRawReading < SOUTH_VALUE)
+			{
+				MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
+			}
+			else
+			{
+				MOVE::MoveTurn_CCW(cleaner, NORTH_VALUE);
+			}
+			break;
+		case REQUEST_WEST:
+			if (CompassRawReading < EAST_VALUE)
+			{
+				MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
+			}
+			else
+			{
+				MOVE::MoveTurn_CCW(cleaner, WEST_VALUE);
+			}
+			break;
+		case REQUEST_SOUTH:
+			if (CompassRawReading < NORTH_VALUE)
+			{
+				MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
+			}
+			else
+			{
+				MOVE::MoveTurn_CCW(cleaner, SOUTH_VALUE);
+			}
+			break;
+		case REQUEST_EAST:
+			if (CompassRawReading < WEST_VALUE)
+			{
+				MOVE::MoveTurn_CW(cleaner, EAST_VALUE);
+			}
+			else
+			{
+				MOVE::MoveTurn_CCW(cleaner, EAST_VALUE);
+			}
+			break;
+		default:
+			break;
+		}
 	}
 
 	(void)MOVE::MoveForward(cleaner);
@@ -132,12 +192,12 @@ while (1)
 	return;
 }
 
-static Boolean CheckPointUpdatePos(PointPos TempPointPos, Heading heading, Map& RoomMap)
+static Boolean CheckPointUpdatePos(PointPos newPointPos, Heading heading, Map& RoomMap)
 {
 	uint8 PointListIndex;
 	Boolean PosUpdateCheck = FALSE;
-
-	if ((heading == NORTH) && (heading == SOUTH))
+	PointPos TempPointPos = newPointPos;
+	if ((heading == NORTH) || (heading == SOUTH))
 	{
 		if (RoomMap.room[TempPointPos.Y_Row][TempPointPos.X_Column - 1] == BUSY)
 		{
@@ -154,7 +214,7 @@ static Boolean CheckPointUpdatePos(PointPos TempPointPos, Heading heading, Map& 
 			/*do nothing*/
 		}
 	}
-	else if ((heading == WEST) && (heading == EAST))
+	else if ((heading == WEST) || (heading == EAST))
 	{
 		if (RoomMap.room[TempPointPos.Y_Row - 1][TempPointPos.X_Column] == BUSY)
 		{
@@ -175,7 +235,7 @@ static Boolean CheckPointUpdatePos(PointPos TempPointPos, Heading heading, Map& 
 	{
 		PointListIndex = NearBusyPointSearch(TempPointPos);
 		Pointlist[PointListIndex].setPointPos(TempPointPos);
-		RoomMap.room[TempPointPos.Y_Row][TempPointPos.X_Column] = UNCOVERED;
+		RoomMap.MergePointsOnMap(newPointPos, TempPointPos);
 	}
 	return PosUpdateCheck;
 }
@@ -190,4 +250,9 @@ static uint8 NearBusyPointSearch(PointPos TempPointPos)
 			return PointListIndex;
 		}
 	}
+}
+
+static void ISR_BumperHit(enu_Direction_req Request)
+{
+	BumperHit = TRUE;
 }
