@@ -13,5 +13,7 @@ public:
 	Comp();
 
 	static Heading ReadComp(void);
+	
+	static uint16 ReadRawData(void);
 };
 #endif
