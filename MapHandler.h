@@ -29,6 +29,8 @@ public:
 	
 	void addPointOnMap(Point newpoint, Robot rob, Heading heading);
 
+	void MergePointsOnMap(PointPos newPointPos, PointPos oldPointPos);
+
 	void UpdateRobotPosition(Robot rob);
 };
 
