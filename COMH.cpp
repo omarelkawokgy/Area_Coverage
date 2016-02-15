@@ -8,10 +8,8 @@ Comp::Comp()
 
 }
 
-Heading Comp::ReadComp(void)
+uint16 Comp::ReadRawData(void)
 {
-
-	Heading Angle;
 	uint16 Temp_angle;
 
 #ifdef ENABLE_SIMULATION
@@ -37,6 +35,17 @@ Heading Comp::ReadComp(void)
 	return headingDegrees;
 	//  Serial.println(" Degrees   \t");
 #endif
+	return Temp_angle;
+}
+
+Heading Comp::ReadComp(void)
+{
+
+	Heading Angle;
+	uint16 Temp_angle;
+
+	Temp_angle = ReadRawData();
+
 	if ((Temp_angle > (NORTH_VALUE - ALLOWED_ANGLE_ERROR)) && (Temp_angle < (NORTH_VALUE + ALLOWED_ANGLE_ERROR)))
 	{
 		Angle = NORTH;
