@@ -108,7 +108,9 @@ void MOVE::MoveInitAngle(Robot& rob)
 void MOVE::MoveTurn_CW(Robot& rob, uint8 TargetAngle)
 {
 #ifdef ENABLE_SIMULATION
-
+	RobotPos robPosition = rob.GetRobotPosition();
+	robPosition.theta = TargetAngle;
+	rob.UpdateRobotPosition(robPosition);
 #else
 	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, LOW);
 	digitalWrite(RIGHT_MOTOR_GROUND_PIN, HIGH);
@@ -120,7 +122,9 @@ void MOVE::MoveTurn_CW(Robot& rob, uint8 TargetAngle)
 void MOVE::MoveTurn_CCW(Robot& rob, uint8 TargetAngle)
 {
 #ifdef ENABLE_SIMULATION
-
+	RobotPos robPosition = rob.GetRobotPosition();
+	robPosition.theta = TargetAngle;
+	rob.UpdateRobotPosition(robPosition);
 #else
 	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, HIGH);
 	digitalWrite(RIGHT_MOTOR_GROUND_PIN, LOW);
