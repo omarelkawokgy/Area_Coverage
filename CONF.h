@@ -26,6 +26,15 @@ INVALID_DIRECTION = 0
 #define EAST_VALUE 333
 #define ALLOWED_ANGLE_ERROR 5 
 
+typedef enum
+{
+	REQUEST_NONE = 0,
+	REQUEST_NORTH = 2,
+	REQUEST_EAST = 4,
+	REQUEST_WEST = 6,
+	REQUEST_SOUTH = 8
+}enu_Direction_req;
+
 /*Cell values*/
 enum CELL_STATE
 {
@@ -68,7 +77,7 @@ typedef struct
 	uint16 R_Distance;
 }L_R_Dist;
 
-/*--------------------CONTROLS-------------------------*/
+/*--------------------MACRO CONTROLS--------------------*/
 #define ENABLE_SIMULATION
 #undef DEBUG
 #undef RECTANGLE
