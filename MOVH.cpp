@@ -132,3 +132,8 @@ void MOVE::MoveTurn_CCW(Robot& rob, uint8 TargetAngle)
 	digitalWrite(LEFT_MOTOR_GROUND_PIN, HIGH);
 #endif
 }
+
+void MOVE::MoveForwardStep(Robot& rob)
+{
+	MoveForward(rob);
+}
