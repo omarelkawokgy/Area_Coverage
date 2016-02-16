@@ -23,5 +23,6 @@ public:
 
 	static void MoveTurn_CCW(Robot& rob, uint8 TargetAngle);
 
+	static void MoveForwardStep(Robot& rob);
 };
 #endif
