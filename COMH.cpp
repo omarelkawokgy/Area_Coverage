@@ -1,7 +1,9 @@
 #include "COMH.h"
+#ifdef ENABLE_SIMULATION
 #include<iostream>
 using namespace std;
-
+#include "Main_func_1.h"
+#endif
 
 Comp::Comp()
 {
@@ -15,6 +17,11 @@ uint16 Comp::ReadRawData(void)
 #ifdef ENABLE_SIMULATION
 	cout << "Angle from compass:" << endl;
 	cin >> Temp_angle;
+
+	if(Temp_angle > 400)
+	{
+		ISR_BumperHit();
+	}
 #else
 	comp Compass;
 	//raw data so its not scaled
