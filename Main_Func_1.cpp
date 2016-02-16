@@ -19,8 +19,11 @@ static Boolean BumperHit;
 /*static functions declaration*/
 static Boolean CheckPointUpdatePos(PointPos TempPointPos, Heading heading, Map& RoomMap);
 static uint8 NearBusyPointSearch(PointPos TempPointPos);
-static void ISR_BumperHit(enu_Direction_req Request);
+static void UTurnLeft(Robot& cleaner, Heading RobCurrentHeading);
+static void UTurnRight(Robot& cleaner, Heading RobCurrentHeading);
+static void fixRobotHeading(Robot& cleaner, enu_Direction_req RobHeadingReq);
 
+void ISR_BumperHit(void);
 
 void main()
 {
@@ -40,7 +43,7 @@ void main()
 
 	/*----------------Robot Init Data------------------*/
 	RobotPos RobTempPosition;
-	Heading RobTempHeading;
+	Heading RobCurrentHeading;
 	RobTempPosition.theta = ROBOT_INIT_THETA;
 	RobTempPosition.X_pos = ROBOT_INIT_X;
 	RobTempPosition.Y_pos = ROBOT_INIT_Y;
@@ -51,8 +54,8 @@ void main()
 	Boolean UpdatePointCheck;
 
 	/*----------------Move Init Data-------------------*/
-	enu_Direction_req DirectionReq = REQUEST_NONE;
-	uint8 CompassRawReading;
+	enu_Direction_req RobHeadingReq = REQUEST_NONE;
+
 #ifdef RECTANGLE
 	L_R_Dist diagonalList[FULL_SCAN_NUM];
 	RectSize rectsize;
@@ -72,7 +75,7 @@ void main()
 	Coordinates position;
 	position.X_Column = 2;
 	position.Y_Row = 3;
-	rect1.UpdateRectangle(position,BUSY);
+	rect1.UpdateRectangle(position, BUSY);
 #endif
 	rect1.getRectSize(&rectsize);
 
@@ -83,136 +86,128 @@ void main()
 		RoomMap.AddRectangle(rect1, &RobTempPosition);
 	}
 #endif
-	DirectionReq = REQUEST_NORTH;
-while (1)
-{
-	RobTempHeading = cleaner.GetRobotHeading();
-	if (BumperHit)
+	RobHeadingReq = REQUEST_NORTH;
+	while (1)
 	{
-		/*TODO: fix the turn to the requested direction after a hit*/
-		RobTempPosition = cleaner.GetRobotPosition();
-		if (DirectionReq == REQUEST_NORTH)
-		{
-			if (RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY)
-			{
-				/*turn right*/
-			}
-			else if (RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY)
-			{
-				/*turn left*/
-			}
-		}
-		else if (DirectionReq == REQUEST_SOUTH)
-		{
-			if (RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY)
-			{
-				/*turn left*/
-			}
-			else if (RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY)
-			{
-				/*turn right*/
-			}
-		}
-		
-	}
-	
-	/*check the ID of the point before creating new ones*/
-	Error_Check = scan.LinearScan(&LeftTempPointPos, &RightTempPointPos, cleaner, RobTempHeading);
-	if (Error_Check == RET_OK)
-	{
+		RobCurrentHeading = cleaner.GetRobotHeading();
 
-		if ((RoomMap.room[LeftTempPointPos.Y_Row][LeftTempPointPos.X_Column] != BUSY) && (RoomMap.room[LeftTempPointPos.Y_Row][LeftTempPointPos.X_Column] != ROBOT))
+		/*triggers from ISR*/
+		if (BumperHit)
 		{
-			UpdatePointCheck = CheckPointUpdatePos(LeftTempPointPos, RobTempHeading, RoomMap);
-			if (UpdatePointCheck == FALSE)
+			/*TODO: fix the turn to the requested direction after a hit*/
+			RobTempPosition = cleaner.GetRobotPosition();
+			if (RobHeadingReq == REQUEST_NORTH)
 			{
-				Pointlist[PointListIndex].setPointPos(LeftTempPointPos);
-				RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner, RobTempHeading);
-				PointListIndex++;
+				if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY) || 
+					(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == CLEANED)) 
+					&&
+					((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == UNCOVERED) || 
+					(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY)))
+				{
+					/*uturn right*/
+					RobHeadingReq = REQUEST_SOUTH;
+					UTurnRight(cleaner, RobCurrentHeading);
+					
+				}
+				else if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY) ||
+					(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
+					&&
+					((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == UNCOVERED) ||
+					(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY)))
+				{
+					/*uturn left*/
+					RobHeadingReq = REQUEST_SOUTH;
+					UTurnLeft(cleaner, RobCurrentHeading);
+					
+				}
+				else
+				{
+					/*stop robot*/
+				}
+			}
+			else if (RobHeadingReq == REQUEST_SOUTH)
+			{
+				if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY) ||
+					(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == CLEANED))
+					&&
+					((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == UNCOVERED) ||
+					(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY)))
+				{
+					/*uturn left*/
+					RobHeadingReq = REQUEST_NORTH;
+					UTurnLeft(cleaner, RobCurrentHeading);
+					
+				}
+				else if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY) ||
+					(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == CLEANED))
+					&&
+					((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == UNCOVERED) ||
+					(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY)))
+				{
+					/*uturn right*/
+					RobHeadingReq = REQUEST_NORTH;
+					UTurnRight(cleaner, RobCurrentHeading);
+					
+				}
+				else
+				{
+					/*stop robot*/
+				}
+			}
+			BumperHit = FALSE;
+		}
+
+		/*TODO: function to check that request is consistant with the heading*/
+		/*check the ID of the point before creating new ones*/
+		Error_Check = scan.LinearScan(&LeftTempPointPos, &RightTempPointPos, cleaner, RobCurrentHeading);
+		if (Error_Check == RET_OK)
+		{
+
+			if ((RoomMap.room[LeftTempPointPos.Y_Row][LeftTempPointPos.X_Column] != BUSY) && (RoomMap.room[LeftTempPointPos.Y_Row][LeftTempPointPos.X_Column] != ROBOT))
+			{
+				UpdatePointCheck = CheckPointUpdatePos(LeftTempPointPos, RobCurrentHeading, RoomMap);
+				if (UpdatePointCheck == FALSE)
+				{
+					Pointlist[PointListIndex].setPointPos(LeftTempPointPos);
+					RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner, RobCurrentHeading);
+					PointListIndex++;
+				}
+			}
+			else
+			{
+				/*Do nothing*/
+
+			}
+
+			if ((RoomMap.room[RightTempPointPos.Y_Row][RightTempPointPos.X_Column] != BUSY) && (RoomMap.room[RightTempPointPos.Y_Row][RightTempPointPos.X_Column] != ROBOT))
+			{
+				UpdatePointCheck = CheckPointUpdatePos(RightTempPointPos, RobCurrentHeading, RoomMap);
+				if (UpdatePointCheck == FALSE)
+				{
+					Pointlist[PointListIndex].setPointPos(RightTempPointPos);
+					RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner, RobCurrentHeading);
+					PointListIndex++;
+				}
+			}
+			else
+			{
+				/*Do nothing*/
 			}
 		}
 		else
 		{
-			/*Do nothing*/
-
+			/*TODO: Fix the heading of the robot if its not ok*/
+			fixRobotHeading(cleaner, RobHeadingReq);
 		}
 
-		if ((RoomMap.room[RightTempPointPos.Y_Row][RightTempPointPos.X_Column] != BUSY) && (RoomMap.room[RightTempPointPos.Y_Row][RightTempPointPos.X_Column] != ROBOT))
-		{
-			UpdatePointCheck = CheckPointUpdatePos(RightTempPointPos, RobTempHeading, RoomMap);
-			if (UpdatePointCheck == FALSE)
-			{
-				Pointlist[PointListIndex].setPointPos(RightTempPointPos);
-				RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner, RobTempHeading);
-				PointListIndex++;
-			}
-		}
-		else
-		{
-			/*Do nothing*/
-		}
-	}
-	else
-	{
-		/*TODO: Fix the heading of the robot if its not ok*/
-
-		CompassRawReading = Comp::ReadRawData();
-
-		switch (DirectionReq)
-		{
-		case REQUEST_NORTH:
-			if (CompassRawReading < SOUTH_VALUE)
-			{
-				MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
-			}
-			else
-			{
-				MOVE::MoveTurn_CCW(cleaner, NORTH_VALUE);
-			}
-			break;
-		case REQUEST_WEST:
-			if (CompassRawReading < EAST_VALUE)
-			{
-				MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
-			}
-			else
-			{
-				MOVE::MoveTurn_CCW(cleaner, WEST_VALUE);
-			}
-			break;
-		case REQUEST_SOUTH:
-			if (CompassRawReading < NORTH_VALUE)
-			{
-				MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
-			}
-			else
-			{
-				MOVE::MoveTurn_CCW(cleaner, SOUTH_VALUE);
-			}
-			break;
-		case REQUEST_EAST:
-			if (CompassRawReading < WEST_VALUE)
-			{
-				MOVE::MoveTurn_CW(cleaner, EAST_VALUE);
-			}
-			else
-			{
-				MOVE::MoveTurn_CCW(cleaner, EAST_VALUE);
-			}
-			break;
-		default:
-			break;
-		}
-	}
-
-	(void)MOVE::MoveForward(cleaner);
-	RoomMap.UpdateRobotPosition(cleaner);
+		(void)MOVE::MoveForward(cleaner);
+		RoomMap.UpdateRobotPosition(cleaner);
 #ifdef ENABLE_SIMULATION
-	simu sim;
-	sim.printMap(RoomMap);
+		simu sim;
+		sim.printMap(RoomMap);
 #endif
 
-}
+	}
 	system("pause");
 	return;
 }
@@ -277,7 +272,117 @@ static uint8 NearBusyPointSearch(PointPos TempPointPos)
 	}
 }
 
-static void ISR_BumperHit(enu_Direction_req Request)
+void ISR_BumperHit(void)
 {
 	BumperHit = TRUE;
+}
+
+static void fixRobotHeading(Robot& cleaner, enu_Direction_req RobHeadingReq)
+{
+	uint16 CompassRawReading = Comp::ReadRawData();
+	switch (RobHeadingReq)
+	{
+	case REQUEST_NORTH:
+		if (CompassRawReading < SOUTH_VALUE)
+		{
+			MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
+		}
+		else
+		{
+			MOVE::MoveTurn_CCW(cleaner, NORTH_VALUE);
+		}
+		break;
+	case REQUEST_WEST:
+		if (CompassRawReading < EAST_VALUE)
+		{
+			MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
+		}
+		else
+		{
+			MOVE::MoveTurn_CCW(cleaner, WEST_VALUE);
+		}
+		break;
+	case REQUEST_SOUTH:
+		if (CompassRawReading < NORTH_VALUE)
+		{
+			MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
+		}
+		else
+		{
+			MOVE::MoveTurn_CCW(cleaner, SOUTH_VALUE);
+		}
+		break;
+	case REQUEST_EAST:
+		if (CompassRawReading < WEST_VALUE)
+		{
+			MOVE::MoveTurn_CW(cleaner, EAST_VALUE);
+		}
+		else
+		{
+			MOVE::MoveTurn_CCW(cleaner, EAST_VALUE);
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+static void UTurnRight(Robot& cleaner, Heading RobCurrentHeading)
+{
+	switch (RobCurrentHeading)
+	{
+	case NORTH:
+		MOVE::MoveTurn_CW(cleaner, EAST_VALUE);
+		MOVE::MoveForwardStep(cleaner);
+		MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
+		break;
+	case WEST:
+		MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
+		MOVE::MoveForwardStep(cleaner);
+		MOVE::MoveTurn_CW(cleaner, EAST_VALUE);
+		break;
+	case SOUTH:
+		MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
+		MOVE::MoveForwardStep(cleaner);
+		MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
+		break;
+	case EAST:
+		MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
+		MOVE::MoveForwardStep(cleaner);
+		MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
+		break;
+	default:
+		/*TODO: heading is invalid*/
+		break;
+	}
+}
+
+static void UTurnLeft(Robot& cleaner, Heading RobCurrentHeading)
+{
+	switch (RobCurrentHeading)
+	{
+	case NORTH:
+		MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
+		MOVE::MoveForwardStep(cleaner);
+		MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
+		break;
+	case WEST:
+		MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
+		MOVE::MoveForwardStep(cleaner);
+		MOVE::MoveTurn_CW(cleaner, EAST_VALUE);
+		break;
+	case SOUTH:
+		MOVE::MoveTurn_CW(cleaner, EAST_VALUE);
+		MOVE::MoveForwardStep(cleaner);
+		MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
+		break;
+	case EAST:
+		MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
+		MOVE::MoveForwardStep(cleaner);
+		MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
+		break;
+	default:
+		/*TODO: heading is invalid*/
+		break;
+	}
 }
