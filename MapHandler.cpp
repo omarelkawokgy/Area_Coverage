@@ -48,9 +48,29 @@ void Map::AddRectangle(Rectangle rect, RobotPos* position)
 }
 #endif
 
-void Map::addRobotOnMap(RobotPos robPosition)
+void Map::addCleanedOnMap(uint8 y, uint8 x)
 {
-	Map::room[robPosition.Y_pos][robPosition.X_pos] = ROBOT;
+	room[y][x] = CLEANED;
+}
+
+void Map::addBusyOnMap(uint8 y, uint8 x)
+{
+	room[y][x] = BUSY;
+}
+
+void Map::addEmptyOnMap(uint8 y, uint8 x)
+{
+	room[y][x] = EMPTY;
+}
+
+void Map::addRobotOnMap(uint8 y, uint8 x)
+{
+	room[y][x] = ROBOT;
+}
+
+void Map::addUnCoveredOnMap(uint8 y, uint8 x)
+{
+	room[y][x] = UNCOVERED;
 }
 
 void Map::addPointOnMap(Point newpoint, Robot rob, Heading heading)
@@ -60,7 +80,7 @@ void Map::addPointOnMap(Point newpoint, Robot rob, Heading heading)
 	uint8 EmptyDistance;
 	uint8 StartSwipe;
 	PointPosition = newpoint.getPointPos();
-	room[PointPosition.Y_Row][PointPosition.X_Column] = BUSY;
+	addBusyOnMap(PointPosition.Y_Row, PointPosition.X_Column);
 
 	/*clearing area between robot and obstical*/
 	RobPosition = rob.GetRobotPosition();
@@ -82,7 +102,7 @@ void Map::addPointOnMap(Point newpoint, Robot rob, Heading heading)
 		{
 			if ((room[PointPosition.Y_Row][i] != CLEANED) && (room[PointPosition.Y_Row][i] != BUSY))
 			{
-				room[PointPosition.Y_Row][i] = EMPTY;
+				addEmptyOnMap(PointPosition.Y_Row, i);
 			}
 		}
 	}
@@ -103,7 +123,7 @@ void Map::addPointOnMap(Point newpoint, Robot rob, Heading heading)
 		{
 			if ((room[i][PointPosition.X_Column] != CLEANED) && (room[i][PointPosition.X_Column] != BUSY))
 			{
-				room[i][PointPosition.X_Column] = EMPTY;
+				addEmptyOnMap(i, PointPosition.X_Column);
 			}
 		}
 	}
@@ -117,11 +137,11 @@ void Map::UpdateRobotPosition(Robot rob)
 		{
 			if ((rob.GetRobotPosition().X_pos == i) && (rob.GetRobotPosition().Y_pos == j))
 			{
-				room[j][i] = ROBOT;
+				addRobotOnMap(j, i);
 			}
 			else if (room[j][i] == ROBOT)
 			{
-				room[j][i] = CLEANED;
+				addCleanedOnMap(j, i);
 			}
 		}
 	}
@@ -129,7 +149,6 @@ void Map::UpdateRobotPosition(Robot rob)
 
 void Map::MergePointsOnMap(PointPos newPointPos, PointPos oldPointPos)
 {
-	
-	room[oldPointPos.Y_Row][oldPointPos.X_Column] = UNCOVERED;
-	room[newPointPos.Y_Row][newPointPos.X_Column] = BUSY;
+	addUnCoveredOnMap(oldPointPos.Y_Row, oldPointPos.X_Column);
+	addBusyOnMap(newPointPos.Y_Row, newPointPos.X_Column);
 }
