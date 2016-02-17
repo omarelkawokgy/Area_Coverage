@@ -7,11 +7,11 @@
 class MOVE
 {
 private:
-	static return_type UpdatePosition(RobotPos* robposition);
+	static return_type UpdatePosition(RobotPos* robposition, Heading heading);
 public:
 	MOVE();
 
-	static return_type MoveForward(Robot& rob);
+	static return_type MoveForward(Robot& rob, Heading heading);
 
 	static void MoveBackward(Robot& rob);
 
@@ -19,10 +19,10 @@ public:
 
 	static void MoveInitAngle(Robot& rob);
 
-	static void MoveTurn_CW(Robot& rob, uint8 TargetAngle);
+	static void MoveTurn_CW(Robot& rob, const uint16 TargetAngle);
 
-	static void MoveTurn_CCW(Robot& rob, uint8 TargetAngle);
+	static void MoveTurn_CCW(Robot& rob, const uint16 TargetAngle);
 
-	static void MoveForwardStep(Robot& rob);
+	static void MoveForwardStep(Robot& rob, Heading heading);
 };
 #endif
