@@ -25,13 +25,21 @@ public:
 
 	void AddRectangle(Rectangle rect, RobotPos* position);
 
-	void addRobotOnMap(RobotPos robPosition);
-	
 	void addPointOnMap(Point newpoint, Robot rob, Heading heading);
 
 	void MergePointsOnMap(PointPos newPointPos, PointPos oldPointPos);
 
 	void UpdateRobotPosition(Robot rob);
+
+	void addRobotOnMap(uint8 y, uint8 x);
+
+	void addCleanedOnMap(uint8 y, uint8 x);
+
+	void addBusyOnMap(uint8 y, uint8 x);
+
+	void addEmptyOnMap(uint8 y, uint8 x);
+
+	void addUnCoveredOnMap(uint8 y, uint8 x);
 };
 
 #endif
