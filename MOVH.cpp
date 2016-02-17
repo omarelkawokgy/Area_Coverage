@@ -11,10 +11,9 @@ MOVE::MOVE()
 
 }
 
-return_type MOVE::UpdatePosition(RobotPos* robposition)
+return_type MOVE::UpdatePosition(RobotPos* robposition, Heading heading)
 {
 	return_type ret = RET_NOT_OK;
-	Heading heading = Comp::ReadComp();
 	if (heading != INVALID_DIRECTION)
 	{
 		if (heading == NORTH)
@@ -45,7 +44,7 @@ return_type MOVE::UpdatePosition(RobotPos* robposition)
 	return ret;
 }
 
-return_type MOVE::MoveForward(Robot& rob)
+return_type MOVE::MoveForward(Robot& rob, Heading heading)
 {
 #ifdef ENABLE_SIMULATION
 	static uint8 Stepcounter = 0;
@@ -54,7 +53,7 @@ return_type MOVE::MoveForward(Robot& rob)
 	Stepcounter++;
 	if((Stepcounter % STEP_LINEAR_SCAN) == 0)
 	{
-		Error_Check = UpdatePosition(&robposition);
+		Error_Check = UpdatePosition(&robposition, heading);
 		if (Error_Check == RET_OK)
 		{
 			rob.UpdateRobotPosition(robposition);
@@ -105,7 +104,7 @@ void MOVE::MoveInitAngle(Robot& rob)
 #endif
 }
 
-void MOVE::MoveTurn_CW(Robot& rob, uint8 TargetAngle)
+void MOVE::MoveTurn_CW(Robot& rob, const uint16 TargetAngle)
 {
 #ifdef ENABLE_SIMULATION
 	RobotPos robPosition = rob.GetRobotPosition();
@@ -119,7 +118,7 @@ void MOVE::MoveTurn_CW(Robot& rob, uint8 TargetAngle)
 #endif
 }
 
-void MOVE::MoveTurn_CCW(Robot& rob, uint8 TargetAngle)
+void MOVE::MoveTurn_CCW(Robot& rob, const uint16 TargetAngle)
 {
 #ifdef ENABLE_SIMULATION
 	RobotPos robPosition = rob.GetRobotPosition();
@@ -133,7 +132,7 @@ void MOVE::MoveTurn_CCW(Robot& rob, uint8 TargetAngle)
 #endif
 }
 
-void MOVE::MoveForwardStep(Robot& rob)
+void MOVE::MoveForwardStep(Robot& rob, Heading heading)
 {
-	MoveForward(rob);
+	MoveForward(rob, heading);
 }
