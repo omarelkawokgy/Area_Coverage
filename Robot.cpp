@@ -7,12 +7,12 @@
 using namespace std;
 
 //initial position where the robot starts its corrdinate and bearing
-Robot& Robot::initRobotPosition(RobotPos position)
+Robot& Robot::initRobotPosition(void)
 {
 	static Robot cleaner;
-	cleaner.X_Robot = position.X_pos;
-	cleaner.Y_Robot = position.Y_pos;
-	cleaner.theta_Robot = position.theta;
+	cleaner.X_Robot = ROBOT_INIT_X;
+	cleaner.Y_Robot = ROBOT_INIT_Y;
+	cleaner.theta_Robot = ROBOT_INIT_THETA;
 	return cleaner;
 }
 
