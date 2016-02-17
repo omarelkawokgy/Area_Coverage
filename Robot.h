@@ -19,7 +19,7 @@ private:
 public:
 
 	//initial position where the robot starts its corrdinate and bearing
-	static Robot& initRobotPosition(RobotPos position);
+	static Robot& initRobotPosition(void);
 
 	//getting position of the robot
 	RobotPos GetRobotPosition(void);
