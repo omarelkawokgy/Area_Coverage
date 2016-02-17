@@ -48,7 +48,7 @@ void main()
 	/*=========================Start Implementation=======================*/
 
 	RobTempPosition = cleaner.GetRobotPosition();
-	RoomMap.addRobotOnMap(RobTempPosition);
+	RoomMap.addRobotOnMap(RobTempPosition.Y_pos, RobTempPosition.X_pos);
 #ifdef RECTANGLE
 	Error_Check = Rectangle::ConstructRect(diagonalList, &rectsize, cleaner, &robPosInRect);
 	Rectangle rect1(rectsize);
@@ -195,13 +195,13 @@ static void UTurnRight(Robot& cleaner, Heading RobCurrentHeading)
 		RobCurrentHeading = EAST;
 		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
 		MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
-		RobCurrentHeading = SOUTH;
 #ifdef ENABLE_SIMULATION
 		cout << "UTurnRight >> SOUTH" << endl;
 #endif
 		break;
 	case WEST:
 		MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
+		RobCurrentHeading = NORTH;
 		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
 		MOVE::MoveTurn_CW(cleaner, EAST_VALUE);
 #ifdef ENABLE_SIMULATION
@@ -210,6 +210,7 @@ static void UTurnRight(Robot& cleaner, Heading RobCurrentHeading)
 		break;
 	case SOUTH:
 		MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
+		RobCurrentHeading = WEST;
 		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
 		MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
 #ifdef ENABLE_SIMULATION
@@ -218,6 +219,7 @@ static void UTurnRight(Robot& cleaner, Heading RobCurrentHeading)
 		break;
 	case EAST:
 		MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
+		RobCurrentHeading = SOUTH;
 		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
 		MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
 #ifdef ENABLE_SIMULATION
@@ -236,6 +238,7 @@ static void UTurnLeft(Robot& cleaner, Heading RobCurrentHeading)
 	{
 	case NORTH:
 		MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
+		RobCurrentHeading = WEST;
 		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
 		MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
 #ifdef ENABLE_SIMULATION
@@ -244,6 +247,7 @@ static void UTurnLeft(Robot& cleaner, Heading RobCurrentHeading)
 		break;
 	case WEST:
 		MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
+		RobCurrentHeading = SOUTH;
 		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
 		MOVE::MoveTurn_CW(cleaner, EAST_VALUE);
 #ifdef ENABLE_SIMULATION
@@ -252,6 +256,7 @@ static void UTurnLeft(Robot& cleaner, Heading RobCurrentHeading)
 		break;
 	case SOUTH:
 		MOVE::MoveTurn_CW(cleaner, EAST_VALUE);
+		RobCurrentHeading = EAST;
 		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
 		MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
 #ifdef ENABLE_SIMULATION
@@ -260,6 +265,7 @@ static void UTurnLeft(Robot& cleaner, Heading RobCurrentHeading)
 		break;
 	case EAST:
 		MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
+		RobCurrentHeading = NORTH;
 		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
 		MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
 #ifdef ENABLE_SIMULATION
@@ -315,6 +321,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 					/*uturn right*/
 					RobHeadingReq = REQUEST_SOUTH;
 					UTurnRight(cleaner, RobCurrentHeading);
+					RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos] = CLEANED;
 				}
 				else if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY) ||
 					(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
@@ -325,6 +332,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 					/*uturn left*/
 					RobHeadingReq = REQUEST_SOUTH;
 					UTurnLeft(cleaner, RobCurrentHeading);
+					RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos] = CLEANED;
 
 				}
 				else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == UNCOVERED)
@@ -334,6 +342,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 					/*uturn right*/
 					RobHeadingReq = REQUEST_SOUTH;
 					UTurnRight(cleaner, RobCurrentHeading);
+					RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos] = CLEANED;
 				}
 				else
 				{
@@ -370,6 +379,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 				}
 			}
 			BumperHit = FALSE;
+			RobCurrentHeading = cleaner.GetRobotHeading();
 		}
 
 		/*TODO: function to check that request is consistant with the heading*/
