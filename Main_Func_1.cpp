@@ -25,6 +25,7 @@ static void UTurnLeft(Robot& cleaner, Heading RobCurrentHeading);
 static void UTurnRight(Robot& cleaner, Heading RobCurrentHeading);
 static void fixRobotHeading(Robot& cleaner, enu_Direction_req RobHeadingReq);
 static void ZigZagRoutine(Robot& cleaner, Map& RoomMap);
+static SensorsReadings BumperHitSensorsView(Robot& rob, Map RoomMap, enu_Direction_req RobHeadingReq);
 void ISR_BumperHit(void);
 
 void main()
@@ -299,7 +300,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 	PointPos RightTempPointPos;
 
 	RobHeadingReq = REQUEST_NORTH;
-
+	uint8 readingSensorsView;
 	while (ZigZagFlag)
 	{
 		RobCurrentHeading = cleaner.GetRobotHeading();
@@ -309,7 +310,51 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 		{
 			/*TODO: fix the turn to the requested direction after a hit*/
 			RobTempPosition = cleaner.GetRobotPosition();
+			readingSensorsView = BumperHitSensorsView(cleaner, RoomMap, RobHeadingReq);
 
+			switch (readingSensorsView)
+			{
+			case LEFT_EMPTY_RIGHT_EMPTY:
+			case LEFT_CLEANED_RIGHT_EMPTY:
+			case LEFT_BUSY_RIGHT_EMPTY:
+				if (REQUEST_NORTH == RobHeadingReq)
+				{
+					/*uturn right*/
+				}
+				else if (REQUEST_SOUTH == RobHeadingReq)
+				{
+					/*uturn left*/
+				}
+				else
+				{
+					/*do nothing*/
+				}
+				break;
+			case LEFT_EMPTY_RIGHT_CLEANED:
+			case LEFT_EMPTY_RIGHT_BUSY:
+				if (REQUEST_NORTH == RobHeadingReq)
+				{
+					/*uturn left*/
+				}
+				else if (REQUEST_SOUTH == RobHeadingReq)
+				{
+					/*uturn right*/
+				}
+				else
+				{
+					/*do nothing*/
+				}
+				break;
+			case LEFT_BUSY_RIGHT_BUSY:
+			case LEFT_BUSY_RIGHT_CLEANED:
+			case LEFT_CLEANED_RIGHT_BUSY:
+			case LEFT_CLEANED_RIGHT_CLEANED:
+				/*uturn*/
+				break;
+			default:
+				break;
+			}
+#if 0 
 			if (RobHeadingReq == REQUEST_NORTH)
 			{
 				if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY) ||
@@ -321,7 +366,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 					/*uturn right*/
 					RobHeadingReq = REQUEST_SOUTH;
 					UTurnRight(cleaner, RobCurrentHeading);
-					RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos] = CLEANED;
+					RoomMap.addCleanedOnMap(RobTempPosition.Y_pos, RobTempPosition.X_pos);
 				}
 				else if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY) ||
 					(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
@@ -332,7 +377,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 					/*uturn left*/
 					RobHeadingReq = REQUEST_SOUTH;
 					UTurnLeft(cleaner, RobCurrentHeading);
-					RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos] = CLEANED;
+					RoomMap.addCleanedOnMap(RobTempPosition.Y_pos, RobTempPosition.X_pos);
 
 				}
 				else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == UNCOVERED)
@@ -342,7 +387,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 					/*uturn right*/
 					RobHeadingReq = REQUEST_SOUTH;
 					UTurnRight(cleaner, RobCurrentHeading);
-					RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos] = CLEANED;
+					RoomMap.addCleanedOnMap(RobTempPosition.Y_pos, RobTempPosition.X_pos);
 				}
 				else
 				{
@@ -360,7 +405,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 					/*uturn left*/
 					RobHeadingReq = REQUEST_NORTH;
 					UTurnLeft(cleaner, RobCurrentHeading);
-
+					RoomMap.addCleanedOnMap(RobTempPosition.Y_pos, RobTempPosition.X_pos);
 				}
 				else if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY) ||
 					(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == CLEANED))
@@ -371,13 +416,24 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 					/*uturn right*/
 					RobHeadingReq = REQUEST_NORTH;
 					UTurnRight(cleaner, RobCurrentHeading);
-
+					RoomMap.addCleanedOnMap(RobTempPosition.Y_pos, RobTempPosition.X_pos);
+				}
+				else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == UNCOVERED)
+					&&
+					(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == UNCOVERED))
+				{
+					/*uturn left*/
+					RobHeadingReq = REQUEST_SOUTH;
+					UTurnLeft(cleaner, RobCurrentHeading);
+					RoomMap.addCleanedOnMap(RobTempPosition.Y_pos, RobTempPosition.X_pos);
 				}
 				else
 				{
-					/*stop robot*/
+					/*stop Robot*/
 				}
 			}
+#endif
+
 			BumperHit = FALSE;
 			RobCurrentHeading = cleaner.GetRobotHeading();
 		}
@@ -436,3 +492,137 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 	}
 
 }
+
+static SensorsReadings BumperHitSensorsView(Robot& rob, Map RoomMap, enu_Direction_req RobHeadingReq)
+{
+	SensorsReadings reading;
+	RobotPos RobTempPosition = rob.GetRobotPosition();
+
+
+	if (RobHeadingReq == REQUEST_NORTH)
+	{
+		if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY) &&
+
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY))
+		{
+			reading = LEFT_BUSY_RIGHT_EMPTY;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == CLEANED)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY))
+		{
+			reading = LEFT_CLEANED_RIGHT_EMPTY;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY))
+		{
+			reading = LEFT_EMPTY_RIGHT_BUSY;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
+		{
+			reading = LEFT_EMPTY_RIGHT_CLEANED;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY))
+		{
+			reading = LEFT_EMPTY_RIGHT_EMPTY;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY))
+		{
+			reading = LEFT_BUSY_RIGHT_BUSY;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == CLEANED)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
+		{
+			reading = LEFT_CLEANED_RIGHT_CLEANED;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
+		{
+			reading = LEFT_BUSY_RIGHT_CLEANED;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == CLEANED)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY))
+		{
+			reading = LEFT_CLEANED_RIGHT_BUSY;
+		}
+		else
+		{
+			/*do nothing*/
+			reading = FAILURE_READING;
+		}
+	}
+	else if (RobHeadingReq == REQUEST_SOUTH)
+	{
+		if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY) &&
+
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY))
+		{
+			reading = LEFT_EMPTY_RIGHT_BUSY;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == CLEANED)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY))
+		{
+			reading = LEFT_EMPTY_RIGHT_CLEANED;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY))
+		{
+			reading = LEFT_BUSY_RIGHT_EMPTY;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
+		{
+			reading = LEFT_CLEANED_RIGHT_EMPTY;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY))
+		{
+			reading = LEFT_EMPTY_RIGHT_EMPTY;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY))
+		{
+			reading = LEFT_BUSY_RIGHT_BUSY;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == CLEANED)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
+		{
+			reading = LEFT_CLEANED_RIGHT_CLEANED;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
+		{
+			reading = LEFT_CLEANED_RIGHT_BUSY;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == CLEANED)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY))
+		{
+			reading = LEFT_BUSY_RIGHT_CLEANED;
+		}
+		else
+		{
+			/*do nothing*/
+			FAILURE_READING;
+		}
+		return reading;
+	}
+}
+
