@@ -71,6 +71,24 @@ typedef enum
 #define SCAN_120_ANGLE 4
 #define SCAN_150_ANGLE 5
 
+/*sensors view*/
+typedef uint8 SensorsReadings;
+/*Possible values*/
+#define LEFT_EMPTY_RIGHT_EMPTY 0
+
+#define LEFT_BUSY_RIGHT_EMPTY 1
+#define LEFT_EMPTY_RIGHT_BUSY 2
+#define LEFT_BUSY_RIGHT_BUSY 3
+
+#define LEFT_CLEANED_RIGHT_EMPTY 4
+#define LEFT_EMPTY_RIGHT_CLEANED 5
+#define LEFT_CLEANED_RIGHT_CLEANED 6
+
+#define LEFT_CLEANED_RIGHT_BUSY 7
+#define LEFT_BUSY_RIGHT_CLEANED 8
+
+#define FAILURE_READING 9
+
 typedef struct
 {
 	uint16 L_Distance;
