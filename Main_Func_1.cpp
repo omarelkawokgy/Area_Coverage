@@ -15,7 +15,7 @@ using namespace std;
 /*global variable declaration*/
 Point Pointlist[POINT_LIST_SIZE];
 static uint8 PointListIndex = 0;
-static Boolean BumperHit;
+static Boolean BumperHit = FALSE;
 static Boolean ZigZagFlag = FALSE;
 
 /*static functions declaration*/
@@ -298,15 +298,25 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 	/*-----------------Point Init Data -----------------*/
 	PointPos LeftTempPointPos;
 	PointPos RightTempPointPos;
+	uint8 interrupt;
+
 
 	RobHeadingReq = REQUEST_NORTH;
 	uint8 readingSensorsView;
 	while (ZigZagFlag)
 	{
+#ifdef ENABLE_SIMULATION
+		cout << "if Interrupt press '5'?" << endl;
+		cin >> interrupt;
+		if (interrupt == '5')
+		{
+			ISR_BumperHit();
+		}
+#endif
 		RobCurrentHeading = cleaner.GetRobotHeading();
 
 		/*triggers from ISR*/
-		if (BumperHit)
+		if (BumperHit == TRUE)
 		{
 			/*TODO: fix the turn to the requested direction after a hit*/
 			RobTempPosition = cleaner.GetRobotPosition();
@@ -362,6 +372,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 			case LEFT_CLEANED_RIGHT_BUSY:
 			case LEFT_CLEANED_RIGHT_CLEANED:
 				/*uturn*/
+				cout << "uturn"<< endl;
 				break;
 			default:
 				break;
@@ -492,13 +503,13 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 			/*TODO: Fix the heading of the robot if its not ok*/
 			fixRobotHeading(cleaner, RobHeadingReq);
 		}
-
-		(void)MOVE::MoveForward(cleaner, RobCurrentHeading);
 		RoomMap.UpdateRobotPosition(cleaner);
+		(void)MOVE::MoveForward(cleaner, RobCurrentHeading);
 #ifdef ENABLE_SIMULATION
 		simu sim;
 		sim.printMap(RoomMap);
 #endif
+		
 	}
 
 }
@@ -513,8 +524,8 @@ static SensorsReadings BumperHitSensorsView(Robot& rob, Map RoomMap, enu_Directi
 	{
 		if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY) &&
 
-			((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY) 
-			|| 
+			((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY)
+			||
 			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == UNCOVERED)))
 		{
 			reading = LEFT_BUSY_RIGHT_EMPTY;
@@ -522,7 +533,7 @@ static SensorsReadings BumperHitSensorsView(Robot& rob, Map RoomMap, enu_Directi
 		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == CLEANED)
 			&&
 			((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY)
-			|| 
+			||
 			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == UNCOVERED)))
 		{
 			reading = LEFT_CLEANED_RIGHT_EMPTY;
@@ -533,45 +544,45 @@ static SensorsReadings BumperHitSensorsView(Robot& rob, Map RoomMap, enu_Directi
 		{
 			reading = LEFT_EMPTY_RIGHT_BUSY;
 		}
-		else if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY) 
-				|| 
-				(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == UNCOVERED))
+		else if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY)
+			||
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == UNCOVERED))
 			&&
-				(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
 		{
 			reading = LEFT_EMPTY_RIGHT_CLEANED;
 		}
 		else if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY)
-				||
-				(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == UNCOVERED))
+			||
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == UNCOVERED))
 			&&
-				((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY) 
-				|| 
-				(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == UNCOVERED)))
+			((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY)
+			||
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == UNCOVERED)))
 		{
 			reading = LEFT_EMPTY_RIGHT_EMPTY;
 		}
 		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY)
 			&&
-				(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY))
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY))
 		{
 			reading = LEFT_BUSY_RIGHT_BUSY;
 		}
 		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == CLEANED)
 			&&
-				(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
 		{
 			reading = LEFT_CLEANED_RIGHT_CLEANED;
 		}
 		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY)
 			&&
-				(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
 		{
 			reading = LEFT_BUSY_RIGHT_CLEANED;
 		}
 		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == CLEANED)
 			&&
-				(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY))
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY))
 		{
 			reading = LEFT_CLEANED_RIGHT_BUSY;
 		}
@@ -583,46 +594,46 @@ static SensorsReadings BumperHitSensorsView(Robot& rob, Map RoomMap, enu_Directi
 	}
 	else if (RobHeadingReq == REQUEST_SOUTH)
 	{
-		if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY) 
-		
+		if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == BUSY)
+
 			&&
-				((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY)
-				|| 
-				(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == UNCOVERED)))
+			((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY)
+			||
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == UNCOVERED)))
 		{
 			reading = LEFT_EMPTY_RIGHT_BUSY;
 		}
 		else if ((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == CLEANED)
 			&&
-				((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY) 
-				|| 
-				(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == UNCOVERED)))
+			((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY)
+			||
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == UNCOVERED)))
 		{
 			reading = LEFT_EMPTY_RIGHT_CLEANED;
 		}
-		else if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY) 
-				|| 
-				(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == UNCOVERED))
+		else if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY)
+			||
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == UNCOVERED))
 			&&
-				(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY))
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == BUSY))
 		{
 			reading = LEFT_BUSY_RIGHT_EMPTY;
 		}
-		else if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY) 
-				|| 
-				(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == UNCOVERED))
+		else if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY)
+			||
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == UNCOVERED))
 			&&
 			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == CLEANED))
 		{
 			reading = LEFT_CLEANED_RIGHT_EMPTY;
 		}
-		else if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY) 
-				|| 
-				(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == UNCOVERED))
+		else if (((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == EMPTY)
+			||
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos - 1] == UNCOVERED))
 			&&
-				((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY) 
-				|| 
-				(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == UNCOVERED)))
+			((RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == EMPTY)
+			||
+			(RoomMap.room[RobTempPosition.Y_pos][RobTempPosition.X_pos + 1] == UNCOVERED)))
 		{
 			reading = LEFT_EMPTY_RIGHT_EMPTY;
 		}
@@ -655,7 +666,7 @@ static SensorsReadings BumperHitSensorsView(Robot& rob, Map RoomMap, enu_Directi
 			/*do nothing*/
 			FAILURE_READING;
 		}
-		
+
 	}
 	return reading;
 }
