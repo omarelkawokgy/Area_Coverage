@@ -98,7 +98,7 @@ return_type MOVE::MoveForward(Robot& rob, Heading heading)
 	return Error_Check;
 }
 
-void MOVE::MoveBackward(Robot& rob, Heading heading)
+return_type MOVE::MoveBackward(Robot& rob, Heading heading)
 {
 #ifdef ENABLE_SIMULATION
 	return_type Error_Check = RET_NOT_OK; 
@@ -115,6 +115,7 @@ void MOVE::MoveBackward(Robot& rob, Heading heading)
 	digitalWrite(LEFT_MOTOR_POSITIVE_PIN, LOW);
 	digitalWrite(LEFT_MOTOR_GROUND_PIN, HIGH);
 #endif
+	return Error_Check;
 }
 
 void MOVE::MoveStop(Robot& rob)
