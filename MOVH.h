@@ -4,16 +4,19 @@
 #include "CONF.h"
 #include "Robot.h"
 
+#define FORWARD 1
+#define BACKWARD 0
+
 class MOVE
 {
 private:
-	static return_type UpdatePosition(RobotPos* robposition, Heading heading);
+	static return_type UpdatePosition(RobotPos* robposition, Heading heading, uint8 Direction);
 public:
 	MOVE();
 
 	static return_type MoveForward(Robot& rob, Heading heading);
 
-	static void MoveBackward(Robot& rob);
+	static void MoveBackward(Robot& rob, Heading heading);
 
 	static void MoveStop(Robot& rob);
 
