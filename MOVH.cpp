@@ -11,34 +11,64 @@ MOVE::MOVE()
 
 }
 
-return_type MOVE::UpdatePosition(RobotPos* robposition, Heading heading)
+return_type MOVE::UpdatePosition(RobotPos* robposition, Heading heading, uint8 Direction)
 {
 	return_type ret = RET_NOT_OK;
 	if (heading != INVALID_DIRECTION)
 	{
-		if (heading == NORTH)
+		if (Direction == FORWARD)
 		{
-			robposition->Y_pos--;
-			ret = RET_OK;
+			if (heading == NORTH)
+			{
+				robposition->Y_pos--;
+				ret = RET_OK;
+			}
+			else if (heading == SOUTH)
+			{
+				robposition->Y_pos++;
+				ret = RET_OK;
+			}
+			else if (heading == WEST)
+			{
+				robposition->X_pos--;
+				ret = RET_OK;
+			}
+			else if (heading == EAST)
+			{
+				robposition->X_pos++;
+				ret = RET_OK;
+			}
+			else
+			{
+				ret = RET_NOT_OK;
+			}
 		}
-		else if (heading == SOUTH)
+		else if (Direction == BACKWARD)
 		{
-			robposition->Y_pos++;
-			ret = RET_OK;
-		}
-		else if (heading == WEST)
-		{
-			robposition->X_pos--;
-			ret = RET_OK;
-		}
-		else if (heading == EAST)
-		{
-			robposition->X_pos++;
-			ret = RET_OK;
-		}
-		else
-		{
-			ret = RET_NOT_OK;
+			if (heading == NORTH)
+			{
+				robposition->Y_pos++;
+				ret = RET_OK;
+			}
+			else if (heading == SOUTH)
+			{
+				robposition->Y_pos--;
+				ret = RET_OK;
+			}
+			else if (heading == WEST)
+			{
+				robposition->X_pos++;
+				ret = RET_OK;
+			}
+			else if (heading == EAST)
+			{
+				robposition->X_pos--;
+				ret = RET_OK;
+			}
+			else
+			{
+				ret = RET_NOT_OK;
+			}
 		}
 	}
 	return ret;
@@ -53,7 +83,7 @@ return_type MOVE::MoveForward(Robot& rob, Heading heading)
 	Stepcounter++;
 	if((Stepcounter % STEP_LINEAR_SCAN) == 0)
 	{
-		Error_Check = UpdatePosition(&robposition, heading);
+		Error_Check = UpdatePosition(&robposition, heading, FORWARD);
 		if (Error_Check == RET_OK)
 		{
 			rob.UpdateRobotPosition(robposition);
@@ -68,10 +98,17 @@ return_type MOVE::MoveForward(Robot& rob, Heading heading)
 	return Error_Check;
 }
 
-void MOVE::MoveBackward(Robot& rob)
+void MOVE::MoveBackward(Robot& rob, Heading heading)
 {
 #ifdef ENABLE_SIMULATION
+	return_type Error_Check = RET_NOT_OK; 
+	RobotPos robposition = rob.GetRobotPosition();
 
+		Error_Check = UpdatePosition(&robposition, heading, BACKWARD);
+		if (Error_Check == RET_OK)
+		{
+			rob.UpdateRobotPosition(robposition);
+		}
 #else
 	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, LOW);
 	digitalWrite(RIGHT_MOTOR_GROUND_PIN, HIGH);
