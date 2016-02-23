@@ -65,6 +65,7 @@ void main()
 
 	ZigZagRoutine(cleaner, RoomMap);
 
+	/*TODO: check the right side of the Map to cover it all*/
 
 	system("pause");
 	return;
@@ -333,7 +334,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 	PointPos LeftTempPointPos;
 	PointPos RightTempPointPos;
 	uint8 interrupt;
-
+	Boolean UturnFlag = FALSE;
 
 	RobHeadingReq = REQUEST_NORTH;
 	uint8 readingSensorsView;
@@ -364,6 +365,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 			case LEFT_EMPTY_RIGHT_EMPTY:
 			case LEFT_CLEANED_RIGHT_EMPTY:
 			case LEFT_BUSY_RIGHT_EMPTY:
+				UturnFlag = FALSE;
 				if (REQUEST_NORTH == RobHeadingReq)
 				{
 					/*uturn right*/
@@ -387,6 +389,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 				break;
 			case LEFT_EMPTY_RIGHT_CLEANED:
 			case LEFT_EMPTY_RIGHT_BUSY:
+				UturnFlag = FALSE;
 				if (REQUEST_NORTH == RobHeadingReq)
 				{
 					/*uturn left*/
@@ -399,7 +402,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 				{
 					/*uturn right*/
 					RobHeadingReq = REQUEST_NORTH;
-					UTurnRight(cleaner, RobCurrentHeading);
+					UTurnLeft(cleaner, RobCurrentHeading);
 					RoomMap.addCleanedOnMap(RobTempPosition.Y_pos, RobTempPosition.X_pos);
 					RoomMap.addBusyOnMap(RobTempPosition.Y_pos + 1, RobTempPosition.X_pos);
 				}
@@ -413,6 +416,11 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 			case LEFT_CLEANED_RIGHT_BUSY:
 			case LEFT_CLEANED_RIGHT_CLEANED:
 				/*uturn*/
+				if (UturnFlag == TRUE)
+				{
+					ZigZagFlag = FALSE;
+				}
+				UturnFlag = TRUE;
 				if (REQUEST_NORTH == RobHeadingReq)
 				{
 					RoomMap.addBusyOnMap(RobTempPosition.Y_pos - 1, RobTempPosition.X_pos);
