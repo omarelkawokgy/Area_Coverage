@@ -86,7 +86,7 @@ return_type MOVE::MoveForward(Robot& rob, Heading heading)
 		Error_Check = UpdatePosition(&robposition, heading, FORWARD);
 		if (Error_Check == RET_OK)
 		{
-			rob.UpdateRobotPosition(robposition);
+			rob.SetPosition(robposition);
 		}
 	}
 #else
@@ -107,7 +107,7 @@ return_type MOVE::MoveBackward(Robot& rob, Heading heading)
 		Error_Check = UpdatePosition(&robposition, heading, BACKWARD);
 		if (Error_Check == RET_OK)
 		{
-			rob.UpdateRobotPosition(robposition);
+			rob.SetPosition(robposition);
 		}
 #else
 	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, LOW);
@@ -147,7 +147,7 @@ void MOVE::MoveTurn_CW(Robot& rob, const uint16 TargetAngle)
 #ifdef ENABLE_SIMULATION
 	RobotPos robPosition = rob.GetRobotPosition();
 	robPosition.theta = TargetAngle;
-	rob.UpdateRobotPosition(robPosition);
+	rob.SetPosition(robPosition);
 #else
 	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, LOW);
 	digitalWrite(RIGHT_MOTOR_GROUND_PIN, HIGH);
@@ -161,7 +161,7 @@ void MOVE::MoveTurn_CCW(Robot& rob, const uint16 TargetAngle)
 #ifdef ENABLE_SIMULATION
 	RobotPos robPosition = rob.GetRobotPosition();
 	robPosition.theta = TargetAngle;
-	rob.UpdateRobotPosition(robPosition);
+	rob.SetPosition(robPosition);
 #else
 	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, HIGH);
 	digitalWrite(RIGHT_MOTOR_GROUND_PIN, LOW);
@@ -172,5 +172,137 @@ void MOVE::MoveTurn_CCW(Robot& rob, const uint16 TargetAngle)
 
 void MOVE::MoveForwardStep(Robot& rob, Heading heading)
 {
+	/*TODO: handle crashing before continuing this step*/
+#ifdef ENABLE_SIMULATION
+
+#else
+
+#endif
 	MoveForward(rob, heading);
+}
+
+void MOVE::UTurnRight(Robot& cleaner, Heading RobCurrentHeading)
+{
+	switch (RobCurrentHeading)
+	{
+	case NORTH:
+		MOVE::MoveTurn_CW(cleaner, EAST_VALUE);
+		RobCurrentHeading = EAST;
+		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
+		MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
+#ifdef ENABLE_SIMULATION
+		cout << "UTurnRight >> SOUTH" << endl;
+#endif
+		break;
+	case WEST:
+		MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
+		RobCurrentHeading = NORTH;
+		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
+		MOVE::MoveTurn_CW(cleaner, EAST_VALUE);
+#ifdef ENABLE_SIMULATION
+		cout << "UTurnRight >> EAST" << endl;
+#endif
+		break;
+	case SOUTH:
+		MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
+		RobCurrentHeading = WEST;
+		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
+		MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
+#ifdef ENABLE_SIMULATION
+		cout << "UTurnRight >> NORTH" << endl;
+#endif
+		break;
+	case EAST:
+		MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
+		RobCurrentHeading = SOUTH;
+		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
+		MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
+#ifdef ENABLE_SIMULATION
+		cout << "UTurnRight >> WEST" << endl;
+#endif
+		break;
+	default:
+		/*TODO: heading is invalid*/
+		break;
+	}
+}
+
+void MOVE::UTurnLeft(Robot& cleaner, Heading RobCurrentHeading)
+{
+	switch (RobCurrentHeading)
+	{
+	case NORTH:
+		MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
+		RobCurrentHeading = WEST;
+		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
+		MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
+#ifdef ENABLE_SIMULATION
+		cout << "UTurnLeft >> SOUTH" << endl;
+#endif
+		break;
+	case WEST:
+		MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
+		RobCurrentHeading = SOUTH;
+		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
+		MOVE::MoveTurn_CW(cleaner, EAST_VALUE);
+#ifdef ENABLE_SIMULATION
+		cout << "UTurnLeft >> EAST" << endl;
+#endif
+		break;
+	case SOUTH:
+		MOVE::MoveTurn_CW(cleaner, EAST_VALUE);
+		RobCurrentHeading = EAST;
+		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
+		MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
+#ifdef ENABLE_SIMULATION
+		cout << "UTurnLeft >> NORTH" << endl;
+#endif
+		break;
+	case EAST:
+		MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
+		RobCurrentHeading = NORTH;
+		MOVE::MoveForwardStep(cleaner, RobCurrentHeading);
+		MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
+#ifdef ENABLE_SIMULATION
+		cout << "UTurnLeft >> WEST" << endl;
+#endif
+		break;
+	default:
+		/*TODO: heading is invalid*/
+		break;
+	}
+}
+
+void MOVE::UTurn(Robot& cleaner, Heading RobCurrentHeading)
+{
+	switch (RobCurrentHeading)
+	{
+	case NORTH:
+		MOVE::MoveTurn_CW(cleaner, SOUTH_VALUE);
+#ifdef ENABLE_SIMULATION
+		cout << "UTurn >> SOUTH" << endl;
+#endif
+		break;
+	case WEST:
+		MOVE::MoveTurn_CW(cleaner, EAST_VALUE);
+#ifdef ENABLE_SIMULATION
+		cout << "UTurn >> EAST" << endl;
+#endif
+		break;
+	case SOUTH:
+		MOVE::MoveTurn_CW(cleaner, NORTH_VALUE);
+#ifdef ENABLE_SIMULATION
+		cout << "UTurn >> NORTH" << endl;
+#endif
+		break;
+	case EAST:
+		MOVE::MoveTurn_CW(cleaner, WEST_VALUE);
+#ifdef ENABLE_SIMULATION
+		cout << "UTurn >> WEST" << endl;
+#endif
+		break;
+	default:
+		/*TODO: heading is invalid*/
+		break;
+	}
 }
