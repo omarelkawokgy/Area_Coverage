@@ -28,7 +28,7 @@ public:
 
 	PointPos getPointPos(void);
 
-	void setPointPos(PointPos pos);
+	void SetPosition(PointPos pos);
 
 	PointPos Point::FilteredPointReading(PointPos* newPointPosList, const uint8 PointListSize);
 
