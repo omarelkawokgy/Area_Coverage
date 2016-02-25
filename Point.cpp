@@ -17,7 +17,7 @@ PointPos Point::getPointPos(void)
 	return ClasspointPos;
 }
 
-void Point::setPointPos(PointPos pos)
+void Point::SetPosition(PointPos pos)
 {
 	ClasspointPos.X_Column = pos.X_Column;
 	ClasspointPos.Y_Row = pos.Y_Row;
