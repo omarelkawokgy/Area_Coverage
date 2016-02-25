@@ -27,5 +27,11 @@ public:
 	static void MoveTurn_CCW(Robot& rob, const uint16 TargetAngle);
 
 	static void MoveForwardStep(Robot& rob, Heading heading);
+
+	static void UTurnLeft(Robot& cleaner, Heading RobCurrentHeading);
+
+	static void UTurnRight(Robot& cleaner, Heading RobCurrentHeading);
+
+	static void UTurn(Robot& cleaner, Heading RobCurrentHeading);
 };
 #endif
