@@ -34,7 +34,7 @@ Heading Robot::GetRobotHeading(void)
 }
 
 //updating the position of the robot
-void Robot::UpdateRobotPosition(RobotPos position)
+void Robot::SetPosition(RobotPos position)
 {
 	X_Robot = position.X_pos;
 	Y_Robot = position.Y_pos;
