@@ -385,6 +385,8 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap)
 				fixRobotHeading(cleaner, RobHeadingReq);
 			}
 
+
+
 			RoomMap.UpdateRobotPosition(cleaner);
 		}
 		
