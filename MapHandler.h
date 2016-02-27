@@ -29,7 +29,7 @@ public:
 
 	void MergePointsOnMap(PointPos newPointPos, PointPos oldPointPos);
 
-	void UpdateRobotPosition(Robot rob);
+	void UpdateRobotPosition(Robot& rob);
 
 	void addRobotOnMap(uint8 y, uint8 x);
 

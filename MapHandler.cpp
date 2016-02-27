@@ -129,7 +129,7 @@ void Map::addPointOnMap(Point newpoint, Robot rob, Heading heading)
 	}
 }
 
-void Map::UpdateRobotPosition(Robot rob)
+void Map::UpdateRobotPosition(Robot& rob)
 {
 	for (uint8 i = 0; i < MAP_ROW; i++)
 	{
