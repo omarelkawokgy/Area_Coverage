@@ -305,7 +305,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHe
 				}
 				else if (REQUEST_SOUTH == *RobHeadingReq)
 				{
-					/*uturn right*/
+					/*uturn left*/
 					*RobHeadingReq = REQUEST_NORTH;
 					MOVE::UTurnLeft(cleaner, RobCurrentHeading);
 					RoomMap.addCleanedOnMap(RobTempPosition.Y_pos, RobTempPosition.X_pos);
@@ -329,10 +329,12 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHe
 				if (REQUEST_NORTH == *RobHeadingReq)
 				{
 					RoomMap.addBusyOnMap(RobTempPosition.Y_pos - 1, RobTempPosition.X_pos);
+					*RobHeadingReq = REQUEST_SOUTH;
 				}
 				else if (REQUEST_SOUTH == *RobHeadingReq)
 				{
 					RoomMap.addBusyOnMap(RobTempPosition.Y_pos + 1, RobTempPosition.X_pos);
+					*RobHeadingReq = REQUEST_NORTH;
 				}
 				MOVE::UTurn(cleaner, RobCurrentHeading);
 				break;
@@ -642,7 +644,7 @@ static void GoToStartPoint(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobH
 {
 	uint8 interrupt = FALSE;
 	SensorsReadings readingSensorsView = FAILURE_READING;
-	Heading heading;
+	Heading heading = INVALID_DIRECTION;
 
 	if(ToStartPoint)
 	{
