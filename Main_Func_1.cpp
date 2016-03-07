@@ -17,8 +17,8 @@ using namespace std;
 Point Pointlist[POINT_LIST_SIZE];
 static uint8 PointListIndex = 0;
 static Boolean ZigZagFlag = FALSE;
-static Boolean ToStartPoint = TRUE;
 static Boolean BumperHit = FALSE;
+Boolean ToStartPoint = TRUE;
 
 /*static functions declaration*/
 static Boolean CheckPointUpdatePos(PointPos TempPointPos, Heading heading, Map& RoomMap);
@@ -27,6 +27,7 @@ static void fixRobotHeading(Robot& cleaner, enu_Direction_req RobHeadingReq);
 static void ZigZagRoutine(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHeadingReq);
 static void GoToStartPoint(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHeadingReq);
 static SensorsReadings BumperHitSensorsView(Robot& rob, Map& RoomMap, enu_Direction_req RobHeadingReq);
+static void FinishUpLeftEmpty(Robot& cleaner, Map& RoomMap, enu_Direction_req* Direction_req);
 
 
 void main()
@@ -71,6 +72,8 @@ void main()
 		GoToStartPoint(cleaner, RoomMap, &Direction_req);
 
 		ZigZagRoutine(cleaner, RoomMap, &Direction_req);
+
+		FinishUpLeftEmpty(cleaner, RoomMap, &Direction_req);
 
 #ifdef ENABLE_SIMULATION
 		sim.printMap(RoomMap);
@@ -760,4 +763,9 @@ static void GoToStartPoint(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobH
 		RoomMap.UpdateRobotPosition(cleaner);
 		BumperHit = FALSE;
 	}
+}
+
+static void FinishUpLeftEmpty(Robot& cleaner, Map& RoomMap, enu_Direction_req* Direction_req)
+{
+
 }
