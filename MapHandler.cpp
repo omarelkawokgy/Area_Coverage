@@ -1,5 +1,6 @@
 #include <iostream>
 #include "MapHandler.h"
+#include "Main_func_1.h"
 
 using namespace std;
 
@@ -141,7 +142,14 @@ void Map::UpdateRobotPosition(Robot& rob)
 			}
 			else if (room[j][i] == ROBOT)
 			{
-				addCleanedOnMap(j, i);
+				if (ToStartPoint == FALSE)
+				{
+					addCleanedOnMap(j, i);
+				}
+				else
+				{
+					addEmptyOnMap(j, i);
+				}
 			}
 		}
 	}
