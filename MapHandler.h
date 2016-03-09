@@ -40,6 +40,8 @@ public:
 	void addEmptyOnMap(uint8 y, uint8 x);
 
 	void addUnCoveredOnMap(uint8 y, uint8 x);
+
+	void Map::ScanEmptyArea(Robot& cleaner);
 };
 
 #endif
