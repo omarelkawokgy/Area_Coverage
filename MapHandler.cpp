@@ -160,3 +160,34 @@ void Map::MergePointsOnMap(PointPos newPointPos, PointPos oldPointPos)
 	addUnCoveredOnMap(oldPointPos.Y_Row, oldPointPos.X_Column);
 	addBusyOnMap(newPointPos.Y_Row, newPointPos.X_Column);
 }
+
+void Map::ScanEmptyArea(Robot& cleaner)
+{
+	RobotPos tempRobotPosition;
+	uint8 delta_X;
+	uint8 delta_Y;
+	Required_Empty_Goal goalheading;
+	for (uint8 i = 0; i < MAP_ROW; i++)
+	{
+		for (uint8 j = 0; j < MAP_COLUMN; j++)
+		{
+			if (room[j][i] == EMPTY)
+			{
+				tempRobotPosition = cleaner.GetRobotPosition();
+				delta_X = tempRobotPosition.X_pos - i;
+				delta_Y = tempRobotPosition.Y_pos - j;
+				if (delta_X < 0)
+				{
+					delta_X *= -1;
+				}
+
+				if (delta_Y < 0)
+				{
+					delta_Y *= -1;
+				}
+
+				goalheading = 
+			}
+		}
+	}
+}
