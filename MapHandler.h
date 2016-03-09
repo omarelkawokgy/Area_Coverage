@@ -41,7 +41,7 @@ public:
 
 	void addUnCoveredOnMap(uint8 y, uint8 x);
 
-	void Map::ScanEmptyArea(Robot& cleaner);
+	void ScanEmptyArea(Robot& cleaner);
 };
 
 #endif

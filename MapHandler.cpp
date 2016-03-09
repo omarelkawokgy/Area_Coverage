@@ -167,6 +167,8 @@ void Map::ScanEmptyArea(Robot& cleaner)
 	uint8 delta_X;
 	uint8 delta_Y;
 	Required_Empty_Goal goalheading;
+	uint16 Theta_Temp;
+	uint16 Theta_Goal;
 	for (uint8 i = 0; i < MAP_ROW; i++)
 	{
 		for (uint8 j = 0; j < MAP_COLUMN; j++)

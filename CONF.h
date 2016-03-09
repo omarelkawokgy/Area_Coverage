@@ -8,6 +8,7 @@
 
 /*-------------Map Conf------------*/
 #define POINT_LIST_SIZE 20
+typedef float Required_Empty_Goal;
 
 /*directions of the vacuum (heading)*/
 typedef enum
