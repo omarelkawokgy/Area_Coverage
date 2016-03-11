@@ -9,6 +9,18 @@
 /*-------------Map Conf------------*/
 #define POINT_LIST_SIZE 20
 typedef float Required_Empty_Goal;
+typedef uint8 Robot_to_Goal;
+
+#define INVALID_RESULT 0
+#define X_ROBOT_GR_X_GOAL_Y_ROBOT_GR_Y_GOAL 1
+#define X_ROBOT_LES_X_GOAL_Y_ROBOT_LES_Y_GOAL 2
+#define X_ROBOT_LES_X_GOAL_Y_ROBOT_GR_Y_GOAL 3
+#define X_ROBOT_GR_X_GOAL_Y_ROBOT_LES_Y_GOAL 4
+#define X_ROBOT_EQ_X_GOAL_Y_ROBOT_GR_Y_GOAL 5
+#define X_ROBOT_EQ_X_GOAL_Y_ROBOT_LES_Y_GOAL 6
+#define X_ROBOT_GR_X_GOAL_Y_ROBOT_EQ_Y_GOAL 7
+#define X_ROBOT_LES_X_GOAL_Y_ROBOT_EQ_Y_GOAL 8
+#define X_ROBOT_EQ_X_GOAL_Y_ROBOT_EQ_Y_GOAL 9
 
 /*directions of the vacuum (heading)*/
 typedef enum
@@ -101,6 +113,7 @@ typedef struct
 #undef DEBUG
 #undef RECTANGLE
 #undef USING_MAP_LIBRARY
+#undef WORKING_WITH_ANGLES
 
 /*----------------return types-------------------------*/
 #define RET_NOT_OK 0

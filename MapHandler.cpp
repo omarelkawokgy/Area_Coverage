@@ -160,21 +160,34 @@ void Map::MergePointsOnMap(PointPos newPointPos, PointPos oldPointPos)
 	addUnCoveredOnMap(oldPointPos.Y_Row, oldPointPos.X_Column);
 	addBusyOnMap(newPointPos.Y_Row, newPointPos.X_Column);
 }
-
-void Map::ScanEmptyArea(Robot& cleaner)
+#ifdef WORKING_WITH_ANGLES
+uint16 Map::ScanEmptyArea(Robot& cleaner)
+#else
+Coordinates Map::ScanEmptyArea(Robot& cleaner)
+#endif
 {
+	Coordinates Empty_Coordinate;
+	Empty_Coordinate.X_Column = 0;
+	Empty_Coordinate.Y_Row = 0;
+#ifdef WORKING_WITH_ANGLES
 	RobotPos tempRobotPosition;
 	uint8 delta_X;
 	uint8 delta_Y;
 	Required_Empty_Goal goalheading;
 	uint16 Theta_Temp;
 	uint16 Theta_Goal;
+#endif
 	for (uint8 i = 0; i < MAP_ROW; i++)
 	{
 		for (uint8 j = 0; j < MAP_COLUMN; j++)
 		{
 			if (room[j][i] == EMPTY)
 			{
+				Empty_Coordinate.X_Column = i;
+				Empty_Coordinate.Y_Row = j;
+				i = MAP_ROW;
+				j = MAP_COLUMN;
+#ifdef WORKING_WITH_ANGLES
 				tempRobotPosition = cleaner.GetRobotPosition();
 				delta_X = tempRobotPosition.X_pos - i;
 				delta_Y = tempRobotPosition.Y_pos - j;
@@ -187,9 +200,10 @@ void Map::ScanEmptyArea(Robot& cleaner)
 				{
 					delta_Y *= -1;
 				}
+#endif
 
-				goalheading = 
 			}
 		}
 	}
+	return Empty_Coordinate;
 }

@@ -41,7 +41,11 @@ public:
 
 	void addUnCoveredOnMap(uint8 y, uint8 x);
 
-	void ScanEmptyArea(Robot& cleaner);
+#ifdef WORKING_WITH_ANGLES
+	uint16 Map::ScanEmptyArea(Robot& cleaner);
+#else
+	Coordinates Map::ScanEmptyArea(Robot& cleaner);
+#endif
 };
 
 #endif
