@@ -153,7 +153,9 @@ static uint8 NearBusyPointSearch(PointPos TempPointPos)
 void ISR_BumperHit(void)
 {
 	BumperHit = TRUE;
+#ifndef ENABLE_SIMULATION
 	/*Stop Robot*/
+#endif
 }
 
 static void fixRobotHeading(Robot& cleaner, enu_Direction_req RobHeadingReq)
@@ -406,6 +408,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHe
 
 }
 
+/*Bumper hit sensor view tell me when i hit an object the left and right situations on the map*/
 static SensorsReadings BumperHitSensorsView(Robot& rob, Map& RoomMap, enu_Direction_req RobHeadingReq)
 {
 	SensorsReadings reading;
@@ -556,13 +559,13 @@ static SensorsReadings BumperHitSensorsView(Robot& rob, Map& RoomMap, enu_Direct
 		else
 		{
 			/*do nothing*/
+			reading = FAILURE_READING;
 		}
 
 	}
 	else if (RobHeadingReq == REQUEST_WEST)
 	{
 		if ((RoomMap.room[RobTempPosition.Y_pos - 1][RobTempPosition.X_pos] == BUSY)
-
 			&&
 			((RoomMap.room[RobTempPosition.Y_pos + 1][RobTempPosition.X_pos] == EMPTY)
 			||
@@ -631,11 +634,82 @@ static SensorsReadings BumperHitSensorsView(Robot& rob, Map& RoomMap, enu_Direct
 		else
 		{
 			/*do nothing*/
+			reading = FAILURE_READING;
 		}
 	}
 	else if (RobHeadingReq == REQUEST_EAST)
 	{
-		/*TODO: Handle east direction hitting*/
+		if ((RoomMap.room[RobTempPosition.Y_pos - 1][RobTempPosition.X_pos] == BUSY)
+			&&
+			((RoomMap.room[RobTempPosition.Y_pos + 1][RobTempPosition.X_pos] == EMPTY)
+			||
+			(RoomMap.room[RobTempPosition.Y_pos + 1][RobTempPosition.X_pos] == UNCOVERED)))
+		{
+			reading = LEFT_BUSY_RIGHT_EMPTY;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos - 1][RobTempPosition.X_pos] == CLEANED)
+			&&
+			((RoomMap.room[RobTempPosition.Y_pos + 1][RobTempPosition.X_pos] == EMPTY)
+			||
+			(RoomMap.room[RobTempPosition.Y_pos + 1][RobTempPosition.X_pos] == UNCOVERED)))
+		{
+			reading = LEFT_CLEANED_RIGHT_EMPTY;
+		}
+		else if (((RoomMap.room[RobTempPosition.Y_pos - 1][RobTempPosition.X_pos] == EMPTY)
+			||
+			(RoomMap.room[RobTempPosition.Y_pos - 1][RobTempPosition.X_pos] == UNCOVERED))
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos + 1][RobTempPosition.X_pos] == BUSY))
+		{
+			reading = LEFT_EMPTY_RIGHT_BUSY;
+		}
+		else if (((RoomMap.room[RobTempPosition.Y_pos - 1][RobTempPosition.X_pos] == EMPTY)
+			||
+			(RoomMap.room[RobTempPosition.Y_pos - 1][RobTempPosition.X_pos] == UNCOVERED))
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos + 1][RobTempPosition.X_pos] == CLEANED))
+		{
+			reading = LEFT_EMPTY_RIGHT_CLEANED;
+		}
+		else if (((RoomMap.room[RobTempPosition.Y_pos - 1][RobTempPosition.X_pos] == EMPTY)
+			||
+			(RoomMap.room[RobTempPosition.Y_pos - 1][RobTempPosition.X_pos] == UNCOVERED))
+			&&
+			((RoomMap.room[RobTempPosition.Y_pos + 1][RobTempPosition.X_pos] == EMPTY)
+			||
+			(RoomMap.room[RobTempPosition.Y_pos + 1][RobTempPosition.X_pos] == UNCOVERED)))
+		{
+			reading = LEFT_EMPTY_RIGHT_EMPTY;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos - 1][RobTempPosition.X_pos] == BUSY)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos + 1][RobTempPosition.X_pos] == BUSY))
+		{
+			reading = LEFT_BUSY_RIGHT_BUSY;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos - 1][RobTempPosition.X_pos] == CLEANED)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos + 1][RobTempPosition.X_pos] == CLEANED))
+		{
+			reading = LEFT_CLEANED_RIGHT_CLEANED;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos - 1][RobTempPosition.X_pos] == BUSY)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos + 1][RobTempPosition.X_pos] == CLEANED))
+		{
+			reading = LEFT_BUSY_RIGHT_CLEANED;
+		}
+		else if ((RoomMap.room[RobTempPosition.Y_pos - 1][RobTempPosition.X_pos] == CLEANED)
+			&&
+			(RoomMap.room[RobTempPosition.Y_pos + 1][RobTempPosition.X_pos] == BUSY))
+		{
+			reading = LEFT_CLEANED_RIGHT_BUSY;
+		}
+		else
+		{
+			/*do nothing*/
+			reading = FAILURE_READING;
+		}
 	}
 	else
 	{
@@ -767,15 +841,15 @@ static void GoToStartPoint(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobH
 	}
 }
 
-static void GoToGoal_Empty(Robot& cleaner, Map& RoomMap)
+/*Goes to empty blocks left on the map to finish up the cleaning*/
+static void GoToGoal_Empty(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHeadingReq)
 {
 
 	Coordinates Empty_Position_Goal;
-	uint16 Requested_Angle;
-	enu_Direction_req RobHeadingReq = REQUEST_NONE;
+	uint16 Requested_Angle; 
+	uint16 TempRequested_Angle = INVALID_ANGLE_VALUE;
+	SensorsReadings LeftRightScan;
 	RobotPos RobotPosition = cleaner.GetRobotPosition();
-
-	
 	Robot_to_Goal  Goal_Relative_to_Robot;
 
 	if (GoToGoal_Empty_Flag == TRUE)
@@ -791,67 +865,107 @@ static void GoToGoal_Empty(Robot& cleaner, Map& RoomMap)
 		{
 			/*TODO: flag so scaning of empty area is done once*/
 		}
-
-		if ((RobotPosition.X_pos < Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos < Empty_Position_Goal.Y_Row))
-		{
-			Goal_Relative_to_Robot = X_ROBOT_LES_X_GOAL_Y_ROBOT_LES_Y_GOAL;
-			RobHeadingReq = REQUEST_EAST;
-			Requested_Angle = EAST_VALUE;
-		}
-		else if ((RobotPosition.X_pos > Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos > Empty_Position_Goal.Y_Row))
-		{
-			Goal_Relative_to_Robot = X_ROBOT_GR_X_GOAL_Y_ROBOT_GR_Y_GOAL;
-			RobHeadingReq = REQUEST_WEST;
-			Requested_Angle = WEST_VALUE;
-		}
-		else if ((RobotPosition.X_pos > Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos < Empty_Position_Goal.Y_Row))
-		{
-			Goal_Relative_to_Robot = X_ROBOT_GR_X_GOAL_Y_ROBOT_LES_Y_GOAL;
-			RobHeadingReq = REQUEST_WEST;
-			Requested_Angle = WEST_VALUE;
-		}
-		else if ((RobotPosition.X_pos < Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos > Empty_Position_Goal.Y_Row))
-		{
-			Goal_Relative_to_Robot = X_ROBOT_LES_X_GOAL_Y_ROBOT_GR_Y_GOAL;
-			RobHeadingReq = REQUEST_EAST;
-			Requested_Angle = EAST_VALUE;
-		}
-		else if ((RobotPosition.X_pos == Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos < Empty_Position_Goal.Y_Row))
-		{
-			Goal_Relative_to_Robot = X_ROBOT_EQ_X_GOAL_Y_ROBOT_LES_Y_GOAL;
-			RobHeadingReq = REQUEST_SOUTH;
-			Requested_Angle = SOUTH_VALUE;
-		}
-		else if ((RobotPosition.X_pos == Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos > Empty_Position_Goal.Y_Row))
-		{
-			Goal_Relative_to_Robot = X_ROBOT_EQ_X_GOAL_Y_ROBOT_GR_Y_GOAL;
-			RobHeadingReq = REQUEST_NORTH;
-			Requested_Angle = NORTH_VALUE;
-		}
-		else if ((RobotPosition.X_pos < Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos == Empty_Position_Goal.Y_Row))
-		{
-			Goal_Relative_to_Robot = X_ROBOT_LES_X_GOAL_Y_ROBOT_EQ_Y_GOAL;
-			RobHeadingReq = REQUEST_EAST;
-			Requested_Angle = EAST_VALUE;
-		}
-		else if ((RobotPosition.X_pos > Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos == Empty_Position_Goal.Y_Row))
-		{
-			Goal_Relative_to_Robot = X_ROBOT_GR_X_GOAL_Y_ROBOT_EQ_Y_GOAL;
-			RobHeadingReq = REQUEST_WEST;
-			Requested_Angle = WEST_VALUE;
-		}
-		else if ((RobotPosition.X_pos == Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos == Empty_Position_Goal.Y_Row))
-		{
-			Goal_Relative_to_Robot = X_ROBOT_EQ_X_GOAL_Y_ROBOT_EQ_Y_GOAL;
-			ZigZagFlag = TRUE;
-			GoToGoal_Empty_Flag = FALSE;
-		}
-		else
-		{
-			/*do nothing*/
-		}
 		
-		MOVE::MoveTurn_CCW(cleaner, Requested_Angle);
-		MOVE::MoveForward(cleaner, cleaner.GetRobotHeading());
+		if (BumperHit)
+		{
+			LeftRightScan = BumperHitSensorsView(cleaner, RoomMap, *RobHeadingReq);
+
+			switch (LeftRightScan)
+			{
+			case LEFT_EMPTY_RIGHT_EMPTY:
+				if (RobHeadingReq == EAST)
+				break;
+			case LEFT_CLEANED_RIGHT_EMPTY:
+			case LEFT_BUSY_RIGHT_EMPTY:
+				break;
+			case LEFT_EMPTY_RIGHT_CLEANED:
+			case LEFT_EMPTY_RIGHT_BUSY:
+				break;
+			case LEFT_BUSY_RIGHT_BUSY:
+			case LEFT_BUSY_RIGHT_CLEANED:
+			case LEFT_CLEANED_RIGHT_BUSY:
+			case LEFT_CLEANED_RIGHT_CLEANED:
+				break;
+			default:
+				break;
+			}
+		}
+
+		if (No_Obstical_flag == TRUE)
+		{
+			Goal_Relative_to_Robot = Goal_FromRobot_UpdateReq(RobotPosition, Empty_Position_Goal, RobHeadingReq, &Requested_Angle);
+
+			if (TempRequested_Angle != Requested_Angle)
+			{
+				MOVE::MoveTurn_CCW(cleaner, Requested_Angle);
+				TempRequested_Angle = Requested_Angle;
+			}
+
+			MOVE::MoveForward(cleaner, cleaner.GetRobotHeading());
+		}
 	}
 }
+
+
+Robot_to_Goal Goal_FromRobot_UpdateReq(RobotPos RobotPosition, Coordinates Empty_Position_Goal, enu_Direction_req* RobHeadingReq, uint16* Requested_Angle)
+{
+	Robot_to_Goal  Goal_Relative_to_Robot;
+
+	if ((RobotPosition.X_pos < Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos < Empty_Position_Goal.Y_Row))
+	{
+		Goal_Relative_to_Robot = X_ROBOT_LES_X_GOAL_Y_ROBOT_LES_Y_GOAL;
+		*RobHeadingReq = REQUEST_EAST;
+		*Requested_Angle = EAST_VALUE;
+	}
+	else if ((RobotPosition.X_pos > Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos > Empty_Position_Goal.Y_Row))
+	{
+		Goal_Relative_to_Robot = X_ROBOT_GR_X_GOAL_Y_ROBOT_GR_Y_GOAL;
+		*RobHeadingReq = REQUEST_WEST;
+		*Requested_Angle = WEST_VALUE;
+	}
+	else if ((RobotPosition.X_pos > Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos < Empty_Position_Goal.Y_Row))
+	{
+		Goal_Relative_to_Robot = X_ROBOT_GR_X_GOAL_Y_ROBOT_LES_Y_GOAL;
+		*RobHeadingReq = REQUEST_WEST;
+		*Requested_Angle = WEST_VALUE;
+	}
+	else if ((RobotPosition.X_pos < Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos > Empty_Position_Goal.Y_Row))
+	{
+		Goal_Relative_to_Robot = X_ROBOT_LES_X_GOAL_Y_ROBOT_GR_Y_GOAL;
+		*RobHeadingReq = REQUEST_EAST;
+		*Requested_Angle = EAST_VALUE;
+	}
+	else if ((RobotPosition.X_pos == Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos < Empty_Position_Goal.Y_Row))
+	{
+		Goal_Relative_to_Robot = X_ROBOT_EQ_X_GOAL_Y_ROBOT_LES_Y_GOAL;
+		*RobHeadingReq = REQUEST_SOUTH;
+		*Requested_Angle = SOUTH_VALUE;
+	}
+	else if ((RobotPosition.X_pos == Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos > Empty_Position_Goal.Y_Row))
+	{
+		Goal_Relative_to_Robot = X_ROBOT_EQ_X_GOAL_Y_ROBOT_GR_Y_GOAL;
+		*RobHeadingReq = REQUEST_NORTH;
+		*Requested_Angle = NORTH_VALUE;
+	}
+	else if ((RobotPosition.X_pos < Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos == Empty_Position_Goal.Y_Row))
+	{
+		Goal_Relative_to_Robot = X_ROBOT_LES_X_GOAL_Y_ROBOT_EQ_Y_GOAL;
+		*RobHeadingReq = REQUEST_EAST;
+		*Requested_Angle = EAST_VALUE;
+	}
+	else if ((RobotPosition.X_pos > Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos == Empty_Position_Goal.Y_Row))
+	{
+		Goal_Relative_to_Robot = X_ROBOT_GR_X_GOAL_Y_ROBOT_EQ_Y_GOAL;
+		*RobHeadingReq = REQUEST_WEST;
+		*Requested_Angle = WEST_VALUE;
+	}
+	else if ((RobotPosition.X_pos == Empty_Position_Goal.X_Column) && (RobotPosition.Y_pos == Empty_Position_Goal.Y_Row))
+	{
+		Goal_Relative_to_Robot = X_ROBOT_EQ_X_GOAL_Y_ROBOT_EQ_Y_GOAL;
+		ZigZagFlag = TRUE;
+		GoToGoal_Empty_Flag = FALSE;
+	}
+	return Goal_Relative_to_Robot;
+}
+
+void Aline_Request_and_Heading(void);

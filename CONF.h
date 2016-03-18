@@ -37,6 +37,8 @@ INVALID_DIRECTION = 0
 #define WEST_VALUE 219
 #define SOUTH_VALUE 281
 #define EAST_VALUE 333
+
+#define INVALID_ANGLE_VALUE 0
 #define ALLOWED_ANGLE_ERROR 5 
 
 typedef enum
@@ -87,7 +89,7 @@ typedef enum
 /*sensors view*/
 typedef uint8 SensorsReadings;
 /*Possible values*/
-#define LEFT_EMPTY_RIGHT_EMPTY 0
+#define FAILURE_READING 0
 
 #define LEFT_BUSY_RIGHT_EMPTY 1
 #define LEFT_EMPTY_RIGHT_BUSY 2
@@ -100,7 +102,7 @@ typedef uint8 SensorsReadings;
 #define LEFT_CLEANED_RIGHT_BUSY 7
 #define LEFT_BUSY_RIGHT_CLEANED 8
 
-#define FAILURE_READING 9
+#define LEFT_EMPTY_RIGHT_EMPTY 9
 
 typedef struct
 {
