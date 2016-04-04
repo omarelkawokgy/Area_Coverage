@@ -116,10 +116,19 @@ typedef struct
 #undef RECTANGLE
 #undef USING_MAP_LIBRARY
 #undef WORKING_WITH_ANGLES
+#define FINISHUP_EMPTY_SLOTS
+#define SINGLE_ENCODER_ROBOT
+#undef GO_TO_GOAL_STRAIGHTLINES
 
 /*----------------return types-------------------------*/
 #define RET_NOT_OK 0
 #define RET_OK 1
+
+/*----------------Hardware configuration--------------*/
+
+/*Encoder*/
+#define ENCODER_UINT8 uint8
+#define ENCODER_UINT16 uint16
 
 #endif
 
