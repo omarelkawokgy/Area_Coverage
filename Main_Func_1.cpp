@@ -29,9 +29,12 @@ static void fixRobotHeading(Robot& cleaner, enu_Direction_req RobHeadingReq);
 static void ZigZagRoutine(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHeadingReq);
 static void GoToStartPoint(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHeadingReq);
 static SensorsReadings BumperHitSensorsView(Robot& rob, Map& RoomMap, enu_Direction_req RobHeadingReq);
+#ifdef FINISHUP_EMPTY_SLOTS
+#ifdef GO_TO_GOAL_STRAIGHTLINES
 static void GoToGoal_Empty(Robot& cleaner, Map& RoomMap);
-
-
+#endif
+static void FinishUpLeftEmpty(Robot& cleaner, Map& RoomMap, enu_Direction_req* Direction_req);
+#endif
 void main()
 {
 	/*=============================Intialize project==============================*/
@@ -75,8 +78,12 @@ void main()
 
 		ZigZagRoutine(cleaner, RoomMap, &Direction_req);
 
+#ifdef FINISHUP_EMPTY_SLOTS
+#ifdef GO_TO_GOAL_STRAIGHTLINES
 		GoToGoal_Empty(cleaner, RoomMap);
-
+#endif
+		FinishUpLeftEmpty(cleaner, RoomMap, &Direction_req);
+#endif
 #ifdef ENABLE_SIMULATION
 		sim.printMap(RoomMap);
 #endif
@@ -841,6 +848,8 @@ static void GoToStartPoint(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobH
 	}
 }
 
+#ifdef GO_TO_GOAL_STRAIGHTLINES
+
 /*Goes to empty blocks left on the map to finish up the cleaning*/
 static void GoToGoal_Empty(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHeadingReq)
 {
@@ -967,5 +976,15 @@ Robot_to_Goal Goal_FromRobot_UpdateReq(RobotPos RobotPosition, Coordinates Empty
 	}
 	return Goal_Relative_to_Robot;
 }
+#endif
 
-void Aline_Request_and_Heading(void);
+
+static void FinishUpLeftEmpty(Robot& cleaner, Map& RoomMap, enu_Direction_req* Direction_req)
+{
+
+}
+
+void Aline_Request_and_Heading(void)
+{
+
+}
