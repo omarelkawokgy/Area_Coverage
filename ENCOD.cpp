@@ -1,46 +1,20 @@
-#ifndef ENCODER_H
-#define ENCODER_H
+#include "ENCOD.h"
 
-#include "CONF.h"
 
-class left_encoder
+
+left_encoder& left_encoder::getInstance(ENCODER_UINT16 ticks)
 {
-private:
-	ENCODER_UINT16 left_encoder_ticks;
+	static left_encoder left_device;
+	left_device.left_encoder_ticks = ticks;
+	return left_device;
+}
 
-	left_encoder(){}
-
-	left_encoder(ENCODER_UINT16 left_encoder_local)
-	{
-		left_encoder_ticks = left_encoder_local;
-	}
-public:
-	static left_encoder& getInstance(ENCODER_UINT16 ticks);
-
-	void incrementTick(void);
-
-	void read_left_encoder_ticks(ENCODER_UINT16* ticks);
-};
-
-#ifndef SINGLE_ENCODER_ROBOT
-class right_encoder
+void left_encoder::incrementTick(void)
 {
-private:
-	ENCODER_UINT16 right_encoder_ticks;
+	left_encoder_ticks++;
+}
 
-	right_encoder(){}
-
-	right_encoder(ENCODER_UINT16 right_encoder_local)
-	{
-		right_encoder_ticks = right_encoder_local;
-	}
-public:
-	static right_encoder& getInstance(void);
-
-	void incrementTick(void);
-
-	void read_right_encoder_ticks(void);
-};
-#endif
-
-#endif
+void left_encoder::read_left_encoder_ticks(ENCODER_UINT16* ticks)
+{
+	ticks = &left_encoder_ticks;
+}
