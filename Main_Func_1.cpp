@@ -19,10 +19,16 @@ static uint8 PointListIndex = 0;
 static Boolean ZigZagFlag = FALSE;
 static Boolean BumperHit = FALSE;
 Boolean ToStartPoint = TRUE;
-static Boolean GoToGoal_Empty_Flag = FALSE;
+#ifdef FINISHUP_EMPTY_SLOTS
+#ifdef GO_TO_GOAL_STRAIGHTLINES
+static Boolean GoToGoal_Straightlines_Flag = FALSE;
+#endif
+static Boolean GoToGoal_PID_flag = FALSE;
+#endif
 static Boolean GO_BACK_TO_CHARGER = FALSE;
 
-/*static functions declaration*/
+/*-----------------static functions declaration------------------*/
+static void Aline_Request_and_Heading(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHeadingReq);
 static Boolean CheckPointUpdatePos(PointPos TempPointPos, Heading heading, Map& RoomMap);
 static uint8 NearBusyPointSearch(PointPos TempPointPos);
 static void fixRobotHeading(Robot& cleaner, enu_Direction_req RobHeadingReq);
@@ -73,6 +79,7 @@ void main()
 
 	while (1)
 	{
+
 		/*go to extreme left of map to scan room*/
 		GoToStartPoint(cleaner, RoomMap, &Direction_req);
 
@@ -84,6 +91,7 @@ void main()
 #endif
 		FinishUpLeftEmpty(cleaner, RoomMap, &Direction_req);
 #endif
+		Aline_Request_and_Heading(cleaner, RoomMap, &Direction_req);
 #ifdef ENABLE_SIMULATION
 		sim.printMap(RoomMap);
 #endif
@@ -138,23 +146,29 @@ static Boolean CheckPointUpdatePos(PointPos newPointPos, Heading heading, Map& R
 	if (PosUpdateCheck == TRUE)
 	{
 		PointListIndex = NearBusyPointSearch(TempPointPos);
-		Pointlist[PointListIndex].SetPosition(TempPointPos);
-		RoomMap.MergePointsOnMap(newPointPos, TempPointPos);
+		if (PointListIndex != RET_NOT_OK)
+		{
+			Pointlist[PointListIndex].SetPosition(TempPointPos);
+			RoomMap.MergePointsOnMap(newPointPos, TempPointPos);
+		}
 	}
 	return PosUpdateCheck;
 }
 
+/*searchs near the busy point detected to update it*/
 static uint8 NearBusyPointSearch(PointPos TempPointPos)
 {
+	uint8 result = RET_NOT_OK;
+
 	for (uint8 PointListIndex = 0; PointListIndex < POINT_LIST_SIZE; PointListIndex++)
 	{
 		if ((Pointlist[PointListIndex].getPointPos().X_Column == TempPointPos.X_Column) &&
 			(Pointlist[PointListIndex].getPointPos().Y_Row == TempPointPos.Y_Row))
 		{
-			return PointListIndex;
+			result = PointListIndex;
 		}
 	}
-	/*TODO: handle error if index not found*/
+	return result;
 }
 
 void ISR_BumperHit(void)
@@ -253,7 +267,6 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHe
 			(void)MOVE::MoveStop(cleaner);
 			(void)MOVE::MoveBackward(cleaner, RobCurrentHeading);
 			
-			/*TODO: fix the turn to the requested direction after a hit*/
 			RobTempPosition = cleaner.GetRobotPosition();
 			readingSensorsView = BumperHitSensorsView(cleaner, RoomMap, *RobHeadingReq);
 
@@ -362,7 +375,6 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHe
 		else
 		{ 
 
-			/*TODO: function to check that request is consistant with the heading*/
 			/*check the ID of the point before creating new ones*/
 			Error_Check = scan.LinearScan(&LeftTempPointPos, &RightTempPointPos, cleaner, RobCurrentHeading);
 			if (Error_Check == RET_OK)
@@ -403,11 +415,8 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHe
 			}
 			else
 			{
-				/*TODO: Fix the heading of the robot if its not ok*/
 				fixRobotHeading(cleaner, *RobHeadingReq);
 			}
-
-
 
 			RoomMap.UpdateRobotPosition(cleaner);
 		}
@@ -980,11 +989,6 @@ Robot_to_Goal Goal_FromRobot_UpdateReq(RobotPos RobotPosition, Coordinates Empty
 
 
 static void FinishUpLeftEmpty(Robot& cleaner, Map& RoomMap, enu_Direction_req* Direction_req)
-{
-
-}
-
-void Aline_Request_and_Heading(void)
 {
 
 }
