@@ -1,6 +1,8 @@
 #include <iostream>
 #include "MOVH.h"
+#ifdef ENABLE_SIMULATION
 #include "SIMU.h"
+#endif
 #include "COMH.h"
 
 using namespace std;
@@ -173,6 +175,7 @@ void MOVE::MoveTurn_CCW(Robot& rob, const uint16 TargetAngle)
 void MOVE::MoveForwardStep(Robot& rob, Heading heading)
 {
 	/*TODO: handle crashing before continuing this step*/
+	/*the robot will stop as it hits an object to need to handle it here*/
 #ifdef ENABLE_SIMULATION
 
 #else
@@ -223,6 +226,7 @@ void MOVE::UTurnRight(Robot& cleaner, Heading RobCurrentHeading)
 		break;
 	default:
 		/*TODO: heading is invalid*/
+		MOVE::MoveStop(cleaner);
 		break;
 	}
 }
@@ -269,6 +273,7 @@ void MOVE::UTurnLeft(Robot& cleaner, Heading RobCurrentHeading)
 		break;
 	default:
 		/*TODO: heading is invalid*/
+		MOVE::MoveStop(cleaner);
 		break;
 	}
 }
@@ -303,6 +308,7 @@ void MOVE::UTurn(Robot& cleaner, Heading RobCurrentHeading)
 		break;
 	default:
 		/*TODO: heading is invalid*/
+		MOVE::MoveStop(cleaner);
 		break;
 	}
 }
