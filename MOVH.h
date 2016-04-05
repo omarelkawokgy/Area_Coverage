@@ -20,8 +20,9 @@ public:
 
 	static void MoveStop(Robot& rob);
 
+#if 0
 	static void MoveInitAngle(Robot& rob);
-
+#endif
 	static void MoveTurn_CW(Robot& rob, const uint16 TargetAngle);
 
 	static void MoveTurn_CCW(Robot& rob, const uint16 TargetAngle);
