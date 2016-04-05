@@ -78,9 +78,10 @@ return_type MOVE::UpdatePosition(RobotPos* robposition, Heading heading, uint8 D
 
 return_type MOVE::MoveForward(Robot& rob, Heading heading)
 {
+	return_type Error_Check = RET_NOT_OK; 
 #ifdef ENABLE_SIMULATION
 	static uint8 Stepcounter = 0;
-	return_type Error_Check = RET_NOT_OK; 
+
 	RobotPos robposition = rob.GetRobotPosition();
 	Stepcounter++;
 	if((Stepcounter % STEP_LINEAR_SCAN) == 0)
@@ -102,8 +103,9 @@ return_type MOVE::MoveForward(Robot& rob, Heading heading)
 
 return_type MOVE::MoveBackward(Robot& rob, Heading heading)
 {
-#ifdef ENABLE_SIMULATION
 	return_type Error_Check = RET_NOT_OK; 
+#ifdef ENABLE_SIMULATION
+	
 	RobotPos robposition = rob.GetRobotPosition();
 
 		Error_Check = UpdatePosition(&robposition, heading, BACKWARD);
@@ -132,6 +134,7 @@ void MOVE::MoveStop(Robot& rob)
 #endif
 }
 
+#if 0
 void MOVE::MoveInitAngle(Robot& rob)
 {
 #ifdef ENABLE_SIMULATION
@@ -143,6 +146,7 @@ void MOVE::MoveInitAngle(Robot& rob)
 	digitalWrite(LEFT_MOTOR_GROUND_PIN, );
 #endif
 }
+#endif
 
 void MOVE::MoveTurn_CW(Robot& rob, const uint16 TargetAngle)
 {
