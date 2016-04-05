@@ -1,6 +1,6 @@
 #include "Robot.h"
 #include "MapHandler.h"
-#include "SIMU.h"
+
 #include "Scan.h"
 #include "OBJD.h"
 #include "ULSH.h"
@@ -9,6 +9,7 @@
 
 
 #ifdef ENABLE_SIMULATION
+#include "SIMU.h"
 #include <iostream>
 using namespace std;
 #endif
@@ -28,7 +29,6 @@ static Boolean GoToGoal_PID_flag = FALSE;
 static Boolean GO_BACK_TO_CHARGER = FALSE;
 
 /*-----------------static functions declaration------------------*/
-static void Aline_Request_and_Heading(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHeadingReq);
 static Boolean CheckPointUpdatePos(PointPos TempPointPos, Heading heading, Map& RoomMap);
 static uint8 NearBusyPointSearch(PointPos TempPointPos);
 static void fixRobotHeading(Robot& cleaner, enu_Direction_req RobHeadingReq);
@@ -55,7 +55,9 @@ void main()
 
 	/*----------------------INIT--------------------*/
 	enu_Direction_req Direction_req = REQUEST_NORTH;
+#ifdef ENABLE_SIMULATION
 	simu sim;
+#endif
 #ifdef RECTANGLE
 	L_R_Dist diagonalList[FULL_SCAN_NUM];
 	RectSize rectsize;
@@ -91,7 +93,6 @@ void main()
 #endif
 		FinishUpLeftEmpty(cleaner, RoomMap, &Direction_req);
 #endif
-		Aline_Request_and_Heading(cleaner, RoomMap, &Direction_req);
 #ifdef ENABLE_SIMULATION
 		sim.printMap(RoomMap);
 #endif
@@ -100,7 +101,7 @@ void main()
 	/*TODO: check the right side of the Map to cover it all*/
 
 
-	system("pause");
+	//system("pause");
 	return;
 }
 
