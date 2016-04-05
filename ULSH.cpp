@@ -10,7 +10,7 @@ ULSH::ULSH()
 
 uint16 ULSH::ULS_getLeftDist(void)
 {
-	uint16 left;
+	uint16 left = 0;
 #ifdef ENABLE_SIMULATION
 	cout << "Left distance:" << endl;
 	cin >> left;
@@ -27,7 +27,7 @@ uint16 ULSH::ULS_getLeftDist(void)
 
 uint16 ULSH::ULS_getRightDist(void)
 {
-	uint16 right;
+	uint16 right = 0;
 #ifdef ENABLE_SIMULATION
 	cout << "right distance:" << endl;
 	cin >> right;
