@@ -20,6 +20,8 @@ static uint8 PointListIndex = 0;
 static Boolean ZigZagFlag = FALSE;
 static Boolean BumperHit = FALSE;
 Boolean ToStartPoint = TRUE;
+Robot cleaner = Robot::initRobotPosition();
+
 #ifdef FINISHUP_EMPTY_SLOTS
 #ifdef GO_TO_GOAL_STRAIGHTLINES
 static Boolean GoToGoal_Straightlines_Flag = FALSE;
@@ -41,6 +43,7 @@ static void GoToGoal_Empty(Robot& cleaner, Map& RoomMap);
 #endif
 static void FinishUpLeftEmpty(Robot& cleaner, Map& RoomMap, enu_Direction_req* Direction_req);
 #endif
+
 void main()
 {
 	/*=============================Intialize project==============================*/
@@ -50,7 +53,6 @@ void main()
 	RoomMap.initMap();
 
 	/*----------------Robot Init Data------------------*/
-	Robot cleaner = Robot::initRobotPosition();
 	RobotPos RobTempPosition = cleaner.GetRobotPosition();
 
 	/*----------------------INIT--------------------*/
@@ -150,7 +152,7 @@ static Boolean CheckPointUpdatePos(PointPos newPointPos, Heading heading, Map& R
 		if (PointListIndex != RET_NOT_OK)
 		{
 			Pointlist[PointListIndex].SetPosition(TempPointPos);
-			RoomMap.MergePointsOnMap(newPointPos, TempPointPos);
+			RoomMap.MergePointsOnMap(newPointPos,TempPointPos);
 		}
 	}
 	return PosUpdateCheck;
@@ -177,6 +179,7 @@ void ISR_BumperHit(void)
 	BumperHit = TRUE;
 #ifndef ENABLE_SIMULATION
 	/*Stop Robot*/
+	MOVE::MoveStop(cleaner);
 #endif
 }
 
