@@ -1,7 +1,9 @@
-#include <iostream>
 #include "MOVH.h"
 #ifdef ENABLE_SIMULATION
 #include "SIMU.h"
+#include <iostream>
+#else
+#include "Arduino.h"
 #endif
 #include "COMH.h"
 
@@ -79,24 +81,11 @@ return_type MOVE::UpdatePosition(RobotPos* robposition, Heading heading, uint8 D
 return_type MOVE::MoveForward(Robot& rob, Heading heading)
 {
 	return_type Error_Check = RET_NOT_OK; 
+	MoveForwardStep(rob,heading);
 #ifdef ENABLE_SIMULATION
-	static uint8 Stepcounter = 0;
 
-	RobotPos robposition = rob.GetRobotPosition();
-	Stepcounter++;
-	if((Stepcounter % STEP_LINEAR_SCAN) == 0)
-	{
-		Error_Check = UpdatePosition(&robposition, heading, FORWARD);
-		if (Error_Check == RET_OK)
-		{
-			rob.SetPosition(robposition);
-		}
-	}
 #else
-	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, HIGH);
-	digitalWrite(RIGHT_MOTOR_GROUND_PIN, LOW);
-	digitalWrite(LEFT_MOTOR_POSITIVE_PIN, HIGH);
-	digitalWrite(LEFT_MOTOR_GROUND_PIN, LOW);
+
 #endif
 	return Error_Check;
 }
@@ -113,13 +102,15 @@ return_type MOVE::MoveBackward(Robot& rob, Heading heading)
 		{
 			rob.SetPosition(robposition);
 		}
+		return Error_Check;
 #else
 	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, LOW);
 	digitalWrite(RIGHT_MOTOR_GROUND_PIN, HIGH);
 	digitalWrite(LEFT_MOTOR_POSITIVE_PIN, LOW);
 	digitalWrite(LEFT_MOTOR_GROUND_PIN, HIGH);
+	return Error_Check = RET_OK;
 #endif
-	return Error_Check;
+	
 }
 
 void MOVE::MoveStop(Robot& rob)
@@ -150,8 +141,9 @@ void MOVE::MoveInitAngle(Robot& rob)
 
 void MOVE::MoveTurn_CW(Robot& rob, const uint16 TargetAngle)
 {
-#ifdef ENABLE_SIMULATION
 	RobotPos robPosition = rob.GetRobotPosition();
+#ifdef ENABLE_SIMULATION
+	
 	robPosition.theta = TargetAngle;
 	rob.SetPosition(robPosition);
 #else
@@ -159,13 +151,21 @@ void MOVE::MoveTurn_CW(Robot& rob, const uint16 TargetAngle)
 	digitalWrite(RIGHT_MOTOR_GROUND_PIN, HIGH);
 	digitalWrite(LEFT_MOTOR_POSITIVE_PIN, HIGH);
 	digitalWrite(LEFT_MOTOR_GROUND_PIN, LOW);
+
+	while ((robPosition.theta < (TargetAngle - ALLOWED_ANGLE_ERROR)) || (robPosition.theta >(TargetAngle + ALLOWED_ANGLE_ERROR)))
+	{
+		/*TODO: timer in case angle didnt reach*/
+		robPosition.theta = rob.GetRobotPosition().theta;
+	}
+	rob.SetPosition(robPosition);
 #endif
 }
 
 void MOVE::MoveTurn_CCW(Robot& rob, const uint16 TargetAngle)
 {
-#ifdef ENABLE_SIMULATION
 	RobotPos robPosition = rob.GetRobotPosition();
+#ifdef ENABLE_SIMULATION
+
 	robPosition.theta = TargetAngle;
 	rob.SetPosition(robPosition);
 #else
@@ -173,6 +173,12 @@ void MOVE::MoveTurn_CCW(Robot& rob, const uint16 TargetAngle)
 	digitalWrite(RIGHT_MOTOR_GROUND_PIN, LOW);
 	digitalWrite(LEFT_MOTOR_POSITIVE_PIN, LOW);
 	digitalWrite(LEFT_MOTOR_GROUND_PIN, HIGH);
+	while ((robPosition.theta < (TargetAngle - ALLOWED_ANGLE_ERROR)) || (robPosition.theta >(TargetAngle + ALLOWED_ANGLE_ERROR)))
+	{
+		/*TODO: timer in case angle didnt reach*/
+		robPosition.theta = rob.GetRobotPosition().theta;
+	}
+	rob.SetPosition(robPosition);
 #endif
 }
 
@@ -180,12 +186,45 @@ void MOVE::MoveForwardStep(Robot& rob, Heading heading)
 {
 	/*TODO: handle crashing before continuing this step*/
 	/*the robot will stop as it hits an object to need to handle it here*/
+	static uint8 Stepcounter = 0;
+	RobotPos robposition = rob.GetRobotPosition();
+	return_type Error_Check = RET_NOT_OK;
 #ifdef ENABLE_SIMULATION
-
+	
+	Stepcounter++;
+	if ((Stepcounter % STEP_LINEAR_SCAN) == 0)
+	{
 #else
 
+	Boolean hit_encoder = FALSE;
+	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, HIGH);
+	digitalWrite(RIGHT_MOTOR_GROUND_PIN, LOW);
+	digitalWrite(LEFT_MOTOR_POSITIVE_PIN, HIGH);
+	digitalWrite(LEFT_MOTOR_GROUND_PIN, LOW);\
+
+	while (Stepcounter < ROBOT_SINGLE_STEP)
+	{
+		/*TODO: timer in case counter didnt reach*/
+
+		/*return boolean flag when signal is on using interrupt*/
+		hit_encoder = ENCODER.READ_RIGHT_ENCODER();
+		if (hit_encoder)
+		{
+			Stepcounter++;
+			hit_encoder = FALSE;
+		}
+	}
 #endif
-	MoveForward(rob, heading);
+	Error_Check = UpdatePosition(&robposition, heading, FORWARD);
+	if (Error_Check == RET_OK)
+	{
+		rob.SetPosition(robposition);
+	}
+#ifdef ENABLE_SIMULATION
+}
+#endif
+
+
 }
 
 void MOVE::UTurnRight(Robot& cleaner, Heading RobCurrentHeading)
