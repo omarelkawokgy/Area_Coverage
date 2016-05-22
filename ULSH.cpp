@@ -1,4 +1,3 @@
-#include <iostream>
 #include "ULSH.h"
 
 using namespace std;
@@ -6,6 +5,12 @@ using namespace std;
 ULSH::ULSH()
 {
 
+}
+
+static uint16 Read_distance()
+{
+#define RADOM_NUM 30
+	return RADOM_NUM;
 }
 
 uint16 ULSH::ULS_getLeftDist(void)
@@ -16,6 +21,11 @@ uint16 ULSH::ULS_getLeftDist(void)
 	cin >> left;
 #else
 	/*take about 3 readings evrytime and return the average*/
+	left = Read_distance();
+	left += Read_distance();
+	left += Read_distance();
+
+	left = (uint16)(left / 3);
 #endif
 	if (left < ROBOT_SIZE)
 	{
@@ -33,6 +43,11 @@ uint16 ULSH::ULS_getRightDist(void)
 	cin >> right;
 #else
 	/*take about 3 readings evrytime and return the average*/
+	right = Read_distance();
+	right += Read_distance();
+	right += Read_distance();
+
+	right = (uint16)(right / 3);
 #endif
 	if (right < ROBOT_SIZE)
 	{
@@ -45,11 +60,7 @@ uint16 ULSH::ULS_getRightDist(void)
 L_R_Dist ULSH::ULS_getDistanceboth(void)
 {
 	L_R_Dist both;
-#ifdef ENABLE_SIMULATION
 	both.L_Distance = ULSH::ULS_getLeftDist();
 	both.R_Distance = ULSH::ULS_getRightDist();
-#else
-
-#endif
 	return both;
 }
