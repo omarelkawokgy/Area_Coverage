@@ -2,6 +2,8 @@
 #ifdef ENABLE_SIMULATION
 #include<iostream>
 using namespace std;
+#else
+#include "H34439043.h"
 #endif
 
 Comp::Comp()
