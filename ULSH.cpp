@@ -1,6 +1,9 @@
 #include "ULSH.h"
 
+#ifdef ENABLE_SIMULATION
+#include <iostream>
 using namespace std;
+#endif
 
 ULSH::ULSH()
 {

@@ -5,8 +5,9 @@
 
 class left_encoder
 {
+#ifdef OLD_ENCODER_DESIGN
 private:
-	ENCODER_UINT16 left_encoder_ticks;
+	ENCODER_UINT8 left_encoder_ticks;
 
 	left_encoder(){}
 
@@ -15,11 +16,16 @@ private:
 		left_encoder_ticks = left_encoder_local;
 	}
 public:
-	static left_encoder& getInstance(void);
+	static left_encoder& getInstance(uint8 ticks);
 
 	void incrementTick(void);
 
-	void read_left_encoder_ticks(ENCODER_UINT16* ticks);
+	void read_left_encoder_ticks(ENCODER_UINT8* ticks);
+#else
+public:
+	static void L_encoder(void);
+	static Boolean left_encoder::get_L_encoder_flag(void);
+#endif
 };
 
 #ifdef SINGLE_ENCODER_ROBOT

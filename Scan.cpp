@@ -27,6 +27,7 @@ void Scan::Init(void)
 	}
 }
 
+#if 0
 void Scan::CirclScanRoutine(Robot rob, L_R_Dist* scanlist)
 {
 	MOVE::MoveInitAngle(rob);
@@ -37,6 +38,7 @@ void Scan::CirclScanRoutine(Robot rob, L_R_Dist* scanlist)
 		scanlist[i] = ULSH::ULS_getDistanceboth();
 	}
 }
+#endif
 
 return_type Scan::LinearScan(PointPos* leftpoint, PointPos* rightpoint, Robot rob, Heading heading)
 {

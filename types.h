@@ -11,10 +11,10 @@ most probably it will be included in all modules
 #define UNDEFINED_SLOT 0x00
 
 /*pins of the sensors*/
-#define FRONT_SENSOR_PIN 3
+#define FRONT_SENSOR_PIN 0
 #define RIGHT_SENSOR_PIN 8
 #define LEFT_SENSOR_PIN 9
-#define ENCODER_PIN 0
+#define ENCODER_PIN 1
 
 /*pins of the motors*/
 #define RIGHT_MOTOR_POSITIVE_PIN 5

@@ -1,10 +1,11 @@
 #include "Robot.h"
 #include "MapHandler.h"
-
+#include "Arduino.h"
 #include "Scan.h"
 #include "OBJD.h"
 #include "ULSH.h"
 #include "MOVH.h"
+#include "ENCOD.h"
 
 
 
@@ -18,7 +19,7 @@ using namespace std;
 Point Pointlist[POINT_LIST_SIZE];
 static uint8 PointListIndex = 0;
 static Boolean ZigZagFlag = FALSE;
-static Boolean BumperHit = FALSE;
+static volatile Boolean BumperHit = FALSE;
 Boolean ToStartPoint = TRUE;
 Robot cleaner = Robot::initRobotPosition();
 
@@ -37,6 +38,7 @@ static void fixRobotHeading(Robot& cleaner, enu_Direction_req RobHeadingReq);
 static void ZigZagRoutine(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHeadingReq);
 static void GoToStartPoint(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHeadingReq);
 static SensorsReadings BumperHitSensorsView(Robot& rob, Map& RoomMap, enu_Direction_req RobHeadingReq);
+static void ISR_left_Encoder_tick(void);
 #ifdef FINISHUP_EMPTY_SLOTS
 #ifdef GO_TO_GOAL_STRAIGHTLINES
 static void GoToGoal_Empty(Robot& cleaner, Map& RoomMap);
@@ -48,6 +50,9 @@ void main()
 {
 	/*=============================Intialize project==============================*/
 
+	/*pin 0 in interrupt is pin 2 in arduino*/
+	attachInterrupt(FRONT_SENSOR_PIN, ISR_BumperHit, RISING);
+	attachInterrupt(ENCODER_PIN, ISR_left_Encoder_tick, RISING);
 	/*------------------Map Init Data-------------------*/
 	Map RoomMap;
 	RoomMap.initMap();
@@ -181,6 +186,11 @@ void ISR_BumperHit(void)
 	/*Stop Robot*/
 	MOVE::MoveStop(cleaner);
 #endif
+}
+
+void ISR_left_Encoder_tick()
+{
+	left_encoder::L_encoder();
 }
 
 static void fixRobotHeading(Robot& cleaner, enu_Direction_req RobHeadingReq)

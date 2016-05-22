@@ -4,6 +4,7 @@
 #include <iostream>
 #else
 #include "Arduino.h"
+#include "ENCOD.h"
 #endif
 #include "COMH.h"
 
@@ -195,7 +196,6 @@ void MOVE::MoveForwardStep(Robot& rob, Heading heading)
 	if ((Stepcounter % STEP_LINEAR_SCAN) == 0)
 	{
 #else
-
 	Boolean hit_encoder = FALSE;
 	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, HIGH);
 	digitalWrite(RIGHT_MOTOR_GROUND_PIN, LOW);
@@ -207,7 +207,7 @@ void MOVE::MoveForwardStep(Robot& rob, Heading heading)
 		/*TODO: timer in case counter didnt reach*/
 
 		/*return boolean flag when signal is on using interrupt*/
-		hit_encoder = ENCODER.READ_RIGHT_ENCODER();
+		hit_encoder = left_encoder::get_L_encoder_flag();
 		if (hit_encoder)
 		{
 			Stepcounter++;
