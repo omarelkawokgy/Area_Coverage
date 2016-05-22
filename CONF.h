@@ -72,6 +72,7 @@ typedef enum
 #define ROBOT_INIT_THETA	0
 #define ROBOT_WHEEL_SIZE 5//in cm
 #define ROBOT_SIZE 20 //in cm
+#define ROBOT_SINGLE_STEP 80
 
 /*----------Scan conf-------------*/
 #define SCAN_ANGLE 30
@@ -111,12 +112,12 @@ typedef struct
 }L_R_Dist;
 
 /*--------------------MACRO CONTROLS--------------------*/
-#define ENABLE_SIMULATION
+#undef ENABLE_SIMULATION
 #undef DEBUG
 #undef RECTANGLE
 #undef USING_MAP_LIBRARY
 #undef WORKING_WITH_ANGLES
-#define FINISHUP_EMPTY_SLOTS
+#undef FINISHUP_EMPTY_SLOTS
 #define SINGLE_ENCODER_ROBOT
 #undef GO_TO_GOAL_STRAIGHTLINES
 
