@@ -1,3 +1,4 @@
+
 #include "Robot.h"
 #include "MapHandler.h"
 #include "Scan.h"
@@ -45,14 +46,14 @@ static void GoToGoal_Empty(Robot& cleaner, Map& RoomMap);
 static void FinishUpLeftEmpty(Robot& cleaner, Map& RoomMap, enu_Direction_req* Direction_req);
 #endif
 
+
 void main()
 {
 	/*=============================Intialize project==============================*/
-#ifdef ARDUINO_HARDWARE_CONNECTED
+
 	/*pin 0 in interrupt is pin 2 in arduino*/
 	attachInterrupt(FRONT_SENSOR_PIN, ISR_BumperHit, RISING);
 	attachInterrupt(ENCODER_PIN, ISR_left_Encoder_tick, RISING);
-#endif
 	/*------------------Map Init Data-------------------*/
 	Map RoomMap;
 	RoomMap.initMap();
@@ -1006,3 +1007,4 @@ static void FinishUpLeftEmpty(Robot& cleaner, Map& RoomMap, enu_Direction_req* D
 {
 
 }
+

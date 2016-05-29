@@ -74,6 +74,7 @@ typedef enum
 #define ROBOT_SIZE 20 //in cm
 #define ROBOT_SINGLE_STEP 80
 
+
 /*----------Scan conf-------------*/
 #define SCAN_ANGLE 30
 /*for circular scans only temp. closed*/
@@ -120,6 +121,7 @@ typedef struct
 #undef FINISHUP_EMPTY_SLOTS
 #define SINGLE_ENCODER_ROBOT
 #undef GO_TO_GOAL_STRAIGHTLINES
+#undef ARDUINO_HARDWARE_CONNECTED
 
 /*----------------return types-------------------------*/
 #define RET_NOT_OK 0
