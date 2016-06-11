@@ -1,15 +1,15 @@
 #ifndef MAPHANDLER_H
 #define MAPHANDLER_H
-
-#include "rectangle.h"
+#include "Robot.h"
+//#include "rectangle.h"
 #include "CONF.h"
 #include "OBJD.h"
 
 
-class Map : public Rectangle
+class Map
 {
 private:
-	Rectangle* rect;
+	//Rectangle* rect;
 	/*
 	uint8 MapRow[MAP_ROW];
 	uint8 MapColumn[MAP_COLUMN];
@@ -23,7 +23,7 @@ public:
 
 	void initMap(void);
 
-	void AddRectangle(Rectangle rect, RobotPos* position);
+	//void AddRectangle(Rectangle rect, RobotPos* position);
 
 	void addPointOnMap(Point newpoint, Robot rob, Heading heading);
 
