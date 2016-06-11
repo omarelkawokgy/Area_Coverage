@@ -17,10 +17,12 @@ using namespace std;
 
 /*global variable declaration*/
 Point Pointlist[POINT_LIST_SIZE];
+Map RoomMap;
 static uint8 PointListIndex = 0;
 static Boolean ZigZagFlag = FALSE;
 static volatile Boolean BumperHit = FALSE;
 Boolean ToStartPoint = TRUE;
+enu_Direction_req Direction_req = REQUEST_NORTH;
 Robot cleaner = Robot::initRobotPosition();
 
 #ifdef FINISHUP_EMPTY_SLOTS
@@ -39,6 +41,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHe
 static void GoToStartPoint(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHeadingReq);
 static SensorsReadings BumperHitSensorsView(Robot& rob, Map& RoomMap, enu_Direction_req RobHeadingReq);
 static void ISR_left_Encoder_tick(void);
+static void ISR_BumperHit(void);
 #ifdef FINISHUP_EMPTY_SLOTS
 #ifdef GO_TO_GOAL_STRAIGHTLINES
 static void GoToGoal_Empty(Robot& cleaner, Map& RoomMap);
@@ -47,7 +50,7 @@ static void FinishUpLeftEmpty(Robot& cleaner, Map& RoomMap, enu_Direction_req* D
 #endif
 
 
-void main()
+void setup()
 {
 	/*=============================Intialize project==============================*/
 
@@ -55,14 +58,14 @@ void main()
 	attachInterrupt(FRONT_SENSOR_PIN, ISR_BumperHit, RISING);
 	attachInterrupt(ENCODER_PIN, ISR_left_Encoder_tick, RISING);
 	/*------------------Map Init Data-------------------*/
-	Map RoomMap;
+	
 	RoomMap.initMap();
 
 	/*----------------Robot Init Data------------------*/
 	RobotPos RobTempPosition = cleaner.GetRobotPosition();
 
 	/*----------------------INIT--------------------*/
-	enu_Direction_req Direction_req = REQUEST_NORTH;
+	
 #ifdef ENABLE_SIMULATION
 	simu sim;
 #endif
@@ -86,9 +89,9 @@ void main()
 		RoomMap.AddRectangle(rect1, &RobTempPosition);
 	}
 #endif
-
-	while (1)
-	{
+}
+void loop()
+{
 
 		/*go to extreme left of map to scan room*/
 		GoToStartPoint(cleaner, RoomMap, &Direction_req);
@@ -105,9 +108,8 @@ void main()
 		sim.printMap(RoomMap);
 #endif
 
-	}
-	/*TODO: check the right side of the Map to cover it all*/
 
+	/*TODO: check the right side of the Map to cover it all*/
 
 	//system("pause");
 	return;
