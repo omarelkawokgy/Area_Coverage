@@ -11,23 +11,28 @@ most probably it will be included in all modules
 #define UNDEFINED_SLOT 0x00
 
 /*pins of the sensors*/
-#define FRONT_SENSOR_PIN 0
+#define FRONT_SENSOR_INTERRUPT_NUMBER 0
 #define RIGHT_SENSOR_PIN 8
-#define LEFT_SENSOR_PIN 9
-#define ENCODER_PIN 1
+#define LEFT_SENSOR_PIN 7
+#define ENCODER_INTERRUPT_NUMBER 1
 
 /*pins of the motors*/
-#define RIGHT_MOTOR_POSITIVE_PIN 5
-#define RIGHT_MOTOR_GROUND_PIN 4
+#define RIGHT_MOTOR_POSITIVE_PIN 6
+#define RIGHT_MOTOR_GROUND_PIN 5
 
-#define LEFT_MOTOR_POSITIVE_PIN 6
-#define LEFT_MOTOR_GROUND_PIN 7
+#define LEFT_MOTOR_POSITIVE_PIN 10
+#define LEFT_MOTOR_GROUND_PIN 9
+
+#define HIGH_PWM 127
+#define LOW_PWM 0
 
 /*standard distances for empty and busy*/
 #define SIZE_OF_SLOT 20
 
 #define TRUE 1
 #define FALSE 0
+
+#define UINT_SNA 0
 
 /*------------Macro functions definition-------------*/
 #define VAR(type, Name_of_Module) type

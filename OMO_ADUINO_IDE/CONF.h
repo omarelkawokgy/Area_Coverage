@@ -3,8 +3,8 @@
 
 #include "types.h"
 
-#define MAP_ROW 40
-#define MAP_COLUMN 40
+#define MAP_ROW 20
+#define MAP_COLUMN 20
 
 /*-------------Map Conf------------*/
 #define POINT_LIST_SIZE 20
@@ -31,12 +31,6 @@ SOUTH,
 EAST,
 INVALID_DIRECTION = 0
 }Heading;
-
-/*values of directions*/
-#define NORTH_VALUE 102
-#define WEST_VALUE 219
-#define SOUTH_VALUE 281
-#define EAST_VALUE 333
 
 #define INVALID_ANGLE_VALUE 0
 #define ALLOWED_ANGLE_ERROR 5 
@@ -66,13 +60,14 @@ typedef enum
 	RIGHT_SENSOR
 }SensorID;
 
+
 /*-----------Robot conf--------------*/
 #define ROBOT_INIT_X		(MAP_ROW/2)
 #define ROBOT_INIT_Y		(MAP_COLUMN/2)
 #define ROBOT_INIT_THETA	0
-#define ROBOT_WHEEL_SIZE 5//in cm
+#define ROBOT_WHEEL_SIZE 20//in cm
 #define ROBOT_SIZE 20 //in cm
-#define ROBOT_SINGLE_STEP 80
+#define ROBOT_SINGLE_STEP 210
 
 
 /*----------Scan conf-------------*/
@@ -114,7 +109,7 @@ typedef struct
 
 /*--------------------MACRO CONTROLS--------------------*/
 #undef ENABLE_SIMULATION
-#undef DEBUG
+#define DEBUG
 #undef RECTANGLE
 #undef USING_MAP_LIBRARY
 #undef WORKING_WITH_ANGLES
@@ -122,6 +117,8 @@ typedef struct
 #define SINGLE_ENCODER_ROBOT
 #undef GO_TO_GOAL_STRAIGHTLINES
 #undef ARDUINO_HARDWARE_CONNECTED
+#undef UPDATE_POINT_POSITION
+#undef ENCODER_ON_INTERRUPT
 
 /*----------------return types-------------------------*/
 #define RET_NOT_OK 0

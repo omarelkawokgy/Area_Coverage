@@ -1,9 +1,12 @@
+#ifdef ENABLE_SIMULATION
 #include <iostream>
+#endif
 
 #include "Scan.h"
 
-
+#ifdef ENABLE_SIMULATION
 using namespace std;
+#endif
 
 Scan& Scan::getInstanceScan()
 {

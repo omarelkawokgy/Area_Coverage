@@ -19,6 +19,8 @@ public:
 	static return_type MoveBackward(Robot& rob, Heading heading);
 
 	static void MoveStop(Robot& rob);
+ 
+  static void MoveStop(void);
 
 #if 0
 	static void MoveInitAngle(Robot& rob);
@@ -34,5 +36,13 @@ public:
 	static void UTurnRight(Robot& cleaner, Heading RobCurrentHeading);
 
 	static void UTurn(Robot& cleaner, Heading RobCurrentHeading);
+#ifndef ENABLE_SIMULATION
+  static Boolean CheckConnection(const Boolean CW_CHECK);
+
+
+  static void SetMotorPins(const uint8 rightMotorPositivePin_value, const  uint8 rightMotorGroundPin_value,
+	  const uint8 leftMotorPositivePin_value, const  uint8 leftMotorGroundPin_value);
+#endif
+
 };
 #endif

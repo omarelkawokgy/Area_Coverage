@@ -1,10 +1,14 @@
+#ifdef ENABLE_SIMULATION 
 #include <iostream>
+#endif
+
 #include "Robot.h"
 #include "MapHandler.h"
 #include "SIMU.h"
 
-
+#ifdef ENABLE_SIMULATION
 using namespace std;
+#endif
 
 //initial position where the robot starts its corrdinate and bearing
 Robot& Robot::initRobotPosition(void)

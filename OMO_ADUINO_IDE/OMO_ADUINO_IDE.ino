@@ -16,11 +16,14 @@ using namespace std;
 #endif
 
 /*global variable declaration*/
+#ifdef POINT_LIST_ENABLE
 Point Pointlist[POINT_LIST_SIZE];
-Map RoomMap;
 static uint8 PointListIndex = 0;
+#endif
+
+Map RoomMap;
 static Boolean ZigZagFlag = FALSE;
-static volatile Boolean BumperHit = FALSE;
+volatile Boolean BumperHit = FALSE;
 Boolean ToStartPoint = TRUE;
 enu_Direction_req Direction_req = REQUEST_NORTH;
 Robot cleaner = Robot::initRobotPosition();
@@ -48,15 +51,47 @@ static void GoToGoal_Empty(Robot& cleaner, Map& RoomMap);
 #endif
 static void FinishUpLeftEmpty(Robot& cleaner, Map& RoomMap, enu_Direction_req* Direction_req);
 #endif
+static Boolean checkConnections(void);
 
 
 void setup()
 {
-	/*=============================Intialize project==============================*/
+        Wire.begin();
 
+        #ifdef DEBUG
+        Serial.begin(9600);
+        Serial.println("start setup");
+        #endif
+
+	/*=============================Intialize project==============================*/
+        
+        /*input and output pins*/
+        pinMode (RIGHT_MOTOR_POSITIVE_PIN, OUTPUT);
+        pinMode (RIGHT_MOTOR_GROUND_PIN, OUTPUT);
+        pinMode (LEFT_MOTOR_POSITIVE_PIN, OUTPUT);
+        pinMode (LEFT_MOTOR_GROUND_PIN, OUTPUT);
+
+        Comp::InitializeDirections();
+        
+        Serial.print("NORTH initial value: ");
+        Serial.println(NORTH_VALUE);
+
+        Serial.print("WEST initial value: ");
+        Serial.println(WEST_VALUE);
+
+        Serial.print("SOUTH initial value: ");
+        Serial.println(SOUTH_VALUE);
+
+        Serial.print("EAST initial value: ");
+        Serial.println(EAST_VALUE);
+
+        delay(2000);
+  
 	/*pin 0 in interrupt is pin 2 in arduino*/
-	attachInterrupt(FRONT_SENSOR_PIN, ISR_BumperHit, RISING);
-	attachInterrupt(ENCODER_PIN, ISR_left_Encoder_tick, RISING);
+	attachInterrupt(FRONT_SENSOR_INTERRUPT_NUMBER, ISR_BumperHit, FALLING);
+#ifdef ENCODER_ON_INTERRUPT
+	attachInterrupt(ENCODER_INTERRUPT_NUMBER, ISR_left_Encoder_tick, RISING);
+#endif
 	/*------------------Map Init Data-------------------*/
 	
 	RoomMap.initMap();
@@ -65,7 +100,10 @@ void setup()
 	RobotPos RobTempPosition = cleaner.GetRobotPosition();
 
 	/*----------------------INIT--------------------*/
-	
+	Serial.print("Check connection result: ");
+	Serial.println(checkConnections());
+  delay(2000);
+ 
 #ifdef ENABLE_SIMULATION
 	simu sim;
 #endif
@@ -90,10 +128,17 @@ void setup()
 	}
 #endif
 }
+
 void loop()
 {
-
 		/*go to extreme left of map to scan room*/
+#ifdef DEBUG_OFF
+Serial.println("start loop");
+#endif
+#ifdef DEBUG
+Serial.print("Robot position.Y: ");
+Serial.println(cleaner.GetRobotPosition().Y_pos);
+#endif
 		GoToStartPoint(cleaner, RoomMap, &Direction_req);
 
 		ZigZagRoutine(cleaner, RoomMap, &Direction_req);
@@ -108,16 +153,12 @@ void loop()
 		sim.printMap(RoomMap);
 #endif
 
-
-	/*TODO: check the right side of the Map to cover it all*/
-
 	//system("pause");
-	return;
 }
 
+#ifdef UPDATE_POINT_POSITION
 static Boolean CheckPointUpdatePos(PointPos newPointPos, Heading heading, Map& RoomMap)
 {
-	uint8 PointListIndex;
 	Boolean PosUpdateCheck = FALSE;
 	PointPos TempPointPos = newPointPos;
 	if ((heading == NORTH) || (heading == SOUTH))
@@ -165,7 +206,9 @@ static Boolean CheckPointUpdatePos(PointPos newPointPos, Heading heading, Map& R
 	}
 	return PosUpdateCheck;
 }
+#endif
 
+#ifdef UPDATE_POINT_POSITION
 /*searchs near the busy point detected to update it*/
 static uint8 NearBusyPointSearch(PointPos TempPointPos)
 {
@@ -181,20 +224,28 @@ static uint8 NearBusyPointSearch(PointPos TempPointPos)
 	}
 	return result;
 }
+#endif
 
 void ISR_BumperHit(void)
 {
+  #ifdef DEBUG
+  Serial.println("interrupt hit");
+  #endif
+
 	BumperHit = TRUE;
+
 #ifndef ENABLE_SIMULATION
 	/*Stop Robot*/
 	MOVE::MoveStop(cleaner);
 #endif
 }
 
+#ifdef ENCODER_ON_INTERRUPT
 void ISR_left_Encoder_tick()
 {
 	left_encoder::L_encoder();
 }
+#endif
 
 static void fixRobotHeading(Robot& cleaner, enu_Direction_req RobHeadingReq)
 {
@@ -283,7 +334,8 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHe
 		{
 			(void)MOVE::MoveStop(cleaner);
 			(void)MOVE::MoveBackward(cleaner, RobCurrentHeading);
-			
+			BumperHit = FALSE;
+
 			RobTempPosition = cleaner.GetRobotPosition();
 			readingSensorsView = BumperHitSensorsView(cleaner, RoomMap, *RobHeadingReq);
 
@@ -385,14 +437,13 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHe
 			default:
 				break;
 			}
-			BumperHit = FALSE;
 			//RobCurrentHeading = cleaner.GetRobotHeading();
 			RoomMap.UpdateRobotPosition(cleaner);
 		}
 		else
 		{ 
-
-			/*check the ID of the point before creating new ones*/
+			/*entering straightline no BumperHit*/
+			/*TODO:check the ID of the point before creating new ones*/
 			Error_Check = scan.LinearScan(&LeftTempPointPos, &RightTempPointPos, cleaner, RobCurrentHeading);
 			if (Error_Check == RET_OK)
 			{
@@ -400,13 +451,18 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHe
 				if ((RoomMap.room[LeftTempPointPos.Y_Row][LeftTempPointPos.X_Column] != BUSY) &&
 					(RoomMap.room[LeftTempPointPos.Y_Row][LeftTempPointPos.X_Column] != ROBOT))
 				{
+#ifdef POINT_LIST_ENABLE
 					UpdatePointCheck = CheckPointUpdatePos(LeftTempPointPos, RobCurrentHeading, RoomMap);
 					if (UpdatePointCheck == FALSE)
 					{
 						Pointlist[PointListIndex].SetPosition(LeftTempPointPos);
 						RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner, RobCurrentHeading);
 						PointListIndex++;
-					}
+          }
+#else
+						RoomMap.addPointOnMap(LeftTempPointPos, cleaner, RobCurrentHeading);
+#endif
+					
 				}
 				else
 				{
@@ -417,6 +473,7 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHe
 				if ((RoomMap.room[RightTempPointPos.Y_Row][RightTempPointPos.X_Column] != BUSY) &&
 					(RoomMap.room[RightTempPointPos.Y_Row][RightTempPointPos.X_Column] != ROBOT))
 				{
+#ifdef POINT_LIST_ENABLE
 					UpdatePointCheck = CheckPointUpdatePos(RightTempPointPos, RobCurrentHeading, RoomMap);
 					if (UpdatePointCheck == FALSE)
 					{
@@ -424,6 +481,9 @@ static void ZigZagRoutine(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobHe
 						RoomMap.addPointOnMap(Pointlist[PointListIndex], cleaner, RobCurrentHeading);
 						PointListIndex++;
 					}
+#else
+          RoomMap.addPointOnMap(RightTempPointPos, cleaner, RobCurrentHeading);
+#endif
 				}
 				else
 				{
@@ -757,11 +817,17 @@ static void GoToStartPoint(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobH
 	uint8 interrupt = FALSE;
 	SensorsReadings readingSensorsView = FAILURE_READING;
 	Heading heading = INVALID_DIRECTION;
-
-	if(ToStartPoint)
+	if(ToStartPoint == TRUE)
 	{
+#ifdef DEBUG_OFF
+  Serial.println("start of go to start point1");
+#endif
 		heading = cleaner.GetRobotHeading();
+#ifdef DEBUG_OFF
+  Serial.println("start of go to start point2");
+#endif
 		MOVE::MoveForward(cleaner, heading);
+
 #ifdef ENABLE_SIMULATION
 		cout << "To Start Point if Interrupt press '5'?" << endl;
 		cin >> interrupt;
@@ -774,6 +840,7 @@ static void GoToStartPoint(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobH
 		{
 			(void)MOVE::MoveStop(cleaner);
 			(void)MOVE::MoveBackward(cleaner, heading);
+			BumperHit = FALSE;
 			readingSensorsView = BumperHitSensorsView(cleaner, RoomMap, *RobHeadingReq);
 
 			switch (readingSensorsView)
@@ -870,7 +937,6 @@ static void GoToStartPoint(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobH
 
 		}
 		RoomMap.UpdateRobotPosition(cleaner);
-		BumperHit = FALSE;
 	}
 }
 
@@ -1008,5 +1074,29 @@ Robot_to_Goal Goal_FromRobot_UpdateReq(RobotPos RobotPosition, Coordinates Empty
 static void FinishUpLeftEmpty(Robot& cleaner, Map& RoomMap, enu_Direction_req* Direction_req)
 {
 
+}
+
+
+
+static Boolean checkConnections(void)
+{
+  Boolean ErrorCheck = RET_OK;
+  uint16 ReadDist = 0;
+
+  ErrorCheck &= MOVE::CheckConnection(CW_CHECK);
+  ErrorCheck &= right_encoder::CheckConnection();
+  ErrorCheck &= Comp::CheckConnection();
+  delay(400);
+  ErrorCheck &= MOVE::CheckConnection(CW_CHECK);
+  delay(500);
+  MOVE::MoveStop();
+  ReadDist = ULSH::ULS_getLeftDist();
+  ReadDist += ULSH::ULS_getRightDist();
+
+  if(ReadDist == 0)
+  {
+    ErrorCheck = RET_NOT_OK;
+  }
+  return ErrorCheck;
 }
 

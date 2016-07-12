@@ -1,4 +1,6 @@
-#include <iostream>
+#ifdef ENABLE_SIMULATION
+#include <iostream<=
+#endif
 #include "MapHandler.h"
 #include "Main_func_1.h"
 
@@ -51,36 +53,76 @@ void Map::AddRectangle(Rectangle rect, RobotPos* position)
 
 void Map::addCleanedOnMap(uint8 y, uint8 x)
 {
-	room[y][x] = CLEANED;
+	if ((y <= MAP_ROW) && (x <= MAP_COLUMN))
+	{
+		room[y][x] = CLEANED;
+	}
+	else
+	{
+		BumperHit = TRUE;
+	}
 }
 
 void Map::addBusyOnMap(uint8 y, uint8 x)
 {
-	room[y][x] = BUSY;
+	if ((y <= MAP_ROW) && (x <= MAP_COLUMN))
+	{
+		room[y][x] = BUSY;
+	}
+	else
+	{
+		BumperHit = TRUE;
+	}
 }
 
 void Map::addEmptyOnMap(uint8 y, uint8 x)
 {
-	room[y][x] = EMPTY;
+	if ((y <= MAP_ROW) && (x <= MAP_COLUMN))
+	{
+		room[y][x] = EMPTY;
+	}
+	else
+	{
+		BumperHit = TRUE;
+	}
 }
 
 void Map::addRobotOnMap(uint8 y, uint8 x)
 {
-	room[y][x] = ROBOT;
+	if ((y <= MAP_ROW) && (x <= MAP_COLUMN))
+	{
+		room[y][x] = ROBOT;
+	}
+	else
+	{
+		BumperHit = TRUE;
+	}
 }
 
 void Map::addUnCoveredOnMap(uint8 y, uint8 x)
 {
-	room[y][x] = UNCOVERED;
+	if ((y <= MAP_ROW) && (x <= MAP_COLUMN))
+	{
+		room[y][x] = UNCOVERED;
+	}
+	else
+	{
+		BumperHit = TRUE;
+	}
 }
-
+#ifdef POINT_LIST_ENABLE
 void Map::addPointOnMap(Point newpoint, Robot rob, Heading heading)
-{
-	PointPos PointPosition;
+#else
+void Map::addPointOnMap(PointPos PointPosition, Robot rob, Heading heading)
+#endif
+{	
 	RobotPos RobPosition;
 	uint8 EmptyDistance;
 	uint8 StartSwipe;
+#ifdef POINT_LIST_ENABLE
+	PointPos PointPosition;
 	PointPosition = newpoint.getPointPos();
+#endif
 	addBusyOnMap(PointPosition.Y_Row, PointPosition.X_Column);
 
 	/*clearing area between robot and obstical*/
@@ -122,9 +164,16 @@ void Map::addPointOnMap(Point newpoint, Robot rob, Heading heading)
 
 		for (uint8 i = StartSwipe; i < EmptyDistance; i++)
 		{
-			if ((room[i][PointPosition.X_Column] != CLEANED) && (room[i][PointPosition.X_Column] != BUSY))
+			if ((i <= MAP_ROW) && (PointPosition.X_Column <= MAP_COLUMN))
 			{
-				addEmptyOnMap(i, PointPosition.X_Column);
+				if ((room[i][PointPosition.X_Column] != CLEANED) && (room[i][PointPosition.X_Column] != BUSY))
+				{
+					addEmptyOnMap(i, PointPosition.X_Column);
+				}
+			}
+			else
+			{
+				BumperHit = TRUE;
 			}
 		}
 	}
@@ -136,20 +185,28 @@ void Map::UpdateRobotPosition(Robot& rob)
 	{
 		for (uint8 j = 0; j < MAP_COLUMN; j++)
 		{
-			if ((rob.GetRobotPosition().X_pos == i) && (rob.GetRobotPosition().Y_pos == j))
+			if ((i <= MAP_ROW) && (j <= MAP_COLUMN))
 			{
-				addRobotOnMap(j, i);
+				if ((rob.GetRobotPosition().X_pos == i) && (rob.GetRobotPosition().Y_pos == j))
+				{
+					addRobotOnMap(j, i);
+				}
+				else if (room[j][i] == ROBOT)
+				{
+					if (ToStartPoint == FALSE)
+					{
+						addCleanedOnMap(j, i);
+					}
+					else
+					{
+						addEmptyOnMap(j, i);
+					}
+
+				}
 			}
-			else if (room[j][i] == ROBOT)
+			else
 			{
-				if (ToStartPoint == FALSE)
-				{
-					addCleanedOnMap(j, i);
-				}
-				else
-				{
-					addEmptyOnMap(j, i);
-				}
+				BumperHit = TRUE;
 			}
 		}
 	}

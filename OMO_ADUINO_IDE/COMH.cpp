@@ -1,24 +1,53 @@
-#include <HMC5883L.h>
-
-
-
 #include "COMH.h"
 #ifdef ENABLE_SIMULATION
 #include<iostream>
 using namespace std;
 #else
 HMC5883L Compass;
+
 #endif
+
+ /*values of directions*/
+uint16 NORTH_VALUE = 0;
+uint16 WEST_VALUE = 0;
+uint16 SOUTH_VALUE = 0;
+uint16 EAST_VALUE = 0;
 
 Comp::Comp()
 {
 
 }
 
+void Comp::InitializeDirections(void)
+{
+  NORTH_VALUE = Comp::ReadRawData();
+
+  WEST_VALUE = NORTH_VALUE + 90;
+  if(WEST_VALUE > 360)
+  {
+    /*Handle plus 90 greater than 360*/
+    WEST_VALUE -= 360;
+  }
+
+  SOUTH_VALUE = WEST_VALUE + 90;
+  if(SOUTH_VALUE > 360)
+  {
+    /*Handle plus 90 greater than 360*/
+    SOUTH_VALUE -= 360; 
+  }
+
+  EAST_VALUE = SOUTH_VALUE + 90;
+  if(EAST_VALUE > 360)
+  {
+    /*Handle plus 90 greater than 360*/
+    EAST_VALUE -= 360;     
+  }
+  
+}
+
 uint16 Comp::ReadRawData(void)
 {
   uint16 Temp_angle;
-
 #ifdef ENABLE_SIMULATION
   cout << "Angle from compass:" << endl;
   cin >> Temp_angle;
@@ -26,6 +55,7 @@ uint16 Comp::ReadRawData(void)
 /* CONNECTION PINS FOR THIS ARE A5 PIN (I2C PIN) >> SCL ..... A4 PIN (I2C PIN) >> SCA */
     //raw data so its not scaled
   MagnetometerRaw raw = Compass.ReadRawAxis();
+  
   MagnetometerScaled scaled = Compass.ReadScaledAxis();
 
   float heading = atan2(raw.YAxis, raw.XAxis);
@@ -36,12 +66,15 @@ uint16 Comp::ReadRawData(void)
   }
 
   //convert radians to degrees
-  Temp_angle = heading * 180 / M_PI;
-  //Serial.println(headingDegrees);
-
-  return Temp_angle;
-  //  Serial.println(" Degrees   \t");
+  Temp_angle = (uint16)(heading * 180 / M_PI);
+  
+  
 #endif
+#ifdef DEBUG
+Serial.print("read compass: ");
+Serial.println(Temp_angle);
+#endif
+
   return Temp_angle;
 }
 
@@ -75,5 +108,22 @@ Heading Comp::ReadComp(void)
     Angle = INVALID_DIRECTION;
   }
   return Angle;
+}
+
+Boolean Comp::CheckConnection(void)
+{
+  uint16 TempAngle = 0;
+  uint16 CurrentAngle = 0;
+  Boolean ret = RET_NOT_OK;
+  
+  TempAngle = Comp::ReadRawData();
+  delay(100);
+  CurrentAngle = Comp::ReadRawData();
+  
+  if( TempAngle != CurrentAngle)
+  {
+    ret = RET_OK;
+  }
+  return ret;
 }
 

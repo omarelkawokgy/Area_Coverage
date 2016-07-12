@@ -24,9 +24,11 @@ public:
 	void initMap(void);
 
 	//void AddRectangle(Rectangle rect, RobotPos* position);
-
+#ifdef POINT_LIST_ENABLE
 	void addPointOnMap(Point newpoint, Robot rob, Heading heading);
-
+#else
+	void addPointOnMap(PointPos PointPosition, Robot rob, Heading heading);
+#endif
 	void MergePointsOnMap(PointPos newPointPos, PointPos oldPointPos);
 
 	void UpdateRobotPosition(Robot& rob);

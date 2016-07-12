@@ -81,8 +81,11 @@ return_type MOVE::UpdatePosition(RobotPos* robposition, Heading heading, uint8 D
 
 return_type MOVE::MoveForward(Robot& rob, Heading heading)
 {
-	return_type Error_Check = RET_NOT_OK; 
-	MoveForwardStep(rob,heading);
+	return_type Error_Check = RET_NOT_OK;
+	if (BumperHit == FALSE)
+	{
+		MoveForwardStep(rob, heading);
+	}
 #ifdef ENABLE_SIMULATION
 
 #else
@@ -105,10 +108,10 @@ return_type MOVE::MoveBackward(Robot& rob, Heading heading)
 		}
 		return Error_Check;
 #else
-	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, LOW);
-	digitalWrite(RIGHT_MOTOR_GROUND_PIN, HIGH);
-	digitalWrite(LEFT_MOTOR_POSITIVE_PIN, LOW);
-	digitalWrite(LEFT_MOTOR_GROUND_PIN, HIGH);
+#ifdef DEBUG
+Serial.print("movebackward");
+#endif
+	MOVE::SetMotorPins(LOW_PWM, HIGH_PWM, LOW_PWM, HIGH_PWM);
 	return Error_Check = RET_OK;
 #endif
 	
@@ -119,10 +122,10 @@ void MOVE::MoveStop(Robot& rob)
 #ifdef ENABLE_SIMULATION
 
 #else
-	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, LOW);
-	digitalWrite(RIGHT_MOTOR_GROUND_PIN, LOW);
-	digitalWrite(LEFT_MOTOR_POSITIVE_PIN, LOW);
-	digitalWrite(LEFT_MOTOR_GROUND_PIN, LOW);
+#ifdef DEBUG 
+Serial.println("stop");
+#endif
+	MOVE::SetMotorPins(LOW_PWM, LOW_PWM, LOW_PWM, LOW_PWM);
 #endif
 }
 
@@ -148,10 +151,7 @@ void MOVE::MoveTurn_CW(Robot& rob, const uint16 TargetAngle)
 	robPosition.theta = TargetAngle;
 	rob.SetPosition(robPosition);
 #else
-	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, LOW);
-	digitalWrite(RIGHT_MOTOR_GROUND_PIN, HIGH);
-	digitalWrite(LEFT_MOTOR_POSITIVE_PIN, HIGH);
-	digitalWrite(LEFT_MOTOR_GROUND_PIN, LOW);
+	MOVE::SetMotorPins(LOW_PWM, HIGH_PWM, HIGH_PWM, LOW_PWM);
 
 	while ((robPosition.theta < (TargetAngle - ALLOWED_ANGLE_ERROR)) || (robPosition.theta >(TargetAngle + ALLOWED_ANGLE_ERROR)))
 	{
@@ -170,10 +170,8 @@ void MOVE::MoveTurn_CCW(Robot& rob, const uint16 TargetAngle)
 	robPosition.theta = TargetAngle;
 	rob.SetPosition(robPosition);
 #else
-	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, HIGH);
-	digitalWrite(RIGHT_MOTOR_GROUND_PIN, LOW);
-	digitalWrite(LEFT_MOTOR_POSITIVE_PIN, LOW);
-	digitalWrite(LEFT_MOTOR_GROUND_PIN, HIGH);
+	MOVE::SetMotorPins(HIGH_PWM, LOW_PWM, LOW_PWM, HIGH_PWM);
+
 	while ((robPosition.theta < (TargetAngle - ALLOWED_ANGLE_ERROR)) || (robPosition.theta >(TargetAngle + ALLOWED_ANGLE_ERROR)))
 	{
 		/*TODO: timer in case angle didnt reach*/
@@ -187,7 +185,8 @@ void MOVE::MoveForwardStep(Robot& rob, Heading heading)
 {
 	/*TODO: handle crashing before continuing this step*/
 	/*the robot will stop as it hits an object to need to handle it here*/
-	static uint8 Stepcounter = 0;
+
+	Boolean StepComplete = FALSE;
 	RobotPos robposition = rob.GetRobotPosition();
 	return_type Error_Check = RET_NOT_OK;
 #ifdef ENABLE_SIMULATION
@@ -196,29 +195,21 @@ void MOVE::MoveForwardStep(Robot& rob, Heading heading)
 	if ((Stepcounter % STEP_LINEAR_SCAN) == 0)
 	{
 #else
-	Boolean hit_encoder = FALSE;
-	digitalWrite(RIGHT_MOTOR_POSITIVE_PIN, HIGH);
-	digitalWrite(RIGHT_MOTOR_GROUND_PIN, LOW);
-	digitalWrite(LEFT_MOTOR_POSITIVE_PIN, HIGH);
-	digitalWrite(LEFT_MOTOR_GROUND_PIN, LOW);\
+#ifdef DEBUG
+  Serial.println("move forward step");
+#endif
+	MOVE::SetMotorPins(HIGH_PWM, LOW_PWM, HIGH_PWM, LOW_PWM);
 
-	while (Stepcounter < ROBOT_SINGLE_STEP)
-	{
+	StepComplete = right_encoder::read_right_encoder_ticks();
+
 		/*TODO: timer in case counter didnt reach*/
 
-		/*return boolean flag when signal is on using interrupt*/
-		hit_encoder = left_encoder::get_L_encoder_flag();
-		if (hit_encoder)
-		{
-			Stepcounter++;
-			hit_encoder = FALSE;
-		}
-	}
+
 #endif
 	Error_Check = UpdatePosition(&robposition, heading, FORWARD);
 	if (Error_Check == RET_OK)
 	{
-		rob.SetPosition(robposition);
+			rob.SetPosition(robposition);
 	}
 #ifdef ENABLE_SIMULATION
 }
@@ -355,3 +346,37 @@ void MOVE::UTurn(Robot& cleaner, Heading RobCurrentHeading)
 		break;
 	}
 }
+
+Boolean MOVE::CheckConnection(const Boolean CW_CHECK_VAR)
+{
+  Boolean ret = RET_NOT_OK;
+  if(CW_CHECK_VAR == CW_CHECK)
+  {
+  MOVE::SetMotorPins(LOW_PWM, HIGH_PWM, HIGH_PWM, LOW_PWM);
+  ret = RET_OK;
+  }
+  else
+  {
+  MOVE::SetMotorPins(HIGH_PWM, LOW_PWM, LOW_PWM, HIGH_PWM);
+  ret = RET_OK;
+  }
+  
+  return ret;
+}
+
+void MOVE::MoveStop(void)
+{
+  MOVE::SetMotorPins(LOW_PWM, LOW_PWM, LOW_PWM, LOW_PWM);
+}
+
+
+#ifndef ENABLE_SIMULATION
+void MOVE::SetMotorPins(const uint8 rightMotorPositivePin_value, const uint8 rightMotorGroundPin_value,
+	const uint8 leftMotorPositivePin_value, const uint8 leftMotorGroundPin_value)
+{
+	analogWrite(RIGHT_MOTOR_POSITIVE_PIN, rightMotorPositivePin_value);
+	analogWrite(RIGHT_MOTOR_GROUND_PIN, rightMotorGroundPin_value);
+	analogWrite(LEFT_MOTOR_POSITIVE_PIN, leftMotorPositivePin_value);
+	analogWrite(LEFT_MOTOR_GROUND_PIN, leftMotorGroundPin_value);
+}
+#endif

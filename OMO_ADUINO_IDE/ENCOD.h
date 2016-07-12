@@ -2,6 +2,7 @@
 #define ENCODER_H
 
 #include "CONF.h"
+#include "Main_Func_1.h"
 
 class left_encoder
 {
@@ -45,7 +46,9 @@ public:
 
 	void incrementTick(void);
 
-	void read_right_encoder_ticks(void);
+static Boolean read_right_encoder_ticks(void);
+
+static Boolean CheckConnection(void);
 };
 #endif
 
