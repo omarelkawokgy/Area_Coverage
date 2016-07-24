@@ -3,7 +3,7 @@
 #include<iostream>
 using namespace std;
 #else
-HMC5883L Compass;
+static HMC5883L Compass;
 
 #endif
 
@@ -15,7 +15,16 @@ uint16 EAST_VALUE = 0;
 
 Comp::Comp()
 {
+	Compass = HMC5883L();
 
+	Serial.println("setting scale to +/- 2.0 Ga");
+	int error = Compass.SetScale(0.88);
+
+	error = Compass.SetMeasurementMode(Measurement_Continuous);
+	if (error != 0)
+	{
+		Serial.println(Compass.GetErrorText(error));
+	}
 }
 
 void Comp::InitializeDirections(void)

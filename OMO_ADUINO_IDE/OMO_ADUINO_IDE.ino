@@ -27,6 +27,7 @@ volatile Boolean BumperHit = FALSE;
 Boolean ToStartPoint = TRUE;
 enu_Direction_req Direction_req = REQUEST_NORTH;
 Robot cleaner = Robot::initRobotPosition();
+volatile uint64 last_micros = 0;
 
 #ifdef FINISHUP_EMPTY_SLOTS
 #ifdef GO_TO_GOAL_STRAIGHTLINES
@@ -52,16 +53,21 @@ static void GoToGoal_Empty(Robot& cleaner, Map& RoomMap);
 static void FinishUpLeftEmpty(Robot& cleaner, Map& RoomMap, enu_Direction_req* Direction_req);
 #endif
 static Boolean checkConnections(void);
+#ifdef DEBUG
+static void Map_Print(Map room);
+#endif
 
 
 void setup()
 {
         Wire.begin();
-
+		
         #ifdef DEBUG
         Serial.begin(9600);
         Serial.println("start setup");
         #endif
+
+		Comp compass;
 
 	/*=============================Intialize project==============================*/
         
@@ -88,7 +94,7 @@ void setup()
         delay(2000);
   
 	/*pin 0 in interrupt is pin 2 in arduino*/
-	attachInterrupt(FRONT_SENSOR_INTERRUPT_NUMBER, ISR_BumperHit, FALLING);
+		attachInterrupt(FRONT_SENSOR_INTERRUPT_NUMBER, ISR_BumperHit, RISING);
 #ifdef ENCODER_ON_INTERRUPT
 	attachInterrupt(ENCODER_INTERRUPT_NUMBER, ISR_left_Encoder_tick, RISING);
 #endif
@@ -142,6 +148,10 @@ Serial.println(cleaner.GetRobotPosition().Y_pos);
 		GoToStartPoint(cleaner, RoomMap, &Direction_req);
 
 		ZigZagRoutine(cleaner, RoomMap, &Direction_req);
+
+#ifdef DEBUG
+		Map_Print(RoomMap);
+#endif
 
 #ifdef FINISHUP_EMPTY_SLOTS
 #ifdef GO_TO_GOAL_STRAIGHTLINES
@@ -226,6 +236,16 @@ static uint8 NearBusyPointSearch(PointPos TempPointPos)
 }
 #endif
 
+#if 0
+/*work around for interrupt hardware debouncing*/
+void debounceInterrupt() {
+	if ((long)(micros() - last_micros) >= DEBOUNCING_TIME * MILLISECOND_SCALE) {
+		ISR_BumperHit();
+		last_micros = micros();
+	}
+}
+#endif
+
 void ISR_BumperHit(void)
 {
   #ifdef DEBUG
@@ -233,10 +253,12 @@ void ISR_BumperHit(void)
   #endif
 
 	BumperHit = TRUE;
+	
 
 #ifndef ENABLE_SIMULATION
 	/*Stop Robot*/
 	MOVE::MoveStop(cleaner);
+
 #endif
 }
 
@@ -819,13 +841,10 @@ static void GoToStartPoint(Robot& cleaner, Map& RoomMap, enu_Direction_req* RobH
 	Heading heading = INVALID_DIRECTION;
 	if(ToStartPoint == TRUE)
 	{
-#ifdef DEBUG_OFF
+#ifdef DEBUG
   Serial.println("start of go to start point1");
 #endif
 		heading = cleaner.GetRobotHeading();
-#ifdef DEBUG_OFF
-  Serial.println("start of go to start point2");
-#endif
 		MOVE::MoveForward(cleaner, heading);
 
 #ifdef ENABLE_SIMULATION
@@ -1100,3 +1119,17 @@ static Boolean checkConnections(void)
   return ErrorCheck;
 }
 
+#ifdef DEBUG
+static void Map_Print(Map map)
+{
+	for (uint8 i = 0; i < MAP_ROW; i++)
+	{
+		for (uint8 j = 0; j < MAP_COLUMN; j++)
+		{
+			Serial.print((int)map.room[i][j]);
+		}
+		Serial.println();
+	}
+	Serial.println();
+}
+#endif

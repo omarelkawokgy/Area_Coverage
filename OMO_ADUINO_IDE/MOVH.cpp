@@ -94,6 +94,21 @@ return_type MOVE::MoveForward(Robot& rob, Heading heading)
 	return Error_Check;
 }
 
+void  MOVE::MoveBackward(Robot& rob)
+{
+	MOVE::SetMotorPins(LOW_PWM, HIGH_PWM, LOW_PWM, HIGH_PWM);
+
+#ifdef DEBUG
+	Serial.print("movebackward_interrupt");
+#endif
+	/*
+	for (uint8 delay_counter = 0; delay_counter < 100; delay_counter++)
+	{
+	Serial.println("batekh");
+	}
+	*/
+}
+
 return_type MOVE::MoveBackward(Robot& rob, Heading heading)
 {
 	return_type Error_Check = RET_NOT_OK; 
@@ -111,6 +126,7 @@ return_type MOVE::MoveBackward(Robot& rob, Heading heading)
 #ifdef DEBUG
 Serial.print("movebackward");
 #endif
+
 	MOVE::SetMotorPins(LOW_PWM, HIGH_PWM, LOW_PWM, HIGH_PWM);
 	return Error_Check = RET_OK;
 #endif
@@ -126,6 +142,12 @@ void MOVE::MoveStop(Robot& rob)
 Serial.println("stop");
 #endif
 	MOVE::SetMotorPins(LOW_PWM, LOW_PWM, LOW_PWM, LOW_PWM);
+	/*
+	for (uint8 delay_counter = 0; delay_counter < 100; delay_counter++)
+	{
+		Serial.println("batekh");
+	}
+	*/
 #endif
 }
 
@@ -146,17 +168,29 @@ void MOVE::MoveInitAngle(Robot& rob)
 void MOVE::MoveTurn_CW(Robot& rob, const uint16 TargetAngle)
 {
 	RobotPos robPosition = rob.GetRobotPosition();
+	uint64 timer = UINT_SNA;
+	uint64 timer_comparator = UINT_SNA;
 #ifdef ENABLE_SIMULATION
 	
 	robPosition.theta = TargetAngle;
 	rob.SetPosition(robPosition);
 #else
 	MOVE::SetMotorPins(LOW_PWM, HIGH_PWM, HIGH_PWM, LOW_PWM);
-
+#ifdef DEBUG
+	Serial.println("MOVE_CW");
+#endif 
+	timer = millis();
 	while ((robPosition.theta < (TargetAngle - ALLOWED_ANGLE_ERROR)) || (robPosition.theta >(TargetAngle + ALLOWED_ANGLE_ERROR)))
 	{
 		/*TODO: timer in case angle didnt reach*/
-		robPosition.theta = rob.GetRobotPosition().theta;
+		timer_comparator = millis();
+		if (timer_comparator >= (timer + (MS_SCALE * TIME_OF_TURN_SECONDS)))
+		{
+			Serial.println("too much time spent in spinning");
+			break;
+		}
+		robPosition.theta = Comp::ReadRawData();
+		//robPosition.theta = rob.GetRobotPosition().theta;
 	}
 	rob.SetPosition(robPosition);
 #endif
@@ -165,17 +199,29 @@ void MOVE::MoveTurn_CW(Robot& rob, const uint16 TargetAngle)
 void MOVE::MoveTurn_CCW(Robot& rob, const uint16 TargetAngle)
 {
 	RobotPos robPosition = rob.GetRobotPosition();
+	uint64 timer = UINT_SNA;
+	uint64 timer_comparator = UINT_SNA;
 #ifdef ENABLE_SIMULATION
 
 	robPosition.theta = TargetAngle;
 	rob.SetPosition(robPosition);
 #else
 	MOVE::SetMotorPins(HIGH_PWM, LOW_PWM, LOW_PWM, HIGH_PWM);
-
+#ifdef DEBUG
+	Serial.println("MOVE_CCW");
+#endif 
+	timer = millis();
 	while ((robPosition.theta < (TargetAngle - ALLOWED_ANGLE_ERROR)) || (robPosition.theta >(TargetAngle + ALLOWED_ANGLE_ERROR)))
 	{
 		/*TODO: timer in case angle didnt reach*/
-		robPosition.theta = rob.GetRobotPosition().theta;
+		timer_comparator = millis();
+		if (timer_comparator >= (timer + (MS_SCALE * TIME_OF_TURN_SECONDS)))
+		{
+			Serial.println("too much time spent in spinning");
+			break;
+		}
+		robPosition.theta = Comp::ReadRawData();
+		//robPosition.theta = rob.GetRobotPosition().theta;
 	}
 	rob.SetPosition(robPosition);
 #endif
@@ -374,9 +420,24 @@ void MOVE::MoveStop(void)
 void MOVE::SetMotorPins(const uint8 rightMotorPositivePin_value, const uint8 rightMotorGroundPin_value,
 	const uint8 leftMotorPositivePin_value, const uint8 leftMotorGroundPin_value)
 {
-	analogWrite(RIGHT_MOTOR_POSITIVE_PIN, rightMotorPositivePin_value);
-	analogWrite(RIGHT_MOTOR_GROUND_PIN, rightMotorGroundPin_value);
-	analogWrite(LEFT_MOTOR_POSITIVE_PIN, leftMotorPositivePin_value);
-	analogWrite(LEFT_MOTOR_GROUND_PIN, leftMotorGroundPin_value);
+	if (BumperHit == TRUE)
+	{
+		analogWrite(RIGHT_MOTOR_POSITIVE_PIN, LOW_PWM);
+		analogWrite(RIGHT_MOTOR_GROUND_PIN, HIGH_PWM);
+		analogWrite(LEFT_MOTOR_POSITIVE_PIN, LOW_PWM);
+		analogWrite(LEFT_MOTOR_GROUND_PIN, HIGH_PWM);
+		delay(500);
+		analogWrite(RIGHT_MOTOR_POSITIVE_PIN, LOW_PWM);
+		analogWrite(RIGHT_MOTOR_GROUND_PIN, LOW_PWM);
+		analogWrite(LEFT_MOTOR_POSITIVE_PIN, LOW_PWM);
+		analogWrite(LEFT_MOTOR_GROUND_PIN, LOW_PWM);
+	}
+	else
+	{
+		analogWrite(RIGHT_MOTOR_POSITIVE_PIN, rightMotorPositivePin_value);
+		analogWrite(RIGHT_MOTOR_GROUND_PIN, rightMotorGroundPin_value);
+		analogWrite(LEFT_MOTOR_POSITIVE_PIN, leftMotorPositivePin_value);
+		analogWrite(LEFT_MOTOR_GROUND_PIN, leftMotorGroundPin_value);
+	}
 }
 #endif

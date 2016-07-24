@@ -67,7 +67,7 @@ typedef enum
 #define ROBOT_INIT_THETA	0
 #define ROBOT_WHEEL_SIZE 20//in cm
 #define ROBOT_SIZE 20 //in cm
-#define ROBOT_SINGLE_STEP 210
+#define ROBOT_SINGLE_STEP 350
 
 
 /*----------Scan conf-------------*/
@@ -132,3 +132,7 @@ typedef struct
 
 #endif
 
+/*INTERRUPT VARIABLES*/
+/*Timer interrupts*/
+#define MS_SCALE 1000
+#define TIME_OF_TURN_SECONDS 10

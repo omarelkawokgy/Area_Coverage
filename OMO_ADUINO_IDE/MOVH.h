@@ -16,6 +16,8 @@ public:
 
 	static return_type MoveForward(Robot& rob, Heading heading);
 
+	static void  MoveBackward(Robot& rob);
+
 	static return_type MoveBackward(Robot& rob, Heading heading);
 
 	static void MoveStop(Robot& rob);

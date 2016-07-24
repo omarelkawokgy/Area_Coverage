@@ -30,7 +30,7 @@ Boolean right_encoder::read_right_encoder_ticks(void)
 {
 	Boolean SingleStepComplete = RET_NOT_OK;
 	uint16 current_encoder_status = UINT_SNA;
-	uint8 counter_ticks = UINT_SNA;
+	uint16 counter_ticks = UINT_SNA;
 
 	while ((counter_ticks < ROBOT_SINGLE_STEP) && (BumperHit == FALSE))
 	{
@@ -42,8 +42,10 @@ Boolean right_encoder::read_right_encoder_ticks(void)
 			if (CHECK_IF_LOW(current_encoder_status))
 			{
 				counter_ticks++;
+#if 0 
 				Serial.print("Counter Ticks: ");
 				Serial.println(counter_ticks);
+#endif
 			}
 		}
 	}
