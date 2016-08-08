@@ -1,4 +1,8 @@
-#include "COMH.h"
+#include "Project_Path.h"
+#include RELATIVE_PATH(COMH.h)
+#include RELATIVE_PATH(ERRH.h)
+#undef PROJECT_PATH_H
+
 #ifdef ENABLE_SIMULATION
 #include<iostream>
 using namespace std;
@@ -24,6 +28,7 @@ Comp::Comp()
 	if (error != 0)
 	{
 		Serial.println(Compass.GetErrorText(error));
+		ERRH::Error_logErrorClass(ERROR_COMH_MEASURE_FAIL);
 	}
 }
 
@@ -115,24 +120,8 @@ Heading Comp::ReadComp(void)
   {
     /*TODO handling wrong calling while not being in 4 directions*/
     Angle = INVALID_DIRECTION;
+	ERRH::Error_logErrorClass(ERROR_COMH_INVALID_HEADING);
   }
   return Angle;
-}
-
-Boolean Comp::CheckConnection(void)
-{
-  uint16 TempAngle = 0;
-  uint16 CurrentAngle = 0;
-  Boolean ret = RET_NOT_OK;
-  
-  TempAngle = Comp::ReadRawData();
-  delay(100);
-  CurrentAngle = Comp::ReadRawData();
-  
-  if( TempAngle != CurrentAngle)
-  {
-    ret = RET_OK;
-  }
-  return ret;
 }
 
