@@ -42,8 +42,8 @@ void ZGZG::ZigZagRoutine(RobotDevice& theCleaner, Map& RoomMap, enu_Direction_re
 		/*triggers from ISR*/
 		if (BumperHit == TRUE)
 		{
-			(void)theCleaner.getTheMove().MoveStop();
-			(void)theCleaner.getTheMove().MoveBackward(RobCurrentHeading);
+//			(void)theCleaner.getTheMove().MoveStop();
+//			(void)theCleaner.getTheMove().MoveBackward(RobCurrentHeading);
 			BumperHit = FALSE;
 
 			RobTempPosition = theCleaner.GetRobotPosition();
