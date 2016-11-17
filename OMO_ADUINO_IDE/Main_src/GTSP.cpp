@@ -26,8 +26,8 @@ void GTSP::GoToStartPoint(RobotDevice& theCleaner, Map& RoomMap, enu_Direction_r
 #endif
 		if (BumperHit == TRUE)
 		{
-			(void)theCleaner.getTheMove().MoveStop();
-			(void)theCleaner.getTheMove().MoveBackward(heading);
+//			(void)theCleaner.getTheMove().MoveStop();
+//			(void)theCleaner.getTheMove().MoveBackward(heading);
 			BumperHit = FALSE;
 			readingSensorsView = BumperHitSensorsView(theCleaner.getPosition(), RoomMap, *RobHeadingReq);
 
