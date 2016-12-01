@@ -95,11 +95,39 @@ uint16 Comp::ReadRawData(void)
 
   //convert radians to degrees
   tempAngle = (uint16)(heading * 180 / M_PI);
-  
-  
+#endif
+#ifdef FILTERED_COMPASS_READING
+  tempAngle = Comp::compassKalmanFilter1D(tempAngle);
 #endif
   return tempAngle;
 }
+
+#ifdef FILTERED_COMPASS_READING
+#define PROCESS_NOISE 2.5
+#define MEASUREMENTS_NOISE 1.2
+
+uint16 Comp::compassKalmanFilter1D(uint16 Z)
+{
+	static uint16 X = 0;
+	static uint16 P = 1000;
+	static uint16 K = 0;
+
+	if ((X > 350) && (Z < 10))
+	{
+		X = 0;
+		K = 0;
+		P = 1000;
+	}
+
+	P = P * PROCESS_NOISE;
+
+	K = P / (P + MEASUREMENTS_NOISE);
+	X = X + K * (Z - X);
+	P = (1 - K) * P;
+
+	return (uint16)(X + 0.5);
+}
+#endif
 
 Heading Comp::ReadComp(void)
 {
