@@ -124,6 +124,7 @@ most probably it will be included in all modules
 #undef UPDATE_POINT_POSITION
 #undef ENCODER_ON_INTERRUPT
 #undef USE_BLUETOOTH
+#define FILTERED_COMPASS_READING
 
 /*----------------return types-------------------------*/
 #define RET_NOT_OK 0
