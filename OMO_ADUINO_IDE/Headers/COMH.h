@@ -16,6 +16,7 @@ class Comp
 private:
 
 	friend class positionHeadingHandler;
+	uint16 compassKalmanFilter1D(uint16 Z);
 public:
 	Comp();
 	static Comp& getInstance(void);
