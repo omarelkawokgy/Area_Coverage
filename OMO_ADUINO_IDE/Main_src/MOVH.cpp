@@ -178,19 +178,28 @@ void MOVE::MoveTurn_CW(positionHeadingHandler& rob, const uint16 TargetAngle)
 
 void MOVE::MoveTurn_CCW(positionHeadingHandler& rob, const uint16 TargetAngle)
 {
+#define USING_PID_CONTROLLER
+#ifdef USING_PID_CONTROLLER
+#define TAWO_P 0.2
+#define TAWO_D 2.5
+#define TAWO_I 0.004
+	Serial.print("CCW");
+	Serial.println(callFunction);
 	RobotPos robPosition = rob.GetRobotPosition();
 	uint64 timer = UINT_SNA;
 	uint64 timer_comparator = UINT_SNA;
-#ifdef ENABLE_SIMULATION
 
-	robPosition.theta = TargetAngle;
-	rob.SetPosition(robPosition);
-#else
-	rightMotor.forward();
-	leftMotor.backward();
+	double PID_error = 1000;
+	double PWM_input = 0;
+	double PID_error_difference = 0;
+	double PID_error_sum = 0;
 
+	//30% of power in turning
+
+
+	robPosition.theta = rob.getCompass().ReadRawData();
 	timer = millis();
-	while ((robPosition.theta < (TargetAngle - ALLOWED_ANGLE_ERROR)) || (robPosition.theta >(TargetAngle + ALLOWED_ANGLE_ERROR)))
+	while (((int)robPosition.theta < ((int)TargetAngle - ALLOWED_ANGLE_ERROR)) || (robPosition.theta > (TargetAngle + ALLOWED_ANGLE_ERROR)))
 	{
 		/*TODO: timer in case angle didnt reach*/
 		timer_comparator = millis();
@@ -200,7 +209,48 @@ void MOVE::MoveTurn_CCW(positionHeadingHandler& rob, const uint16 TargetAngle)
 			break;
 		}
 		robPosition.theta = rob.getCompass().ReadRawData();
-		//robPosition.theta = rob.GetRobotPosition().theta;
+		PID_error_difference -= PID_error;
+		PID_error_sum += PID_error;
+
+		PID_error = robPosition.theta - TargetAngle;
+		if(PID_error < 0)
+		{
+			PID_error = (robPosition.theta + 360) - TargetAngle;
+		}
+		PWM_input = TAWO_P * PID_error + TAWO_D * PID_error_difference + TAWO_I * PID_error_sum;	
+		rightMotor.forward(40);
+		leftMotor.backward(40);
+	}
+	rob.SetPosition(robPosition);
+#else
+	Serial.print("CCW");
+	Serial.println(callFunction);
+	RobotPos robPosition = rob.GetRobotPosition();
+	uint64 timer = UINT_SNA;
+	uint64 timer_comparator = UINT_SNA;
+
+	//30% of power in turning
+	rightMotor.forward(40);
+	leftMotor.backward(40);
+
+	robPosition.theta = rob.getCompass().ReadRawData();
+	timer = millis();
+	while (((int)robPosition.theta < ((int)TargetAngle - ALLOWED_ANGLE_ERROR)) || (robPosition.theta > (TargetAngle + ALLOWED_ANGLE_ERROR)))
+	{
+		/*TODO: timer in case angle didnt reach*/
+		timer_comparator = millis();
+		if (timer_comparator >= (timer + (MS_SCALE * TIME_OF_TURN_SECONDS)))
+		{
+			Serial.println("too much time spent in spinning");
+			break;
+		}
+		robPosition.theta = rob.getCompass().ReadRawData();
+		Serial.print("current angle: ");
+		Serial.println(robPosition.theta);
+		Serial.print("Target angle: ");
+		Serial.println(TargetAngle);
+		Serial.print("Error: ");
+		Serial.println(ALLOWED_ANGLE_ERROR);
 	}
 	rob.SetPosition(robPosition);
 #endif
