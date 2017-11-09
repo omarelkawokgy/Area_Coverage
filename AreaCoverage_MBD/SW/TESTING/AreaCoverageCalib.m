@@ -13,17 +13,23 @@ FAST_INCRE = ANGLE_INC_STEP * 2;
 SLOW_DECR = ANGLE_INC_STEP * -1;
 FAST_DECR = ANGLE_INC_STEP * -2;
 
-INIT_COMP_VALUE = 270; %degree
-MAX_SPEED = 150; %mm/s
-ROB_LENG = 30; %cm
-SAMPLE_TIME = 0.001; %sec
-INIT_Y = 10;
-INIT_X = 10;
-
 NORTH = 270;
 SOUTH = 90;
 EAST = 0;
 WEST = 180;
 NONE = -1;
 
+INIT_COMP_VALUE = WEST; %degree
+MAX_SPEED = 150; %mm/s
+ROB_LENG = 30; %cm
+SAMPLE_TIME = 0.001; %sec
+
+
+
+
 ERRVAL = 5;
+
+roomDrawing
+
+INIT_Y = round(roomSize/2);
+INIT_X = round(roomSize/2);

@@ -1,7 +1,7 @@
 
 standardRoom_CM = 400; % cm
 ROBO_LENG = 30;
-roomSize = round(standardRoom_CM/ROBO_LENG + 2)*10;
+roomSize = round(standardRoom_CM/ROBO_LENG + 2);
 room = uint8(ones(roomSize , roomSize)*255);
 
 %% Draw room Boarders
@@ -9,6 +9,8 @@ for rowNum = 1:(roomSize)
     for colNum = 1: roomSize
         if (rowNum == 1) || (rowNum == roomSize)...
                 || (colNum == 1) || (colNum == roomSize)
+%                 || (rowNum == 2) || (rowNum == roomSize - 1)...
+%                 || (colNum == 2) || (colNum == roomSize-1)
             room(rowNum, colNum) = 0;
         end
     end
@@ -29,7 +31,7 @@ room(3:4, 4:5) = 0;
 room(12:14, 8:13) = 0;
 
 %% insert LeglessTable
-room(7:11, 1:4) = 1;
+room(7:11, 1:4) = 0;
 
 %% show Map
  imshow(room,'InitialMagnification','fit')

@@ -19,9 +19,9 @@ for i = 1: length(X_OUT.Data)
     finish = [Y_OUT.Data(i) yend];
     plot(start, finish, 'LineWidth', 3)
     plot(xend, yend, 'or')
-    hold off
-    xlim([-350 200]);
-    ylim([0 200]);
+%     hold off
+    xlim([0 roomSize]);
+    ylim([0 roomSize]);
     grid on
     grid minor
     pause(0.000001);
