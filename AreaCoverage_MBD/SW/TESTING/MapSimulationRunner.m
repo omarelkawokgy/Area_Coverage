@@ -1,4 +1,4 @@
-lineLength = ROB_LENG;
+lineLength = round(roomSize*0.12);
 for i = 1: length(X_OUT.Data)
     
     plot(X_OUT.Data(i), Y_OUT.Data(i), '*', 'MarkerSize', 10);
@@ -19,10 +19,10 @@ for i = 1: length(X_OUT.Data)
     finish = [Y_OUT.Data(i) yend];
     plot(start, finish, 'LineWidth', 3)
     plot(xend, yend, 'or')
-%     hold off
+    hold off
     xlim([0 roomSize]);
     ylim([0 roomSize]);
     grid on
     grid minor
-    pause(0.000001);
+    pause(0.000000000000000001);
 end

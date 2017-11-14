@@ -1,5 +1,5 @@
 
-standardRoom_CM = 400; % cm
+standardRoom_CM = 500; % cm
 ROBO_LENG = 30;
 roomSize = round(standardRoom_CM/ROBO_LENG + 2);
 room = uint8(ones(roomSize , roomSize)*255);
