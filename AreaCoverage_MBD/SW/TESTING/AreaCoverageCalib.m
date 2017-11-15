@@ -25,7 +25,7 @@ ROB_LENG = 30; %cm
 SAMPLE_TIME = 0.001; %sec
 
 ROB_WHEEL_R = .05;
-
+STEP_SIZE = 5;
 
 
 ERRVAL = 5;
