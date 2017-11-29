@@ -21,12 +21,12 @@ EAST = 0;
 WEST = 180;
 NONE = -1;
 
-INIT_COMP_VALUE = SOUTH; %degree
+INIT_COMP_VALUE = WEST; %degree
 MAX_SPEED = 850; %mm/s
 ROB_LENG = 30; %cm
 SAMPLE_TIME = 0.001; %sec
 
-ROB_WHEEL_R = .05;
+ROB_WHEEL_R = .15;
 STEP_SIZE = 5;
 
 
