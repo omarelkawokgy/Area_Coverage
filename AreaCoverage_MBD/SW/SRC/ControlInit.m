@@ -4,8 +4,10 @@ BACKWARD = 2;
 CW = 3;
 CCW = 4;
 STOP = 5;
-MOVE_TURN_CCW = 20;
-MOVE_TURN_CW = 21;
+
+% 90 and 180 degree turns Enum
+MOVE_TURN_LEFT = 20;
+MOVE_TURN_RIGHT = 21;
 MOVE_U_TURN_RIGHT = 22;
 MOVE_U_TURN_LEFT = 23;
 MOVE_U_TURN = 24;
@@ -16,6 +18,11 @@ ROB_SOUTH = 90;
 ROB_EAST = 0;
 ROB_WEST = 180;
 ROB_NONE = 400;
+ROB_ERRVAL = 401;
+
+%% Routines Enum
+GTSP = 25;
+ZIGZAG = 26;
 
 %% Sensor View Enum
 FAILURE_READING = 6;
@@ -39,3 +46,9 @@ map = ones(19, 19)*EMPTY;
 
 map(10, 6) = CLEANED;
 map(10, 4) = BUSY;
+
+%% RobotConfig
+ROB_DIAMETER = 30;
+
+%% MapConfig
+BLOCK_SIZE = 20;
