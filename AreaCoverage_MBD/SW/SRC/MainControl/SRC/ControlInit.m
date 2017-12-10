@@ -18,7 +18,8 @@ ROB_SOUTH = 90;
 ROB_EAST = 0;
 ROB_WEST = 180;
 ROB_NONE = 400;
-ROB_ERRVAL = 401;
+
+
 
 %% Routines Enum
 GTSP = 25;
@@ -37,10 +38,10 @@ LEFT_BUSY_RIGHT_CLEANED = 14;
 LEFT_EMPTY_RIGHT_EMPTY = 15;
 
 %% Map States
-BUSY = 16;
-EMPTY = 17;
-CLEANED = 18;
-UNCOVERED = 19;
+BUSY = 0;
+EMPTY = 255;
+CLEANED = 0;
+UNCOVERED = 255;
 
 map = ones(19, 19)*EMPTY;
 
@@ -49,6 +50,8 @@ map(10, 4) = BUSY;
 
 %% RobotConfig
 ROB_DIAMETER = 30;
+% Angle error allowed value
+ROB_ERRVAL = 5;
 
 %% MapConfig
 BLOCK_SIZE = 20;
