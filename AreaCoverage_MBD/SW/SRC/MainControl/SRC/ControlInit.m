@@ -37,21 +37,34 @@ LEFT_CLEANED_RIGHT_BUSY = 13;
 LEFT_BUSY_RIGHT_CLEANED = 14;
 LEFT_EMPTY_RIGHT_EMPTY = 15;
 
-%% Map States
-BUSY = 0;
-EMPTY = 255;
-CLEANED = 0;
-UNCOVERED = 255;
 
-map = ones(19, 19)*EMPTY;
-
-map(10, 6) = CLEANED;
-map(10, 4) = BUSY;
 
 %% RobotConfig
 ROB_DIAMETER = 30;
 % Angle error allowed value
 ROB_ERRVAL = 5;
 
+%% Map States
+BUSY = 4;
+EMPTY = 3;
+CLEANED = 2;
+UNCOVERED = 1;
+
 %% MapConfig
 BLOCK_SIZE = 20;
+ROOM_SIDE_SIZE = 20;
+
+roomSize = ROOM_SIDE_SIZE;
+map = uint8(ones(ROOM_SIDE_SIZE , ROOM_SIDE_SIZE)*UNCOVERED);
+
+%% Draw room Boarders
+for rowNum = 1:(roomSize)
+    for colNum = 1: roomSize
+        if (rowNum == 1) || (rowNum == roomSize)...
+                || (colNum == 1) || (colNum == roomSize)
+%                 || (rowNum == 2) || (rowNum == roomSize - 1)...
+%                 || (colNum == 2) || (colNum == roomSize-1)
+            map(rowNum, colNum) = BUSY;
+        end
+    end
+end
