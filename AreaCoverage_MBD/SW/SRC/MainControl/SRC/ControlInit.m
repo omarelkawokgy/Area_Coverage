@@ -39,10 +39,7 @@ LEFT_EMPTY_RIGHT_EMPTY = 15;
 
 
 
-%% RobotConfig
-ROB_DIAMETER = 30;
-% Angle error allowed value
-ROB_ERRVAL = 5;
+
 
 %% Map States
 BUSY = 4;
@@ -68,3 +65,10 @@ for rowNum = 1:(roomSize)
         end
     end
 end
+
+%% RobotConfig
+ROB_DIAMETER = 30;
+% Angle error allowed value
+ROB_ERRVAL = 5;
+initX = uint8((ROOM_SIDE_SIZE/2) - 1);
+initY = initX;
