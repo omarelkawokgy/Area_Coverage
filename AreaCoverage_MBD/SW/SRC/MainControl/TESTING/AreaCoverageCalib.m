@@ -29,6 +29,9 @@ SAMPLE_TIME = 0.001; %sec
 ROB_WHEEL_R = .15;
 STEP_SIZE = 5;
 
+initYSim = 45;
+initXSim = 45;
+
 
 ERRVAL = 5;
 
