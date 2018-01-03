@@ -73,5 +73,5 @@ ROB_ERRVAL = 5;
 initX = uint8((ROOM_SIDE_SIZE/2) - 1);
 initY = initX;
 
-MOTOR_HIGH = 100;
+MOTOR_HIGH = 254;
 MOTOR_LOW = 0;
