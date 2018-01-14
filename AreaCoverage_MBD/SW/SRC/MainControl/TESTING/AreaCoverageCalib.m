@@ -4,7 +4,6 @@ CCW_FAST = 3;
 CW_FAST = 4;
 FORWARD_MOVE = 5;
 BACKWARD_MOVE = 6;
-STOP = 7;
 
 ANGLE_INC_STEP = 0.2;
 
@@ -29,8 +28,8 @@ SAMPLE_TIME = 0.001; %sec
 ROB_WHEEL_R = .15;
 STEP_SIZE = 5;
 
-initYSim = 45;
-initXSim = 45;
+initYSim = 50;
+initXSim = 50;
 
 
 ERRVAL = 5;

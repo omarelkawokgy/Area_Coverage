@@ -75,3 +75,6 @@ initY = initX;
 
 MOTOR_HIGH = 254;
 MOTOR_LOW = 0;
+
+NO_ERROR = 0;
+ALLOWED_ERROR_VALUE = 0.01;
