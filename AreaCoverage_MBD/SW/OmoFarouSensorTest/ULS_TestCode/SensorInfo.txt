@@ -1,0 +1,6 @@
+ULS Info
+
+sensor prototype code produces output every 100ms.
+no much noise in the signal data
+signal is never 0cm
+signal is 0cm when sensor is not connected or out of power
