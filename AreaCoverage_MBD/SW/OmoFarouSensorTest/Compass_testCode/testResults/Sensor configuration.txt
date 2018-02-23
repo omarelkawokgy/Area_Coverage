@@ -1,0 +1,3 @@
+Test periodicity 100ms 
+Not connected:
+infinit loop in sensor read. timer should be implemented to check on that
