@@ -24,6 +24,7 @@ ROB_NONE = 400;
 %% Routines Enum
 GTSP = 25;
 ZIGZAG = 26;
+END = 27;
 
 %% Sensor View Enum
 FAILURE_READING = 6;
