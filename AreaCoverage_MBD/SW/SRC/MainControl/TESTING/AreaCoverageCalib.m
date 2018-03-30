@@ -29,7 +29,7 @@ ROB_WHEEL_R = .15;
 STEP_SIZE = 5;
 
 initYSim = 50;
-initXSim = 50;
+initXSim = 35;
 
 
 ERRVAL = 5;
