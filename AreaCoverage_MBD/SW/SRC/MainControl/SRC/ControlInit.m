@@ -68,7 +68,8 @@ for rowNum = 1:(roomSize)
 end
 
 %% RobotConfig
-ROB_DIAMETER = 30;
+% ROB_DIAMETER = 30;
+ROBO_LENG = 30;
 % Angle error allowed value
 ROB_ERRVAL = 5;
 initX = uint8((ROOM_SIDE_SIZE/2) - 1);

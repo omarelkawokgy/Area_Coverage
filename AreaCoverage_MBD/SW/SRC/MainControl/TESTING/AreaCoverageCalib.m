@@ -22,7 +22,7 @@ NONE = -1;
 
 INIT_COMP_VALUE = NORTH; %degree
 MAX_SPEED = 1000; %mm/s
-ROB_LENG = 30; %cm
+ROB_LENG = ROBO_LENG; %cm
 SAMPLE_TIME = 0.001; %sec
 
 ROB_WHEEL_R = .15;
