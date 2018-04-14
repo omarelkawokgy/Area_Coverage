@@ -1,82 +1,93 @@
 %% Movements Enum
-FORWARD = 1;
-BACKWARD = 2;
-CW = 3;
-CCW = 4;
-STOP = 5;
+ENU_FORWARD = uint8(1);
+ENU_BACKWARD = uint8(2);
+ENU_CW = uint8(3);
+ENU_CCW = uint8(4);
+ENU_STOP = uint8(5);
 
 % 90 and 180 degree turns Enum
-MOVE_TURN_LEFT = 20;
-MOVE_TURN_RIGHT = 21;
-MOVE_U_TURN_RIGHT = 22;
-MOVE_U_TURN_LEFT = 23;
-MOVE_U_TURN = 24;
+ENU_MOVE_TURN_LEFT = uint8(20);
+ENU_MOVE_TURN_RIGHT = uint8(21);
+ENU_MOVE_U_TURN_RIGHT = uint8(22);
+ENU_MOVE_U_TURN_LEFT = uint8(23);
+ENU_MOVE_U_TURN = uint8(24);
 
 %% Heading Enum
 % ROB_NORTH = 270;
 % ROB_SOUTH = 90;
 % ROB_EAST = 0;
 % ROB_WEST = 180;
-ROB_NONE = 400;
+ENU_ROB_NONE = uint16(400);
 
 
 
 %% Routines Enum
-GTSP = 25;
-ZIGZAG = 26;
-END = 27;
+ENU_GTSP = uint8(25);
+ENU_ZIGZAG = uint8(26);
+ENU_END = uint8(27);
 
 %% Sensor View Enum
-FAILURE_READING = 6;
-LEFT_BUSY_RIGHT_EMPTY = 7;
-LEFT_EMPTY_RIGHT_BUSY = 8;
-LEFT_BUSY_RIGHT_BUSY = 9;
-LEFT_CLEANED_RIGHT_EMPTY = 10;
-LEFT_EMPTY_RIGHT_CLEANED = 11;
-LEFT_CLEANED_RIGHT_CLEANED = 12;
-LEFT_CLEANED_RIGHT_BUSY = 13;
-LEFT_BUSY_RIGHT_CLEANED = 14;
-LEFT_EMPTY_RIGHT_EMPTY = 15;
+ENU_FAILURE_READING = uint8(6);
+ENU_LEFT_BUSY_RIGHT_EMPTY = uint8(7);
+ENU_LEFT_EMPTY_RIGHT_BUSY = uint8(8);
+ENU_LEFT_BUSY_RIGHT_BUSY = uint8(9);
+ENU_LEFT_CLEANED_RIGHT_EMPTY = uint8(10);
+ENU_LEFT_EMPTY_RIGHT_CLEANED = uint8(11);
+ENU_LEFT_CLEANED_RIGHT_CLEANED = uint8(12);
+ENU_LEFT_CLEANED_RIGHT_BUSY = uint8(13);
+ENU_LEFT_BUSY_RIGHT_CLEANED = uint8(14);
+ENU_LEFT_EMPTY_RIGHT_EMPTY = uint8(15);
 
 
 
 
 
 %% Map States
-BUSY = 4;
-EMPTY = 3;
-CLEANED = 2;
-UNCOVERED = 1;
+ENU_BUSY = uint8(4);
+ENU_EMPTY = uint8(3);
+ENU_CLEANED = uint8(2);
+ENU_UNCOVERED = uint8(1);
 
 %% MapConfig
-BLOCK_SIZE = 20;
-ROOM_SIDE_SIZE = 20;
+CAL_BLOCK_SIZE = uint8(20);
+CAL_ROOM_SIDE_SIZE = uint8(20);
 
-roomSize = ROOM_SIDE_SIZE;
-map = uint8(ones(ROOM_SIDE_SIZE , ROOM_SIDE_SIZE)*UNCOVERED);
+CAL_roomSize = CAL_ROOM_SIDE_SIZE;
+CAL_map = uint8(ones(CAL_ROOM_SIDE_SIZE , CAL_ROOM_SIDE_SIZE)*1); %1 for ENU_UNCOVERED
 
 %% Draw room Boarders
-for rowNum = 1:(roomSize)
-    for colNum = 1: roomSize
-        if (rowNum == 1) || (rowNum == roomSize)...
-                || (colNum == 1) || (colNum == roomSize)
+for rowNum = 1:(CAL_roomSize)
+    for colNum = 1: CAL_roomSize
+        if (rowNum == 1) || (rowNum == CAL_roomSize)...
+                || (colNum == 1) || (colNum == CAL_roomSize)
 %                 || (rowNum == 2) || (rowNum == roomSize - 1)...
 %                 || (colNum == 2) || (colNum == roomSize-1)
-            map(rowNum, colNum) = BUSY;
+            CAL_map(rowNum, colNum) = ENU_BUSY;
         end
     end
 end
 
 %% RobotConfig
 % ROB_DIAMETER = 30;
-ROBO_LENG = 30;
+CAL_ROBO_LENG = uint8(30);
 % Angle error allowed value
-ROB_ERRVAL = 5;
-initX = uint8((ROOM_SIDE_SIZE/2) - 1);
-initY = initX;
+CAL_ROB_ERRVAL = uint8(5);
+CAL_initX = uint8((CAL_ROOM_SIDE_SIZE/2) - 1);
+CAL_initY = CAL_initX;
 
-MOTOR_HIGH = 126;
-MOTOR_LOW = 0;
+CAL_MOTOR_HIGH = uint8(126);
+CAL_MOTOR_LOW = uint8(0);
 
-NO_ERROR = 0;
-ALLOWED_ERROR_VALUE = 0.02;
+CAL_NO_ERROR = uint8(0);
+CAL_ALLOWED_ERROR_VALUE = single(0.02);
+
+CAL_thetaGain = uint8(100);
+CAL_halfCircle_DEG = uint16(180);
+CAL_fullCircle_DEG = uint16(360);
+
+CAL_SAMPLE_TIME = single(0.005);
+
+CAL_NORTH = uint16(270);
+CAL_EAST = uint16(0);
+CAL_WEST = uint16(180);
+CAL_SOUTH = uint16(90);
