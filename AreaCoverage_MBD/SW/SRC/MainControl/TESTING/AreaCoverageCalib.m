@@ -29,7 +29,7 @@ ROB_WHEEL_R = .15;
 STEP_SIZE = 5;
 
 initYSim = 50;
-initXSim = 35;
+initXSim = 38;
 
 
 ERRVAL = 5;
@@ -38,8 +38,8 @@ roomDrawing
 
 INIT_Y = round(roomSize/2);
 INIT_X = round(roomSize/2);
-BLOCK_SIZE = CAL_BLOCK_SIZE;
-ROOM_SIDE_SIZE = CAL_ROOM_SIDE_SIZE;
+BLOCK_SIZE = double(CAL_BLOCK_SIZE);
+ROOM_SIDE_SIZE = double(CAL_ROOM_SIDE_SIZE);
 
 MOTOR_HIGH = CAL_MOTOR_HIGH;
 MOTOR_LOW = CAL_MOTOR_LOW;

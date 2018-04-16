@@ -79,7 +79,6 @@ CAL_MOTOR_HIGH = uint8(126);
 CAL_MOTOR_LOW = uint8(0);
 
 CAL_NO_ERROR = uint8(0);
-CAL_ALLOWED_ERROR_VALUE = single(0.02);
 
 CAL_thetaGain = uint8(100);
 CAL_halfCircle_DEG = uint16(180);
@@ -91,3 +90,43 @@ CAL_NORTH = uint16(270);
 CAL_EAST = uint16(0);
 CAL_WEST = uint16(180);
 CAL_SOUTH = uint16(90);
+
+%% ULS filter calibration
+CAL_FilterBufferSize = uint8(4);
+
+%% Encoder Calibration data
+CAL_SingleStepMulti = 0.75;
+CONST_CounterInit = uint8(0);
+CAL_SingleStepTicks = uint8(47);
+CAL_backwardTicks = uint8(25);
+
+%% main routines calibrations
+CAL_GTSPgapCounter = uint8(100); %time in ticks
+CAL_GTSPdelayStart = uint8(200); %time in ticks
+CAL_ZgZgCounterThd = uint8(2);
+
+%% movement Calibrations
+CAL_forwardThetaThd = uint8(200);
+
+%error calibrations
+CONST_NegOne = int16(-1);
+CONST_ZeroDeg = int16(0); 
+CONST_EnableDelay = boolean(1);
+CAL_Ki = single(0.000025);
+CAL_Kp = single(4);
+CAL_Kd = single(0.002);
+CAL_ALLOWED_ERROR_VALUE = single(0.02);
+
+%% compass handler config
+% filter calibrations
+CAL_ProcessNoise = single(1.009);
+CAL_MeasureNoise = single(2);
+CAL_FilterResetThd = int16(100);
+
+%% motor handler config
+CAL_forwardStartIncr = single(0.001);
+CAL_forwardErrorLimit = single(0.5);
+CAL_ErrorUpperLimit = single(2);
+CAL_ErrorLowerLimit = single(-2);
+CAL_backwardErrorVal = single(0.5);
+CONST_noVelocity = int16(0);
