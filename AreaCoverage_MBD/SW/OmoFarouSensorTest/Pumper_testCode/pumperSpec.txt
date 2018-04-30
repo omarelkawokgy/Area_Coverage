@@ -1,0 +1,1 @@
+pumper is normally True!. debouncing is handled by hardware

@@ -22,7 +22,7 @@
 */
 
 // this constant won't change. It's the pin number of the sensor's output:
-const int pingPin = 7;
+const int pingPin = 8;
 
 void setup() {
   // initialize serial communication:
