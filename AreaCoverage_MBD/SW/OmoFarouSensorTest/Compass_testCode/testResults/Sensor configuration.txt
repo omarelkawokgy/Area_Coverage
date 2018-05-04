@@ -1,3 +1,9 @@
 Test periodicity 100ms 
 Not connected:
 infinit loop in sensor read. timer should be implemented to check on that
+can work on periodicity of 5ms
+Test Site Haram:
+N = 127.5
+E = 236
+S = 332.6
+W = 33
