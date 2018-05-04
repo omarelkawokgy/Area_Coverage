@@ -8,5 +8,5 @@ void loop() {
   // put your main code here, to run repeatedly:
 Serial.print("encoder reading: ");
 Serial.println(analogRead(A0));
-delay(100);
+delay(5);
 }

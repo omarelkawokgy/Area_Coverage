@@ -1,1 +1,4 @@
 encoder values range from 194 => 74
+encoder reading max sample period is 0.5 mSec
+R = (Ticks / Distance) = 1000 / 40 = 25 T/cm
+On carpet PWM less than 170 does not move the robot
