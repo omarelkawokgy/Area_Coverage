@@ -1,0 +1,12 @@
+addpath('..\SRC')
+addpath(genpath('..\..\COMH'))
+addpath(genpath('..\..\MAPH'))
+addpath(genpath('..\..\MOTH'))
+addpath(genpath('..\..\MOVH'))
+addpath(genpath('..\..\POSH'))
+addpath(genpath('..\..\ROTH'))
+addpath(genpath('..\..\SCAN'))
+addpath(genpath('..\..\DSCA'))
+ControlInit;
+AreaCoverageCalib;
+MotorConfigurationSheet;
