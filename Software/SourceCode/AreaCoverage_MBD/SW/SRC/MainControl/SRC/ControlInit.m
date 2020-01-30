@@ -19,6 +19,8 @@ ENU_MOVE_U_TURN = uint8(24);
 % ROB_WEST = 180;
 ENU_ROB_NONE = uint16(400);
 
+%DIAG Calibrations
+CONST_EndOfLineEnableFlg = 0;
 
 
 %% Routines Enum
