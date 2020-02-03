@@ -19,8 +19,14 @@ ENU_MOVE_U_TURN = uint8(24);
 % ROB_WEST = 180;
 ENU_ROB_NONE = uint16(400);
 
-%DIAG Calibrations
-CONST_EndOfLineEnableFlg = 0;
+%% DIAG EOL Calibrations
+CONST_EndOfLineEnableFlg = boolean(true);
+CONST_EnDelay = uint16(10 * 1000);
+CONST_EOL_SlowPwm = uint8(100);
+CONST_EOL_MedPwm = uint8(150);
+CONST_EOL_FastPwm = uint8(200);
+CONST_EOL_SFastPwm = uint8(250);
+CONST_EOL_ME_Ticks = uint16(50); %original 15000
 
 
 %% Routines Enum
