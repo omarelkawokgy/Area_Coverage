@@ -26,7 +26,8 @@ CONST_EOL_SlowPwm = uint8(100);
 CONST_EOL_MedPwm = uint8(150);
 CONST_EOL_FastPwm = uint8(200);
 CONST_EOL_SFastPwm = uint8(250);
-CONST_EOL_ME_Ticks = uint16(50); %original 15000
+CONST_EOL_ME_Ticks = uint16(150); %original 15000
+CONST_MinDistError_mm = uint16(5);
 
 
 %% Routines Enum
@@ -102,13 +103,15 @@ CAL_EAST = uint16(0);
 CAL_WEST = uint16(180);
 CAL_SOUTH = uint16(90);
 
+CAL_Wheel2WheelDist_mm = uint16(250);
+
 %% ULS filter calibration
 CAL_FilterBufferSize = uint8(4);
 
 %% Encoder Calibration data
 CAL_SingleStepMulti = 0.75;
 CONST_CounterInit = uint8(0);
-CAL_SingleStepTicks = uint16(1100);
+CAL_SingleStepTicks = uint16(470);
 CAL_tick_PER_mm = single(CAL_SingleStepTicks) / single(CAL_BLOCK_SIZE_mm);
 CAL_hitBackwardDist_mm = single(100);
 CAL_stopTime_sec = single(0.1);
@@ -121,7 +124,7 @@ CAL_ZgZgCounterThd = uint8(2);
 
 %% movement Calibrations
 CAL_forwardThetaThd = uint8(200);
-
+CONST_Zero = int16(0);
 %error calibrations
 CONST_NegOne = int16(-1);
 CONST_ZeroDeg = int16(0); 
