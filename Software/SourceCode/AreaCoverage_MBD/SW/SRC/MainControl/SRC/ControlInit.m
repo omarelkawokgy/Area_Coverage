@@ -28,7 +28,11 @@ CONST_EOL_FastPwm = uint8(200);
 CONST_EOL_SFastPwm = uint8(250);
 CONST_EOL_ME_Ticks = uint16(150); %original 15000
 CONST_MinDistError_mm = uint16(5);
-
+ENU_DIAG_COMP = uint8(1);
+ENU_DIAG_ENCOD = uint8(2);
+ENU_DIAG_ULS = uint8(3);
+ENU_DIAG_PUMP = uint8(4);
+ENU_DIAG_BLTOTH = uint8(5);
 
 %% Routines Enum
 ENU_GTSP = uint8(25);
