@@ -33,6 +33,7 @@ ENU_DIAG_ENCOD = uint8(2);
 ENU_DIAG_ULS = uint8(3);
 ENU_DIAG_PUMP = uint8(4);
 ENU_DIAG_BLTOTH = uint8(5);
+CAL_PwmMoveThd_mm = uint8(180);
 
 %% Routines Enum
 ENU_GTSP = uint8(25);
@@ -53,6 +54,7 @@ ENU_LEFT_EMPTY_RIGHT_EMPTY = uint8(15);
 
 ENU_PASSED = 1;
 ENU_FAILED = 2;
+ENU_TEST_NOT_CONFIRMED = 3;
 
 %% Map States
 ENU_BUSY = uint8(4);
@@ -100,6 +102,7 @@ CAL_fullCircle_DEG = uint16(360);
 
 CAL_SAMPLE_TIME = single(0.005);
 CAL_APP_Ticks_Sec = uint8(5);
+CAL_DIAG_Ticks_Sec = uint8(50);
 CAL_EncoderSampleTime = double(0.001);
 
 CAL_NORTH = uint16(270);
