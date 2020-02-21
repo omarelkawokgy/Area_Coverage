@@ -33,12 +33,14 @@ ENU_DIAG_ENCOD = uint8(2);
 ENU_DIAG_ULS = uint8(3);
 ENU_DIAG_PUMP = uint8(4);
 ENU_DIAG_BLTOTH = uint8(5);
+ENU_DIAG_ANGLE_CALIB = uint8(6);
 CAL_PwmMoveThd_mm = uint8(180);
 
 %% Routines Enum
 ENU_GTSP = uint8(25);
 ENU_ZIGZAG = uint8(26);
 ENU_END = uint8(27);
+ENU_DIAG = uint8(28);
 
 %% Sensor View Enum
 ENU_FAILURE_READING = uint8(6);
