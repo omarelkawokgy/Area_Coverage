@@ -24,6 +24,8 @@ INIT_COMP_VALUE = NORTH; %degree
 MAX_SPEED = 1000; %mm/s
 ROB_LENG = CAL_ROBO_LENG; %cm
 SAMPLE_TIME = 0.001; %sec
+gearRatio = 60;
+halfWheel_mm = 60;
 
 ROB_WHEEL_R = .15;
 STEP_SIZE = 5;
