@@ -56,8 +56,8 @@ thetaMapTb = [thetaMapTb1, thetaMapTb2, thetaMapTb3, thetaMapTb4, thetaMapTb5];
 thetaMapBp = [0 : 0.1 : 360];
 
 % NVM Handler
-NVM_NORTH = uint16(0);
-NVM_SOUTH = uint16(180);
-NVM_EAST = uint16(90);
-NVM_WEST = uint16(270);
+NVM_NORTH = uint16(CAL_NORTH);
+NVM_SOUTH = uint16(CAL_SOUTH);
+NVM_EAST = uint16(CAL_EAST);
+NVM_WEST = uint16(CAL_WEST);
 NVM_AngleStoreFlg = true;

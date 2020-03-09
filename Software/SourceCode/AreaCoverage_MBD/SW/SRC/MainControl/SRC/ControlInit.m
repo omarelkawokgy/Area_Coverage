@@ -154,6 +154,8 @@ CAL_ALLOWED_ERROR_VALUE = single(0.02);
 %% compass handler config
 % filter calibrations
 CAL_ProcessNoise = single(1.009);
+CAL_procNoiseVelKF = single(1.5);
+CAL_MeasNoiseVelKF = single(0.8);
 CAL_MeasureNoise = single(2);
 CAL_FilterResetThd = int16(100);
 

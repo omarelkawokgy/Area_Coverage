@@ -7,6 +7,7 @@ addpath(genpath('..\..\POSH'))
 addpath(genpath('..\..\ROTH'))
 addpath(genpath('..\..\SCAN'))
 addpath(genpath('..\..\DSCA'))
+addpath(genpath('..\..\MOMO'))
 ControlInit;
 AreaCoverageCalib;
 MotorConfigurationSheet;
