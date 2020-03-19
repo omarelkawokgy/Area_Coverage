@@ -90,8 +90,9 @@ end
 
 %% RobotConfig
 % ROB_DIAMETER = 30;
-CAL_ROBO_LENG = uint8(30);
-CAL_ROBO_LENG_mm = uint16(300);
+CAL_Wheel2WheelDist_mm = uint16(250);
+CAL_ROBO_LENG = uint8(CAL_Wheel2WheelDist_mm/10);
+CAL_ROBO_LENG_mm = CAL_Wheel2WheelDist_mm;
 % Angle error allowed value
 CAL_ROB_ERRVAL = uint8(5);
 CAL_initX = uint8((CAL_ROOM_SIDE_SIZE/2) - 1);
@@ -110,13 +111,14 @@ CAL_SAMPLE_TIME = single(0.005);
 CAL_APP_Ticks_Sec = uint8(5);
 CAL_DIAG_Ticks_Sec = uint8(50);
 CAL_EncoderSampleTime = double(0.001);
+CAL_Init_timer = uint16(2/CAL_SAMPLE_TIME); %450 ms to initialize filters
 
 CAL_NORTH = uint16(270);
 CAL_EAST = uint16(0);
 CAL_WEST = uint16(180);
 CAL_SOUTH = uint16(90);
 
-CAL_Wheel2WheelDist_mm = uint16(250);
+
 
 %% ULS filter calibration
 CAL_FilterBufferSize = uint8(4);
@@ -156,7 +158,7 @@ CAL_ALLOWED_ERROR_VALUE = single(0.02);
 CAL_ProcessNoise = single(1.009);
 CAL_procNoiseVelKF = single(1.5);
 CAL_MeasNoiseVelKF = single(0.8);
-CAL_MeasureNoise = single(2);
+CAL_MeasureNoise = single(1.2);
 CAL_FilterResetThd = int16(100);
 
 %% motor handler config
