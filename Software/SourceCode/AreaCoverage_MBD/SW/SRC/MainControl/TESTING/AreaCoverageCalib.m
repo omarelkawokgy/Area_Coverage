@@ -23,11 +23,14 @@ NONE = -1;
 INIT_COMP_VALUE = NORTH; %degree
 MAX_SPEED = 1000; %mm/s
 ROB_LENG = CAL_ROBO_LENG; %cm
+ROB_LENG_mm = single(CAL_ROBO_LENG*10);
+ROB_LENG_m = 0.25;
 SAMPLE_TIME = 0.001; %sec
 gearRatio = 12;
 halfWheel_mm = 60;
 
-ROB_WHEEL_R = .15;
+ROB_WHEEL_R_m = .06;
+ROB_WHEEL_R_cm = ROB_WHEEL_R*100;
 STEP_SIZE = 5;
 
 initYSim = 50;

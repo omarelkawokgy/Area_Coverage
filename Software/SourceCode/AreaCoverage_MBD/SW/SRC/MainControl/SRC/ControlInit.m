@@ -153,6 +153,7 @@ CAL_Kp = single(4);
 CAL_Kd = single(0.002);
 CAL_ALLOWED_ERROR_VALUE = single(0.02);
 
+
 %% compass handler config
 % filter calibrations
 CAL_ProcessNoise = single(1.009);
@@ -168,3 +169,6 @@ CAL_ErrorUpperLimit = single(2);
 CAL_ErrorLowerLimit = single(-2);
 CAL_backwardErrorVal = single(0.5);
 CONST_noVelocity = int16(0);
+CAL_risingStep_pwmPerSample = single(CAL_ErrorUpperLimit * 0.05);
+CAL_fallingStep_pwmPerSample = single(CAL_ErrorLowerLimit * 0.1);
+CAL_straightLineErrorAllowed_f32 = single(CAL_ErrorUpperLimit);
