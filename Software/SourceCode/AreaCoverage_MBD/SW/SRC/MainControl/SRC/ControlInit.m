@@ -39,6 +39,37 @@ CONST_DIAG_FINISH_FLG = uint8(8);
 CONST_DIAG_UNCONFIRM = uint8(9);
 CAL_PwmMoveThd_mm = uint8(180);
 
+%% General constants
+CONST_TWO_F32 = single(2);
+CONST_PI_F32 = single(pi);
+CONST_ZERO_UINT16 = uint16(0);
+CONST_ZERO_F32 = single(0);
+CONST_ONE_F32 = single(1);
+CONST_ONE_INT32 = int32(1);
+CONST_NEG_ONE_INT32 = int32(-1);
+CONST_ONE_UINT16 = uint16(1);
+CONST_ZERO_THD_F32 = single(0.0000001);
+CONST_FALSE = boolean(false);
+COSNT_TRUE = boolean(true);
+CONST_ENCOD_TIMER_FAULT = uint8(10);
+CONST_VEL_TIMEOUT = uint8(100);
+CONST_COMPASS_DIAG_FIN_TIMER = uint8(10);
+CONST_ERROR_TOLERANCE = uint8(6);
+CONST_MODES_TOLERANCE = uint8(5);
+CONST_ZGZAG_CNT_THD = uint8(2);
+CONST_GTSP_HITCNT_THD = uint8(3);
+CONST_SNSR_VIEW_PERC = single(0.2);
+CONST_MOVE_STABLE_CNT = uint8(5);
+CONST_UTURN_CNT_THD = uint8(2);
+CONST_TARGET_REACHED_TIMER = uint8(100);
+CONST_CONFIRM_TIME_STOP = uint8(5);
+CONST_STUCK_CONFIRM_THD = uint8(2);
+
+
+
+%% General Calibration
+CAL_mmPerTickPerTs = CAL_mm_PER_tick/CAL_EncoderSampleTime;
+
 %% Routines Enum
 ENU_GTSP = uint8(25);
 ENU_ZIGZAG = uint8(26);
@@ -106,14 +137,16 @@ CAL_NO_ERROR = uint8(0);
 CAL_thetaGain = uint8(100);
 CAL_halfCircle_DEG = uint16(180);
 CAL_fullCircle_DEG = uint16(360);
+CONST_OVERFLOW_THD_UINT16 = uint16(5);
 
 CAL_SAMPLE_TIME = single(0.005);
 CAL_APP_Ticks_Sec = uint8(5);
 CAL_DIAG_Ticks_Sec = uint8(50);
-CAL_EncoderSampleTime = double(0.001);
+CAL_EncoderSampleTime = single(0.001);
 CAL_Init_timer = uint16(2/CAL_SAMPLE_TIME); %450 ms to initialize filters
 
 CAL_NORTH = uint16(270);
+CAL_NORTH_rad = single((270*pi)/180);
 CAL_EAST = uint16(0);
 CAL_WEST = uint16(180);
 CAL_SOUTH = uint16(90);
@@ -156,7 +189,7 @@ CAL_ALLOWED_ERROR_VALUE = single(0.02);
 
 %% compass handler config
 % filter calibrations
-CAL_ProcessNoise = single(1.009);
+CAL_ProcessNoise = single(1.5);
 CAL_procNoiseVelKF = single(1.5);
 CAL_MeasNoiseVelKF = single(0.8);
 CAL_MeasureNoise = single(1.2);
