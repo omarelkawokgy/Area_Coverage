@@ -65,11 +65,6 @@ CONST_TARGET_REACHED_TIMER = uint8(100);
 CONST_CONFIRM_TIME_STOP = uint8(5);
 CONST_STUCK_CONFIRM_THD = uint8(2);
 
-
-
-%% General Calibration
-CAL_mmPerTickPerTs = CAL_mm_PER_tick/CAL_EncoderSampleTime;
-
 %% Routines Enum
 ENU_GTSP = uint8(25);
 ENU_ZIGZAG = uint8(26);
@@ -205,3 +200,6 @@ CONST_noVelocity = int16(0);
 CAL_risingStep_pwmPerSample = single(CAL_ErrorUpperLimit * 0.05);
 CAL_fallingStep_pwmPerSample = single(CAL_ErrorLowerLimit * 0.1);
 CAL_straightLineErrorAllowed_f32 = single(CAL_ErrorUpperLimit);
+
+%% General Calibration
+CAL_mmPerTickPerTs = CAL_mm_PER_tick/CAL_EncoderSampleTime;

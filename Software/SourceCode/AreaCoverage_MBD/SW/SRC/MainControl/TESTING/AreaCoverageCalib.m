@@ -30,7 +30,7 @@ gearRatio = 12;
 halfWheel_mm = 60;
 
 ROB_WHEEL_R_m = .06;
-ROB_WHEEL_R_cm = ROB_WHEEL_R*100;
+ROB_WHEEL_R_cm = ROB_WHEEL_R_m*100;
 STEP_SIZE = 5;
 
 initYSim = 50;
