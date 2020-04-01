@@ -54,7 +54,7 @@ COSNT_TRUE = boolean(true);
 CONST_ENCOD_TIMER_FAULT = uint8(10);
 CONST_VEL_TIMEOUT = uint8(100);
 CONST_COMPASS_DIAG_FIN_TIMER = uint8(10);
-CONST_ERROR_TOLERANCE = uint8(6);
+CONST_ERROR_TOLERANCE = uint8(15);
 CONST_MODES_TOLERANCE = uint8(5);
 CONST_ZGZAG_CNT_THD = uint8(2);
 CONST_GTSP_HITCNT_THD = uint8(3);
@@ -70,6 +70,7 @@ ENU_GTSP = uint8(25);
 ENU_ZIGZAG = uint8(26);
 ENU_END = uint8(27);
 ENU_DIAG = uint8(28);
+ENU_SHIFT_HEADING = uint8(29);
 
 %% Sensor View Enum
 ENU_FAILURE_READING = uint8(6);
@@ -87,6 +88,7 @@ ENU_PASSED = uint8(1);
 ENU_FAILED = uint8(2);
 ENU_FINISHED = uint8(4);
 ENU_TEST_NOT_CONFIRMED = uint8(3);
+ENU_TEST_INIT = uint8(5);
 
 %% Map States
 ENU_BUSY = uint8(4);
@@ -170,22 +172,22 @@ CAL_GTSPdelayStart = uint8(200); %time in ticks
 CAL_ZgZgCounterThd = uint8(2);
 
 %% movement Calibrations
-CAL_forwardThetaThd = uint8(200);
+CAL_forwardThetaThd = uint16(500);
 CONST_Zero = int16(0);
 %error calibrations
 CONST_NegOne = int16(-1);
 CONST_ZeroDeg = int16(0); 
 CONST_EnableDelay = boolean(1);
-CAL_Ki = single(0.000025);
+CAL_Ki = single(0.0003);
 CAL_Kp = single(4);
 CAL_Kd = single(0.002);
-CAL_ALLOWED_ERROR_VALUE = single(0.02);
+CAL_ALLOWED_ERROR_VALUE = single(0.05);
 
 
 %% compass handler config
 % filter calibrations
 CAL_ProcessNoise = single(1.5);
-CAL_procNoiseVelKF = single(1.5);
+CAL_procNoiseVelKF = single(1.2);
 CAL_MeasNoiseVelKF = single(0.8);
 CAL_MeasureNoise = single(1.2);
 CAL_FilterResetThd = int16(100);

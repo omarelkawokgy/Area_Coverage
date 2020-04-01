@@ -63,4 +63,4 @@ NVM_NORTH = uint16(CAL_NORTH);
 NVM_SOUTH = uint16(CAL_SOUTH);
 NVM_EAST = uint16(CAL_EAST);
 NVM_WEST = uint16(CAL_WEST);
-NVM_AngleStoreFlg = true;
+NVM_AngleStoreFlg = false;
