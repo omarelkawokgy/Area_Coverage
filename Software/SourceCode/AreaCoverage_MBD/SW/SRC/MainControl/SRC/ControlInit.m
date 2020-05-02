@@ -48,7 +48,7 @@ CONST_ONE_F32 = single(1);
 CONST_ONE_INT32 = int32(1);
 CONST_NEG_ONE_INT32 = int32(-1);
 CONST_ONE_UINT16 = uint16(1);
-CONST_ZERO_THD_F32 = single(0.0000001);
+CONST_ZERO_THD_F32 = single(0.00001);
 CONST_FALSE = boolean(false);
 COSNT_TRUE = boolean(true);
 CONST_ENCOD_TIMER_FAULT = uint8(10);
@@ -64,6 +64,7 @@ CONST_UTURN_CNT_THD = uint8(2);
 CONST_TARGET_REACHED_TIMER = uint8(100);
 CONST_CONFIRM_TIME_STOP = uint8(5);
 CONST_STUCK_CONFIRM_THD = uint8(2);
+
 
 %% Routines Enum
 ENU_GTSP = uint8(25);
@@ -98,7 +99,7 @@ ENU_UNCOVERED = uint8(1);
 
 %% MapConfig
 CAL_BLOCK_SIZE = uint8(20);
-CAL_BLOCK_SIZE_mm = uint8(200);
+CAL_BLOCK_SIZE_mm = uint16(250);
 CAL_ROOM_SIDE_SIZE = uint8(20);
 
 CAL_roomSize = CAL_ROOM_SIDE_SIZE;
@@ -178,10 +179,10 @@ CONST_Zero = int16(0);
 CONST_NegOne = int16(-1);
 CONST_ZeroDeg = int16(0); 
 CONST_EnableDelay = boolean(1);
-CAL_Ki = single(0.0003);
+CAL_Ki = single(3.00e-03);
 CAL_Kp = single(4);
-CAL_Kd = single(0.002);
-CAL_ALLOWED_ERROR_VALUE = single(0.05);
+CAL_Kd = single(0.005);
+CAL_ALLOWED_ERROR_VALUE = single(5/180);
 
 
 %% compass handler config
