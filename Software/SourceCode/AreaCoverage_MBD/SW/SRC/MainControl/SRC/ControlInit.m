@@ -64,7 +64,7 @@ CONST_UTURN_CNT_THD = uint8(2);
 CONST_TARGET_REACHED_TIMER = uint8(100);
 CONST_CONFIRM_TIME_STOP = uint8(5);
 CONST_STUCK_CONFIRM_THD = uint8(2);
-
+CONST_TARGET_REACHED_BLIND = uint8(5); %wait till request changs and target reached is zero
 
 %% Routines Enum
 ENU_GTSP = uint8(25);
@@ -180,7 +180,7 @@ CONST_NegOne = int16(-1);
 CONST_ZeroDeg = int16(0); 
 CONST_EnableDelay = boolean(1);
 CAL_Ki = single(3.00e-03);
-CAL_Kp = single(4);
+CAL_Kp = single(3);
 CAL_Kd = single(0.005);
 CAL_ALLOWED_ERROR_VALUE = single(5/180);
 
@@ -206,3 +206,6 @@ CAL_straightLineErrorAllowed_f32 = single(CAL_ErrorUpperLimit);
 
 %% General Calibration
 CAL_mmPerTickPerTs = CAL_mm_PER_tick/CAL_EncoderSampleTime;
+CAL_hitBakTimeout = uint16(2/0.005); %2 sec
+CAL_sideStuckTimeout = uint16(35/0.005); %25 sec
+CAL_hitEscapeDist_mm = uint16(CAL_hitBackwardDist_mm - 100);
