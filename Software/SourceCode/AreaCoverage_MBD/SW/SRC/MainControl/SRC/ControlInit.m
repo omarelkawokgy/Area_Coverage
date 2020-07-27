@@ -50,7 +50,7 @@ CONST_NEG_ONE_INT32 = int32(-1);
 CONST_ONE_UINT16 = uint16(1);
 CONST_ZERO_THD_F32 = single(0.00001);
 CONST_FALSE = boolean(false);
-COSNT_TRUE = boolean(true);
+CONST_TRUE = boolean(true);
 CONST_ENCOD_TIMER_FAULT = uint8(10);
 CONST_VEL_TIMEOUT = uint8(100);
 CONST_COMPASS_DIAG_FIN_TIMER = uint8(10);
@@ -65,6 +65,7 @@ CONST_TARGET_REACHED_TIMER = uint8(100);
 CONST_CONFIRM_TIME_STOP = uint8(5);
 CONST_STUCK_CONFIRM_THD = uint8(2);
 CONST_TARGET_REACHED_BLIND = uint8(5); %wait till request changs and target reached is zero
+CONST_MAXZIGZAG = uint8(30);
 
 %% Routines Enum
 ENU_GTSP = uint8(25);
@@ -103,19 +104,19 @@ CAL_BLOCK_SIZE_mm = uint16(250);
 CAL_ROOM_SIDE_SIZE = uint8(20);
 
 CAL_roomSize = CAL_ROOM_SIDE_SIZE;
-CAL_map = uint8(ones(CAL_ROOM_SIDE_SIZE , CAL_ROOM_SIDE_SIZE)*1); %1 for ENU_UNCOVERED
+% CAL_map = uint8(ones(CAL_ROOM_SIDE_SIZE , CAL_ROOM_SIDE_SIZE)*1); %1 for ENU_UNCOVERED
 
 %% Draw room Boarders
-for rowNum = 1:(CAL_roomSize)
-    for colNum = 1: CAL_roomSize
-        if (rowNum == 1) || (rowNum == CAL_roomSize)...
-                || (colNum == 1) || (colNum == CAL_roomSize)
-%                 || (rowNum == 2) || (rowNum == roomSize - 1)...
-%                 || (colNum == 2) || (colNum == roomSize-1)
-            CAL_map(rowNum, colNum) = ENU_BUSY;
-        end
-    end
-end
+% for rowNum = 1:(CAL_roomSize)
+%     for colNum = 1: CAL_roomSize
+%         if (rowNum == 1) || (rowNum == CAL_roomSize)...
+%                 || (colNum == 1) || (colNum == CAL_roomSize)
+% %                 || (rowNum == 2) || (rowNum == roomSize - 1)...
+% %                 || (colNum == 2) || (colNum == roomSize-1)
+%             CAL_map(rowNum, colNum) = ENU_BUSY;
+%         end
+%     end
+% end
 
 %% RobotConfig
 % ROB_DIAMETER = 30;
@@ -124,6 +125,7 @@ CAL_ROBO_LENG = uint8(CAL_Wheel2WheelDist_mm/10);
 CAL_ROBO_LENG_mm = CAL_Wheel2WheelDist_mm;
 % Angle error allowed value
 CAL_ROB_ERRVAL = uint8(5);
+CAL_ROB_ERRVAL_ENCODE = uint8(10);
 CAL_initX = uint8((CAL_ROOM_SIDE_SIZE/2) - 1);
 CAL_initY = CAL_initX;
 
@@ -143,11 +145,11 @@ CAL_DIAG_Ticks_Sec = uint8(50);
 CAL_EncoderSampleTime = single(0.001);
 CAL_Init_timer = uint16(2/CAL_SAMPLE_TIME); %450 ms to initialize filters
 
-CAL_NORTH = uint16(270);
+CAL_NORTH = int16(270);
 CAL_NORTH_rad = single((270*pi)/180);
-CAL_EAST = uint16(0);
-CAL_WEST = uint16(180);
-CAL_SOUTH = uint16(90);
+CAL_EAST = int16(0);
+CAL_WEST = int16(180);
+CAL_SOUTH = int16(90);
 
 
 
@@ -166,6 +168,7 @@ CAL_tick_PER_mm = single(CAL_SingleTurnTicks) / single(CAL_WheelCircumference_cm
 CAL_hitBackwardDist_mm = single(150);
 CAL_stopTime_sec = single(0.1);
 CAL_mm_PER_tick = single(1 / CAL_tick_PER_mm);
+CAL_EncoderAnaThd = uint16(100);
 
 %% main routines calibrations
 CAL_GTSPgapCounter = uint8(100); %time in ticks
@@ -188,7 +191,7 @@ CAL_ALLOWED_ERROR_VALUE = single(5/180);
 %% compass handler config
 % filter calibrations
 CAL_ProcessNoise = single(1.5);
-CAL_procNoiseVelKF = single(1.2);
+CAL_procNoiseVelKF = single(2.5);
 CAL_MeasNoiseVelKF = single(0.8);
 CAL_MeasureNoise = single(1.2);
 CAL_FilterResetThd = int16(100);
@@ -203,9 +206,13 @@ CONST_noVelocity = int16(0);
 CAL_risingStep_pwmPerSample = single(CAL_ErrorUpperLimit * 0.05);
 CAL_fallingStep_pwmPerSample = single(CAL_ErrorLowerLimit * 0.1);
 CAL_straightLineErrorAllowed_f32 = single(CAL_ErrorUpperLimit);
+gearRatio = 12;
 
 %% General Calibration
 CAL_mmPerTickPerTs = CAL_mm_PER_tick/CAL_EncoderSampleTime;
 CAL_hitBakTimeout = uint16(2/0.005); %2 sec
 CAL_sideStuckTimeout = uint16(35/0.005); %25 sec
 CAL_hitEscapeDist_mm = uint16(CAL_hitBackwardDist_mm - 100);
+
+%% Motor estimators parameters
+MotorConfigurationSheet

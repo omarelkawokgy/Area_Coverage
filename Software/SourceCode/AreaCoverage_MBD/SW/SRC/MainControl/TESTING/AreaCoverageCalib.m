@@ -26,7 +26,6 @@ ROB_LENG = CAL_ROBO_LENG; %cm
 ROB_LENG_mm = single(CAL_ROBO_LENG*10);
 ROB_LENG_m = 0.25;
 SAMPLE_TIME = 0.001; %sec
-gearRatio = 12;
 halfWheel_mm = 60;
 
 ROB_WHEEL_R_m = .06;

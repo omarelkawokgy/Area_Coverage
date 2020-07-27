@@ -12,3 +12,4 @@ addpath(genpath('..\..\COML'))
 ControlInit;
 AreaCoverageCalib;
 MotorConfigurationSheet;
+Test_MotorConfigurationSheet;

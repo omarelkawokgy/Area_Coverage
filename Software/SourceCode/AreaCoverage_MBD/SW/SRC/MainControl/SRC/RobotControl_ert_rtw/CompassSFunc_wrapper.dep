@@ -1,0 +1,83 @@
+CompassSFunc_wrapper.o: \
+ C:/Projects/myProject/CleanerRepo/Area_Coverage/Software/SourceCode/AreaCoverage_MBD/SW/SRC/MainControl/SRC/CompassSFunc_wrapper.cpp \
+ C:/Projects/myProject/CleanerRepo/Area_Coverage/Software/SourceCode/AreaCoverage_MBD/SW/SRC/MainControl/SRC/RobotControl_ert_rtw/rtwtypes.h \
+ C:/TOOLS/MATLAB/extern/include/tmwtypes.h \
+ C:/TOOLS/MATLAB/simulink/include/simstruc_types.h \
+ C:/TOOLS/MATLAB/simulink/include/sl_types_def.h \
+ C:/TOOLS/MATLAB/simulink/include/rtw_matlogging.h \
+ C:/TOOLS/MATLAB/simulink/include/rtw_extmode.h \
+ C:/TOOLS/MATLAB/simulink/include/rtw_continuous.h \
+ C:/TOOLS/MATLAB/simulink/include/rtw_solver.h \
+ C:/TOOLS/MATLAB/simulink/include/sysran_types.h \
+ C:/TOOLS/MATLAB/simulink/include/sl_sample_time_defs.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/Arduino.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/binary.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/WCharacter.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/WString.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/HardwareSerial.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/Stream.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/Print.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/Printable.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/USBAPI.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/Arduino.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/variants/standard/pins_arduino.h \
+ C:/Projects/myProject/CleanerRepo/Area_Coverage/Software/SourceCode/AreaCoverage_MBD/SW/SRC/MainControl/SRC/Wire.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/Stream.h \
+ C:/Projects/myProject/CleanerRepo/Area_Coverage/Software/SourceCode/AreaCoverage_MBD/SW/SRC/MainControl/SRC/Wire.cpp \
+ C:/Projects/myProject/CleanerRepo/Area_Coverage/Software/SourceCode/AreaCoverage_MBD/SW/SRC/MainControl/SRC/twi.h \
+ C:/Projects/myProject/CleanerRepo/Area_Coverage/Software/SourceCode/AreaCoverage_MBD/SW/SRC/MainControl/SRC/HMC5883L.h \
+ C:/Projects/myProject/CleanerRepo/Area_Coverage/Software/SourceCode/AreaCoverage_MBD/SW/SRC/MainControl/SRC/HMC5883L.cpp
+
+C:/Projects/myProject/CleanerRepo/Area_Coverage/Software/SourceCode/AreaCoverage_MBD/SW/SRC/MainControl/SRC/RobotControl_ert_rtw/rtwtypes.h:
+
+C:/TOOLS/MATLAB/extern/include/tmwtypes.h:
+
+C:/TOOLS/MATLAB/simulink/include/simstruc_types.h:
+
+C:/TOOLS/MATLAB/simulink/include/sl_types_def.h:
+
+C:/TOOLS/MATLAB/simulink/include/rtw_matlogging.h:
+
+C:/TOOLS/MATLAB/simulink/include/rtw_extmode.h:
+
+C:/TOOLS/MATLAB/simulink/include/rtw_continuous.h:
+
+C:/TOOLS/MATLAB/simulink/include/rtw_solver.h:
+
+C:/TOOLS/MATLAB/simulink/include/sysran_types.h:
+
+C:/TOOLS/MATLAB/simulink/include/sl_sample_time_defs.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/Arduino.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/binary.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/WCharacter.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/WString.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/HardwareSerial.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/Stream.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/Print.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/Printable.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/USBAPI.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/Arduino.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/variants/standard/pins_arduino.h:
+
+C:/Projects/myProject/CleanerRepo/Area_Coverage/Software/SourceCode/AreaCoverage_MBD/SW/SRC/MainControl/SRC/Wire.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2016b/3P.instrset/arduinoide.instrset/arduino-1.6.13/hardware/arduino/avr/cores/arduino/Stream.h:
+
+C:/Projects/myProject/CleanerRepo/Area_Coverage/Software/SourceCode/AreaCoverage_MBD/SW/SRC/MainControl/SRC/Wire.cpp:
+
+C:/Projects/myProject/CleanerRepo/Area_Coverage/Software/SourceCode/AreaCoverage_MBD/SW/SRC/MainControl/SRC/twi.h:
+
+C:/Projects/myProject/CleanerRepo/Area_Coverage/Software/SourceCode/AreaCoverage_MBD/SW/SRC/MainControl/SRC/HMC5883L.h:
+
+C:/Projects/myProject/CleanerRepo/Area_Coverage/Software/SourceCode/AreaCoverage_MBD/SW/SRC/MainControl/SRC/HMC5883L.cpp:
