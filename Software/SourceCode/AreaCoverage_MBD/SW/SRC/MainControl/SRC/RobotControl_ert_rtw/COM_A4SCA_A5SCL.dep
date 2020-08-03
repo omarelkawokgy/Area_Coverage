@@ -9,18 +9,8 @@ COM_A4SCA_A5SCL.o: COM_A4SCA_A5SCL.c COM_A4SCA_A5SCL.h rtwtypes.h \
  C:/TOOLS/MATLAB/simulink/include/rtw_solver.h \
  C:/TOOLS/MATLAB/simulink/include/sysran_types.h \
  C:/TOOLS/MATLAB/simulink/include/sl_sample_time_defs.h \
- C:/TOOLS/MATLAB/simulink/include/simstruc.h \
- C:/TOOLS/MATLAB/simulink/include/simstruc_types.h \
- C:/TOOLS/MATLAB/simulink/include/solver_zc.h \
- C:/TOOLS/MATLAB/simulink/include/sl_common_types_def.h \
- C:/TOOLS/MATLAB/simulink/include/sl_fixpt.h \
- C:/TOOLS/MATLAB/simulink/include/sl_datatype_access.h \
- C:/TOOLS/MATLAB/simulink/include/sl_prodhwdevicetype.h \
- C:/TOOLS/MATLAB/simulink/include/simulink_solver_api.h \
- C:/TOOLS/MATLAB/simulink/include/simstruc.h \
- C:/TOOLS/MATLAB/rtw/c/src/sfcn_bridge.h \
- C:/TOOLS/MATLAB/simulink/include/fixedpoint.h \
- C:/TOOLS/MATLAB/simulink/include/fixpoint_spec.h \
+ C:/TOOLS/MATLAB/simulink/include/rtw_continuous.h \
+ C:/TOOLS/MATLAB/simulink/include/rtw_solver.h \
  C:/ProgramData/MATLAB/SupportPackages/R2016b/toolbox/target/supportpackages/arduinobase/include/MW_digitalio.h \
  C:/ProgramData/MATLAB/SupportPackages/R2016b/toolbox/target/supportpackages/arduinobase/blocks/sfcn/include/arduino_analoginput_lct.h \
  C:/ProgramData/MATLAB/SupportPackages/R2016b/toolbox/target/supportpackages/arduinobase/include/io_wrappers.h \
@@ -31,7 +21,7 @@ COM_A4SCA_A5SCL.o: COM_A4SCA_A5SCL.c COM_A4SCA_A5SCL.h rtwtypes.h \
  C:/ProgramData/MATLAB/SupportPackages/R2016b/toolbox/target/supportpackages/arduinobase/blocks/sfcn/include/arduino_analogoutput_lct.h \
  RobotControl_types.h multiword_types.h RobotControl.h DIAG_Cont.h DSCA.h \
  HeadingCalculator.h HeadingsDirectionHandler.h HighLevelRoutines.h \
- MovementHandler.h rt_nonfinite.h ScanHandler.h StopRoutine.h \
+ MovementHandler.h ScanHandler.h StopRoutine.h rt_nonfinite.h \
  motorHandler.h thetaFilter.h MW_target_hardware_resources.h \
  C:/ProgramData/MATLAB/SupportPackages/R2016b/toolbox/target/supportpackages/arduinotarget/registry/../scheduler/include/arduinoAVRScheduler.h \
  rtGetInf.h RobotControl_private.h
@@ -60,29 +50,9 @@ C:/TOOLS/MATLAB/simulink/include/sysran_types.h:
 
 C:/TOOLS/MATLAB/simulink/include/sl_sample_time_defs.h:
 
-C:/TOOLS/MATLAB/simulink/include/simstruc.h:
+C:/TOOLS/MATLAB/simulink/include/rtw_continuous.h:
 
-C:/TOOLS/MATLAB/simulink/include/simstruc_types.h:
-
-C:/TOOLS/MATLAB/simulink/include/solver_zc.h:
-
-C:/TOOLS/MATLAB/simulink/include/sl_common_types_def.h:
-
-C:/TOOLS/MATLAB/simulink/include/sl_fixpt.h:
-
-C:/TOOLS/MATLAB/simulink/include/sl_datatype_access.h:
-
-C:/TOOLS/MATLAB/simulink/include/sl_prodhwdevicetype.h:
-
-C:/TOOLS/MATLAB/simulink/include/simulink_solver_api.h:
-
-C:/TOOLS/MATLAB/simulink/include/simstruc.h:
-
-C:/TOOLS/MATLAB/rtw/c/src/sfcn_bridge.h:
-
-C:/TOOLS/MATLAB/simulink/include/fixedpoint.h:
-
-C:/TOOLS/MATLAB/simulink/include/fixpoint_spec.h:
+C:/TOOLS/MATLAB/simulink/include/rtw_solver.h:
 
 C:/ProgramData/MATLAB/SupportPackages/R2016b/toolbox/target/supportpackages/arduinobase/include/MW_digitalio.h:
 
@@ -118,11 +88,11 @@ HighLevelRoutines.h:
 
 MovementHandler.h:
 
-rt_nonfinite.h:
-
 ScanHandler.h:
 
 StopRoutine.h:
+
+rt_nonfinite.h:
 
 motorHandler.h:
 

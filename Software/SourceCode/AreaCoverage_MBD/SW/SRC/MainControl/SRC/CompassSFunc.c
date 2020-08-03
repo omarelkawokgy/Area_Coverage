@@ -25,7 +25,7 @@
   *  -------------------------------------------------------------------------
   * | See matlabroot/simulink/src/sfuntmpl_doc.c for a more detailed template |
   *  ------------------------------------------------------------------------- 
-* Created: Mon Jul 20 22:52:39 2020
+* Created: Wed Jul 29 10:07:36 2020
 */
 #define S_FUNCTION_LEVEL 2
 #define S_FUNCTION_NAME CompassSFunc
@@ -59,7 +59,7 @@
 #define NUM_CONT_STATES      0
 #define CONT_STATES_IC       [0]
 
-#define SFUNWIZ_GENERATE_TLC 0
+#define SFUNWIZ_GENERATE_TLC 1
 #define SOURCEFILES "__SFB__"
 #define PANELINDEX           6
 #define USE_SIMSTRUCT        0
@@ -110,6 +110,7 @@ static void mdlInitializeSizes(SimStruct *S)
 
     /* Take care when specifying exception free code - see sfuntmpl_doc.c */
     ssSetOptions(S, (SS_OPTION_EXCEPTION_FREE_CODE |
+                     SS_OPTION_USE_TLC_WITH_ACCELERATOR | 
 		     SS_OPTION_WORKS_WITH_CODE_REUSE));
 }
 

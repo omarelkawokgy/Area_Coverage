@@ -2,9 +2,9 @@
  * Code generation for system system '<S17>/HeadingCalculator'
  *
  * Model                      : RobotControl
- * Model version              : 1.500
+ * Model version              : 1.509
  * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Mon Jul 27 18:15:17 2020
+ * C source code generated on : Thu Jul 30 11:39:58 2020
  *
  * Note that the functions contained in this file are part of a Simulink
  * model, and are not self-contained algorithms.
@@ -34,30 +34,28 @@ static real_T RobotContro_thdOverflowRangeFlg(real_T direction, real_T theta)
   /* Graphical Function 'thdOverflowRangeFlg': '<S28>:195' */
   /* Transition: '<S28>:180' */
   guard1 = false;
-  if (direction - (real_T)RobotControl_P.CAL_ROB_ERRVAL < 0.0) {
+  if (direction - 5.0 < 0.0) {
     /* Transition: '<S28>:196' */
     /* Transition: '<S28>:189' */
-    thdUpper = (int16_T)(direction + (real_T)RobotControl_P.CAL_ROB_ERRVAL);
-    thdLower = (int16_T)((direction - (real_T)RobotControl_P.CAL_ROB_ERRVAL) +
-                         (real_T)RobotControl_CAL_fullCircle_DEG);
+    thdUpper = (int16_T)(direction + 5.0);
+    thdLower = (int16_T)((direction - 5.0) + (real_T)
+                         RobotControl_CAL_fullCircle_DEG);
     guard1 = true;
   } else {
     /* Transition: '<S28>:192' */
-    if (direction + (real_T)RobotControl_P.CAL_ROB_ERRVAL >
-        RobotControl_CAL_fullCircle_DEG) {
+    if (direction + 5.0 > RobotControl_CAL_fullCircle_DEG) {
       /* Transition: '<S28>:197' */
       /* Transition: '<S28>:200' */
-      thdUpper = (int16_T)((direction + (real_T)RobotControl_P.CAL_ROB_ERRVAL) -
-                           (real_T)RobotControl_CAL_fullCircle_DEG);
-      thdLower = (int16_T)(direction - (real_T)RobotControl_P.CAL_ROB_ERRVAL);
+      thdUpper = (int16_T)((direction + 5.0) - (real_T)
+                           RobotControl_CAL_fullCircle_DEG);
+      thdLower = (int16_T)(direction - 5.0);
 
       /* Transition: '<S28>:214' */
       guard1 = true;
     } else {
       /* Transition: '<S28>:201' */
-      if ((theta >= (int16_T)(direction - (real_T)RobotControl_P.CAL_ROB_ERRVAL))
-          && (theta <= (int16_T)(direction + (real_T)
-            RobotControl_P.CAL_ROB_ERRVAL))) {
+      if ((theta >= (int16_T)(direction - 5.0)) && (theta <= (int16_T)(direction
+            + 5.0))) {
         /* Transition: '<S28>:215' */
         /* Transition: '<S28>:217' */
         rangeFlg = 1.0;
@@ -146,7 +144,7 @@ void RobotControl_HeadingCalculator(void)
           /* Transition: '<S28>:130' */
         } else {
           /* Transition: '<S28>:128' */
-          RobotControl_B.currentHeading = RobotControl_P.ENU_ROB_NONE;
+          RobotControl_B.currentHeading = 400U;
         }
       }
     }

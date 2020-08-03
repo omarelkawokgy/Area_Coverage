@@ -1,0 +1,40 @@
+rt_nonfinite.o: rt_nonfinite.c rt_nonfinite.h rtwtypes.h \
+ C:/TOOLS/MATLAB/extern/include/tmwtypes.h \
+ C:/TOOLS/MATLAB/simulink/include/simstruc_types.h \
+ C:/Projects/myProject/CleanerRepo/Area_Coverage/Software/SourceCode/AreaCoverage_MBD/SW/SRC/MainControl/SRC/RobotControl_ert_rtw/rtwtypes.h \
+ C:/TOOLS/MATLAB/simulink/include/sl_types_def.h \
+ C:/TOOLS/MATLAB/simulink/include/rtw_matlogging.h \
+ C:/TOOLS/MATLAB/simulink/include/rtw_extmode.h \
+ C:/TOOLS/MATLAB/simulink/include/rtw_continuous.h \
+ C:/TOOLS/MATLAB/simulink/include/rtw_solver.h \
+ C:/TOOLS/MATLAB/simulink/include/sysran_types.h \
+ C:/TOOLS/MATLAB/simulink/include/sl_sample_time_defs.h rtGetNaN.h \
+ rtGetInf.h
+
+rt_nonfinite.h:
+
+rtwtypes.h:
+
+C:/TOOLS/MATLAB/extern/include/tmwtypes.h:
+
+C:/TOOLS/MATLAB/simulink/include/simstruc_types.h:
+
+C:/Projects/myProject/CleanerRepo/Area_Coverage/Software/SourceCode/AreaCoverage_MBD/SW/SRC/MainControl/SRC/RobotControl_ert_rtw/rtwtypes.h:
+
+C:/TOOLS/MATLAB/simulink/include/sl_types_def.h:
+
+C:/TOOLS/MATLAB/simulink/include/rtw_matlogging.h:
+
+C:/TOOLS/MATLAB/simulink/include/rtw_extmode.h:
+
+C:/TOOLS/MATLAB/simulink/include/rtw_continuous.h:
+
+C:/TOOLS/MATLAB/simulink/include/rtw_solver.h:
+
+C:/TOOLS/MATLAB/simulink/include/sysran_types.h:
+
+C:/TOOLS/MATLAB/simulink/include/sl_sample_time_defs.h:
+
+rtGetNaN.h:
+
+rtGetInf.h:

@@ -2,9 +2,9 @@
  * Code generation for system system '<S16>/StopRoutine'
  *
  * Model                      : RobotControl
- * Model version              : 1.500
+ * Model version              : 1.509
  * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Mon Jul 27 18:15:17 2020
+ * C source code generated on : Thu Jul 30 11:39:58 2020
  *
  * Note that the functions contained in this file are part of a Simulink
  * model, and are not self-contained algorithms.
@@ -151,8 +151,7 @@ void RobotControl_StopRoutine(void)
 
      case RobotControl_IN_backup:
       /* During 'backup': '<S144>:4' */
-      if (RobotControl_DW.hitDistance - rtb_MinMax >
-          RobotControl_P.CAL_hitBackwardDist_mm) {
+      if (RobotControl_DW.hitDistance - rtb_MinMax > 150.0F) {
         /* Transition: '<S144>:8' */
         RobotControl_DW.is_stopRoutine = RobotControl_IN_hitFinish;
         RobotControl_DW.temporalCounter_i2 = 0U;

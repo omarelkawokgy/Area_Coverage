@@ -3,9 +3,9 @@
  *
  * Code generation for model "RobotControl".
  *
- * Model version              : 1.500
+ * Model version              : 1.509
  * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Mon Jul 27 18:15:17 2020
+ * C source code generated on : Thu Jul 30 11:39:58 2020
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -42,20 +42,23 @@ RT_MODEL_RobotControl_T *const RobotControl_M = &RobotControl_M_;
 /* Model step function */
 void RobotControl_step(void)
 {
+  boolean_T p;
+  boolean_T p_0;
+
   /* Start for MATLABSystem: '<S6>/Digital Input' incorporates:
    *  MATLABSystem: '<S6>/Digital Input'
    */
-  RobotControl_B.p = false;
-  RobotControl_B.p_m = true;
+  p = false;
+  p_0 = true;
   if (!(RobotControl_DW.obj.SampleTime == -1.0)) {
-    RobotControl_B.p_m = false;
+    p_0 = false;
   }
 
-  if (RobotControl_B.p_m) {
-    RobotControl_B.p = true;
+  if (p_0) {
+    p = true;
   }
 
-  if (!RobotControl_B.p) {
+  if (!p) {
     RobotControl_DW.obj.SampleTime = -1.0;
   }
 
@@ -201,23 +204,6 @@ void RobotControl_step(void)
    */
   writeDigitalPin((uint8_T)RobotControl_PinNumber_iz, (uint8_T)
                   RobotControl_B.greenLED_BOOL);
-
-  /* Update absolute time for base rate */
-  /* The "clockTick0" counts the number of times the code of this task has
-   * been executed. The absolute time is the multiplication of "clockTick0"
-   * and "Timing.stepSize0". Size of "clockTick0" ensures timer will not
-   * overflow during the application lifespan selected.
-   * Timer of this task consists of two 32 bit unsigned integers.
-   * The two integers represent the low bits Timing.clockTick0 and the high bits
-   * Timing.clockTickH0. When the low bit overflows to 0, the high bits increment.
-   */
-  if (!(++RobotControl_M->Timing.clockTick0)) {
-    ++RobotControl_M->Timing.clockTickH0;
-  }
-
-  RobotControl_M->Timing.t[0] = RobotControl_M->Timing.clockTick0 *
-    RobotControl_M->Timing.stepSize0 + RobotControl_M->Timing.clockTickH0 *
-    RobotControl_M->Timing.stepSize0 * 4294967296.0;
 }
 
 /* Model initialize function */
@@ -228,43 +214,8 @@ void RobotControl_initialize(void)
   /* initialize non-finites */
   rt_InitInfAndNaN(sizeof(real_T));
 
-  /* initialize real-time model */
-  (void) memset((void *)RobotControl_M, 0,
-                sizeof(RT_MODEL_RobotControl_T));
-  rtsiSetSolverName(&RobotControl_M->solverInfo,"FixedStepDiscrete");
-  RobotControl_M->solverInfoPtr = (&RobotControl_M->solverInfo);
-
-  /* Initialize timing info */
-  {
-    int_T *mdlTsMap = RobotControl_M->Timing.sampleTimeTaskIDArray;
-    mdlTsMap[0] = 0;
-    RobotControl_M->Timing.sampleTimeTaskIDPtr = (&mdlTsMap[0]);
-    RobotControl_M->Timing.sampleTimes =
-      (&RobotControl_M->Timing.sampleTimesArray[0]);
-    RobotControl_M->Timing.offsetTimes =
-      (&RobotControl_M->Timing.offsetTimesArray[0]);
-
-    /* task periods */
-    RobotControl_M->Timing.sampleTimes[0] = (0.001);
-
-    /* task offsets */
-    RobotControl_M->Timing.offsetTimes[0] = (0.0);
-  }
-
-  rtmSetTPtr(RobotControl_M, &RobotControl_M->Timing.tArray[0]);
-
-  {
-    int_T *mdlSampleHits = RobotControl_M->Timing.sampleHitArray;
-    mdlSampleHits[0] = 1;
-    RobotControl_M->Timing.sampleHits = (&mdlSampleHits[0]);
-  }
-
-  rtmSetTFinal(RobotControl_M, -1);
-  RobotControl_M->Timing.stepSize0 = 0.001;
-  RobotControl_M->solverInfoPtr = (&RobotControl_M->solverInfo);
-  RobotControl_M->Timing.stepSize = (0.001);
-  rtsiSetFixedStepSize(&RobotControl_M->solverInfo, 0.001);
-  rtsiSetSolverMode(&RobotControl_M->solverInfo, SOLVER_MODE_SINGLETASKING);
+  /* initialize error status */
+  rtmSetErrorStatus(RobotControl_M, (NULL));
 
   /* block I/O */
   (void) memset(((void *) &RobotControl_B), 0,
@@ -273,131 +224,6 @@ void RobotControl_initialize(void)
   /* states (dwork) */
   (void) memset((void *)&RobotControl_DW, 0,
                 sizeof(DW_RobotControl_T));
-
-  /* child S-Function registration */
-  {
-    RTWSfcnInfo *sfcnInfo = &RobotControl_M->NonInlinedSFcns.sfcnInfo;
-    RobotControl_M->sfcnInfo = (sfcnInfo);
-    rtssSetErrorStatusPtr(sfcnInfo, (&rtmGetErrorStatus(RobotControl_M)));
-    rtssSetNumRootSampTimesPtr(sfcnInfo, &RobotControl_M->Sizes.numSampTimes);
-    RobotControl_M->NonInlinedSFcns.taskTimePtrs[0] = &(rtmGetTPtr
-      (RobotControl_M)[0]);
-    rtssSetTPtrPtr(sfcnInfo,RobotControl_M->NonInlinedSFcns.taskTimePtrs);
-    rtssSetTStartPtr(sfcnInfo, &rtmGetTStart(RobotControl_M));
-    rtssSetTFinalPtr(sfcnInfo, &rtmGetTFinal(RobotControl_M));
-    rtssSetTimeOfLastOutputPtr(sfcnInfo, &rtmGetTimeOfLastOutput(RobotControl_M));
-    rtssSetStepSizePtr(sfcnInfo, &RobotControl_M->Timing.stepSize);
-    rtssSetStopRequestedPtr(sfcnInfo, &rtmGetStopRequested(RobotControl_M));
-    rtssSetDerivCacheNeedsResetPtr(sfcnInfo,
-      &RobotControl_M->derivCacheNeedsReset);
-    rtssSetZCCacheNeedsResetPtr(sfcnInfo, &RobotControl_M->zCCacheNeedsReset);
-    rtssSetBlkStateChangePtr(sfcnInfo, &RobotControl_M->blkStateChange);
-    rtssSetSampleHitsPtr(sfcnInfo, &RobotControl_M->Timing.sampleHits);
-    rtssSetPerTaskSampleHitsPtr(sfcnInfo,
-      &RobotControl_M->Timing.perTaskSampleHits);
-    rtssSetSimModePtr(sfcnInfo, &RobotControl_M->simMode);
-    rtssSetSolverInfoPtr(sfcnInfo, &RobotControl_M->solverInfoPtr);
-  }
-
-  RobotControl_M->Sizes.numSFcns = (1);
-
-  /* register each child */
-  {
-    (void) memset((void *)&RobotControl_M->NonInlinedSFcns.childSFunctions[0], 0,
-                  1*sizeof(SimStruct));
-    RobotControl_M->childSfunctions =
-      (&RobotControl_M->NonInlinedSFcns.childSFunctionPtrs[0]);
-    RobotControl_M->childSfunctions[0] =
-      (&RobotControl_M->NonInlinedSFcns.childSFunctions[0]);
-
-    /* Level2 S-Function Block: RobotControl/<S5>/COM_A4SCA_A5SCL (CompassSFunc) */
-    {
-      SimStruct *rts = RobotControl_M->childSfunctions[0];
-
-      /* timing info */
-      time_T *sfcnPeriod = RobotControl_M->NonInlinedSFcns.Sfcn0.sfcnPeriod;
-      time_T *sfcnOffset = RobotControl_M->NonInlinedSFcns.Sfcn0.sfcnOffset;
-      int_T *sfcnTsMap = RobotControl_M->NonInlinedSFcns.Sfcn0.sfcnTsMap;
-      (void) memset((void*)sfcnPeriod, 0,
-                    sizeof(time_T)*1);
-      (void) memset((void*)sfcnOffset, 0,
-                    sizeof(time_T)*1);
-      ssSetSampleTimePtr(rts, &sfcnPeriod[0]);
-      ssSetOffsetTimePtr(rts, &sfcnOffset[0]);
-      ssSetSampleTimeTaskIDPtr(rts, sfcnTsMap);
-
-      /* Set up the mdlInfo pointer */
-      {
-        ssSetBlkInfo2Ptr(rts, &RobotControl_M->NonInlinedSFcns.blkInfo2[0]);
-      }
-
-      ssSetRTWSfcnInfo(rts, RobotControl_M->sfcnInfo);
-
-      /* Allocate memory of model methods 2 */
-      {
-        ssSetModelMethods2(rts, &RobotControl_M->NonInlinedSFcns.methods2[0]);
-      }
-
-      /* Allocate memory of model methods 3 */
-      {
-        ssSetModelMethods3(rts, &RobotControl_M->NonInlinedSFcns.methods3[0]);
-      }
-
-      /* Allocate memory of model methods 4 */
-      {
-        ssSetModelMethods4(rts, &RobotControl_M->NonInlinedSFcns.methods4[0]);
-      }
-
-      /* Allocate memory for states auxilliary information */
-      {
-        ssSetStatesInfo2(rts, &RobotControl_M->NonInlinedSFcns.statesInfo2[0]);
-        ssSetPeriodicStatesInfo(rts,
-          &RobotControl_M->NonInlinedSFcns.periodicStatesInfo[0]);
-      }
-
-      /* outputs */
-      {
-        ssSetPortInfoForOutputs(rts,
-          &RobotControl_M->NonInlinedSFcns.Sfcn0.outputPortInfo[0]);
-        _ssSetNumOutputPorts(rts, 1);
-
-        /* port 0 */
-        {
-          _ssSetOutputPortNumDimensions(rts, 0, 1);
-          ssSetOutputPortWidth(rts, 0, 1);
-          ssSetOutputPortSignal(rts, 0, ((int16_T *)
-            &RobotControl_B.COM_A4SCA_A5SCL));
-        }
-      }
-
-      /* path info */
-      ssSetModelName(rts, "COM_A4SCA_A5SCL");
-      ssSetPath(rts, "RobotControl/InputHandler/COM_A4SCA_A5SCL/COM_A4SCA_A5SCL");
-      ssSetRTModel(rts,RobotControl_M);
-      ssSetParentSS(rts, (NULL));
-      ssSetRootSS(rts, rts);
-      ssSetVersion(rts, SIMSTRUCT_VERSION_LEVEL2);
-
-      /* registration */
-      CompassSFunc(rts);
-      sfcnInitializeSizes(rts);
-      sfcnInitializeSampleTimes(rts);
-
-      /* adjust sample time */
-      ssSetSampleTime(rts, 0, 0.001);
-      ssSetOffsetTime(rts, 0, 0.0);
-      sfcnTsMap[0] = 0;
-
-      /* set compiled values of dynamic vector attributes */
-      ssSetNumNonsampledZCs(rts, 0);
-
-      /* Update connectivity flags for each port */
-      _ssSetOutputPortConnected(rts, 0, 1);
-      _ssSetOutputPortBeingMerged(rts, 0, 0);
-
-      /* Update the BufferDstPort flags for each input port */
-    }
-  }
 
   /* Start for MATLABSystem: '<S6>/Digital Input' */
   RobotControl_DW.obj.isInitialized = 0L;
@@ -536,11 +362,6 @@ void RobotControl_terminate(void)
   }
 
   /* End of Start for MATLABSystem: '<S6>/Digital Input' */
-
-  /* Terminate for Chart: '<S4>/Scheduler' incorporates:
-   *  Terminate for SubSystem: '<S1>/COM_A4SCA_A5SCL'
-   */
-  RobotContr_COM_A4SCA_A5SCL_Term();
 
   /* Start for MATLABSystem: '<S10>/Digital Output' incorporates:
    *  Terminate for MATLABSystem: '<S10>/Digital Output'

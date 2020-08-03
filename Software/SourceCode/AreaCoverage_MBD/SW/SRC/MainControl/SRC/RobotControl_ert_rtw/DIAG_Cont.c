@@ -2,9 +2,9 @@
  * Code generation for system system '<S16>/DIAG_Cont'
  *
  * Model                      : RobotControl
- * Model version              : 1.500
+ * Model version              : 1.509
  * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Mon Jul 27 18:15:17 2020
+ * C source code generated on : Thu Jul 30 11:39:58 2020
  *
  * Note that the functions contained in this file are part of a Simulink
  * model, and are not self-contained algorithms.
@@ -59,40 +59,29 @@ void RobotControl_DIAG_Cont_Init(void)
 /* Output and update for function-call system: '<S16>/DIAG_Cont' */
 void RobotControl_DIAG_Cont(void)
 {
-  int16_T rtb_Data_Type_Conversion_f;
+  int16_T rtb_Abs_e;
   boolean_T rtb_moveFlag;
   boolean_T rtb_redLED_BOOL;
 
-  /* RelationalOperator: '<S44>/Relational_Operator' incorporates:
-   *  Constant: '<S44>/CONST_Zero'
-   *  DataTypeConversion: '<S44>/Data_Type_Conversion'
-   */
-  RobotControl_B.ULS_NotConnectedFlag_BOOL = (RobotControl_B.ULSL_D8R_D7L ==
-    (uint16_T)RobotControl_P.CONST_Zero);
+  /* RelationalOperator: '<S44>/Relational_Operator' */
+  RobotControl_B.ULS_NotConnectedFlag_BOOL = (RobotControl_B.ULSL_D8R_D7L == 0U);
 
-  /* RelationalOperator: '<S45>/Relational_Operator' incorporates:
-   *  Constant: '<S45>/CONST_Zero'
-   *  DataTypeConversion: '<S45>/Data_Type_Conversion'
-   */
+  /* RelationalOperator: '<S45>/Relational_Operator' */
   RobotControl_B.ULS_NotConnectedFlag_BOOL_j = (RobotControl_B.ULSR_D8R_D7L1 ==
-    (uint16_T)RobotControl_P.CONST_Zero);
+    0U);
 
   /* Sum: '<S38>/Subtract1' */
-  rtb_Data_Type_Conversion_f = RobotControl_B.leftPosPin -
-    RobotControl_B.leftNegPin;
+  rtb_Abs_e = RobotControl_B.leftPosPin - RobotControl_B.leftNegPin;
 
   /* Abs: '<S38>/Abs' */
-  if (rtb_Data_Type_Conversion_f < 0) {
-    rtb_Data_Type_Conversion_f = -rtb_Data_Type_Conversion_f;
+  if (rtb_Abs_e < 0) {
+    rtb_Abs_e = -rtb_Abs_e;
   }
 
   /* End of Abs: '<S38>/Abs' */
 
-  /* RelationalOperator: '<S38>/Relational_Operator2' incorporates:
-   *  Constant: '<S38>/CAL_PwmMoveThd_mm'
-   *  DataTypeConversion: '<S38>/Data_Type_Conversion'
-   */
-  rtb_moveFlag = (rtb_Data_Type_Conversion_f > RobotControl_P.CAL_PwmMoveThd_mm);
+  /* RelationalOperator: '<S38>/Relational_Operator2' */
+  rtb_moveFlag = (rtb_Abs_e > 180);
 
   /* Chart: '<S40>/MotorMoveMonitor' */
   /* Gateway: RobotControlLib/DIAG_Cont/Pumper/MotorFaultMonitor/MotorMoveMonitor/MotorMoveMonitor */
@@ -148,21 +137,17 @@ void RobotControl_DIAG_Cont(void)
   /* End of Chart: '<S40>/MotorMoveMonitor' */
 
   /* Sum: '<S39>/Subtract1' */
-  rtb_Data_Type_Conversion_f = RobotControl_B.rightPosPin -
-    RobotControl_B.rightNegPin;
+  rtb_Abs_e = RobotControl_B.rightPosPin - RobotControl_B.rightNegPin;
 
   /* Abs: '<S39>/Abs' */
-  if (rtb_Data_Type_Conversion_f < 0) {
-    rtb_Data_Type_Conversion_f = -rtb_Data_Type_Conversion_f;
+  if (rtb_Abs_e < 0) {
+    rtb_Abs_e = -rtb_Abs_e;
   }
 
   /* End of Abs: '<S39>/Abs' */
 
-  /* RelationalOperator: '<S39>/Relational_Operator2' incorporates:
-   *  Constant: '<S39>/CAL_PwmMoveThd_mm'
-   *  DataTypeConversion: '<S39>/Data_Type_Conversion'
-   */
-  rtb_moveFlag = (rtb_Data_Type_Conversion_f > RobotControl_P.CAL_PwmMoveThd_mm);
+  /* RelationalOperator: '<S39>/Relational_Operator2' */
+  rtb_moveFlag = (rtb_Abs_e > 180);
 
   /* Chart: '<S42>/MotorMoveMonitor' */
   /* Gateway: RobotControlLib/DIAG_Cont/Pumper/MotorFaultMonitor1/MotorMoveMonitor/MotorMoveMonitor */
@@ -230,7 +215,7 @@ void RobotControl_DIAG_Cont(void)
    *  Logic: '<S18>/Logical_Operator1'
    *  RelationalOperator: '<S18>/Relational Operator'
    */
-  if (RobotControl_B.currentRoutine != RobotControl_P.ENU_DIAG) {
+  if (RobotControl_B.currentRoutine != 28) {
     rtb_moveFlag = (RobotControl_B.motorFaultFlag_k &&
                     RobotControl_B.motorFaultFlag);
   }

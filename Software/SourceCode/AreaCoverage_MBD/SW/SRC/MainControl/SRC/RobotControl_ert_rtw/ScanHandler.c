@@ -2,9 +2,9 @@
  * Code generation for system system '<S16>/ScanHandler'
  *
  * Model                      : RobotControl
- * Model version              : 1.500
+ * Model version              : 1.509
  * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Mon Jul 27 18:15:17 2020
+ * C source code generated on : Thu Jul 30 11:39:58 2020
  *
  * Note that the functions contained in this file are part of a Simulink
  * model, and are not self-contained algorithms.
@@ -86,7 +86,7 @@ void RobotControl_ScanHandler(void)
   real32_T rtb_Data_Type_Conversion_c;
   int16_T rtb_DataTypeConversion1;
   int16_T rtb_DataTypeConversion_l;
-  int16_T rtb_Add5_c;
+  int16_T rtb_Add5;
   int16_T rtb_Add5_a;
 
   /* DataTypeConversion: '<S140>/Data Type Conversion1' */
@@ -97,19 +97,16 @@ void RobotControl_ScanHandler(void)
    *  Delay: '<S142>/Delay1'
    *  Sum: '<S142>/Add4'
    */
-  rtb_Add5_c = (rtb_DataTypeConversion1 - RobotControl_DW.Delay_DSTATE_k[0]) +
+  rtb_Add5 = (rtb_DataTypeConversion1 - RobotControl_DW.Delay_DSTATE_k[0]) +
     RobotControl_DW.Delay1_DSTATE_p;
 
   /* DataTypeConversion: '<S142>/Data_Type_Conversion' incorporates:
    *  Gain: '<S142>/Gain3'
    */
-  rtb_Divide = (real32_T)((int32_T)rtb_Add5_c << 14) * 1.52587891E-5F;
+  rtb_Divide = (real32_T)((int32_T)rtb_Add5 << 14) * 1.52587891E-5F;
 
-  /* Product: '<S140>/Divide1' incorporates:
-   *  Constant: '<S140>/CAL_ROBO_LENG1'
-   */
-  rtb_Data_Type_Conversion_c = rtb_Divide / (real32_T)
-    RobotControl_P.CAL_ROBO_LENG;
+  /* Product: '<S140>/Divide1' */
+  rtb_Data_Type_Conversion_c = rtb_Divide / 25.0F;
 
   /* DataTypeConversion: '<S140>/Data_Type_Conversion' */
   RobotControl_B.leftBlocks = (uint16_T)rtb_Data_Type_Conversion_c;
@@ -131,11 +128,8 @@ void RobotControl_ScanHandler(void)
   rtb_Data_Type_Conversion_c = (real32_T)((int32_T)rtb_Add5_a << 14) *
     1.52587891E-5F;
 
-  /* Product: '<S140>/Divide' incorporates:
-   *  Constant: '<S140>/CAL_ROBO_LENG'
-   */
-  rtb_Divide = rtb_Data_Type_Conversion_c / (real32_T)
-    RobotControl_P.CAL_ROBO_LENG;
+  /* Product: '<S140>/Divide' */
+  rtb_Divide = rtb_Data_Type_Conversion_c / 25.0F;
 
   /* DataTypeConversion: '<S140>/Data_Type_Conversion1' */
   RobotControl_B.rightBlocks = (uint16_T)rtb_Divide;
@@ -147,7 +141,7 @@ void RobotControl_ScanHandler(void)
   RobotControl_DW.Delay_DSTATE_k[3] = rtb_DataTypeConversion1;
 
   /* Update for Delay: '<S142>/Delay1' */
-  RobotControl_DW.Delay1_DSTATE_p = rtb_Add5_c;
+  RobotControl_DW.Delay1_DSTATE_p = rtb_Add5;
 
   /* Update for Delay: '<S141>/Delay' */
   RobotControl_DW.Delay_DSTATE_f[0] = RobotControl_DW.Delay_DSTATE_f[1];

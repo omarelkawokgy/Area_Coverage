@@ -3,9 +3,9 @@
  *
  * Code generation for model "RobotControl".
  *
- * Model version              : 1.500
+ * Model version              : 1.509
  * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Mon Jul 27 18:15:17 2020
+ * C source code generated on : Thu Jul 30 11:39:58 2020
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -16,13 +16,13 @@
 
 #ifndef RTW_HEADER_RobotControl_h_
 #define RTW_HEADER_RobotControl_h_
-#include <string.h>
 #include <stddef.h>
+#include <string.h>
 #ifndef RobotControl_COMMON_INCLUDES_
 # define RobotControl_COMMON_INCLUDES_
 #include "rtwtypes.h"
-#include "simstruc.h"
-#include "fixedpoint.h"
+#include "rtw_continuous.h"
+#include "rtw_solver.h"
 #include "MW_digitalio.h"
 #include "arduino_analoginput_lct.h"
 #include "arduino_analogoutput_lct.h"
@@ -50,46 +50,6 @@
 #include "rt_nonfinite.h"
 
 /* Macros for accessing real-time model data structure */
-#ifndef rtmGetBlkStateChangeFlag
-# define rtmGetBlkStateChangeFlag(rtm) ((rtm)->blkStateChange)
-#endif
-
-#ifndef rtmSetBlkStateChangeFlag
-# define rtmSetBlkStateChangeFlag(rtm, val) ((rtm)->blkStateChange = (val))
-#endif
-
-#ifndef rtmGetDerivCacheNeedsReset
-# define rtmGetDerivCacheNeedsReset(rtm) ((rtm)->derivCacheNeedsReset)
-#endif
-
-#ifndef rtmSetDerivCacheNeedsReset
-# define rtmSetDerivCacheNeedsReset(rtm, val) ((rtm)->derivCacheNeedsReset = (val))
-#endif
-
-#ifndef rtmGetFinalTime
-# define rtmGetFinalTime(rtm)          ((rtm)->Timing.tFinal)
-#endif
-
-#ifndef rtmGetSampleHitArray
-# define rtmGetSampleHitArray(rtm)     ((rtm)->Timing.sampleHitArray)
-#endif
-
-#ifndef rtmGetStepSize
-# define rtmGetStepSize(rtm)           ((rtm)->Timing.stepSize)
-#endif
-
-#ifndef rtmGetZCCacheNeedsReset
-# define rtmGetZCCacheNeedsReset(rtm)  ((rtm)->zCCacheNeedsReset)
-#endif
-
-#ifndef rtmSetZCCacheNeedsReset
-# define rtmSetZCCacheNeedsReset(rtm, val) ((rtm)->zCCacheNeedsReset = (val))
-#endif
-
-#ifndef rtmGet_TimeOfLastOutput
-# define rtmGet_TimeOfLastOutput(rtm)  ((rtm)->Timing.timeOfLastOutput)
-#endif
-
 #ifndef rtmGetErrorStatus
 # define rtmGetErrorStatus(rtm)        ((rtm)->errorStatus)
 #endif
@@ -98,39 +58,10 @@
 # define rtmSetErrorStatus(rtm, val)   ((rtm)->errorStatus = (val))
 #endif
 
-#ifndef rtmGetStopRequested
-# define rtmGetStopRequested(rtm)      ((rtm)->Timing.stopRequestedFlag)
-#endif
-
-#ifndef rtmSetStopRequested
-# define rtmSetStopRequested(rtm, val) ((rtm)->Timing.stopRequestedFlag = (val))
-#endif
-
-#ifndef rtmGetStopRequestedPtr
-# define rtmGetStopRequestedPtr(rtm)   (&((rtm)->Timing.stopRequestedFlag))
-#endif
-
-#ifndef rtmGetT
-# define rtmGetT(rtm)                  (rtmGetTPtr((rtm))[0])
-#endif
-
-#ifndef rtmGetTFinal
-# define rtmGetTFinal(rtm)             ((rtm)->Timing.tFinal)
-#endif
-
-#ifndef rtmGetTStart
-# define rtmGetTStart(rtm)             ((rtm)->Timing.tStart)
-#endif
-
-#ifndef rtmGetTimeOfLastOutput
-# define rtmGetTimeOfLastOutput(rtm)   ((rtm)->Timing.timeOfLastOutput)
-#endif
-
 /* Block signals (auto storage) */
 typedef struct {
   real_T Add1_l;                       /* '<S48>/Add1' */
   real_T deg_m;                        /* '<S58>/Product' */
-  real_T Add5;                         /* '<S60>/Add5' */
   real32_T forwardDist;                /* '<S91>/Switch1' */
   real32_T DataTypeConversion1;        /* '<S108>/Data Type Conversion1' */
   real32_T DataTypeConversion3;        /* '<S108>/Data Type Conversion3' */
@@ -150,7 +81,6 @@ typedef struct {
   real32_T rightVel1ms_mmPerSec;       /* '<S80>/Data_Type_Conversion3' */
   real32_T Data_Type_Conversion;       /* '<S54>/Data_Type_Conversion' */
   real32_T Data_Type_Conversion_m;     /* '<S55>/Data_Type_Conversion' */
-  real32_T EOL_pwm;                    /* '<S63>/EOL_TickStateMachine' */
   real32_T Data_Type_Conversion_a;     /* '<S60>/Data_Type_Conversion' */
   real32_T theta_Deg;                  /* '<S30>/Saturation' */
   real32_T theta_mDeg;                 /* '<S30>/Gain' */
@@ -165,7 +95,6 @@ typedef struct {
   uint16_T ULSL_D8R_D7L;               /* '<S9>/ULSL_D8R_D7L' */
   uint16_T ULSR_D8R_D7L1;              /* '<S9>/ULSR_D8R_D7L1' */
   uint16_T currentHeading;             /* '<S26>/HeadingCalculation' */
-  uint16_T encoderCounter;             /* '<S64>/Data_Type_Conversion' */
   uint16_T A0;                         /* '<S7>/A0' */
   uint16_T A1;                         /* '<S7>/A1' */
   uint8_T leftPosPin;                  /* '<S145>/Switch' */
@@ -177,8 +106,6 @@ typedef struct {
   uint8_T OutportBufferForDIAG_StatusFlg;/* '<S90>/None' */
   uint8_T DIAG_StatusFlg;              /* '<S104>/CONST_DIAG_FINISH_FLG' */
   uint8_T OutportBufferForangleCalibStatu;/* '<S99>/Angle_CalibrationUponReq' */
-  uint8_T OutportBufferForangleCalibSta_a;/* '<S106>/CompassSelfDiagTestChart' */
-  uint8_T OutportBufferFormoveRequest; /* '<S106>/CompassSelfDiagTestChart' */
   uint8_T moveReq;                     /* '<S106>/CompassSelfDiagTestChart' */
   uint8_T angleCalibStatus;            /* '<S106>/CompassSelfDiagTestChart' */
   uint8_T encoderTstStatus;            /* '<S102>/Switch' */
@@ -197,8 +124,6 @@ typedef struct {
   uint8_T turnRequest;                 /* '<S127>/HighLevelMoves' */
   uint8_T encoderStep;                 /* '<S130>/singleStepCalc' */
   uint8_T moveRequest_n;               /* '<S143>/stopRoutine' */
-  uint8_T EOL_leftMoveReq;             /* '<S63>/EOL_TickStateMachine' */
-  uint8_T EOL_rightMoveReq;            /* '<S63>/EOL_TickStateMachine' */
   boolean_T ULS_NotConnectedFlag_BOOL; /* '<S44>/Relational_Operator' */
   boolean_T ULS_NotConnectedFlag_BOOL_j;/* '<S45>/Relational_Operator' */
   boolean_T failFlag;                  /* '<S18>/Logical_Operator4' */
@@ -228,10 +153,7 @@ typedef struct {
   boolean_T stuckHitFlg;               /* '<S143>/stopRoutine' */
   boolean_T refreshEvent;              /* '<S143>/stopRoutine' */
   boolean_T stopEvent;                 /* '<S143>/stopRoutine' */
-  boolean_T counterReset;              /* '<S63>/EOL_TickStateMachine' */
   boolean_T DigitalInput;              /* '<S6>/Digital Input' */
-  boolean_T p;
-  boolean_T p_m;
   B_DeltaDistCalculator_RobotCo_T sf_DeltaDistCalculator_d;/* '<S116>/DeltaDistCalculator' */
   B_DeltaDistCalculator_RobotCo_T sf_DeltaDistCalculator;/* '<S114>/DeltaDistCalculator' */
   B_SpdTickDetector_RobotContro_T sf_SpdTickDetector_e;/* '<S82>/SpdTickDetector' */
@@ -332,7 +254,6 @@ typedef struct {
   real32_T Delay1_DSTATE_e;            /* '<S54>/Delay1' */
   real32_T Delay_DSTATE_l[5];          /* '<S55>/Delay' */
   real32_T Delay1_DSTATE_i;            /* '<S55>/Delay1' */
-  real32_T Unit_Delay_DSTATE_i;        /* '<S64>/Unit_Delay' */
   real32_T Resettable_Delay_DSTATE;    /* '<S31>/Resettable_Delay' */
   real32_T Resettable_Delay1_DSTATE;   /* '<S31>/Resettable_Delay1' */
   real32_T tempDist;                   /* '<S42>/MotorMoveMonitor' */
@@ -382,8 +303,6 @@ typedef struct {
   boolean_T Unit_Delay2_DSTATE_o;      /* '<S22>/Unit_Delay2' */
   boolean_T Unit_Delay3_DSTATE_c;      /* '<S22>/Unit_Delay3' */
   boolean_T UnitDelay_DSTATE_d;        /* '<S89>/Unit Delay' */
-  boolean_T Unit_Delay4_DSTATE_m;      /* '<S19>/Unit_Delay4' */
-  boolean_T Unit_Delay_DSTATE_ja;      /* '<S62>/Unit_Delay' */
   boolean_T Unit_Delay3_DSTATE_d;      /* '<S27>/Unit_Delay3' */
   int8_T Switch_Case_ActiveSubsystem;  /* '<S97>/Switch_Case' */
   int8_T Switch_Case_ActiveSubsystem_j;/* '<S103>/Switch_Case' */
@@ -490,548 +409,14 @@ typedef struct {
 
 /* Invariant block signals (auto storage) */
 typedef struct {
-  const real_T Divide;                 /* '<S58>/Divide' */
-  const real_T Divide_i;               /* '<S33>/Divide' */
-  const real32_T Gain;                 /* '<S133>/Gain' */
   const uint8_T DataTypeConversion;    /* '<S9>/Data Type Conversion' */
   const uint8_T DataTypeConversion1;   /* '<S9>/Data Type Conversion1' */
-  const boolean_T Logical_Operator;    /* '<S99>/Logical_Operator' */
-  const boolean_T Logical_Operator_j;  /* '<S19>/Logical_Operator' */
 } ConstB_RobotControl_T;
-
-/* Parameters (auto storage) */
-struct P_RobotControl_T_ {
-  real_T gearRatio;                    /* Variable: gearRatio
-                                        * Referenced by:
-                                        *   '<S72>/gearRatio'
-                                        *   '<S81>/gearRatio'
-                                        */
-  real32_T CAL_EncoderSampleTime;      /* Variable: CAL_EncoderSampleTime
-                                        * Referenced by: '<S31>/CAL_EncoderSampleTime'
-                                        */
-  real32_T CAL_ErrorLowerLimit;        /* Variable: CAL_ErrorLowerLimit
-                                        * Referenced by: '<S25>/Saturation1'
-                                        */
-  real32_T CAL_ErrorUpperLimit;        /* Variable: CAL_ErrorUpperLimit
-                                        * Referenced by:
-                                        *   '<S25>/Saturation'
-                                        *   '<S25>/Saturation1'
-                                        */
-  real32_T CAL_Kd;                     /* Variable: CAL_Kd
-                                        * Referenced by: '<S132>/Kd'
-                                        */
-  real32_T CAL_Ki;                     /* Variable: CAL_Ki
-                                        * Referenced by: '<S132>/Ki'
-                                        */
-  real32_T CAL_Kp;                     /* Variable: CAL_Kp
-                                        * Referenced by: '<S132>/Kp'
-                                        */
-  real32_T CAL_MeasNoiseVelKF;         /* Variable: CAL_MeasNoiseVelKF
-                                        * Referenced by:
-                                        *   '<S71>/CAL_MeasNoiseVelKF'
-                                        *   '<S80>/CAL_MeasNoiseVelKF'
-                                        */
-  real32_T CAL_MeasureNoise;           /* Variable: CAL_MeasureNoise
-                                        * Referenced by: '<S31>/CAL_MeasureNoise'
-                                        */
-  real32_T CAL_NORTH_rad;              /* Variable: CAL_NORTH_rad
-                                        * Referenced by: '<S48>/Unit_Delay'
-                                        */
-  real32_T CAL_ProcessNoise;           /* Variable: CAL_ProcessNoise
-                                        * Referenced by: '<S31>/CAL_ProcessNoise'
-                                        */
-  real32_T CAL_forwardStartIncr;       /* Variable: CAL_forwardStartIncr
-                                        * Referenced by: '<S25>/CAL_forwardStartIncr'
-                                        */
-  real32_T CAL_hitBackwardDist_mm;     /* Variable: CAL_hitBackwardDist_mm
-                                        * Referenced by: '<S24>/CAL_hitBackwardDist_mm1'
-                                        */
-  real32_T CAL_mm_PER_tick;            /* Variable: CAL_mm_PER_tick
-                                        * Referenced by:
-                                        *   '<S52>/Gain1'
-                                        *   '<S53>/Gain1'
-                                        */
-  real32_T CAL_procNoiseVelKF;         /* Variable: CAL_procNoiseVelKF
-                                        * Referenced by:
-                                        *   '<S71>/CAL_procNoiseVelKF'
-                                        *   '<S80>/CAL_procNoiseVelKF'
-                                        */
-  real32_T CONST_ONE_F32;              /* Variable: CONST_ONE_F32
-                                        * Referenced by:
-                                        *   '<S71>/CONST_ONE_F32'
-                                        *   '<S80>/CONST_ONE_F32'
-                                        */
-  real32_T CONST_PI_F32;               /* Variable: CONST_PI_F32
-                                        * Referenced by: '<S105>/CONST_PI_F32'
-                                        */
-  real32_T CONST_TWO_F32;              /* Variable: CONST_TWO_F32
-                                        * Referenced by:
-                                        *   '<S91>/CONST_TWO_F32'
-                                        *   '<S124>/CONST_TWO_F32'
-                                        *   '<S105>/CONST_TWO_F32'
-                                        *   '<S105>/CONST_TWO_F321'
-                                        *   '<S72>/CONST_TWO_F32'
-                                        *   '<S81>/CONST_TWO_F32'
-                                        */
-  real32_T CONST_ZERO_F32;             /* Variable: CONST_ZERO_F32
-                                        * Referenced by:
-                                        *   '<S91>/CONST_ZERO_F32'
-                                        *   '<S125>/CONST_ZERO_F32'
-                                        *   '<S129>/CONST_ZERO_F32'
-                                        */
-  int32_T CONST_NEG_ONE_INT32;         /* Variable: CONST_NEG_ONE_INT32
-                                        * Referenced by:
-                                        *   '<S56>/CONST_NEG_ONE_INT32'
-                                        *   '<S57>/CONST_NEG_ONE_INT32'
-                                        */
-  int32_T CONST_ONE_INT32;             /* Variable: CONST_ONE_INT32
-                                        * Referenced by:
-                                        *   '<S56>/CONST_ONE_INT32'
-                                        *   '<S57>/CONST_ONE_INT32'
-                                        */
-  int16_T CAL_EAST;                    /* Variable: CAL_EAST
-                                        * Referenced by: '<S20>/CAL_EAST'
-                                        */
-  int16_T CAL_FilterResetThd;          /* Variable: CAL_FilterResetThd
-                                        * Referenced by: '<S31>/CAL_FilterResetThd'
-                                        */
-  int16_T CAL_NORTH;                   /* Variable: CAL_NORTH
-                                        * Referenced by:
-                                        *   '<S20>/CAL_NORTH'
-                                        *   '<S21>/Unit_Delay5'
-                                        *   '<S31>/Unit_Delay'
-                                        */
-  int16_T CAL_SOUTH;                   /* Variable: CAL_SOUTH
-                                        * Referenced by: '<S20>/CAL_SOUTH'
-                                        */
-  int16_T CAL_WEST;                    /* Variable: CAL_WEST
-                                        * Referenced by: '<S20>/CAL_WEST'
-                                        */
-  int16_T CONST_NegOne;                /* Variable: CONST_NegOne
-                                        * Referenced by:
-                                        *   '<S125>/Gain7'
-                                        *   '<S125>/Gain8'
-                                        */
-  int16_T CONST_Zero;                  /* Variable: CONST_Zero
-                                        * Referenced by:
-                                        *   '<S44>/CONST_Zero'
-                                        *   '<S45>/CONST_Zero'
-                                        */
-  int16_T CONST_ZeroDeg;               /* Variable: CONST_ZeroDeg
-                                        * Referenced by: '<S31>/CONST_ZeroDeg1'
-                                        */
-  uint16_T CAL_EncoderAnaThd;          /* Variable: CAL_EncoderAnaThd
-                                        * Referenced by:
-                                        *   '<S47>/CAL_EncoderAnaThd'
-                                        *   '<S47>/CAL_EncoderAnaThd1'
-                                        */
-  uint16_T CAL_ROBO_LENG_mm;           /* Variable: CAL_ROBO_LENG_mm
-                                        * Referenced by:
-                                        *   '<S59>/CAL_ROBO_LENG_mm'
-                                        *   '<S34>/CAL_ROBO_LENG_mm'
-                                        */
-  uint16_T CAL_Wheel2WheelDist_mm;     /* Variable: CAL_Wheel2WheelDist_mm
-                                        * Referenced by: '<S105>/CAL_Wheel2WheelDist_mm'
-                                        */
-  uint16_T CAL_fullCircle_DEG;         /* Variable: CAL_fullCircle_DEG
-                                        * Referenced by:
-                                        *   '<S125>/CAL_fullCircle_DEG'
-                                        *   '<S125>/CAL_fullCircle_DEG1'
-                                        *   '<S30>/Saturation'
-                                        *   '<S31>/CAL_fullCircle_DEG'
-                                        *   '<S35>/CAL_fullCircle_DEG'
-                                        *   '<S35>/CAL_fullCircle_DEG1'
-                                        */
-  uint16_T CAL_halfCircle_DEG;         /* Variable: CAL_halfCircle_DEG
-                                        * Referenced by:
-                                        *   '<S125>/CAL_halfCircle_DEG'
-                                        *   '<S125>/CAL_halfCircle_DEG1'
-                                        *   '<S125>/CAL_halfCircle_DEG2'
-                                        */
-  uint16_T CONST_MinDistError_mm;      /* Variable: CONST_MinDistError_mm
-                                        * Referenced by:
-                                        *   '<S112>/CONST_MinDistError_mm'
-                                        *   '<S113>/CONST_MinDistError_mm'
-                                        */
-  uint16_T CONST_ONE_UINT16;           /* Variable: CONST_ONE_UINT16
-                                        * Referenced by:
-                                        *   '<S31>/CONST_ONE_UINT16'
-                                        *   '<S64>/CONST_ONE_UINT16'
-                                        */
-  uint16_T CONST_OVERFLOW_THD_UINT16;  /* Variable: CONST_OVERFLOW_THD_UINT16
-                                        * Referenced by:
-                                        *   '<S35>/CONST_OVERFLOW_THD_UINT16'
-                                        *   '<S35>/CONST_OVERFLOW_THD_UINT161'
-                                        */
-  uint16_T CONST_ZERO_UINT16;          /* Variable: CONST_ZERO_UINT16
-                                        * Referenced by:
-                                        *   '<S30>/Saturation'
-                                        *   '<S35>/CONST_ZERO_UINT16'
-                                        */
-  uint16_T ENU_ROB_NONE;               /* Variable: ENU_ROB_NONE
-                                        * Referenced by:
-                                        *   '<S26>/ENU_ROB_NONE'
-                                        *   '<S127>/ENU_ROB_NONE'
-                                        */
-  uint8_T CAL_MOTOR_HIGH;              /* Variable: CAL_MOTOR_HIGH
-                                        * Referenced by:
-                                        *   '<S25>/CAL_MOTOR_HIGH'
-                                        *   '<S145>/CAL_MOTOR_HIGH'
-                                        *   '<S146>/CAL_MOTOR_HIGH'
-                                        */
-  uint8_T CAL_MOTOR_LOW;               /* Variable: CAL_MOTOR_LOW
-                                        * Referenced by:
-                                        *   '<S145>/CAL_MOTOR_LOW'
-                                        *   '<S145>/CAL_MOTOR_LOW1'
-                                        *   '<S145>/CAL_MOTOR_LOW2'
-                                        *   '<S145>/CAL_MOTOR_LOW3'
-                                        *   '<S146>/CAL_MOTOR_LOW'
-                                        *   '<S146>/CAL_MOTOR_LOW1'
-                                        *   '<S146>/CAL_MOTOR_LOW2'
-                                        *   '<S146>/CAL_MOTOR_LOW3'
-                                        */
-  uint8_T CAL_NO_ERROR;                /* Variable: CAL_NO_ERROR
-                                        * Referenced by:
-                                        *   '<S22>/CAL_NO_ERROR'
-                                        *   '<S22>/CAL_NO_ERROR1'
-                                        *   '<S22>/Unit_Delay4'
-                                        */
-  uint8_T CAL_PwmMoveThd_mm;           /* Variable: CAL_PwmMoveThd_mm
-                                        * Referenced by:
-                                        *   '<S38>/CAL_PwmMoveThd_mm'
-                                        *   '<S39>/CAL_PwmMoveThd_mm'
-                                        */
-  uint8_T CAL_ROBO_LENG;               /* Variable: CAL_ROBO_LENG
-                                        * Referenced by:
-                                        *   '<S140>/CAL_ROBO_LENG'
-                                        *   '<S140>/CAL_ROBO_LENG1'
-                                        */
-  uint8_T CAL_ROB_ERRVAL;              /* Variable: CAL_ROB_ERRVAL
-                                        * Referenced by: '<S26>/CAL_ROB_ERRVAL'
-                                        */
-  uint8_T CAL_ULS_UnconnectedBlks;     /* Variable: CAL_ULS_UnconnectedBlks
-                                        * Referenced by:
-                                        *   '<S96>/CAL_ULS_UnconnectedBlks'
-                                        *   '<S96>/CAL_ULS_UnconnectedBlks1'
-                                        */
-  uint8_T CAL_WheelDiameter_cm;        /* Variable: CAL_WheelDiameter_cm
-                                        * Referenced by:
-                                        *   '<S72>/CAL_WheelDiameter_cm'
-                                        *   '<S81>/CAL_WheelDiameter_cm'
-                                        */
-  uint8_T CAL_thetaGain;               /* Variable: CAL_thetaGain
-                                        * Referenced by:
-                                        *   '<S22>/Gain4'
-                                        *   '<S125>/Gain'
-                                        *   '<S125>/Gain1'
-                                        *   '<S125>/Gain2'
-                                        *   '<S125>/Gain3'
-                                        *   '<S125>/Gain4'
-                                        *   '<S125>/Gain5'
-                                        *   '<S30>/Gain'
-                                        */
-  uint8_T CONST_DIAG_FINISH_FLG;       /* Variable: CONST_DIAG_FINISH_FLG
-                                        * Referenced by: '<S104>/CONST_DIAG_FINISH_FLG'
-                                        */
-  uint8_T CONST_DIAG_UNCONFIRM;        /* Variable: CONST_DIAG_UNCONFIRM
-                                        * Referenced by:
-                                        *   '<S21>/Unit_Delay4'
-                                        *   '<S90>/DIAG_StatusFlg'
-                                        *   '<S104>/None'
-                                        */
-  uint8_T ENU_BACKWARD;                /* Variable: ENU_BACKWARD
-                                        * Referenced by:
-                                        *   '<S22>/ENU_BACKWARD'
-                                        *   '<S25>/ENU_FORWARD1'
-                                        *   '<S126>/ENU_BACKWARD'
-                                        *   '<S126>/ENU_BACKWARD1'
-                                        *   '<S126>/ENU_BACKWARD2'
-                                        *   '<S126>/ENU_BACKWARD3'
-                                        *   '<S126>/ENU_BACKWARD4'
-                                        *   '<S127>/ENU_BACKWARD'
-                                        *   '<S145>/ENU_BACKWARD'
-                                        *   '<S146>/ENU_BACKWARD'
-                                        *   '<S87>/ENU_BACKWARD'
-                                        *   '<S88>/ENU_BACKWARD'
-                                        */
-  uint8_T ENU_CCW;                     /* Variable: ENU_CCW
-                                        * Referenced by:
-                                        *   '<S126>/ENU_CCW'
-                                        *   '<S127>/ENU_CCW'
-                                        *   '<S129>/ENU_CCW'
-                                        */
-  uint8_T ENU_CW;                      /* Variable: ENU_CW
-                                        * Referenced by:
-                                        *   '<S126>/ENU_CW'
-                                        *   '<S127>/ENU_CW'
-                                        *   '<S129>/ENU_CW'
-                                        */
-  uint8_T ENU_DIAG;                    /* Variable: ENU_DIAG
-                                        * Referenced by:
-                                        *   '<S18>/ENU_DIAG'
-                                        *   '<S19>/ENU_DIAG'
-                                        */
-  uint8_T ENU_END;                     /* Variable: ENU_END
-                                        * Referenced by: '<S20>/Unit_Delay'
-                                        */
-  uint8_T ENU_FAILED;                  /* Variable: ENU_FAILED
-                                        * Referenced by: '<S102>/ENU_FAILED'
-                                        */
-  uint8_T ENU_FORWARD;                 /* Variable: ENU_FORWARD
-                                        * Referenced by:
-                                        *   '<S22>/ENU_FORWARD'
-                                        *   '<S25>/ENU_FORWARD'
-                                        *   '<S91>/ENU_FORWARD'
-                                        *   '<S95>/ENU_FORWARD'
-                                        *   '<S98>/ENU_FORWARD'
-                                        *   '<S124>/ENU_FORWARD'
-                                        *   '<S126>/ENU_FORWARD'
-                                        *   '<S126>/ENU_FORWARD1'
-                                        *   '<S126>/ENU_FORWARD2'
-                                        *   '<S126>/ENU_FORWARD3'
-                                        *   '<S126>/ENU_FORWARD4'
-                                        *   '<S127>/ENU_FORWARD'
-                                        *   '<S145>/ENU_FORWARD'
-                                        *   '<S146>/ENU_FORWARD'
-                                        *   '<S87>/ENU_FORWARD'
-                                        *   '<S88>/ENU_FORWARD'
-                                        *   '<S56>/ENU_FORWARD'
-                                        *   '<S57>/ENU_FORWARD'
-                                        *   '<S69>/ENU_FORWARD'
-                                        *   '<S78>/ENU_FORWARD'
-                                        */
-  uint8_T ENU_GTSP;                    /* Variable: ENU_GTSP
-                                        * Referenced by: '<S95>/ENU_GTSP'
-                                        */
-  uint8_T ENU_LEFT_BUSY_RIGHT_BUSY;    /* Variable: ENU_LEFT_BUSY_RIGHT_BUSY
-                                        * Referenced by:
-                                        *   '<S93>/ENU_LEFT_BUSY_RIGHT_BUSY'
-                                        *   '<S95>/ENU_LEFT_BUSY_RIGHT_BUSY'
-                                        *   '<S98>/ENU_LEFT_BUSY_RIGHT_BUSY'
-                                        */
-  uint8_T ENU_LEFT_BUSY_RIGHT_CLEANED; /* Variable: ENU_LEFT_BUSY_RIGHT_CLEANED
-                                        * Referenced by:
-                                        *   '<S95>/ENU_LEFT_BUSY_RIGHT_CLEANED'
-                                        *   '<S98>/ENU_LEFT_BUSY_RIGHT_CLEANED'
-                                        */
-  uint8_T ENU_LEFT_BUSY_RIGHT_EMPTY;   /* Variable: ENU_LEFT_BUSY_RIGHT_EMPTY
-                                        * Referenced by:
-                                        *   '<S93>/ENU_LEFT_BUSY_RIGHT_EMPTY'
-                                        *   '<S95>/ENU_LEFT_BUSY_RIGHT_EMPTY'
-                                        *   '<S98>/ENU_LEFT_BUSY_RIGHT_EMPTY'
-                                        */
-  uint8_T ENU_LEFT_CLEANED_RIGHT_BUSY; /* Variable: ENU_LEFT_CLEANED_RIGHT_BUSY
-                                        * Referenced by:
-                                        *   '<S95>/ENU_LEFT_CLEANED_RIGHT_BUSY'
-                                        *   '<S98>/ENU_LEFT_CLEANED_RIGHT_BUSY'
-                                        */
-  uint8_T ENU_LEFT_CLEANED_RIGHT_CLEANED;/* Variable: ENU_LEFT_CLEANED_RIGHT_CLEANED
-                                          * Referenced by:
-                                          *   '<S95>/ENU_LEFT_CLEANED_RIGHT_CLEANED'
-                                          *   '<S98>/ENU_LEFT_CLEANED_RIGHT_CLEANED'
-                                          */
-  uint8_T ENU_LEFT_CLEANED_RIGHT_EMPTY;/* Variable: ENU_LEFT_CLEANED_RIGHT_EMPTY
-                                        * Referenced by:
-                                        *   '<S95>/ENU_LEFT_CLEANED_RIGHT_EMPTY'
-                                        *   '<S98>/ENU_LEFT_CLEANED_RIGHT_EMPTY'
-                                        */
-  uint8_T ENU_LEFT_EMPTY_RIGHT_BUSY;   /* Variable: ENU_LEFT_EMPTY_RIGHT_BUSY
-                                        * Referenced by:
-                                        *   '<S93>/ENU_LEFT_EMPTY_RIGHT_BUSY'
-                                        *   '<S95>/ENU_LEFT_EMPTY_RIGHT_BUSY'
-                                        *   '<S98>/ENU_LEFT_EMPTY_RIGHT_BUSY'
-                                        */
-  uint8_T ENU_LEFT_EMPTY_RIGHT_CLEANED;/* Variable: ENU_LEFT_EMPTY_RIGHT_CLEANED
-                                        * Referenced by:
-                                        *   '<S95>/ENU_LEFT_EMPTY_RIGHT_CLEANED'
-                                        *   '<S98>/ENU_LEFT_EMPTY_RIGHT_CLEANED'
-                                        */
-  uint8_T ENU_LEFT_EMPTY_RIGHT_EMPTY;  /* Variable: ENU_LEFT_EMPTY_RIGHT_EMPTY
-                                        * Referenced by:
-                                        *   '<S93>/ENU_LEFT_EMPTY_RIGHT_EMPTY'
-                                        *   '<S95>/ENU_LEFT_EMPTY_RIGHT_EMPTY'
-                                        *   '<S98>/ENU_LEFT_EMPTY_RIGHT_EMPTY'
-                                        */
-  uint8_T ENU_MOVE_TURN_LEFT;          /* Variable: ENU_MOVE_TURN_LEFT
-                                        * Referenced by:
-                                        *   '<S95>/ENU_MOVE_TURN_LEFT'
-                                        *   '<S127>/ENU_MOVE_TURN_LEFT'
-                                        *   '<S102>/ENU_MOVE_TURN_LEFT'
-                                        */
-  uint8_T ENU_MOVE_TURN_RIGHT;         /* Variable: ENU_MOVE_TURN_RIGHT
-                                        * Referenced by:
-                                        *   '<S95>/ENU_MOVE_TURN_RIGHT'
-                                        *   '<S127>/ENU_MOVE_TURN_RIGHT'
-                                        */
-  uint8_T ENU_MOVE_U_TURN;             /* Variable: ENU_MOVE_U_TURN
-                                        * Referenced by:
-                                        *   '<S95>/ENU_MOVE_U_TURN'
-                                        *   '<S98>/ENU_MOVE_U_TURN'
-                                        *   '<S127>/ENU_MOVE_U_TURN'
-                                        */
-  uint8_T ENU_MOVE_U_TURN_LEFT;        /* Variable: ENU_MOVE_U_TURN_LEFT
-                                        * Referenced by:
-                                        *   '<S98>/ENU_MOVE_U_TURN_LEFT'
-                                        *   '<S127>/ENU_MOVE_U_TURN_LEFT'
-                                        */
-  uint8_T ENU_MOVE_U_TURN_RIGHT;       /* Variable: ENU_MOVE_U_TURN_RIGHT
-                                        * Referenced by:
-                                        *   '<S98>/ENU_MOVE_U_TURN_RIGHT'
-                                        *   '<S127>/ENU_MOVE_U_TURN_RIGHT'
-                                        */
-  uint8_T ENU_PASSED;                  /* Variable: ENU_PASSED
-                                        * Referenced by:
-                                        *   '<S90>/ENU_PASSED'
-                                        *   '<S102>/ENU_PASSED'
-                                        */
-  uint8_T ENU_SHIFT_HEADING;           /* Variable: ENU_SHIFT_HEADING
-                                        * Referenced by:
-                                        *   '<S22>/ENU_SHIFT_HEADING'
-                                        *   '<S89>/ENU_SHIFT_HEADING'
-                                        */
-  uint8_T ENU_STOP;                    /* Variable: ENU_STOP
-                                        * Referenced by:
-                                        *   '<S22>/ENU_STOP'
-                                        *   '<S92>/ENU_STOP'
-                                        *   '<S95>/ENU_STOP'
-                                        *   '<S98>/ENU_STOP'
-                                        *   '<S126>/ENU_STOP'
-                                        *   '<S126>/ENU_STOP1'
-                                        *   '<S127>/ENU_STOP'
-                                        *   '<S145>/ENU_STOP'
-                                        *   '<S146>/ENU_STOP'
-                                        *   '<S87>/ENU_STOP'
-                                        *   '<S88>/ENU_STOP'
-                                        *   '<S100>/ENU_STOP'
-                                        *   '<S104>/ENU_STOP'
-                                        *   '<S106>/moveRequest'
-                                        */
-  uint8_T ENU_TEST_INIT;               /* Variable: ENU_TEST_INIT
-                                        * Referenced by: '<S22>/ENU_TEST_INIT'
-                                        */
-  uint8_T ENU_TEST_NOT_CONFIRMED;      /* Variable: ENU_TEST_NOT_CONFIRMED
-                                        * Referenced by:
-                                        *   '<S90>/Unit_Delay'
-                                        *   '<S90>/Unit_Delay1'
-                                        *   '<S90>/Unit_Delay2'
-                                        *   '<S99>/angleCalibStatus'
-                                        *   '<S102>/ENU_TEST_NOT_CONFIRMED'
-                                        *   '<S106>/angleCalibStatus'
-                                        */
-  boolean_T CONST_EnableDelay;         /* Variable: CONST_EnableDelay
-                                        * Referenced by:
-                                        *   '<S132>/CONST_EnableDelay'
-                                        *   '<S132>/CONST_EnableDelay1'
-                                        *   '<S71>/CONST_EnableDelay'
-                                        *   '<S80>/CONST_EnableDelay'
-                                        */
-  boolean_T CONST_EndOfLineEnableFlg;  /* Variable: CONST_EndOfLineEnableFlg
-                                        * Referenced by:
-                                        *   '<S25>/CONST_EndOfLineEnableFlg'
-                                        *   '<S25>/CONST_EndOfLineEnableFlg1'
-                                        *   '<S25>/CONST_EndOfLineEnableFlg2'
-                                        *   '<S49>/CONST_EndOfLineEnableFlg'
-                                        */
-  boolean_T CONST_FALSE;               /* Variable: CONST_FALSE
-                                        * Referenced by:
-                                        *   '<S71>/CONST_FALSE'
-                                        *   '<S80>/CONST_FALSE'
-                                        */
-};
 
 /* Real-time Model Data Structure */
 struct tag_RTM_RobotControl_T {
-  struct SimStruct_tag * *childSfunctions;
   const char_T *errorStatus;
-  SS_SimMode simMode;
-  RTWSolverInfo solverInfo;
-  RTWSolverInfo *solverInfoPtr;
-  void *sfcnInfo;
-
-  /*
-   * NonInlinedSFcns:
-   * The following substructure contains information regarding
-   * non-inlined s-functions used in the model.
-   */
-  struct {
-    RTWSfcnInfo sfcnInfo;
-    time_T *taskTimePtrs[1];
-    SimStruct childSFunctions[1];
-    SimStruct *childSFunctionPtrs[1];
-    struct _ssBlkInfo2 blkInfo2[1];
-    struct _ssSFcnModelMethods2 methods2[1];
-    struct _ssSFcnModelMethods3 methods3[1];
-    struct _ssSFcnModelMethods4 methods4[1];
-    struct _ssStatesInfo2 statesInfo2[1];
-    ssPeriodicStatesInfo periodicStatesInfo[1];
-    struct {
-      time_T sfcnPeriod[1];
-      time_T sfcnOffset[1];
-      int_T sfcnTsMap[1];
-      struct _ssPortOutputs outputPortInfo[1];
-    } Sfcn0;
-  } NonInlinedSFcns;
-
-  boolean_T zCCacheNeedsReset;
-  boolean_T derivCacheNeedsReset;
-  boolean_T blkStateChange;
-
-  /*
-   * Sizes:
-   * The following substructure contains sizes information
-   * for many of the model attributes such as inputs, outputs,
-   * dwork, sample times, etc.
-   */
-  struct {
-    uint32_T options;
-    int_T numContStates;
-    int_T numU;
-    int_T numY;
-    int_T numSampTimes;
-    int_T numBlocks;
-    int_T numBlockIO;
-    int_T numBlockPrms;
-    int_T numDwork;
-    int_T numSFcnPrms;
-    int_T numSFcns;
-    int_T numIports;
-    int_T numOports;
-    int_T numNonSampZCs;
-    int_T sysDirFeedThru;
-    int_T rtwGenSfcn;
-  } Sizes;
-
-  /*
-   * Timing:
-   * The following substructure contains information regarding
-   * the timing information for the model.
-   */
-  struct {
-    time_T stepSize;
-    uint32_T clockTick0;
-    uint32_T clockTickH0;
-    time_T stepSize0;
-    time_T tStart;
-    time_T tFinal;
-    time_T timeOfLastOutput;
-    boolean_T stopRequestedFlag;
-    time_T *sampleTimes;
-    time_T *offsetTimes;
-    int_T *sampleTimeTaskIDPtr;
-    int_T *sampleHits;
-    int_T *perTaskSampleHits;
-    time_T *t;
-    time_T sampleTimesArray[1];
-    time_T offsetTimesArray[1];
-    int_T sampleTimeTaskIDArray[1];
-    int_T sampleHitArray[1];
-    int_T perTaskSampleHitsArray[1];
-    time_T tArray[1];
-  } Timing;
 };
-
-/* Block parameters (auto storage) */
-extern P_RobotControl_T RobotControl_P;
 
 /* Block signals (auto storage) */
 extern B_RobotControl_T RobotControl_B;
@@ -1127,12 +512,18 @@ extern RT_MODEL_RobotControl_T *const RobotControl_M;
  * Block '<S42>/Data Type Conversion2' : Eliminate redundant data type conversion
  * Block '<S71>/Data_Type_Conversion' : Eliminate redundant data type conversion
  * Block '<S71>/Data_Type_Conversion1' : Eliminate redundant data type conversion
+ * Block '<S74>/Enable' : Eliminated due to constant selection input
+ * Block '<S75>/Reset' : Eliminated due to constant selection input
  * Block '<S80>/Data_Type_Conversion1' : Eliminate redundant data type conversion
  * Block '<S80>/Data_Type_Conversion2' : Eliminate redundant data type conversion
+ * Block '<S83>/Enable' : Eliminated due to constant selection input
+ * Block '<S84>/Reset' : Eliminated due to constant selection input
  * Block '<S108>/Data Type Conversion2' : Eliminate redundant data type conversion
  * Block '<S101>/Data Type Conversion' : Eliminate redundant data type conversion
  * Block '<S116>/Data Type Conversion2' : Eliminate redundant data type conversion
  * Block '<S95>/Data_Type_Conversion' : Eliminate redundant data type conversion
+ * Block '<S134>/Enable' : Eliminated due to constant selection input
+ * Block '<S135>/Enable' : Eliminated due to constant selection input
  * Block '<S127>/Data Type Conversion2' : Eliminate redundant data type conversion
  * Block '<S24>/Data_Type_Conversion' : Eliminate redundant data type conversion
  * Block '<S145>/Data Type Conversion' : Eliminate redundant data type conversion
@@ -1143,6 +534,18 @@ extern RT_MODEL_RobotControl_T *const RobotControl_M;
  * Block '<S146>/Data Type Conversion1' : Eliminate redundant data type conversion
  * Block '<S146>/Data Type Conversion2' : Eliminate redundant data type conversion
  * Block '<S146>/Data Type Conversion3' : Eliminate redundant data type conversion
+ * Block '<S25>/Switch2' : Eliminated due to constant selection input
+ * Block '<S25>/Switch3' : Eliminated due to constant selection input
+ * Block '<S25>/Switch4' : Eliminated due to constant selection input
+ * Block '<S71>/CONST_EnableDelay' : Unused code path elimination
+ * Block '<S80>/CONST_EnableDelay' : Unused code path elimination
+ * Block '<S132>/CONST_EnableDelay' : Unused code path elimination
+ * Block '<S132>/CONST_EnableDelay1' : Unused code path elimination
+ * Block '<S25>/CAL_MOTOR_HIGH' : Unused code path elimination
+ * Block '<S25>/CONST_EndOfLineEnableFlg' : Unused code path elimination
+ * Block '<S25>/CONST_EndOfLineEnableFlg1' : Unused code path elimination
+ * Block '<S25>/CONST_EndOfLineEnableFlg2' : Unused code path elimination
+ * Block '<S25>/Divide' : Unused code path elimination
  */
 
 /*-

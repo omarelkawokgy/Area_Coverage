@@ -2,9 +2,9 @@
  * Code generation for system system '<S16>/HighLevelRoutines'
  *
  * Model                      : RobotControl
- * Model version              : 1.500
+ * Model version              : 1.509
  * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Mon Jul 27 18:15:17 2020
+ * C source code generated on : Thu Jul 30 11:39:58 2020
  *
  * Note that the functions contained in this file are part of a Simulink
  * model, and are not self-contained algorithms.
@@ -223,14 +223,13 @@ static void RobotControl_chartstep_c25_ROTH(void)
       /* During 'Freeze': '<S123>:121' */
       if (RobotControl_DW.sfEvent_j == RobotControl_event_stopEvent_n) {
         /* Transition: '<S123>:32' */
-        if (RobotControl_B.sensorView ==
-            RobotControl_P.ENU_LEFT_EMPTY_RIGHT_EMPTY) {
+        if (RobotControl_B.sensorView == 15) {
           /* Transition: '<S123>:38' */
           if (RobotControl_B.currentHeading ==
               RobotControl_B.DataTypeConversion3_g) {
             /* Constant: '<S98>/ENU_MOVE_U_TURN_RIGHT' */
             /* Transition: '<S123>:41' */
-            RobotControl_B.moveRequest_i = RobotControl_P.ENU_MOVE_U_TURN_RIGHT;
+            RobotControl_B.moveRequest_i = 22U;
             RobotControl_DW.headingRequest = (uint16_T)
               RobotControl_B.DataTypeConversion4_m;
             RobotControl_DW.finishCounter = 1U;
@@ -243,7 +242,7 @@ static void RobotControl_chartstep_c25_ROTH(void)
                      RobotControl_B.DataTypeConversion4_m) {
             /* Constant: '<S98>/ENU_MOVE_U_TURN_LEFT' */
             /* Transition: '<S123>:43' */
-            RobotControl_B.moveRequest_i = RobotControl_P.ENU_MOVE_U_TURN_LEFT;
+            RobotControl_B.moveRequest_i = 23U;
             RobotControl_DW.headingRequest = (uint16_T)
               RobotControl_B.DataTypeConversion3_g;
             RobotControl_DW.finishCounter = 1U;
@@ -310,7 +309,7 @@ static void RobotControl_chartstep_c25_ROTH(void)
         RobotControl_B.zgzgActive = false;
 
         /* Constant: '<S98>/ENU_STOP' */
-        RobotControl_B.moveRequest_i = RobotControl_P.ENU_STOP;
+        RobotControl_B.moveRequest_i = 5U;
       } else {
         if ((RobotControl_DW.headingRequest == RobotControl_B.currentHeading) &&
             RobotControl_B.OutportBufferFortargetReached) {
@@ -321,7 +320,7 @@ static void RobotControl_chartstep_c25_ROTH(void)
 
           /* Constant: '<S98>/ENU_FORWARD' */
           /* Entry 'MovingForward': '<S123>:29' */
-          RobotControl_B.moveRequest_i = RobotControl_P.ENU_FORWARD;
+          RobotControl_B.moveRequest_i = 1U;
         }
       }
       break;
@@ -336,7 +335,7 @@ static void RobotControl_chartstep_c25_ROTH(void)
 
         /* Constant: '<S98>/ENU_FORWARD' */
         /* Entry 'MovingForward': '<S123>:29' */
-        RobotControl_B.moveRequest_i = RobotControl_P.ENU_FORWARD;
+        RobotControl_B.moveRequest_i = 1U;
       } else {
         switch (RobotControl_DW.is_faceWest_h) {
          case RobotControl_IN_Start:
@@ -348,7 +347,7 @@ static void RobotControl_chartstep_c25_ROTH(void)
 
             /* Constant: '<S98>/ENU_MOVE_U_TURN' */
             /* Entry 'turingRight': '<S123>:103' */
-            RobotControl_B.moveRequest_i = RobotControl_P.ENU_MOVE_U_TURN;
+            RobotControl_B.moveRequest_i = 24U;
           } else if (RobotControl_B.currentHeading ==
                      RobotControl_B.DataTypeConversion1_e) {
             /* Transition: '<S123>:97' */
@@ -438,16 +437,14 @@ static void RobotControl_chartstep_c25_ROTH(void)
     }
 
     if (guard4) {
-      if ((RobotControl_B.sensorView ==
-           RobotControl_P.ENU_LEFT_CLEANED_RIGHT_EMPTY) ||
-          (RobotControl_B.sensorView == RobotControl_P.ENU_LEFT_BUSY_RIGHT_EMPTY))
+      if ((RobotControl_B.sensorView == 10) || (RobotControl_B.sensorView == 7))
       {
         /* Transition: '<S123>:44' */
         if (RobotControl_B.currentHeading ==
             RobotControl_B.DataTypeConversion3_g) {
           /* Constant: '<S98>/ENU_MOVE_U_TURN_RIGHT' */
           /* Transition: '<S123>:45' */
-          RobotControl_B.moveRequest_i = RobotControl_P.ENU_MOVE_U_TURN_RIGHT;
+          RobotControl_B.moveRequest_i = 22U;
           RobotControl_DW.headingRequest = (uint16_T)
             RobotControl_B.DataTypeConversion4_m;
           RobotControl_DW.finishCounter = 1U;
@@ -460,7 +457,7 @@ static void RobotControl_chartstep_c25_ROTH(void)
                    RobotControl_B.DataTypeConversion4_m) {
           /* Constant: '<S98>/ENU_MOVE_U_TURN' */
           /* Transition: '<S123>:46' */
-          RobotControl_B.moveRequest_i = RobotControl_P.ENU_MOVE_U_TURN;
+          RobotControl_B.moveRequest_i = 24U;
           RobotControl_DW.headingRequest = (uint16_T)
             RobotControl_B.DataTypeConversion3_g;
           RobotControl_DW.finishCounter++;
@@ -478,20 +475,17 @@ static void RobotControl_chartstep_c25_ROTH(void)
     }
 
     if (guard3) {
-      if (RobotControl_B.sensorView == RobotControl_P.ENU_LEFT_BUSY_RIGHT_BUSY)
-      {
+      if (RobotControl_B.sensorView == 9) {
         /* Transition: '<S123>:90' */
         guard1 = true;
-      } else if ((RobotControl_B.sensorView ==
-                  RobotControl_P.ENU_LEFT_EMPTY_RIGHT_CLEANED) ||
-                 (RobotControl_B.sensorView ==
-                  RobotControl_P.ENU_LEFT_EMPTY_RIGHT_BUSY)) {
+      } else if ((RobotControl_B.sensorView == 11) || (RobotControl_B.sensorView
+                  == 8)) {
         /* Transition: '<S123>:47' */
         if (RobotControl_B.currentHeading ==
             RobotControl_B.DataTypeConversion3_g) {
           /* Constant: '<S98>/ENU_MOVE_U_TURN' */
           /* Transition: '<S123>:48' */
-          RobotControl_B.moveRequest_i = RobotControl_P.ENU_MOVE_U_TURN;
+          RobotControl_B.moveRequest_i = 24U;
           RobotControl_DW.headingRequest = (uint16_T)
             RobotControl_B.DataTypeConversion4_m;
           RobotControl_DW.finishCounter++;
@@ -504,7 +498,7 @@ static void RobotControl_chartstep_c25_ROTH(void)
                    RobotControl_B.DataTypeConversion4_m) {
           /* Constant: '<S98>/ENU_MOVE_U_TURN_LEFT' */
           /* Transition: '<S123>:49' */
-          RobotControl_B.moveRequest_i = RobotControl_P.ENU_MOVE_U_TURN_LEFT;
+          RobotControl_B.moveRequest_i = 23U;
           RobotControl_DW.headingRequest = (uint16_T)
             RobotControl_B.DataTypeConversion3_g;
           RobotControl_DW.finishCounter = 1U;
@@ -522,12 +516,8 @@ static void RobotControl_chartstep_c25_ROTH(void)
     }
 
     if (guard2) {
-      if ((RobotControl_B.sensorView ==
-           RobotControl_P.ENU_LEFT_BUSY_RIGHT_CLEANED) ||
-          (RobotControl_B.sensorView ==
-           RobotControl_P.ENU_LEFT_CLEANED_RIGHT_BUSY) ||
-          (RobotControl_B.sensorView ==
-           RobotControl_P.ENU_LEFT_CLEANED_RIGHT_CLEANED)) {
+      if ((RobotControl_B.sensorView == 14) || (RobotControl_B.sensorView == 13)
+          || (RobotControl_B.sensorView == 12)) {
         /* Transition: '<S123>:50' */
         guard1 = true;
       }
@@ -538,7 +528,7 @@ static void RobotControl_chartstep_c25_ROTH(void)
       {
         /* Constant: '<S98>/ENU_MOVE_U_TURN' */
         /* Transition: '<S123>:51' */
-        RobotControl_B.moveRequest_i = RobotControl_P.ENU_MOVE_U_TURN;
+        RobotControl_B.moveRequest_i = 24U;
         RobotControl_DW.headingRequest = (uint16_T)
           RobotControl_B.DataTypeConversion4_m;
         RobotControl_DW.finishCounter++;
@@ -551,7 +541,7 @@ static void RobotControl_chartstep_c25_ROTH(void)
                  RobotControl_B.DataTypeConversion4_m) {
         /* Constant: '<S98>/ENU_MOVE_U_TURN' */
         /* Transition: '<S123>:56' */
-        RobotControl_B.moveRequest_i = RobotControl_P.ENU_MOVE_U_TURN;
+        RobotControl_B.moveRequest_i = 24U;
         RobotControl_DW.headingRequest = (uint16_T)
           RobotControl_B.DataTypeConversion3_g;
         RobotControl_DW.finishCounter++;
@@ -591,7 +581,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
     RobotControl_DW.counter = 0U;
 
     /* Constant: '<S95>/ENU_STOP' */
-    RobotControl_B.moveRequest_p = RobotControl_P.ENU_STOP;
+    RobotControl_B.moveRequest_p = 5U;
     RobotControl_DW.step1Flag = 0U;
     RobotControl_B.GT_active = true;
   } else {
@@ -600,7 +590,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
     switch (RobotControl_DW.is_c24_ROTH) {
      case RobotControl_IN_GTSP_Active:
       /* During 'GTSP_Active': '<S122>:7' */
-      if (RobotControl_B.currentRoutine != RobotControl_P.ENU_GTSP) {
+      if (RobotControl_B.currentRoutine != 25) {
         /* Transition: '<S122>:9' */
         /* Exit Internal 'GTSP_Active': '<S122>:7' */
         RobotControl_DW.is_GTSP_Active = 0U;
@@ -610,7 +600,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
         RobotControl_DW.counter = 0U;
 
         /* Constant: '<S95>/ENU_STOP' */
-        RobotControl_B.moveRequest_p = RobotControl_P.ENU_STOP;
+        RobotControl_B.moveRequest_p = 5U;
         RobotControl_DW.step1Flag = 0U;
         RobotControl_B.GT_active = true;
       } else if (RobotControl_DW.step1Flag == 1) {
@@ -634,12 +624,8 @@ static void RobotControl_chartstep_c24_ROTH(void)
           /* During 'Freeze': '<S122>:193' */
           if (RobotControl_DW.sfEvent == RobotControl_event_stopEvent_n) {
             /* Transition: '<S122>:194' */
-            if ((RobotControl_B.sensorView ==
-                 RobotControl_P.ENU_LEFT_EMPTY_RIGHT_EMPTY) ||
-                (RobotControl_B.sensorView ==
-                 RobotControl_P.ENU_LEFT_EMPTY_RIGHT_CLEANED) ||
-                (RobotControl_B.sensorView ==
-                 RobotControl_P.ENU_LEFT_EMPTY_RIGHT_BUSY)) {
+            if ((RobotControl_B.sensorView == 15) || (RobotControl_B.sensorView ==
+                 11) || (RobotControl_B.sensorView == 8)) {
               /* Transition: '<S122>:15' */
               if (RobotControl_B.currentHeading ==
                   RobotControl_B.DataTypeConversion) {
@@ -648,7 +634,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
                 /* Constant: '<S95>/ENU_MOVE_TURN_LEFT' */
                 /* Entry 'TurnLeft': '<S122>:12' */
-                RobotControl_B.moveRequest_p = RobotControl_P.ENU_MOVE_TURN_LEFT;
+                RobotControl_B.moveRequest_p = 20U;
               } else if (RobotControl_B.currentHeading ==
                          RobotControl_B.DataTypeConversion2) {
                 /* Transition: '<S122>:20' */
@@ -656,7 +642,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
                 /* Constant: '<S95>/ENU_MOVE_TURN_LEFT' */
                 /* Entry 'preFinishNormal': '<S122>:19' */
-                RobotControl_B.moveRequest_p = RobotControl_P.ENU_MOVE_TURN_LEFT;
+                RobotControl_B.moveRequest_p = 20U;
               } else {
                 guard2 = true;
               }
@@ -676,7 +662,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
             /* Constant: '<S95>/ENU_FORWARD' */
             /* Entry 'Forward': '<S122>:10' */
-            RobotControl_B.moveRequest_p = RobotControl_P.ENU_FORWARD;
+            RobotControl_B.moveRequest_p = 1U;
           }
           break;
 
@@ -696,7 +682,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
             RobotControl_DW.step1Flag = 1U;
 
             /* Constant: '<S95>/ENU_STOP' */
-            RobotControl_B.moveRequest_p = RobotControl_P.ENU_STOP;
+            RobotControl_B.moveRequest_p = 5U;
           }
           break;
 
@@ -709,7 +695,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
           RobotControl_DW.step1Flag = 1U;
 
           /* Constant: '<S95>/ENU_STOP' */
-          RobotControl_B.moveRequest_p = RobotControl_P.ENU_STOP;
+          RobotControl_B.moveRequest_p = 5U;
           break;
 
          case RobotC_IN_preFinishLeftBlockedN:
@@ -740,7 +726,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
             RobotControl_DW.step1Flag = 1U;
 
             /* Constant: '<S95>/ENU_STOP' */
-            RobotControl_B.moveRequest_p = RobotControl_P.ENU_STOP;
+            RobotControl_B.moveRequest_p = 5U;
           }
           break;
 
@@ -756,7 +742,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
             RobotControl_DW.step1Flag = 1U;
 
             /* Constant: '<S95>/ENU_STOP' */
-            RobotControl_B.moveRequest_p = RobotControl_P.ENU_STOP;
+            RobotControl_B.moveRequest_p = 5U;
           }
           break;
         }
@@ -766,8 +752,8 @@ static void RobotControl_chartstep_c24_ROTH(void)
      case RobotControl_IN_Idle_o:
       /* Constant: '<S95>/ENU_GTSP' */
       /* During 'Idle': '<S122>:5' */
-      if ((RobotControl_B.currentRoutine == RobotControl_P.ENU_GTSP) &&
-          (RobotControl_DW.counter > RobotControl_CAL_GTSPdelayStart)) {
+      if ((RobotControl_B.currentRoutine == 25) && (RobotControl_DW.counter >
+           RobotControl_CAL_GTSPdelayStart)) {
         /* Transition: '<S122>:8' */
         RobotControl_DW.is_c24_ROTH = RobotControl_IN_faceWest_c;
 
@@ -849,7 +835,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
               RobotControl_DW.is_GTSPsearch = 0U;
 
               /* Constant: '<S95>/ENU_STOP' */
-              RobotControl_B.moveRequest_p = RobotControl_P.ENU_STOP;
+              RobotControl_B.moveRequest_p = 5U;
               RobotControl_DW.is_facingSouth = RobotControl_IN_Freeze_j;
             } else {
               switch (RobotControl_DW.is_GTSPsearch) {
@@ -861,8 +847,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
                   /* Constant: '<S95>/ENU_MOVE_TURN_RIGHT' */
                   /* Entry 'emptyOnRight': '<S122>:82' */
-                  RobotControl_B.moveRequest_p =
-                    RobotControl_P.ENU_MOVE_TURN_RIGHT;
+                  RobotControl_B.moveRequest_p = 21U;
                 }
                 break;
 
@@ -874,8 +859,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
                   /* Constant: '<S95>/ENU_MOVE_TURN_RIGHT' */
                   /* Entry 'emptyOnRight': '<S122>:82' */
-                  RobotControl_B.moveRequest_p =
-                    RobotControl_P.ENU_MOVE_TURN_RIGHT;
+                  RobotControl_B.moveRequest_p = 21U;
                 }
                 break;
 
@@ -887,8 +871,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
                   /* Constant: '<S95>/ENU_MOVE_TURN_LEFT' */
                   /* Entry 'furtherDown': '<S122>:91' */
-                  RobotControl_B.moveRequest_p =
-                    RobotControl_P.ENU_MOVE_TURN_LEFT;
+                  RobotControl_B.moveRequest_p = 20U;
                 }
                 break;
 
@@ -902,7 +885,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
                   /* Constant: '<S95>/ENU_FORWARD' */
                   /* Entry 'facingWest': '<S122>:84' */
-                  RobotControl_B.moveRequest_p = RobotControl_P.ENU_FORWARD;
+                  RobotControl_B.moveRequest_p = 1U;
                 }
                 break;
 
@@ -915,17 +898,13 @@ static void RobotControl_chartstep_c24_ROTH(void)
                    *  Constant: '<S95>/ENU_LEFT_EMPTY_RIGHT_EMPTY'
                    */
                   /* Transition: '<S122>:204' */
-                  if ((RobotControl_B.sensorView ==
-                       RobotControl_P.ENU_LEFT_EMPTY_RIGHT_BUSY) ||
-                      (RobotControl_B.sensorView ==
-                       RobotControl_P.ENU_LEFT_EMPTY_RIGHT_EMPTY)) {
+                  if ((RobotControl_B.sensorView == 8) ||
+                      (RobotControl_B.sensorView == 15)) {
                     /* Transition: '<S122>:92' */
                     RobotControl_DW.is_GTSPsearch = RobotControl_IN_Freeze5;
                   } else {
-                    if ((RobotControl_B.sensorView ==
-                         RobotControl_P.ENU_LEFT_BUSY_RIGHT_BUSY) ||
-                        (RobotControl_B.sensorView ==
-                         RobotControl_P.ENU_LEFT_BUSY_RIGHT_EMPTY)) {
+                    if ((RobotControl_B.sensorView == 9) ||
+                        (RobotControl_B.sensorView == 7)) {
                       /* Transition: '<S122>:90' */
                       RobotControl_DW.is_GTSPsearch = 0U;
                       RobotControl_DW.is_facingSouth = RobotControl_IN_Freeze6;
@@ -946,7 +925,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
                   /* Constant: '<S95>/ENU_FORWARD' */
                   /* Entry 'start': '<S122>:77' */
-                  RobotControl_B.moveRequest_p = RobotControl_P.ENU_FORWARD;
+                  RobotControl_B.moveRequest_p = 1U;
                   RobotControl_DW.round++;
                 }
                 break;
@@ -956,16 +935,14 @@ static void RobotControl_chartstep_c24_ROTH(void)
                 if (RobotControl_B.hitRoutineRun) {
                   /* Transition: '<S122>:202' */
                   RobotControl_DW.is_GTSPsearch = RobotControl_IN_Freeze4;
-                } else if ((RobotControl_B.sensorView !=
-                            RobotControl_P.ENU_LEFT_BUSY_RIGHT_EMPTY) &&
-                           (RobotControl_B.sensorView !=
-                            RobotControl_P.ENU_LEFT_EMPTY_RIGHT_EMPTY)) {
+                } else if ((RobotControl_B.sensorView != 7) &&
+                           (RobotControl_B.sensorView != 15)) {
                   /* Transition: '<S122>:167' */
                   RobotControl_DW.is_GTSPsearch = RobotControl_IN_start_hx;
 
                   /* Constant: '<S95>/ENU_FORWARD' */
                   /* Entry 'start': '<S122>:77' */
-                  RobotControl_B.moveRequest_p = RobotControl_P.ENU_FORWARD;
+                  RobotControl_B.moveRequest_p = 1U;
                   RobotControl_DW.round++;
                 } else {
                   if (RobotControl_B.forwardDist - RobotControl_DW.tempDist_f >
@@ -976,8 +953,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
                     /* Constant: '<S95>/ENU_MOVE_TURN_RIGHT' */
                     /* Entry 'emptyOnRight': '<S122>:82' */
-                    RobotControl_B.moveRequest_p =
-                      RobotControl_P.ENU_MOVE_TURN_RIGHT;
+                    RobotControl_B.moveRequest_p = 21U;
                   }
                 }
                 break;
@@ -987,10 +963,8 @@ static void RobotControl_chartstep_c24_ROTH(void)
                  *  Constant: '<S95>/ENU_LEFT_EMPTY_RIGHT_EMPTY'
                  */
                 /* During 'start': '<S122>:77' */
-                if (((RobotControl_B.sensorView ==
-                      RobotControl_P.ENU_LEFT_BUSY_RIGHT_EMPTY) ||
-                     (RobotControl_B.sensorView ==
-                      RobotControl_P.ENU_LEFT_EMPTY_RIGHT_EMPTY)) &&
+                if (((RobotControl_B.sensorView == 7) ||
+                     (RobotControl_B.sensorView == 15)) &&
                     RobotControl_B.hitRoutineRun) {
                   /* Transition: '<S122>:164' */
                   /* Transition: '<S122>:163' */
@@ -1000,10 +974,8 @@ static void RobotControl_chartstep_c24_ROTH(void)
                   RobotControl_DW.is_GTSPsearch = 0U;
                   RobotControl_DW.is_facingSouth = RobotControl_IN_Freeze1;
                 } else {
-                  if ((RobotControl_B.sensorView ==
-                       RobotControl_P.ENU_LEFT_BUSY_RIGHT_EMPTY) ||
-                      (RobotControl_B.sensorView ==
-                       RobotControl_P.ENU_LEFT_EMPTY_RIGHT_EMPTY)) {
+                  if ((RobotControl_B.sensorView == 7) ||
+                      (RobotControl_B.sensorView == 15)) {
                     /* Transition: '<S122>:81' */
                     RobotControl_DW.is_GTSPsearch = RobotControl_IN_intermediate;
 
@@ -1022,7 +994,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
        case RobotControl_IN_finish_j:
         /* Constant: '<S95>/ENU_GTSP' */
         /* During 'finish': '<S122>:102' */
-        if (RobotControl_B.currentRoutine == RobotControl_P.ENU_GTSP) {
+        if (RobotControl_B.currentRoutine == 25) {
           /* Transition: '<S122>:101' */
           RobotControl_DW.is_MostSouthLeft = 0U;
           RobotControl_DW.is_c24_ROTH = RobotControl_IN_Idle_o;
@@ -1031,7 +1003,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
           RobotControl_DW.counter = 0U;
 
           /* Constant: '<S95>/ENU_STOP' */
-          RobotControl_B.moveRequest_p = RobotControl_P.ENU_STOP;
+          RobotControl_B.moveRequest_p = 5U;
           RobotControl_DW.step1Flag = 0U;
           RobotControl_B.GT_active = true;
         }
@@ -1057,7 +1029,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
           /* Constant: '<S95>/ENU_FORWARD' */
           /* Entry 'start': '<S122>:77' */
-          RobotControl_B.moveRequest_p = RobotControl_P.ENU_FORWARD;
+          RobotControl_B.moveRequest_p = 1U;
           RobotControl_DW.round++;
         } else {
           if (RobotControl_B.currentHeading == RobotControl_B.DataTypeConversion)
@@ -1087,7 +1059,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
         /* Constant: '<S95>/ENU_FORWARD' */
         /* Entry 'Forward': '<S122>:10' */
-        RobotControl_B.moveRequest_p = RobotControl_P.ENU_FORWARD;
+        RobotControl_B.moveRequest_p = 1U;
       } else {
         switch (RobotControl_DW.is_faceWest) {
          case RobotControl_IN_Start:
@@ -1099,7 +1071,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
             /* Constant: '<S95>/ENU_MOVE_U_TURN' */
             /* Entry 'turingRight': '<S122>:129' */
-            RobotControl_B.moveRequest_p = RobotControl_P.ENU_MOVE_U_TURN;
+            RobotControl_B.moveRequest_p = 24U;
           } else if (RobotControl_B.currentHeading ==
                      RobotControl_B.DataTypeConversion2) {
             /* Transition: '<S122>:133' */
@@ -1107,7 +1079,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
             /* Constant: '<S95>/ENU_MOVE_TURN_RIGHT' */
             /* Entry 'turningLeft': '<S122>:130' */
-            RobotControl_B.moveRequest_p = RobotControl_P.ENU_MOVE_TURN_RIGHT;
+            RobotControl_B.moveRequest_p = 21U;
           } else if (RobotControl_B.currentHeading ==
                      RobotControl_B.DataTypeConversion3_l) {
             /* Transition: '<S122>:134' */
@@ -1115,7 +1087,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
             /* Constant: '<S95>/ENU_MOVE_TURN_LEFT' */
             /* Entry 'uturn': '<S122>:131' */
-            RobotControl_B.moveRequest_p = RobotControl_P.ENU_MOVE_TURN_LEFT;
+            RobotControl_B.moveRequest_p = 20U;
           } else {
             if (RobotControl_B.currentHeading ==
                 RobotControl_B.DataTypeConversion) {
@@ -1176,9 +1148,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
     }
 
     if (guard2) {
-      if ((RobotControl_B.sensorView ==
-           RobotControl_P.ENU_LEFT_CLEANED_RIGHT_EMPTY) ||
-          (RobotControl_B.sensorView == RobotControl_P.ENU_LEFT_BUSY_RIGHT_EMPTY))
+      if ((RobotControl_B.sensorView == 10) || (RobotControl_B.sensorView == 7))
       {
         /* Transition: '<S122>:23' */
         if (RobotControl_B.currentHeading == RobotControl_B.DataTypeConversion)
@@ -1188,7 +1158,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
           /* Constant: '<S95>/ENU_MOVE_U_TURN' */
           /* Entry 'preFinishLeftBlockedN': '<S122>:21' */
-          RobotControl_B.moveRequest_p = RobotControl_P.ENU_MOVE_U_TURN;
+          RobotControl_B.moveRequest_p = 24U;
         } else if (RobotControl_B.currentHeading ==
                    RobotControl_B.DataTypeConversion2) {
           /* Transition: '<S122>:26' */
@@ -1196,7 +1166,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
           /* Constant: '<S95>/ENU_MOVE_TURN_RIGHT' */
           /* Entry 'preFinishLeftBlockedW': '<S122>:25' */
-          RobotControl_B.moveRequest_p = RobotControl_P.ENU_MOVE_TURN_RIGHT;
+          RobotControl_B.moveRequest_p = 21U;
         } else {
           guard1 = true;
         }
@@ -1211,13 +1181,9 @@ static void RobotControl_chartstep_c24_ROTH(void)
        *  Constant: '<S95>/ENU_LEFT_CLEANED_RIGHT_BUSY'
        *  Constant: '<S95>/ENU_LEFT_CLEANED_RIGHT_CLEANED'
        */
-      if ((RobotControl_B.sensorView == RobotControl_P.ENU_LEFT_BUSY_RIGHT_BUSY)
-          || (RobotControl_B.sensorView ==
-              RobotControl_P.ENU_LEFT_BUSY_RIGHT_CLEANED) ||
-          (RobotControl_B.sensorView ==
-           RobotControl_P.ENU_LEFT_CLEANED_RIGHT_BUSY) ||
-          (RobotControl_B.sensorView ==
-           RobotControl_P.ENU_LEFT_CLEANED_RIGHT_CLEANED)) {
+      if ((RobotControl_B.sensorView == 9) || (RobotControl_B.sensorView == 14) ||
+          (RobotControl_B.sensorView == 13) || (RobotControl_B.sensorView == 12))
+      {
         /* Transition: '<S122>:30' */
         if (RobotControl_B.currentHeading == RobotControl_B.DataTypeConversion2)
         {
@@ -1231,7 +1197,7 @@ static void RobotControl_chartstep_c24_ROTH(void)
 
             /* Constant: '<S95>/ENU_MOVE_U_TURN' */
             /* Entry 'preFinishBlockedN': '<S122>:27' */
-            RobotControl_B.moveRequest_p = RobotControl_P.ENU_MOVE_U_TURN;
+            RobotControl_B.moveRequest_p = 24U;
           }
         }
       }
@@ -1287,13 +1253,13 @@ void RobotCon_HighLevelRoutines_Init(void)
   RobotControl_DW.Unit_Delay1_DSTATE_c = false;
 
   /* InitializeConditions for UnitDelay: '<S21>/Unit_Delay4' */
-  RobotControl_DW.Unit_Delay4_DSTATE_b = RobotControl_P.CONST_DIAG_UNCONFIRM;
+  RobotControl_DW.Unit_Delay4_DSTATE_b = 9U;
 
   /* InitializeConditions for UnitDelay: '<S21>/Unit_Delay2' */
   RobotControl_B.moveRequest = 0U;
 
   /* InitializeConditions for UnitDelay: '<S21>/Unit_Delay5' */
-  RobotControl_DW.Unit_Delay5_DSTATE = RobotControl_P.CAL_NORTH;
+  RobotControl_DW.Unit_Delay5_DSTATE = 270.0F;
 
   /* SystemInitialize for Chart: '<S94>/MainStateMachine' */
   RobotControl_DW.is_Running = 0U;
@@ -1356,13 +1322,13 @@ void RobotCon_HighLevelRoutines_Init(void)
 
   /* SystemInitialize for IfAction SubSystem: '<S21>/DIAG_Routine' */
   /* InitializeConditions for UnitDelay: '<S90>/Unit_Delay1' */
-  RobotControl_DW.Unit_Delay1_DSTATE = RobotControl_P.ENU_TEST_NOT_CONFIRMED;
+  RobotControl_DW.Unit_Delay1_DSTATE = 3U;
 
   /* InitializeConditions for UnitDelay: '<S90>/Unit_Delay' */
-  RobotControl_DW.Unit_Delay_DSTATE_j = RobotControl_P.ENU_TEST_NOT_CONFIRMED;
+  RobotControl_DW.Unit_Delay_DSTATE_j = 3U;
 
   /* InitializeConditions for UnitDelay: '<S90>/Unit_Delay2' */
-  RobotControl_DW.Unit_Delay2_DSTATE_h = RobotControl_P.ENU_TEST_NOT_CONFIRMED;
+  RobotControl_DW.Unit_Delay2_DSTATE_h = 3U;
 
   /* SystemInitialize for Chart: '<S118>/HighLevelDiagTestControl' */
   RobotControl_DW.is_SelfDiag = 0U;
@@ -1416,24 +1382,16 @@ void RobotCon_HighLevelRoutines_Init(void)
   RobotControl_B.moveReq = 0U;
   RobotControl_B.angleCalibStatus = 3U;
 
-  /* SystemInitialize for Outport: '<S106>/moveRequest' */
-  RobotControl_B.OutportBufferFormoveRequest = RobotControl_P.ENU_STOP;
-
-  /* SystemInitialize for Outport: '<S106>/angleCalibStatus' */
-  RobotControl_B.OutportBufferForangleCalibSta_a =
-    RobotControl_P.ENU_TEST_NOT_CONFIRMED;
-
   /* End of SystemInitialize for SubSystem: '<S99>/Angle_CalibrationUponReq' */
 
   /* SystemInitialize for Outport: '<S99>/angleCalibStatus' */
-  RobotControl_B.OutportBufferForangleCalibStatu =
-    RobotControl_P.ENU_TEST_NOT_CONFIRMED;
+  RobotControl_B.OutportBufferForangleCalibStatu = 3U;
 
   /* End of SystemInitialize for SubSystem: '<S90>/Angle_Calibration' */
 
   /* SystemInitialize for IfAction SubSystem: '<S90>/None' */
   /* SystemInitialize for Outport: '<S104>/None' */
-  RobotControl_B.DIAG_StatusFlg = RobotControl_P.CONST_DIAG_UNCONFIRM;
+  RobotControl_B.DIAG_StatusFlg = 9U;
 
   /* End of SystemInitialize for SubSystem: '<S90>/None' */
 
@@ -1441,8 +1399,7 @@ void RobotCon_HighLevelRoutines_Init(void)
   RobotControl_B.hardwareFaultFlg = false;
 
   /* SystemInitialize for Outport: '<S90>/DIAG_StatusFlg' */
-  RobotControl_B.OutportBufferForDIAG_StatusFlg =
-    RobotControl_P.CONST_DIAG_UNCONFIRM;
+  RobotControl_B.OutportBufferForDIAG_StatusFlg = 9U;
 
   /* SystemInitialize for Outport: '<S90>/enableAngleCalib_BOOL' */
   RobotControl_B.OutportBufferForenableAngleCali = false;
@@ -1490,7 +1447,7 @@ void RobotControl_HighLevelRoutines(void)
   uint8_T rtb_rightBlocks_uint8;
   int8_T rtPrevAction;
   int8_T rtAction;
-  real32_T rtb_quarterTurnTargetDist_mm;
+  int16_T encodCurrentHeading;
   boolean_T zcEvent_idx_1;
   boolean_T zcEvent_idx_0;
 
@@ -1499,7 +1456,7 @@ void RobotControl_HighLevelRoutines(void)
    *  DataTypeConversion: '<S96>/Data_Type_Conversion1'
    */
   if (RobotControl_B.ULS_NotConnectedFlag_BOOL) {
-    rtb_leftBlocks_uint8 = RobotControl_P.CAL_ULS_UnconnectedBlks;
+    rtb_leftBlocks_uint8 = 10U;
   } else {
     rtb_leftBlocks_uint8 = (uint8_T)RobotControl_B.leftBlocks;
   }
@@ -1511,7 +1468,7 @@ void RobotControl_HighLevelRoutines(void)
    *  DataTypeConversion: '<S96>/Data_Type_Conversion2'
    */
   if (RobotControl_B.ULS_NotConnectedFlag_BOOL_j) {
-    rtb_rightBlocks_uint8 = RobotControl_P.CAL_ULS_UnconnectedBlks;
+    rtb_rightBlocks_uint8 = 10U;
   } else {
     rtb_rightBlocks_uint8 = (uint8_T)RobotControl_B.rightBlocks;
   }
@@ -1665,7 +1622,7 @@ void RobotControl_HighLevelRoutines(void)
     if ((rtb_leftBlocks_uint8 <= 1) && (rtb_rightBlocks_uint8 >= 1)) {
       /* Transition: '<S120>:74' */
       /* Transition: '<S120>:87' */
-      RobotControl_B.sensorView = RobotControl_P.ENU_LEFT_BUSY_RIGHT_EMPTY;
+      RobotControl_B.sensorView = 7U;
 
       /* Transition: '<S120>:106' */
     } else {
@@ -1676,7 +1633,7 @@ void RobotControl_HighLevelRoutines(void)
     if ((rtb_leftBlocks_uint8 >= 1) && (rtb_rightBlocks_uint8 <= 1)) {
       /* Transition: '<S120>:81' */
       /* Transition: '<S120>:88' */
-      RobotControl_B.sensorView = RobotControl_P.ENU_LEFT_EMPTY_RIGHT_BUSY;
+      RobotControl_B.sensorView = 8U;
 
       /* Transition: '<S120>:108' */
     } else {
@@ -1687,7 +1644,7 @@ void RobotControl_HighLevelRoutines(void)
     if ((rtb_leftBlocks_uint8 >= 1) && (rtb_rightBlocks_uint8 >= 1)) {
       /* Transition: '<S120>:82' */
       /* Transition: '<S120>:89' */
-      RobotControl_B.sensorView = RobotControl_P.ENU_LEFT_EMPTY_RIGHT_EMPTY;
+      RobotControl_B.sensorView = 15U;
 
       /* Transition: '<S120>:110' */
     } else {
@@ -1698,7 +1655,7 @@ void RobotControl_HighLevelRoutines(void)
     if ((rtb_leftBlocks_uint8 < 1) && (rtb_rightBlocks_uint8 < 1)) {
       /* Transition: '<S120>:83' */
       /* Transition: '<S120>:93' */
-      RobotControl_B.sensorView = RobotControl_P.ENU_LEFT_BUSY_RIGHT_BUSY;
+      RobotControl_B.sensorView = 9U;
 
       /* Transition: '<S120>:94' */
     } else {
@@ -1722,11 +1679,11 @@ void RobotControl_HighLevelRoutines(void)
    *  UnitDelay: '<S21>/Unit_Delay2'
    */
   /* Transition: '<S120>:99' */
-  if (RobotControl_B.moveRequest == RobotControl_P.ENU_FORWARD) {
+  if (RobotControl_B.moveRequest == 1) {
     RobotControl_B.forwardDist = (RobotControl_B.Data_Type_Conversion +
-      RobotControl_B.Data_Type_Conversion_m) / RobotControl_P.CONST_TWO_F32;
+      RobotControl_B.Data_Type_Conversion_m) / 2.0F;
   } else {
-    RobotControl_B.forwardDist = RobotControl_P.CONST_ZERO_F32;
+    RobotControl_B.forwardDist = 0.0F;
   }
 
   /* End of Switch: '<S91>/Switch1' */
@@ -1774,7 +1731,7 @@ void RobotControl_HighLevelRoutines(void)
 
      case 4:
       /* Disable for Outport: '<S104>/None' */
-      RobotControl_B.DIAG_StatusFlg = RobotControl_P.CONST_DIAG_UNCONFIRM;
+      RobotControl_B.DIAG_StatusFlg = 9U;
       break;
     }
 
@@ -1956,7 +1913,6 @@ void RobotControl_HighLevelRoutines(void)
      *  ActionPort: '<S90>/DIAG_Active'
      */
     /* Chart: '<S118>/HighLevelDiagTestControl' incorporates:
-     *  Constant: '<S90>/ENU_PASSED'
      *  UnitDelay: '<S90>/Unit_Delay'
      *  UnitDelay: '<S90>/Unit_Delay1'
      *  UnitDelay: '<S90>/Unit_Delay2'
@@ -1996,20 +1952,11 @@ void RobotControl_HighLevelRoutines(void)
       switch (RobotControl_DW.is_SelfDiag) {
        case RobotControl_IN_BlueTooth:
         /* During 'BlueTooth': '<S119>:8' */
-        if (RobotControl_P.ENU_PASSED == RobotControl_ENU_FAILED) {
-          /* Transition: '<S119>:19' */
-          RobotControl_DW.is_SelfDiag = RobotControl_IN_Failed;
+        /* Transition: '<S119>:43' */
+        RobotControl_DW.is_SelfDiag = RobotContro_IN_SelfDiagComplete;
 
-          /* Entry 'Failed': '<S119>:14' */
-        } else {
-          if (RobotControl_P.ENU_PASSED == RobotControl_ENU_PASSED) {
-            /* Transition: '<S119>:43' */
-            RobotControl_DW.is_SelfDiag = RobotContro_IN_SelfDiagComplete;
-
-            /* Entry 'SelfDiagComplete': '<S119>:46' */
-            RobotControl_B.diagEnableReq = RobotControl_ENU_DIAG_NONE;
-          }
-        }
+        /* Entry 'SelfDiagComplete': '<S119>:46' */
+        RobotControl_B.diagEnableReq = RobotControl_ENU_DIAG_NONE;
         break;
 
        case RobotControl_IN_CompassRoutine:
@@ -2064,18 +2011,6 @@ void RobotControl_HighLevelRoutines(void)
 
     /* End of Chart: '<S118>/HighLevelDiagTestControl' */
 
-    /* Product: '<S105>/Product' incorporates:
-     *  Constant: '<S105>/CAL_Wheel2WheelDist_mm'
-     *  Constant: '<S105>/CONST_PI_F32'
-     *  Constant: '<S105>/CONST_TWO_F32'
-     *  Constant: '<S105>/CONST_TWO_F321'
-     *  Product: '<S105>/Divide'
-     *  Product: '<S105>/Divide1'
-     */
-    rtb_quarterTurnTargetDist_mm = RobotControl_P.CONST_PI_F32 /
-      RobotControl_P.CONST_TWO_F32 * ((real32_T)
-      RobotControl_P.CAL_Wheel2WheelDist_mm / RobotControl_P.CONST_TWO_F32);
-
     /* SwitchCase: '<S103>/Switch_Case' */
     rtPrevAction = RobotControl_DW.Switch_Case_ActiveSubsystem_j;
     switch ((int32_T)RobotControl_B.diagEnableReq) {
@@ -2119,7 +2054,7 @@ void RobotControl_HighLevelRoutines(void)
 
        case 4:
         /* Disable for Outport: '<S104>/None' */
-        RobotControl_B.DIAG_StatusFlg = RobotControl_P.CONST_DIAG_UNCONFIRM;
+        RobotControl_B.DIAG_StatusFlg = 9U;
         break;
       }
     }
@@ -2147,7 +2082,7 @@ void RobotControl_HighLevelRoutines(void)
         /* Transition: '<S111>:46' */
         /* NORTH */
         /* Transition: '<S111>:50' */
-        rtb_quarterTurnTargetDist_mm = 270.0F;
+        encodCurrentHeading = (int16_T)270.0F;
 
         /* Transition: '<S111>:43' */
         /* Transition: '<S111>:41' */
@@ -2159,7 +2094,7 @@ void RobotControl_HighLevelRoutines(void)
           /* Transition: '<S111>:62' */
           /* SOUTH */
           /* Transition: '<S111>:53' */
-          rtb_quarterTurnTargetDist_mm = 90.0F;
+          encodCurrentHeading = (int16_T)90.0F;
 
           /* Transition: '<S111>:41' */
           /* Transition: '<S111>:54' */
@@ -2171,7 +2106,7 @@ void RobotControl_HighLevelRoutines(void)
             /* Transition: '<S111>:59' */
             /* EAST */
             /* Transition: '<S111>:63' */
-            rtb_quarterTurnTargetDist_mm = 0.0F;
+            encodCurrentHeading = (int16_T)0.0F;
 
             /* Transition: '<S111>:54' */
             /* Transition: '<S111>:42' */
@@ -2181,12 +2116,12 @@ void RobotControl_HighLevelRoutines(void)
               /* Transition: '<S111>:60' */
               /* WEST */
               /* Transition: '<S111>:40' */
-              rtb_quarterTurnTargetDist_mm = 180.0F;
+              encodCurrentHeading = (int16_T)180.0F;
 
               /* Transition: '<S111>:42' */
             } else {
               /* Transition: '<S111>:39' */
-              rtb_quarterTurnTargetDist_mm = 400.0F;
+              encodCurrentHeading = (int16_T)400.0F;
             }
           }
         }
@@ -2236,8 +2171,7 @@ void RobotControl_HighLevelRoutines(void)
           /* During 'turnHandler': '<S110>:43' */
           if ((RobotControl_DW.steps > 0) &&
               RobotControl_B.OutportBufferFortargetReached &&
-              (RobotControl_B.currentHeading != (uint16_T)
-               rtb_quarterTurnTargetDist_mm) &&
+              (RobotControl_B.currentHeading != (uint16_T)encodCurrentHeading) &&
               (RobotControl_DW.filterToleranceCnt >
                RobotCont_CONST_ERROR_TOLERANCE)) {
             /* Transition: '<S110>:44' */
@@ -2259,10 +2193,10 @@ void RobotControl_HighLevelRoutines(void)
                 RobotControl_DW.is_turnHandler = RobotControl_IN_turnRight_l;
               } else if (RobotControl_directionCheck((real_T)
                           RobotControl_DW.startHeading, (real_T)
-                          rtb_quarterTurnTargetDist_mm, (real_T)
-                          RobotControl_CAL_NORTH, 0.0, (real_T)
-                          RobotControl_CAL_SOUTH, (real_T)RobotControl_CAL_WEST,
-                          (real_T)rtb_quarterTurnTargetDist_mm) != 0.0) {
+                          encodCurrentHeading, (real_T)RobotControl_CAL_NORTH,
+                          0.0, (real_T)RobotControl_CAL_SOUTH, (real_T)
+                          RobotControl_CAL_WEST, (real_T)encodCurrentHeading) !=
+                         0.0) {
                 /* Transition: '<S110>:9' */
                 RobotControl_DW.is_turnHandler = 0U;
                 RobotControl_DW.is_c31_ROTH = RobotControl_IN_DiagPassed;
@@ -2278,8 +2212,7 @@ void RobotControl_HighLevelRoutines(void)
               } else {
                 if ((RobotControl_DW.steps == 2) &&
                     RobotControl_B.OutportBufferFortargetReached && ((uint16_T)
-                     rtb_quarterTurnTargetDist_mm !=
-                     RobotControl_B.currentHeading)) {
+                     encodCurrentHeading != RobotControl_B.currentHeading)) {
                   /* Transition: '<S110>:123' */
                   RobotControl_DW.is_turnHandler = 0U;
                   RobotControl_DW.is_c31_ROTH = RobotControl_IN_turnRightFault;
@@ -2301,7 +2234,7 @@ void RobotControl_HighLevelRoutines(void)
                     RobotControl_B.DataTypeConversion1, (real_T)
                     RobotControl_B.DataTypeConversion4, (real_T)
                     RobotControl_B.DataTypeConversion5, (real_T)
-                    rtb_quarterTurnTargetDist_mm) != 0.0)) {
+                    encodCurrentHeading) != 0.0)) {
                 /* Transition: '<S110>:36' */
                 RobotControl_DW.is_turnHandler = RobotControl_IN_Stop_o;
 
@@ -2311,7 +2244,7 @@ void RobotControl_HighLevelRoutines(void)
               } else {
                 if (RobotControl_B.OutportBufferFortargetReached &&
                     (RobotControl_B.currentHeading != (uint16_T)
-                     rtb_quarterTurnTargetDist_mm)) {
+                     encodCurrentHeading)) {
                   /* Transition: '<S110>:114' */
                   RobotControl_DW.filterToleranceCnt++;
                   RobotControl_DW.is_turnHandler = RobotControl_IN_turnLeft_n;
@@ -2329,7 +2262,7 @@ void RobotControl_HighLevelRoutines(void)
                     RobotControl_B.DataTypeConversion4, (real_T)
                     RobotControl_B.DataTypeConversion5, (real_T)
                     RobotControl_B.DataTypeConversion3, (real_T)
-                    rtb_quarterTurnTargetDist_mm) != 0.0)) {
+                    encodCurrentHeading) != 0.0)) {
                 /* Transition: '<S110>:6' */
                 RobotControl_DW.filterToleranceCnt = 0U;
                 RobotControl_DW.is_turnHandler = RobotControl_IN_Stop_o;
@@ -2340,7 +2273,7 @@ void RobotControl_HighLevelRoutines(void)
               } else {
                 if (RobotControl_B.OutportBufferFortargetReached &&
                     (RobotControl_B.currentHeading != (uint16_T)
-                     rtb_quarterTurnTargetDist_mm)) {
+                     encodCurrentHeading)) {
                   /* Transition: '<S110>:112' */
                   /* moveReq = ENU_STOP; */
                   RobotControl_DW.filterToleranceCnt++;
@@ -2373,7 +2306,7 @@ void RobotControl_HighLevelRoutines(void)
       /* SignalConversion: '<S102>/OutportBufferFormoveRequest' incorporates:
        *  Constant: '<S102>/ENU_MOVE_TURN_LEFT'
        */
-      RobotControl_B.Merge = RobotControl_P.ENU_MOVE_TURN_LEFT;
+      RobotControl_B.Merge = 20U;
 
       /* Chart: '<S114>/DeltaDistCalculator' */
       RobotContro_DeltaDistCalculator
@@ -2384,15 +2317,13 @@ void RobotControl_HighLevelRoutines(void)
 
       /* Logic: '<S112>/Logical_Operator' incorporates:
        *  Abs: '<S112>/Abs'
-       *  Constant: '<S112>/CONST_MinDistError_mm'
-       *  DataTypeConversion: '<S112>/Data_Type_Conversion'
        *  RelationalOperator: '<S112>/Relational_Operator'
        *  Sum: '<S112>/Subtract'
        */
       RobotControl_B.encoderDistErrorFlg_BOOL =
         (RobotControl_B.OutportBufferFortargetReached && ((real32_T)fabs
-          (RobotControl_B.sf_DeltaDistCalculator.deltaDistTrav) -
-          rtb_quarterTurnTargetDist_mm > RobotControl_P.CONST_MinDistError_mm));
+          (RobotControl_B.sf_DeltaDistCalculator.deltaDistTrav) - 196.349548F >
+          5.0F));
 
       /* Chart: '<S116>/DeltaDistCalculator' */
       RobotContro_DeltaDistCalculator
@@ -2403,15 +2334,13 @@ void RobotControl_HighLevelRoutines(void)
 
       /* Logic: '<S113>/Logical_Operator' incorporates:
        *  Abs: '<S113>/Abs'
-       *  Constant: '<S113>/CONST_MinDistError_mm'
-       *  DataTypeConversion: '<S113>/Data_Type_Conversion'
        *  RelationalOperator: '<S113>/Relational_Operator'
        *  Sum: '<S113>/Subtract'
        */
       RobotControl_B.encoderDistErrorFlg_BOOL_m =
         (RobotControl_B.OutportBufferFortargetReached && ((real32_T)fabs
-          (RobotControl_B.sf_DeltaDistCalculator_d.deltaDistTrav) -
-          rtb_quarterTurnTargetDist_mm > RobotControl_P.CONST_MinDistError_mm));
+          (RobotControl_B.sf_DeltaDistCalculator_d.deltaDistTrav) - 196.349548F >
+          5.0F));
 
       /* Switch: '<S102>/Switch' incorporates:
        *  Constant: '<S102>/ENU_FAILED'
@@ -2423,14 +2352,14 @@ void RobotControl_HighLevelRoutines(void)
       if ((RobotControl_B.encoderDistErrorFlg_BOOL ||
            RobotControl_B.encoderDistErrorFlg_BOOL_m) &&
           RobotControl_B.OutportBufferFortargetReached) {
-        RobotControl_B.encoderTstStatus = RobotControl_P.ENU_FAILED;
+        RobotControl_B.encoderTstStatus = 2U;
       } else if (RobotControl_B.OutportBufferFortargetReached) {
         /* Switch: '<S102>/Switch1' incorporates:
          *  Constant: '<S102>/ENU_PASSED'
          */
-        RobotControl_B.encoderTstStatus = RobotControl_P.ENU_PASSED;
+        RobotControl_B.encoderTstStatus = 1U;
       } else {
-        RobotControl_B.encoderTstStatus = RobotControl_P.ENU_TEST_NOT_CONFIRMED;
+        RobotControl_B.encoderTstStatus = 3U;
       }
 
       /* End of Switch: '<S102>/Switch' */
@@ -2444,7 +2373,7 @@ void RobotControl_HighLevelRoutines(void)
       /* SignalConversion: '<S100>/OutportBufferFormoveRequest' incorporates:
        *  Constant: '<S100>/ENU_STOP'
        */
-      RobotControl_B.Merge = RobotControl_P.ENU_STOP;
+      RobotControl_B.Merge = 5U;
 
       /* End of Outputs for SubSystem: '<S90>/Bluetooth' */
       break;
@@ -2456,165 +2385,155 @@ void RobotControl_HighLevelRoutines(void)
       /* Outputs for Enabled SubSystem: '<S99>/Angle_CalibrationUponReq' incorporates:
        *  EnablePort: '<S106>/NVM_AngleStoreFlgEnable'
        */
-      if (RobotControl_ConstB.Logical_Operator) {
-        if (!RobotControl_DW.Angle_CalibrationUponReq_MODE) {
-          /* SystemReset for Chart: '<S106>/CompassSelfDiagTestChart' */
-          RobotControl_DW.temporalCounter_i1_k3 = 0U;
-          RobotControl_DW.is_active_c27_ROTH = 0U;
-          RobotControl_DW.is_c27_ROTH = 0U;
-          RobotControl_DW.angleFinishFlg = false;
-          RobotControl_B.moveReq = 0U;
-          RobotControl_B.angleCalibStatus = 3U;
-          RobotControl_DW.Angle_CalibrationUponReq_MODE = true;
-        }
+      if (!RobotControl_DW.Angle_CalibrationUponReq_MODE) {
+        /* SystemReset for Chart: '<S106>/CompassSelfDiagTestChart' */
+        RobotControl_DW.temporalCounter_i1_k3 = 0U;
+        RobotControl_DW.is_active_c27_ROTH = 0U;
+        RobotControl_DW.is_c27_ROTH = 0U;
+        RobotControl_DW.angleFinishFlg = false;
+        RobotControl_B.moveReq = 0U;
+        RobotControl_B.angleCalibStatus = 3U;
+        RobotControl_DW.Angle_CalibrationUponReq_MODE = true;
+      }
 
-        /* Chart: '<S106>/CompassSelfDiagTestChart' */
-        /* Gateway: Routines/DIAG_Routine/Angle_Calibration/Angle_CalibrationUponReq/CompassSelfDiagTestChart */
-        if (RobotControl_DW.temporalCounter_i1_k3 < 15U) {
-          RobotControl_DW.temporalCounter_i1_k3++;
-        }
+      /* Chart: '<S106>/CompassSelfDiagTestChart' */
+      /* Gateway: Routines/DIAG_Routine/Angle_Calibration/Angle_CalibrationUponReq/CompassSelfDiagTestChart */
+      if (RobotControl_DW.temporalCounter_i1_k3 < 15U) {
+        RobotControl_DW.temporalCounter_i1_k3++;
+      }
 
-        /* During: Routines/DIAG_Routine/Angle_Calibration/Angle_CalibrationUponReq/CompassSelfDiagTestChart */
-        if (RobotControl_DW.is_active_c27_ROTH == 0U) {
-          /* Entry: Routines/DIAG_Routine/Angle_Calibration/Angle_CalibrationUponReq/CompassSelfDiagTestChart */
-          RobotControl_DW.is_active_c27_ROTH = 1U;
+      /* During: Routines/DIAG_Routine/Angle_Calibration/Angle_CalibrationUponReq/CompassSelfDiagTestChart */
+      if (RobotControl_DW.is_active_c27_ROTH == 0U) {
+        /* Entry: Routines/DIAG_Routine/Angle_Calibration/Angle_CalibrationUponReq/CompassSelfDiagTestChart */
+        RobotControl_DW.is_active_c27_ROTH = 1U;
 
-          /* Entry Internal: Routines/DIAG_Routine/Angle_Calibration/Angle_CalibrationUponReq/CompassSelfDiagTestChart */
-          /* Transition: '<S107>:2' */
-          RobotControl_DW.is_c27_ROTH = RobotControl_IN_initFacingNorth;
+        /* Entry Internal: Routines/DIAG_Routine/Angle_Calibration/Angle_CalibrationUponReq/CompassSelfDiagTestChart */
+        /* Transition: '<S107>:2' */
+        RobotControl_DW.is_c27_ROTH = RobotControl_IN_initFacingNorth;
 
-          /* Entry 'initFacingNorth': '<S107>:1' */
-          RobotControl_B.moveReq = RobotControl_ENU_STOP_o;
-          RobotControl_B.angleCalibStatus = RobotCon_ENU_TEST_NOT_CONFIRMED;
-          RobotControl_DW.angleFinishFlg = false;
-        } else {
-          switch (RobotControl_DW.is_c27_ROTH) {
-           case RobotControl_IN_FacingEAST:
-            /* During 'FacingEAST': '<S107>:38' */
-            if (RobotControl_DW.temporalCounter_i1_k3 >=
-                Ro_CONST_COMPASS_DIAG_FIN_TIMER) {
-              /* Transition: '<S107>:40' */
-              RobotControl_DW.angleFinishFlg = true;
-              RobotControl_DW.is_c27_ROTH = RobotControl_IN_Moving;
-              RobotControl_DW.temporalCounter_i1_k3 = 0U;
-
-              /* Entry 'Moving': '<S107>:36' */
-              RobotControl_B.moveReq = RobotCont_ENU_MOVE_TURN_RIGHT_d;
-            }
-            break;
-
-           case RobotControl_IN_FacingSOUTH:
-            /* During 'FacingSOUTH': '<S107>:41' */
-            if (RobotControl_DW.temporalCounter_i1_k3 >=
-                Ro_CONST_COMPASS_DIAG_FIN_TIMER) {
-              /* Transition: '<S107>:43' */
-              RobotControl_DW.angleFinishFlg = false;
-              RobotControl_DW.is_c27_ROTH = RobotControl_IN_Moving;
-              RobotControl_DW.temporalCounter_i1_k3 = 0U;
-
-              /* Entry 'Moving': '<S107>:36' */
-              RobotControl_B.moveReq = RobotCont_ENU_MOVE_TURN_RIGHT_d;
-            }
-            break;
-
-           case RobotControl_IN_FacingWEST:
-            /* During 'FacingWEST': '<S107>:44' */
-            if (RobotControl_DW.temporalCounter_i1_k3 >=
-                Ro_CONST_COMPASS_DIAG_FIN_TIMER) {
-              /* Transition: '<S107>:61' */
-              RobotControl_DW.angleFinishFlg = true;
-              RobotControl_DW.is_c27_ROTH = RobotControl_IN_Moving;
-              RobotControl_DW.temporalCounter_i1_k3 = 0U;
-
-              /* Entry 'Moving': '<S107>:36' */
-              RobotControl_B.moveReq = RobotCont_ENU_MOVE_TURN_RIGHT_d;
-            }
-            break;
-
-           case RobotControl_IN_Moving:
-            /* During 'Moving': '<S107>:36' */
-            if ((RobotControl_B.currentHeading == RobotControl_CAL_EAST) &&
-                (!RobotControl_DW.angleFinishFlg) &&
-                RobotControl_B.OutportBufferFortargetReached) {
-              /* Transition: '<S107>:39' */
-              RobotControl_DW.is_c27_ROTH = RobotControl_IN_FacingEAST;
-              RobotControl_DW.temporalCounter_i1_k3 = 0U;
-
-              /* Entry 'FacingEAST': '<S107>:38' */
-              RobotControl_B.moveReq = RobotControl_ENU_STOP_o;
-            } else if ((RobotControl_B.currentHeading == RobotControl_CAL_SOUTH)
-                       && RobotControl_DW.angleFinishFlg &&
-                       RobotControl_B.OutportBufferFortargetReached) {
-              /* Transition: '<S107>:42' */
-              RobotControl_DW.is_c27_ROTH = RobotControl_IN_FacingSOUTH;
-              RobotControl_DW.temporalCounter_i1_k3 = 0U;
-
-              /* Entry 'FacingSOUTH': '<S107>:41' */
-              RobotControl_B.moveReq = RobotControl_ENU_STOP_o;
-            } else if ((RobotControl_B.currentHeading == RobotControl_CAL_WEST) &&
-                       (!RobotControl_DW.angleFinishFlg) &&
-                       RobotControl_B.OutportBufferFortargetReached) {
-              /* Transition: '<S107>:45' */
-              RobotControl_DW.is_c27_ROTH = RobotControl_IN_FacingWEST;
-              RobotControl_DW.temporalCounter_i1_k3 = 0U;
-
-              /* Entry 'FacingWEST': '<S107>:44' */
-              RobotControl_B.moveReq = RobotControl_ENU_STOP_o;
-            } else {
-              if ((RobotControl_B.currentHeading == RobotControl_CAL_NORTH) &&
-                  RobotControl_DW.angleFinishFlg &&
-                  RobotControl_B.OutportBufferFortargetReached &&
-                  (RobotControl_DW.temporalCounter_i1_k3 >=
-                   Ro_CONST_COMPASS_DIAG_FIN_TIMER)) {
-                /* Transition: '<S107>:59' */
-                RobotControl_DW.is_c27_ROTH = RobotContr_IN_finishFacingNorth;
-
-                /* Entry 'finishFacingNorth': '<S107>:60' */
-                RobotControl_B.moveReq = RobotControl_ENU_STOP_o;
-                RobotControl_B.angleCalibStatus = RobotControl_ENU_FINISHED_b;
-              }
-            }
-            break;
-
-           case RobotContr_IN_finishFacingNorth:
-            /* During 'finishFacingNorth': '<S107>:60' */
-            break;
-
-           default:
-            /* During 'initFacingNorth': '<S107>:1' */
-            /* Transition: '<S107>:37' */
+        /* Entry 'initFacingNorth': '<S107>:1' */
+        RobotControl_B.moveReq = RobotControl_ENU_STOP_o;
+        RobotControl_B.angleCalibStatus = RobotCon_ENU_TEST_NOT_CONFIRMED;
+        RobotControl_DW.angleFinishFlg = false;
+      } else {
+        switch (RobotControl_DW.is_c27_ROTH) {
+         case RobotControl_IN_FacingEAST:
+          /* During 'FacingEAST': '<S107>:38' */
+          if (RobotControl_DW.temporalCounter_i1_k3 >=
+              Ro_CONST_COMPASS_DIAG_FIN_TIMER) {
+            /* Transition: '<S107>:40' */
+            RobotControl_DW.angleFinishFlg = true;
             RobotControl_DW.is_c27_ROTH = RobotControl_IN_Moving;
             RobotControl_DW.temporalCounter_i1_k3 = 0U;
 
             /* Entry 'Moving': '<S107>:36' */
             RobotControl_B.moveReq = RobotCont_ENU_MOVE_TURN_RIGHT_d;
-            break;
           }
-        }
+          break;
 
-        /* End of Chart: '<S106>/CompassSelfDiagTestChart' */
+         case RobotControl_IN_FacingSOUTH:
+          /* During 'FacingSOUTH': '<S107>:41' */
+          if (RobotControl_DW.temporalCounter_i1_k3 >=
+              Ro_CONST_COMPASS_DIAG_FIN_TIMER) {
+            /* Transition: '<S107>:43' */
+            RobotControl_DW.angleFinishFlg = false;
+            RobotControl_DW.is_c27_ROTH = RobotControl_IN_Moving;
+            RobotControl_DW.temporalCounter_i1_k3 = 0U;
 
-        /* SignalConversion: '<S106>/OutportBufferForangleCalibStatus' */
-        RobotControl_B.OutportBufferForangleCalibSta_a =
-          RobotControl_B.angleCalibStatus;
+            /* Entry 'Moving': '<S107>:36' */
+            RobotControl_B.moveReq = RobotCont_ENU_MOVE_TURN_RIGHT_d;
+          }
+          break;
 
-        /* SignalConversion: '<S106>/OutportBufferFormoveRequest' */
-        RobotControl_B.OutportBufferFormoveRequest = RobotControl_B.moveReq;
-      } else {
-        if (RobotControl_DW.Angle_CalibrationUponReq_MODE) {
-          RobotControl_DW.Angle_CalibrationUponReq_MODE = false;
+         case RobotControl_IN_FacingWEST:
+          /* During 'FacingWEST': '<S107>:44' */
+          if (RobotControl_DW.temporalCounter_i1_k3 >=
+              Ro_CONST_COMPASS_DIAG_FIN_TIMER) {
+            /* Transition: '<S107>:61' */
+            RobotControl_DW.angleFinishFlg = true;
+            RobotControl_DW.is_c27_ROTH = RobotControl_IN_Moving;
+            RobotControl_DW.temporalCounter_i1_k3 = 0U;
+
+            /* Entry 'Moving': '<S107>:36' */
+            RobotControl_B.moveReq = RobotCont_ENU_MOVE_TURN_RIGHT_d;
+          }
+          break;
+
+         case RobotControl_IN_Moving:
+          /* During 'Moving': '<S107>:36' */
+          if ((RobotControl_B.currentHeading == RobotControl_CAL_EAST) &&
+              (!RobotControl_DW.angleFinishFlg) &&
+              RobotControl_B.OutportBufferFortargetReached) {
+            /* Transition: '<S107>:39' */
+            RobotControl_DW.is_c27_ROTH = RobotControl_IN_FacingEAST;
+            RobotControl_DW.temporalCounter_i1_k3 = 0U;
+
+            /* Entry 'FacingEAST': '<S107>:38' */
+            RobotControl_B.moveReq = RobotControl_ENU_STOP_o;
+          } else if ((RobotControl_B.currentHeading == RobotControl_CAL_SOUTH) &&
+                     RobotControl_DW.angleFinishFlg &&
+                     RobotControl_B.OutportBufferFortargetReached) {
+            /* Transition: '<S107>:42' */
+            RobotControl_DW.is_c27_ROTH = RobotControl_IN_FacingSOUTH;
+            RobotControl_DW.temporalCounter_i1_k3 = 0U;
+
+            /* Entry 'FacingSOUTH': '<S107>:41' */
+            RobotControl_B.moveReq = RobotControl_ENU_STOP_o;
+          } else if ((RobotControl_B.currentHeading == RobotControl_CAL_WEST) &&
+                     (!RobotControl_DW.angleFinishFlg) &&
+                     RobotControl_B.OutportBufferFortargetReached) {
+            /* Transition: '<S107>:45' */
+            RobotControl_DW.is_c27_ROTH = RobotControl_IN_FacingWEST;
+            RobotControl_DW.temporalCounter_i1_k3 = 0U;
+
+            /* Entry 'FacingWEST': '<S107>:44' */
+            RobotControl_B.moveReq = RobotControl_ENU_STOP_o;
+          } else {
+            if ((RobotControl_B.currentHeading == RobotControl_CAL_NORTH) &&
+                RobotControl_DW.angleFinishFlg &&
+                RobotControl_B.OutportBufferFortargetReached &&
+                (RobotControl_DW.temporalCounter_i1_k3 >=
+                 Ro_CONST_COMPASS_DIAG_FIN_TIMER)) {
+              /* Transition: '<S107>:59' */
+              RobotControl_DW.is_c27_ROTH = RobotContr_IN_finishFacingNorth;
+
+              /* Entry 'finishFacingNorth': '<S107>:60' */
+              RobotControl_B.moveReq = RobotControl_ENU_STOP_o;
+              RobotControl_B.angleCalibStatus = RobotControl_ENU_FINISHED_b;
+            }
+          }
+          break;
+
+         case RobotContr_IN_finishFacingNorth:
+          /* During 'finishFacingNorth': '<S107>:60' */
+          break;
+
+         default:
+          /* During 'initFacingNorth': '<S107>:1' */
+          /* Transition: '<S107>:37' */
+          RobotControl_DW.is_c27_ROTH = RobotControl_IN_Moving;
+          RobotControl_DW.temporalCounter_i1_k3 = 0U;
+
+          /* Entry 'Moving': '<S107>:36' */
+          RobotControl_B.moveReq = RobotCont_ENU_MOVE_TURN_RIGHT_d;
+          break;
         }
       }
 
-      /* End of Outputs for SubSystem: '<S99>/Angle_CalibrationUponReq' */
+      /* End of Chart: '<S106>/CompassSelfDiagTestChart' */
 
-      /* SignalConversion: '<S99>/OutportBufferForangleCalibStatus' */
+      /* SignalConversion: '<S99>/OutportBufferForangleCalibStatus' incorporates:
+       *  SignalConversion: '<S106>/OutportBufferForangleCalibStatus'
+       */
       RobotControl_B.OutportBufferForangleCalibStatu =
-        RobotControl_B.OutportBufferForangleCalibSta_a;
+        RobotControl_B.angleCalibStatus;
 
-      /* SignalConversion: '<S99>/OutportBufferFormoveRequest' */
-      RobotControl_B.Merge = RobotControl_B.OutportBufferFormoveRequest;
+      /* SignalConversion: '<S99>/OutportBufferFormoveRequest' incorporates:
+       *  SignalConversion: '<S106>/OutportBufferFormoveRequest'
+       */
+      RobotControl_B.Merge = RobotControl_B.moveReq;
 
+      /* End of Outputs for SubSystem: '<S99>/Angle_CalibrationUponReq' */
       /* End of Outputs for SubSystem: '<S90>/Angle_Calibration' */
       break;
 
@@ -2625,12 +2544,12 @@ void RobotControl_HighLevelRoutines(void)
       /* SignalConversion: '<S104>/OutportBufferForNone' incorporates:
        *  Constant: '<S104>/CONST_DIAG_FINISH_FLG'
        */
-      RobotControl_B.DIAG_StatusFlg = RobotControl_P.CONST_DIAG_FINISH_FLG;
+      RobotControl_B.DIAG_StatusFlg = 8U;
 
       /* SignalConversion: '<S104>/OutportBufferFormoveRequest' incorporates:
        *  Constant: '<S104>/ENU_STOP'
        */
-      RobotControl_B.Merge = RobotControl_P.ENU_STOP;
+      RobotControl_B.Merge = 5U;
 
       /* End of Outputs for SubSystem: '<S90>/None' */
       break;
@@ -2671,7 +2590,7 @@ void RobotControl_HighLevelRoutines(void)
     /* DataTypeConversion: '<S92>/Data_Type_Conversion' incorporates:
      *  Constant: '<S92>/ENU_STOP'
      */
-    RobotControl_B.Merge = RobotControl_P.ENU_STOP;
+    RobotControl_B.Merge = 5U;
 
     /* End of Outputs for SubSystem: '<S21>/End' */
     break;

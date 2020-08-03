@@ -10,8 +10,8 @@
 #ifndef RobotControl_COMMON_INCLUDES_
 # define RobotControl_COMMON_INCLUDES_
 #include "rtwtypes.h"
-#include "simstruc.h"
-#include "fixedpoint.h"
+#include "rtw_continuous.h"
+#include "rtw_solver.h"
 #include "MW_digitalio.h"
 #include "arduino_analoginput_lct.h"
 #include "arduino_analogoutput_lct.h"
@@ -21,7 +21,6 @@
 
 /* Shared type includes */
 #include "multiword_types.h"
-#include "rt_nonfinite.h"
 
 extern void RobotContr_MovementHandler_Init(void);
 extern void RobotControl_MovementHandler(void);

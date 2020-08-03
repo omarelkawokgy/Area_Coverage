@@ -2,9 +2,9 @@
  * Code generation for system system '<S16>/HeadingsDirectionHandler'
  *
  * Model                      : RobotControl
- * Model version              : 1.500
+ * Model version              : 1.509
  * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Mon Jul 27 18:15:17 2020
+ * C source code generated on : Thu Jul 30 11:39:58 2020
  *
  * Note that the functions contained in this file are part of a Simulink
  * model, and are not self-contained algorithms.
@@ -20,7 +20,7 @@
 void R_HeadingsDirectionHandler_Init(void)
 {
   /* InitializeConditions for UnitDelay: '<S20>/Unit_Delay' */
-  RobotControl_DW.Unit_Delay_DSTATE_b = RobotControl_P.ENU_END;
+  RobotControl_DW.Unit_Delay_DSTATE_b = 27U;
 
   /* InitializeConditions for UnitDelay: '<S89>/Unit Delay' */
   RobotControl_DW.UnitDelay_DSTATE_d = false;
@@ -50,59 +50,34 @@ void RobotC_HeadingsDirectionHandler(void)
    *  UnitDelay: '<S20>/Unit_Delay'
    *  UnitDelay: '<S89>/Unit Delay'
    */
-  rtb_Switch2 = ((RobotControl_DW.Unit_Delay_DSTATE_b ==
-                  RobotControl_P.ENU_SHIFT_HEADING) ||
+  rtb_Switch2 = ((RobotControl_DW.Unit_Delay_DSTATE_b == 29) ||
                  RobotControl_DW.UnitDelay_DSTATE_d);
 
   /* Switch: '<S20>/Switch1' */
   if (rtb_Switch2) {
-    /* SignalConversion: '<S20>/Signal Conversion' incorporates:
-     *  Constant: '<S20>/CAL_WEST'
-     *  Switch: '<S20>/Switch'
-     */
-    RobotControl_B.ROB_NORTH = RobotControl_P.CAL_WEST;
+    /* SignalConversion: '<S20>/Signal Conversion' */
+    RobotControl_B.ROB_NORTH = 180;
 
-    /* SignalConversion: '<S20>/Signal Conversion1' incorporates:
-     *  Constant: '<S20>/CAL_EAST'
-     *  Switch: '<S20>/Switch'
-     */
-    RobotControl_B.ROB_SOUTH = RobotControl_P.CAL_EAST;
+    /* SignalConversion: '<S20>/Signal Conversion1' */
+    RobotControl_B.ROB_SOUTH = 0;
 
-    /* SignalConversion: '<S20>/Signal Conversion2' incorporates:
-     *  Constant: '<S20>/CAL_NORTH'
-     *  Switch: '<S20>/Switch'
-     */
-    RobotControl_B.ROB_EAST = RobotControl_P.CAL_NORTH;
+    /* SignalConversion: '<S20>/Signal Conversion2' */
+    RobotControl_B.ROB_EAST = 270;
 
-    /* SignalConversion: '<S20>/Signal Conversion3' incorporates:
-     *  Constant: '<S20>/CAL_SOUTH'
-     *  Switch: '<S20>/Switch'
-     */
-    RobotControl_B.ROB_WEST = RobotControl_P.CAL_SOUTH;
+    /* SignalConversion: '<S20>/Signal Conversion3' */
+    RobotControl_B.ROB_WEST = 90;
   } else {
-    /* SignalConversion: '<S20>/Signal Conversion' incorporates:
-     *  Constant: '<S20>/CAL_NORTH'
-     *  Switch: '<S20>/Switch'
-     */
-    RobotControl_B.ROB_NORTH = RobotControl_P.CAL_NORTH;
+    /* SignalConversion: '<S20>/Signal Conversion' */
+    RobotControl_B.ROB_NORTH = 270;
 
-    /* SignalConversion: '<S20>/Signal Conversion1' incorporates:
-     *  Constant: '<S20>/CAL_SOUTH'
-     *  Switch: '<S20>/Switch'
-     */
-    RobotControl_B.ROB_SOUTH = RobotControl_P.CAL_SOUTH;
+    /* SignalConversion: '<S20>/Signal Conversion1' */
+    RobotControl_B.ROB_SOUTH = 90;
 
-    /* SignalConversion: '<S20>/Signal Conversion2' incorporates:
-     *  Constant: '<S20>/CAL_EAST'
-     *  Switch: '<S20>/Switch'
-     */
-    RobotControl_B.ROB_EAST = RobotControl_P.CAL_EAST;
+    /* SignalConversion: '<S20>/Signal Conversion2' */
+    RobotControl_B.ROB_EAST = 0;
 
-    /* SignalConversion: '<S20>/Signal Conversion3' incorporates:
-     *  Constant: '<S20>/CAL_WEST'
-     *  Switch: '<S20>/Switch'
-     */
-    RobotControl_B.ROB_WEST = RobotControl_P.CAL_WEST;
+    /* SignalConversion: '<S20>/Signal Conversion3' */
+    RobotControl_B.ROB_WEST = 180;
   }
 
   /* End of Switch: '<S20>/Switch1' */

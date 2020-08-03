@@ -2,7 +2,7 @@
 ## Makefile generated for Simulink model 'RobotControl'. 
 ## 
 ## Makefile     : RobotControl.mk
-## Generated on : Mon Jul 27 18:11:22 2020
+## Generated on : Thu Jul 30 11:14:08 2020
 ## MATLAB Coder version: 3.2 (R2016b)
 ## 
 ## Build Info:
@@ -147,9 +147,9 @@ ECHO                = @echo
 MV                  = @move
 RUN                 =
 
-#----------------------------------------
-# "Faster Builds" Build Configuration
-#----------------------------------------
+#--------------------------------------
+# "Faster Runs" Build Configuration
+#--------------------------------------
 
 ARFLAGS              = rcs
 ASFLAGS              =
@@ -163,7 +163,7 @@ CFLAGS               = -std=gnu11  \
                        -MMD \
                        -DARDUINO=10613  \
                        -MMD -MP -MF"$(@:%.o=%.dep)" -MT"$@"  \
-                       -O0
+                       -Os
 CPPFLAGS             = -std=gnu++11 -fpermissive -fno-exceptions -fno-threadsafe-statics  \
                        -c \
                        -g \
@@ -173,7 +173,7 @@ CPPFLAGS             = -std=gnu++11 -fpermissive -fno-exceptions -fno-threadsafe
                        -MMD \
                        -DARDUINO=10613  \
                        -MMD -MP -MF"$(@:%.o=%.dep)" -MT"$@"  \
-                       -O0
+                       -Os
 CPP_LDFLAGS          =  -w -Os -Wl,--gc-sections,--relax
 CPP_SHAREDLIB_LDFLAGS  =
 DOWNLOAD_FLAGS       = $(DOWNLOAD_ARGS)$(PRODUCT_HEX):i
@@ -229,20 +229,19 @@ INCLUDES = $(INCLUDES_BUILDINFO)
 ## DEFINES
 ###########################################################################
 
-DEFINES_ = -DMODEL=RobotControl -DNUMST=1 -DNCSTATES=0 -DHAVESTDIO -DINTEGER_CODE=0 -DMT=0 -DCLASSIC_INTERFACE=0 -DALLOCATIONFCN=0 -DONESTEPFCN=1 -DTERMFCN=1 -DMULTI_INSTANCE_CODE=0 -DTID01EQ=0 -DRT -DUSE_RTMODEL -DERT -D__MW_TARGET_USE_HARDWARE_RESOURCES_H__ -DEXIT_FAILURE=1 -DEXTMODE_DISABLEPRINTF -DEXTMODE_DISABLETESTING -DEXTMODE_DISABLE_ARGS_PROCESSING=1 -DSTACK_SIZE=64 -DMW_TIMERID=2 -DMW_PRESCALAR=128 -DMW_TIMERCOUNT=131 -DMW_SCHEDULERCOUNTER=1 -D_RTT_BAUDRATE_SERIAL0_=9600 -D_RTT_ANALOG_REF_=0
+DEFINES_ = -DMODEL=RobotControl -DNUMST=1 -DNCSTATES=0 -DHAVESTDIO -DINTEGER_CODE=0 -DMT=0 -DCLASSIC_INTERFACE=0 -DALLOCATIONFCN=0 -DONESTEPFCN=1 -DTERMFCN=1 -DMULTI_INSTANCE_CODE=0 -DTID01EQ=0 -D__MW_TARGET_USE_HARDWARE_RESOURCES_H__ -DEXIT_FAILURE=1 -DEXTMODE_DISABLEPRINTF -DEXTMODE_DISABLETESTING -DEXTMODE_DISABLE_ARGS_PROCESSING=1 -DRT -DSTACK_SIZE=64 -DMW_TIMERID=2 -DMW_PRESCALAR=128 -DMW_TIMERCOUNT=131 -DMW_SCHEDULERCOUNTER=1 -D_RTT_BAUDRATE_SERIAL0_=9600 -D_RTT_ANALOG_REF_=0
 DEFINES_BUILD_ARGS = -DINTEGER_CODE=0 -DMT=0 -DCLASSIC_INTERFACE=0 -DALLOCATIONFCN=0 -DONESTEPFCN=1 -DTERMFCN=1 -DMULTI_INSTANCE_CODE=0
 DEFINES_IMPLIED = -DTID01EQ=0
-DEFINES_OPTS = -DRT -DUSE_RTMODEL -DERT
-DEFINES_SKIPFORSIL = -DEXIT_FAILURE=1 -DEXTMODE_DISABLEPRINTF -DEXTMODE_DISABLETESTING -DEXTMODE_DISABLE_ARGS_PROCESSING=1 -DSTACK_SIZE=64
+DEFINES_SKIPFORSIL = -DEXIT_FAILURE=1 -DEXTMODE_DISABLEPRINTF -DEXTMODE_DISABLETESTING -DEXTMODE_DISABLE_ARGS_PROCESSING=1 -DRT -DSTACK_SIZE=64
 DEFINES_STANDARD = -DMODEL=RobotControl -DNUMST=1 -DNCSTATES=0 -DHAVESTDIO
 
-DEFINES = $(DEFINES_) $(DEFINES_BUILD_ARGS) $(DEFINES_IMPLIED) $(DEFINES_OPTS) $(DEFINES_SKIPFORSIL) $(DEFINES_STANDARD)
+DEFINES = $(DEFINES_) $(DEFINES_BUILD_ARGS) $(DEFINES_IMPLIED) $(DEFINES_SKIPFORSIL) $(DEFINES_STANDARD)
 
 ###########################################################################
 ## SOURCE FILES
 ###########################################################################
 
-SRCS = C:/ProgramData/MATLAB/SupportPackages/R2016b/toolbox/target/supportpackages/arduinobase/src/MW_digitalio.cpp $(START_DIR)/RobotControl_ert_rtw/COM_A4SCA_A5SCL.c $(START_DIR)/RobotControl_ert_rtw/DIAG_Cont.c $(START_DIR)/RobotControl_ert_rtw/DSCA.c $(START_DIR)/RobotControl_ert_rtw/HeadingCalculator.c $(START_DIR)/RobotControl_ert_rtw/HeadingsDirectionHandler.c $(START_DIR)/RobotControl_ert_rtw/HighLevelRoutines.c $(START_DIR)/RobotControl_ert_rtw/MovementHandler.c $(START_DIR)/RobotControl_ert_rtw/RobotControl.c $(START_DIR)/RobotControl_ert_rtw/RobotControl_data.c $(START_DIR)/RobotControl_ert_rtw/ScanHandler.c $(START_DIR)/RobotControl_ert_rtw/StopRoutine.c $(START_DIR)/RobotControl_ert_rtw/motorHandler.c $(START_DIR)/RobotControl_ert_rtw/rtGetInf.c $(START_DIR)/RobotControl_ert_rtw/rtGetNaN.c $(START_DIR)/RobotControl_ert_rtw/rt_nonfinite.c $(START_DIR)/RobotControl_ert_rtw/thetaFilter.c rt_matrx.c rt_printf.c $(START_DIR)/twi.c $(START_DIR)/CompassSFunc.c $(START_DIR)/CompassSFunc_wrapper.cpp $(START_DIR)/ULSL_Hndler_wrapper.cpp $(START_DIR)/ULSR_Hndler_wrapper.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/hooks.c $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/WInterrupts.c $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/wiring.c $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/wiring_analog.c $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/wiring_digital.c $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/wiring_pulse.c $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/wiring_shift.c $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/abi.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/CDC.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/HardwareSerial.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/HardwareSerial0.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/HardwareSerial1.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/HardwareSerial2.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/HardwareSerial3.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/PluggableUSB.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/IPAddress.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/new.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/Print.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/Stream.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/Tone.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/USBCore.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/WMath.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/WString.cpp C:/ProgramData/MATLAB/SupportPackages/R2016b/toolbox/target/supportpackages/arduinotarget/registry/../src/MW_ArduinoHWInit.cpp C:/ProgramData/MATLAB/SupportPackages/R2016b/toolbox/target/supportpackages/arduinobase/src/io_wrappers.cpp C:/ProgramData/MATLAB/SupportPackages/R2016b/toolbox/target/supportpackages/arduinotarget/registry/../scheduler/src/arduinoAVRScheduler.cpp
+SRCS = C:/ProgramData/MATLAB/SupportPackages/R2016b/toolbox/target/supportpackages/arduinobase/src/MW_digitalio.cpp $(START_DIR)/RobotControl_ert_rtw/COM_A4SCA_A5SCL.c $(START_DIR)/RobotControl_ert_rtw/DIAG_Cont.c $(START_DIR)/RobotControl_ert_rtw/DSCA.c $(START_DIR)/RobotControl_ert_rtw/HeadingCalculator.c $(START_DIR)/RobotControl_ert_rtw/HeadingsDirectionHandler.c $(START_DIR)/RobotControl_ert_rtw/HighLevelRoutines.c $(START_DIR)/RobotControl_ert_rtw/MovementHandler.c $(START_DIR)/RobotControl_ert_rtw/RobotControl.c $(START_DIR)/RobotControl_ert_rtw/RobotControl_data.c $(START_DIR)/RobotControl_ert_rtw/ScanHandler.c $(START_DIR)/RobotControl_ert_rtw/StopRoutine.c $(START_DIR)/RobotControl_ert_rtw/motorHandler.c $(START_DIR)/RobotControl_ert_rtw/rtGetInf.c $(START_DIR)/RobotControl_ert_rtw/rtGetNaN.c $(START_DIR)/RobotControl_ert_rtw/rt_nonfinite.c $(START_DIR)/RobotControl_ert_rtw/thetaFilter.c $(START_DIR)/twi.c $(START_DIR)/CompassSFunc_wrapper.cpp $(START_DIR)/ULSL_Hndler_wrapper.cpp $(START_DIR)/ULSR_Hndler_wrapper.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/hooks.c $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/WInterrupts.c $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/wiring.c $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/wiring_analog.c $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/wiring_digital.c $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/wiring_pulse.c $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/wiring_shift.c $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/abi.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/CDC.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/HardwareSerial.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/HardwareSerial0.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/HardwareSerial1.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/HardwareSerial2.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/HardwareSerial3.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/PluggableUSB.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/IPAddress.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/new.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/Print.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/Stream.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/Tone.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/USBCore.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/WMath.cpp $(ARDUINO_ROOT)/hardware/arduino/avr/cores/arduino/WString.cpp C:/ProgramData/MATLAB/SupportPackages/R2016b/toolbox/target/supportpackages/arduinotarget/registry/../src/MW_ArduinoHWInit.cpp C:/ProgramData/MATLAB/SupportPackages/R2016b/toolbox/target/supportpackages/arduinobase/src/io_wrappers.cpp C:/ProgramData/MATLAB/SupportPackages/R2016b/toolbox/target/supportpackages/arduinotarget/registry/../scheduler/src/arduinoAVRScheduler.cpp
 
 MAIN_SRC = $(START_DIR)/RobotControl_ert_rtw/ert_main.c
 
@@ -252,7 +251,7 @@ ALL_SRCS = $(SRCS) $(MAIN_SRC)
 ## OBJECTS
 ###########################################################################
 
-OBJS = MW_digitalio.o COM_A4SCA_A5SCL.o DIAG_Cont.o DSCA.o HeadingCalculator.o HeadingsDirectionHandler.o HighLevelRoutines.o MovementHandler.o RobotControl.o RobotControl_data.o ScanHandler.o StopRoutine.o motorHandler.o rtGetInf.o rtGetNaN.o rt_nonfinite.o thetaFilter.o rt_matrx.o rt_printf.o twi.o CompassSFunc.o CompassSFunc_wrapper.o ULSL_Hndler_wrapper.o ULSR_Hndler_wrapper.o hooks.o WInterrupts.o wiring.o wiring_analog.o wiring_digital.o wiring_pulse.o wiring_shift.o abi.o CDC.o HardwareSerial.o HardwareSerial0.o HardwareSerial1.o HardwareSerial2.o HardwareSerial3.o PluggableUSB.o IPAddress.o new.o Print.o Stream.o Tone.o USBCore.o WMath.o WString.o MW_ArduinoHWInit.o io_wrappers.o arduinoAVRScheduler.o
+OBJS = MW_digitalio.o COM_A4SCA_A5SCL.o DIAG_Cont.o DSCA.o HeadingCalculator.o HeadingsDirectionHandler.o HighLevelRoutines.o MovementHandler.o RobotControl.o RobotControl_data.o ScanHandler.o StopRoutine.o motorHandler.o rtGetInf.o rtGetNaN.o rt_nonfinite.o thetaFilter.o twi.o CompassSFunc_wrapper.o ULSL_Hndler_wrapper.o ULSR_Hndler_wrapper.o hooks.o WInterrupts.o wiring.o wiring_analog.o wiring_digital.o wiring_pulse.o wiring_shift.o abi.o CDC.o HardwareSerial.o HardwareSerial0.o HardwareSerial1.o HardwareSerial2.o HardwareSerial3.o PluggableUSB.o IPAddress.o new.o Print.o Stream.o Tone.o USBCore.o WMath.o WString.o MW_ArduinoHWInit.o io_wrappers.o arduinoAVRScheduler.o
 
 MAIN_OBJ = ert_main.o
 

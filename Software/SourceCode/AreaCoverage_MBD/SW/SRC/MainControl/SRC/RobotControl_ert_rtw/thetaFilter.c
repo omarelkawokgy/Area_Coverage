@@ -2,9 +2,9 @@
  * Code generation for system system '<S17>/thetaFilter'
  *
  * Model                      : RobotControl
- * Model version              : 1.500
+ * Model version              : 1.509
  * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Mon Jul 27 18:15:17 2020
+ * C source code generated on : Thu Jul 30 11:39:58 2020
  *
  * Note that the functions contained in this file are part of a Simulink
  * model, and are not self-contained algorithms.
@@ -23,7 +23,7 @@ void RobotControl_thetaFilter_Init(void)
   RobotControl_DW.Unit_Delay3_DSTATE_d = false;
 
   /* InitializeConditions for UnitDelay: '<S31>/Unit_Delay' */
-  RobotControl_DW.Unit_Delay_DSTATE_c = RobotControl_P.CAL_NORTH;
+  RobotControl_DW.Unit_Delay_DSTATE_c = 270;
 
   /* InitializeConditions for Delay: '<S31>/Resettable_Delay' */
   RobotControl_DW.icLoad = 1U;
@@ -77,7 +77,7 @@ void RobotControl_thetaFilter(void)
   /* RelationalOperator: '<S31>/Relational_Operator' incorporates:
    *  Constant: '<S31>/CAL_FilterResetThd'
    */
-  rtb_Relational_Operator = (rtb_Subtract_0 > RobotControl_P.CAL_FilterResetThd);
+  rtb_Relational_Operator = (rtb_Subtract_0 > 100);
 
   /* Switch: '<S31>/Switch' incorporates:
    *  Constant: '<S31>/CAL_fullCircle_DEG'
@@ -86,11 +86,10 @@ void RobotControl_thetaFilter(void)
    *  Logic: '<S31>/Logical_Operator'
    *  RelationalOperator: '<S31>/Relational_Operator1'
    */
-  if (rtb_Relational_Operator && (rtb_Subtract < RobotControl_P.CONST_ZeroDeg))
-  {
-    rtb_Switch_f = RobotControl_P.CONST_ONE_UINT16;
+  if (rtb_Relational_Operator && (rtb_Subtract < 0)) {
+    rtb_Switch_f = 1U;
   } else {
-    rtb_Switch_f = RobotControl_P.CAL_fullCircle_DEG;
+    rtb_Switch_f = 360U;
   }
 
   /* End of Switch: '<S31>/Switch' */
@@ -107,23 +106,21 @@ void RobotControl_thetaFilter(void)
   }
 
   /* Product: '<S34>/Divide1' incorporates:
-   *  Constant: '<S34>/CAL_ROBO_LENG_mm'
    *  Sum: '<S34>/Add'
    */
   rtb_Switch = (RobotControl_B.leftVel1ms_mmPerSec -
-                RobotControl_B.rightVel1ms_mmPerSec) / (real32_T)
-    RobotControl_P.CAL_ROBO_LENG_mm;
+                RobotControl_B.rightVel1ms_mmPerSec) / 250.0F;
 
   /* Product: '<S31>/Product' incorporates:
    *  Constant: '<S31>/CAL_EncoderSampleTime'
    */
-  rtb_Switch *= RobotControl_P.CAL_EncoderSampleTime;
+  rtb_Switch *= 0.001F;
 
   /* Sum: '<S31>/Add2' incorporates:
    *  Delay: '<S31>/Resettable_Delay'
    *  Product: '<S33>/Product'
    */
-  rtb_Switch = (real32_T)(RobotControl_ConstB.Divide_i * rtb_Switch +
+  rtb_Switch = (real32_T)(57.295779513082323 * rtb_Switch +
     RobotControl_DW.Resettable_Delay_DSTATE);
 
   /* Delay: '<S31>/Resettable_Delay1' incorporates:
@@ -143,14 +140,13 @@ void RobotControl_thetaFilter(void)
    *  Constant: '<S31>/CAL_ProcessNoise'
    *  Delay: '<S31>/Resettable_Delay1'
    */
-  rtb_PT_p = RobotControl_P.CAL_ProcessNoise *
-    RobotControl_DW.Resettable_Delay1_DSTATE;
+  rtb_PT_p = 1.5F * RobotControl_DW.Resettable_Delay1_DSTATE;
 
   /* Product: '<S31>/Divide1' incorporates:
    *  Constant: '<S31>/CAL_MeasureNoise'
    *  Sum: '<S31>/Add3'
    */
-  rtb_KT = (RobotControl_P.CAL_MeasureNoise + rtb_PT_p) / rtb_PT_p;
+  rtb_KT = (1.2F + rtb_PT_p) / rtb_PT_p;
 
   /* Sum: '<S31>/Add4' incorporates:
    *  Product: '<S31>/Product5'
@@ -162,36 +158,27 @@ void RobotControl_thetaFilter(void)
   /* Sum: '<S35>/Add2' incorporates:
    *  Constant: '<S35>/CONST_OVERFLOW_THD_UINT16'
    */
-  rtb_Switch = rtb_XT - (real32_T)RobotControl_P.CONST_OVERFLOW_THD_UINT16;
-
-  /* DataTypeConversion: '<S35>/Data_Type_Conversion2' incorporates:
-   *  Constant: '<S35>/CAL_fullCircle_DEG'
-   */
-  rtb_Subtract = (int16_T)RobotControl_P.CAL_fullCircle_DEG;
+  rtb_Switch = rtb_XT - 5.0F;
 
   /* Switch: '<S35>/Switch' incorporates:
    *  Constant: '<S35>/CAL_fullCircle_DEG1'
    *  Constant: '<S35>/CONST_OVERFLOW_THD_UINT161'
-   *  Constant: '<S35>/CONST_ZERO_UINT16'
    *  DataTypeConversion: '<S35>/Data_Type_Conversion'
    *  DataTypeConversion: '<S35>/Data_Type_Conversion1'
-   *  DataTypeConversion: '<S35>/Data_Type_Conversion3'
    *  RelationalOperator: '<S35>/Relational_Operator'
    *  RelationalOperator: '<S35>/Relational_Operator1'
    *  Sum: '<S35>/Add'
    *  Sum: '<S35>/Add3'
    *  Switch: '<S35>/Switch1'
    */
-  if ((int16_T)(real32_T)floor(rtb_Switch) > rtb_Subtract) {
-    rtb_XT -= (real32_T)RobotControl_P.CAL_fullCircle_DEG;
+  if ((int16_T)(real32_T)floor(rtb_Switch) > 360) {
+    rtb_XT -= 360.0F;
   } else {
-    if ((int16_T)(real32_T)floor(rtb_XT + (real32_T)
-         RobotControl_P.CONST_OVERFLOW_THD_UINT16) < (int16_T)
-        RobotControl_P.CONST_ZERO_UINT16) {
+    if ((int16_T)(real32_T)floor(rtb_XT + 5.0F) < 0) {
       /* Switch: '<S35>/Switch1' incorporates:
        *  Sum: '<S35>/Add1'
        */
-      rtb_XT += (real32_T)rtb_Subtract;
+      rtb_XT += 360.0F;
     }
   }
 
@@ -216,10 +203,10 @@ void RobotControl_thetaFilter(void)
   /* End of Switch: '<S30>/Switch' */
 
   /* Saturate: '<S30>/Saturation' */
-  if (rtb_Switch > RobotControl_P.CAL_fullCircle_DEG) {
-    RobotControl_B.theta_Deg = RobotControl_P.CAL_fullCircle_DEG;
-  } else if (rtb_Switch < RobotControl_P.CONST_ZERO_UINT16) {
-    RobotControl_B.theta_Deg = RobotControl_P.CONST_ZERO_UINT16;
+  if (rtb_Switch > 360.0F) {
+    RobotControl_B.theta_Deg = 360.0F;
+  } else if (rtb_Switch < 0.0F) {
+    RobotControl_B.theta_Deg = 0.0F;
   } else {
     RobotControl_B.theta_Deg = rtb_Switch;
   }
@@ -227,8 +214,7 @@ void RobotControl_thetaFilter(void)
   /* End of Saturate: '<S30>/Saturation' */
 
   /* Gain: '<S30>/Gain' */
-  RobotControl_B.theta_mDeg = (real32_T)RobotControl_P.CAL_thetaGain *
-    RobotControl_B.theta_Deg;
+  RobotControl_B.theta_mDeg = 100.0F * RobotControl_B.theta_Deg;
 
   /* Update for UnitDelay: '<S27>/Unit_Delay3' */
   RobotControl_DW.Unit_Delay3_DSTATE_d =

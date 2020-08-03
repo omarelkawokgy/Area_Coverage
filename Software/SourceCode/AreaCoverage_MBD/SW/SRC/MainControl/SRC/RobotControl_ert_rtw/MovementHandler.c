@@ -2,9 +2,9 @@
  * Code generation for system system '<S16>/MovementHandler'
  *
  * Model                      : RobotControl
- * Model version              : 1.500
+ * Model version              : 1.509
  * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Mon Jul 27 18:15:17 2020
+ * C source code generated on : Thu Jul 30 11:39:58 2020
  *
  * Note that the functions contained in this file are part of a Simulink
  * model, and are not self-contained algorithms.
@@ -52,7 +52,7 @@
 
 /* Named constants for Chart: '<S128>/TargetReachedConfirmTime' */
 #define Robo_CONST_TARGET_REACHED_TIMER (100.0F)
-#define RobotCo_CAL_ALLOWED_ERROR_VALUE (0.027778F)
+#define RobotCo_CAL_ALLOWED_ERROR_VALUE (0.027777778F)
 
 /* Forward declaration for local functions */
 static void RobotControl_Stop(void);
@@ -80,21 +80,20 @@ static void RobotControl_Stop(void)
      */
     /* Transition: '<S138>:38' */
     /* previous turn not completed */
-    if (RobotControl_B.moveRequest == RobotControl_P.ENU_FORWARD) {
+    if (RobotControl_B.moveRequest == 1) {
       /* Transition: '<S138>:8' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_FORWARD;
+      RobotControl_B.turnRequest = 1U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_forward;
 
       /* Entry Internal 'forward': '<S138>:4' */
       /* Transition: '<S138>:248' */
       RobotControl_DW.is_forward = RobotControl_IN_Idle;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_BACKWARD) {
+    } else if (RobotControl_B.moveRequest == 2) {
       /* Constant: '<S127>/ENU_BACKWARD' */
       /* Transition: '<S138>:11' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_BACKWARD;
+      RobotControl_B.turnRequest = 2U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_backward;
-    } else if (RobotControl_B.moveRequest ==
-               RobotControl_P.ENU_MOVE_U_TURN_RIGHT) {
+    } else if (RobotControl_B.moveRequest == 22) {
       /* Transition: '<S138>:31' */
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_UturnRight;
 
@@ -111,9 +110,9 @@ static void RobotControl_Stop(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:106' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_U_TURN) {
+    } else if (RobotControl_B.moveRequest == 24) {
       /* Transition: '<S138>:33' */
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_Uturn;
 
@@ -130,10 +129,9 @@ static void RobotControl_Stop(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:195' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_U_TURN_LEFT)
-    {
+    } else if (RobotControl_B.moveRequest == 23) {
       /* Transition: '<S138>:35' */
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_UturnLeft;
 
@@ -150,20 +148,20 @@ static void RobotControl_Stop(void)
 
       /* Constant: '<S127>/ENU_CCW' */
       /* Entry 'start': '<S138>:90' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+      RobotControl_B.turnRequest = 4U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_STOP) {
+    } else if (RobotControl_B.moveRequest == 5) {
       /* Constant: '<S127>/ENU_STOP' */
       /* Transition: '<S138>:39' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_STOP;
+      RobotControl_B.turnRequest = 5U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_Stop;
 
       /* Constant: '<S127>/ENU_ROB_NONE' */
       /* Entry Internal 'Stop': '<S138>:37' */
       /* Transition: '<S138>:309' */
       if ((RobotControl_B.OutportBufferForangleCalibStatu ==
-           RobotControl_ENU_FINISHED) && (RobotControl_B.currentHeading ==
-           RobotControl_P.ENU_ROB_NONE)) {
+           RobotControl_ENU_FINISHED) && (RobotControl_B.currentHeading == 400U))
+      {
         /* Transition: '<S138>:314' */
         /* Transition: '<S138>:316' */
         RobotControl_B.headingRequest = (uint16_T)RobotControl_B.ROB_NORTH;
@@ -175,8 +173,7 @@ static void RobotControl_Stop(void)
 
       /* End of Constant: '<S127>/ENU_ROB_NONE' */
       /* Transition: '<S138>:333' */
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_TURN_RIGHT)
-    {
+    } else if (RobotControl_B.moveRequest == 21) {
       /* Transition: '<S138>:227' */
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_TurnRight;
 
@@ -186,10 +183,10 @@ static void RobotControl_Stop(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:226' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
     } else {
-      if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_TURN_LEFT) {
+      if (RobotControl_B.moveRequest == 20) {
         /* Transition: '<S138>:229' */
         RobotControl_DW.is_c37_MOVH = RobotControl_IN_TurnLeft;
 
@@ -199,7 +196,7 @@ static void RobotControl_Stop(void)
 
         /* Constant: '<S127>/ENU_CCW' */
         /* Entry 'start': '<S138>:239' */
-        RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+        RobotControl_B.turnRequest = 4U;
         RobotControl_DW.turnActive = true;
       }
     }
@@ -218,28 +215,27 @@ static void RobotControl_TurnLeft(void)
   if ((RobotControl_DW.moveRequest_prev != RobotControl_DW.moveRequest_start) ||
       (!RobotControl_DW.turnActive)) {
     /* Transition: '<S138>:240' */
-    if (RobotControl_B.moveRequest == RobotControl_P.ENU_FORWARD) {
+    if (RobotControl_B.moveRequest == 1) {
       /* Transition: '<S138>:8' */
       /* Exit Internal 'TurnLeft': '<S138>:230' */
       RobotControl_DW.is_TurnLeft = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
       /* Constant: '<S127>/ENU_FORWARD' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_FORWARD;
+      RobotControl_B.turnRequest = 1U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_forward;
 
       /* Entry Internal 'forward': '<S138>:4' */
       /* Transition: '<S138>:248' */
       RobotControl_DW.is_forward = RobotControl_IN_Idle;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_BACKWARD) {
+    } else if (RobotControl_B.moveRequest == 2) {
       /* Transition: '<S138>:11' */
       /* Exit Internal 'TurnLeft': '<S138>:230' */
       RobotControl_DW.is_TurnLeft = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
       /* Constant: '<S127>/ENU_BACKWARD' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_BACKWARD;
+      RobotControl_B.turnRequest = 2U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_backward;
-    } else if (RobotControl_B.moveRequest ==
-               RobotControl_P.ENU_MOVE_U_TURN_RIGHT) {
+    } else if (RobotControl_B.moveRequest == 22) {
       /* Transition: '<S138>:31' */
       /* Exit Internal 'TurnLeft': '<S138>:230' */
       RobotControl_DW.is_TurnLeft = RobotContr_IN_NO_ACTIVE_CHILD_g;
@@ -258,9 +254,9 @@ static void RobotControl_TurnLeft(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:106' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_U_TURN) {
+    } else if (RobotControl_B.moveRequest == 24) {
       /* Transition: '<S138>:33' */
       /* Exit Internal 'TurnLeft': '<S138>:230' */
       RobotControl_DW.is_TurnLeft = RobotContr_IN_NO_ACTIVE_CHILD_g;
@@ -279,10 +275,9 @@ static void RobotControl_TurnLeft(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:195' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_U_TURN_LEFT)
-    {
+    } else if (RobotControl_B.moveRequest == 23) {
       /* Transition: '<S138>:35' */
       /* Exit Internal 'TurnLeft': '<S138>:230' */
       RobotControl_DW.is_TurnLeft = RobotContr_IN_NO_ACTIVE_CHILD_g;
@@ -301,23 +296,23 @@ static void RobotControl_TurnLeft(void)
 
       /* Constant: '<S127>/ENU_CCW' */
       /* Entry 'start': '<S138>:90' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+      RobotControl_B.turnRequest = 4U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_STOP) {
+    } else if (RobotControl_B.moveRequest == 5) {
       /* Transition: '<S138>:39' */
       /* Exit Internal 'TurnLeft': '<S138>:230' */
       RobotControl_DW.is_TurnLeft = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
       /* Constant: '<S127>/ENU_STOP' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_STOP;
+      RobotControl_B.turnRequest = 5U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_Stop;
 
       /* Constant: '<S127>/ENU_ROB_NONE' */
       /* Entry Internal 'Stop': '<S138>:37' */
       /* Transition: '<S138>:309' */
       if ((RobotControl_B.OutportBufferForangleCalibStatu ==
-           RobotControl_ENU_FINISHED) && (RobotControl_B.currentHeading ==
-           RobotControl_P.ENU_ROB_NONE)) {
+           RobotControl_ENU_FINISHED) && (RobotControl_B.currentHeading == 400U))
+      {
         /* Transition: '<S138>:314' */
         /* Transition: '<S138>:316' */
         RobotControl_B.headingRequest = (uint16_T)RobotControl_B.ROB_NORTH;
@@ -329,8 +324,7 @@ static void RobotControl_TurnLeft(void)
 
       /* End of Constant: '<S127>/ENU_ROB_NONE' */
       /* Transition: '<S138>:333' */
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_TURN_RIGHT)
-    {
+    } else if (RobotControl_B.moveRequest == 21) {
       /* Transition: '<S138>:227' */
       /* Exit Internal 'TurnLeft': '<S138>:230' */
       RobotControl_DW.is_TurnLeft = RobotContr_IN_NO_ACTIVE_CHILD_g;
@@ -342,10 +336,9 @@ static void RobotControl_TurnLeft(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:226' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_TURN_LEFT)
-    {
+    } else if (RobotControl_B.moveRequest == 20) {
       /* Transition: '<S138>:229' */
       /* Exit Internal 'TurnLeft': '<S138>:230' */
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_TurnLeft;
@@ -356,7 +349,7 @@ static void RobotControl_TurnLeft(void)
 
       /* Constant: '<S127>/ENU_CCW' */
       /* Entry 'start': '<S138>:239' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+      RobotControl_B.turnRequest = 4U;
       RobotControl_DW.turnActive = true;
     } else {
       guard1 = true;
@@ -422,7 +415,7 @@ static void RobotControl_Uturn(void)
   if ((RobotControl_DW.moveRequest_prev != RobotControl_DW.moveRequest_start) ||
       (!RobotControl_DW.turnActive)) {
     /* Transition: '<S138>:34' */
-    if (RobotControl_B.moveRequest == RobotControl_P.ENU_FORWARD) {
+    if (RobotControl_B.moveRequest == 1) {
       /* Transition: '<S138>:8' */
       /* Exit Internal 'Uturn': '<S138>:30' */
       /* Exit Internal 'TurnRight': '<S138>:186' */
@@ -430,13 +423,13 @@ static void RobotControl_Uturn(void)
       RobotControl_DW.is_Uturn = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
       /* Constant: '<S127>/ENU_FORWARD' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_FORWARD;
+      RobotControl_B.turnRequest = 1U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_forward;
 
       /* Entry Internal 'forward': '<S138>:4' */
       /* Transition: '<S138>:248' */
       RobotControl_DW.is_forward = RobotControl_IN_Idle;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_BACKWARD) {
+    } else if (RobotControl_B.moveRequest == 2) {
       /* Transition: '<S138>:11' */
       /* Exit Internal 'Uturn': '<S138>:30' */
       /* Exit Internal 'TurnRight': '<S138>:186' */
@@ -444,10 +437,9 @@ static void RobotControl_Uturn(void)
       RobotControl_DW.is_Uturn = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
       /* Constant: '<S127>/ENU_BACKWARD' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_BACKWARD;
+      RobotControl_B.turnRequest = 2U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_backward;
-    } else if (RobotControl_B.moveRequest ==
-               RobotControl_P.ENU_MOVE_U_TURN_RIGHT) {
+    } else if (RobotControl_B.moveRequest == 22) {
       /* Transition: '<S138>:31' */
       /* Exit Internal 'Uturn': '<S138>:30' */
       /* Exit Internal 'TurnRight': '<S138>:186' */
@@ -468,9 +460,9 @@ static void RobotControl_Uturn(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:106' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_U_TURN) {
+    } else if (RobotControl_B.moveRequest == 24) {
       /* Transition: '<S138>:33' */
       /* Exit Internal 'Uturn': '<S138>:30' */
       /* Exit Internal 'TurnRight': '<S138>:186' */
@@ -489,10 +481,9 @@ static void RobotControl_Uturn(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:195' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_U_TURN_LEFT)
-    {
+    } else if (RobotControl_B.moveRequest == 23) {
       /* Transition: '<S138>:35' */
       /* Exit Internal 'Uturn': '<S138>:30' */
       /* Exit Internal 'TurnRight': '<S138>:186' */
@@ -513,9 +504,9 @@ static void RobotControl_Uturn(void)
 
       /* Constant: '<S127>/ENU_CCW' */
       /* Entry 'start': '<S138>:90' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+      RobotControl_B.turnRequest = 4U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_STOP) {
+    } else if (RobotControl_B.moveRequest == 5) {
       /* Transition: '<S138>:39' */
       /* Exit Internal 'Uturn': '<S138>:30' */
       /* Exit Internal 'TurnRight': '<S138>:186' */
@@ -523,15 +514,15 @@ static void RobotControl_Uturn(void)
       RobotControl_DW.is_Uturn = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
       /* Constant: '<S127>/ENU_STOP' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_STOP;
+      RobotControl_B.turnRequest = 5U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_Stop;
 
       /* Constant: '<S127>/ENU_ROB_NONE' */
       /* Entry Internal 'Stop': '<S138>:37' */
       /* Transition: '<S138>:309' */
       if ((RobotControl_B.OutportBufferForangleCalibStatu ==
-           RobotControl_ENU_FINISHED) && (RobotControl_B.currentHeading ==
-           RobotControl_P.ENU_ROB_NONE)) {
+           RobotControl_ENU_FINISHED) && (RobotControl_B.currentHeading == 400U))
+      {
         /* Transition: '<S138>:314' */
         /* Transition: '<S138>:316' */
         RobotControl_B.headingRequest = (uint16_T)RobotControl_B.ROB_NORTH;
@@ -543,8 +534,7 @@ static void RobotControl_Uturn(void)
 
       /* End of Constant: '<S127>/ENU_ROB_NONE' */
       /* Transition: '<S138>:333' */
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_TURN_RIGHT)
-    {
+    } else if (RobotControl_B.moveRequest == 21) {
       /* Transition: '<S138>:227' */
       /* Exit Internal 'Uturn': '<S138>:30' */
       /* Exit Internal 'TurnRight': '<S138>:186' */
@@ -558,10 +548,9 @@ static void RobotControl_Uturn(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:226' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_TURN_LEFT)
-    {
+    } else if (RobotControl_B.moveRequest == 20) {
       /* Transition: '<S138>:229' */
       /* Exit Internal 'Uturn': '<S138>:30' */
       /* Exit Internal 'TurnRight': '<S138>:186' */
@@ -575,7 +564,7 @@ static void RobotControl_Uturn(void)
 
       /* Constant: '<S127>/ENU_CCW' */
       /* Entry 'start': '<S138>:239' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+      RobotControl_B.turnRequest = 4U;
       RobotControl_DW.turnActive = true;
     } else {
       guard1 = true;
@@ -660,7 +649,7 @@ static void RobotControl_UturnLeft(void)
   guard1 = false;
   if (!RobotControl_DW.turnActive) {
     /* Transition: '<S138>:36' */
-    if (RobotControl_B.moveRequest == RobotControl_P.ENU_FORWARD) {
+    if (RobotControl_B.moveRequest == 1) {
       /* Transition: '<S138>:8' */
       /* Exit Internal 'UturnLeft': '<S138>:28' */
       /* Exit Internal 'TurnLeft': '<S138>:79' */
@@ -668,13 +657,13 @@ static void RobotControl_UturnLeft(void)
       RobotControl_DW.is_UturnLeft = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
       /* Constant: '<S127>/ENU_FORWARD' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_FORWARD;
+      RobotControl_B.turnRequest = 1U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_forward;
 
       /* Entry Internal 'forward': '<S138>:4' */
       /* Transition: '<S138>:248' */
       RobotControl_DW.is_forward = RobotControl_IN_Idle;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_BACKWARD) {
+    } else if (RobotControl_B.moveRequest == 2) {
       /* Transition: '<S138>:11' */
       /* Exit Internal 'UturnLeft': '<S138>:28' */
       /* Exit Internal 'TurnLeft': '<S138>:79' */
@@ -682,10 +671,9 @@ static void RobotControl_UturnLeft(void)
       RobotControl_DW.is_UturnLeft = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
       /* Constant: '<S127>/ENU_BACKWARD' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_BACKWARD;
+      RobotControl_B.turnRequest = 2U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_backward;
-    } else if (RobotControl_B.moveRequest ==
-               RobotControl_P.ENU_MOVE_U_TURN_RIGHT) {
+    } else if (RobotControl_B.moveRequest == 22) {
       /* Transition: '<S138>:31' */
       /* Exit Internal 'UturnLeft': '<S138>:28' */
       /* Exit Internal 'TurnLeft': '<S138>:79' */
@@ -706,9 +694,9 @@ static void RobotControl_UturnLeft(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:106' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_U_TURN) {
+    } else if (RobotControl_B.moveRequest == 24) {
       /* Transition: '<S138>:33' */
       /* Exit Internal 'UturnLeft': '<S138>:28' */
       /* Exit Internal 'TurnLeft': '<S138>:79' */
@@ -729,10 +717,9 @@ static void RobotControl_UturnLeft(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:195' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_U_TURN_LEFT)
-    {
+    } else if (RobotControl_B.moveRequest == 23) {
       /* Transition: '<S138>:35' */
       /* Exit Internal 'UturnLeft': '<S138>:28' */
       /* Exit Internal 'TurnLeft': '<S138>:79' */
@@ -751,9 +738,9 @@ static void RobotControl_UturnLeft(void)
 
       /* Constant: '<S127>/ENU_CCW' */
       /* Entry 'start': '<S138>:90' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+      RobotControl_B.turnRequest = 4U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_STOP) {
+    } else if (RobotControl_B.moveRequest == 5) {
       /* Transition: '<S138>:39' */
       /* Exit Internal 'UturnLeft': '<S138>:28' */
       /* Exit Internal 'TurnLeft': '<S138>:79' */
@@ -761,15 +748,15 @@ static void RobotControl_UturnLeft(void)
       RobotControl_DW.is_UturnLeft = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
       /* Constant: '<S127>/ENU_STOP' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_STOP;
+      RobotControl_B.turnRequest = 5U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_Stop;
 
       /* Constant: '<S127>/ENU_ROB_NONE' */
       /* Entry Internal 'Stop': '<S138>:37' */
       /* Transition: '<S138>:309' */
       if ((RobotControl_B.OutportBufferForangleCalibStatu ==
-           RobotControl_ENU_FINISHED) && (RobotControl_B.currentHeading ==
-           RobotControl_P.ENU_ROB_NONE)) {
+           RobotControl_ENU_FINISHED) && (RobotControl_B.currentHeading == 400U))
+      {
         /* Transition: '<S138>:314' */
         /* Transition: '<S138>:316' */
         RobotControl_B.headingRequest = (uint16_T)RobotControl_B.ROB_NORTH;
@@ -781,8 +768,7 @@ static void RobotControl_UturnLeft(void)
 
       /* End of Constant: '<S127>/ENU_ROB_NONE' */
       /* Transition: '<S138>:333' */
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_TURN_RIGHT)
-    {
+    } else if (RobotControl_B.moveRequest == 21) {
       /* Transition: '<S138>:227' */
       /* Exit Internal 'UturnLeft': '<S138>:28' */
       /* Exit Internal 'TurnLeft': '<S138>:79' */
@@ -796,10 +782,9 @@ static void RobotControl_UturnLeft(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:226' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_TURN_LEFT)
-    {
+    } else if (RobotControl_B.moveRequest == 20) {
       /* Transition: '<S138>:229' */
       /* Exit Internal 'UturnLeft': '<S138>:28' */
       /* Exit Internal 'TurnLeft': '<S138>:79' */
@@ -813,7 +798,7 @@ static void RobotControl_UturnLeft(void)
 
       /* Constant: '<S127>/ENU_CCW' */
       /* Entry 'start': '<S138>:239' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+      RobotControl_B.turnRequest = 4U;
       RobotControl_DW.turnActive = true;
     } else {
       guard1 = true;
@@ -837,7 +822,7 @@ static void RobotControl_UturnLeft(void)
         /* Constant: '<S127>/ENU_FORWARD' */
         /* Entry 'forwardStep': '<S138>:113' */
         /* counter = 0; */
-        RobotControl_B.turnRequest = RobotControl_P.ENU_FORWARD;
+        RobotControl_B.turnRequest = 1U;
       } else if (RobotControl_DW.uTurnCounter == RobotContro_CONST_UTURN_CNT_THD)
       {
         /* Transition: '<S138>:114' */
@@ -913,7 +898,7 @@ static void RobotControl_UturnLeft(void)
 
         /* Constant: '<S127>/ENU_CCW' */
         /* Entry 'start': '<S138>:90' */
-        RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+        RobotControl_B.turnRequest = 4U;
         RobotControl_DW.turnActive = true;
       } else if (RobotControl_DW.sfEvent_p == RobotControl_event_stopEvent) {
         /* Transition: '<S138>:302' */
@@ -925,7 +910,7 @@ static void RobotControl_UturnLeft(void)
 
         /* Constant: '<S127>/ENU_CCW' */
         /* Entry 'start': '<S138>:90' */
-        RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+        RobotControl_B.turnRequest = 4U;
         RobotControl_DW.turnActive = true;
       } else {
         /* counter++; */
@@ -945,7 +930,7 @@ static void RobotControl_UturnRight(void)
   guard1 = false;
   if (!RobotControl_DW.turnActive) {
     /* Transition: '<S138>:32' */
-    if (RobotControl_B.moveRequest == RobotControl_P.ENU_FORWARD) {
+    if (RobotControl_B.moveRequest == 1) {
       /* Transition: '<S138>:8' */
       /* Exit Internal 'UturnRight': '<S138>:29' */
       /* Exit Internal 'TurnRight': '<S138>:95' */
@@ -953,13 +938,13 @@ static void RobotControl_UturnRight(void)
       RobotControl_DW.is_UturnRight = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
       /* Constant: '<S127>/ENU_FORWARD' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_FORWARD;
+      RobotControl_B.turnRequest = 1U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_forward;
 
       /* Entry Internal 'forward': '<S138>:4' */
       /* Transition: '<S138>:248' */
       RobotControl_DW.is_forward = RobotControl_IN_Idle;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_BACKWARD) {
+    } else if (RobotControl_B.moveRequest == 2) {
       /* Transition: '<S138>:11' */
       /* Exit Internal 'UturnRight': '<S138>:29' */
       /* Exit Internal 'TurnRight': '<S138>:95' */
@@ -967,10 +952,9 @@ static void RobotControl_UturnRight(void)
       RobotControl_DW.is_UturnRight = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
       /* Constant: '<S127>/ENU_BACKWARD' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_BACKWARD;
+      RobotControl_B.turnRequest = 2U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_backward;
-    } else if (RobotControl_B.moveRequest ==
-               RobotControl_P.ENU_MOVE_U_TURN_RIGHT) {
+    } else if (RobotControl_B.moveRequest == 22) {
       /* Transition: '<S138>:31' */
       /* Exit Internal 'UturnRight': '<S138>:29' */
       /* Exit Internal 'TurnRight': '<S138>:95' */
@@ -989,9 +973,9 @@ static void RobotControl_UturnRight(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:106' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_U_TURN) {
+    } else if (RobotControl_B.moveRequest == 24) {
       /* Transition: '<S138>:33' */
       /* Exit Internal 'UturnRight': '<S138>:29' */
       /* Exit Internal 'TurnRight': '<S138>:95' */
@@ -1012,10 +996,9 @@ static void RobotControl_UturnRight(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:195' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_U_TURN_LEFT)
-    {
+    } else if (RobotControl_B.moveRequest == 23) {
       /* Transition: '<S138>:35' */
       /* Exit Internal 'UturnRight': '<S138>:29' */
       /* Exit Internal 'TurnRight': '<S138>:95' */
@@ -1036,9 +1019,9 @@ static void RobotControl_UturnRight(void)
 
       /* Constant: '<S127>/ENU_CCW' */
       /* Entry 'start': '<S138>:90' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+      RobotControl_B.turnRequest = 4U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_STOP) {
+    } else if (RobotControl_B.moveRequest == 5) {
       /* Transition: '<S138>:39' */
       /* Exit Internal 'UturnRight': '<S138>:29' */
       /* Exit Internal 'TurnRight': '<S138>:95' */
@@ -1046,15 +1029,15 @@ static void RobotControl_UturnRight(void)
       RobotControl_DW.is_UturnRight = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
       /* Constant: '<S127>/ENU_STOP' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_STOP;
+      RobotControl_B.turnRequest = 5U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_Stop;
 
       /* Constant: '<S127>/ENU_ROB_NONE' */
       /* Entry Internal 'Stop': '<S138>:37' */
       /* Transition: '<S138>:309' */
       if ((RobotControl_B.OutportBufferForangleCalibStatu ==
-           RobotControl_ENU_FINISHED) && (RobotControl_B.currentHeading ==
-           RobotControl_P.ENU_ROB_NONE)) {
+           RobotControl_ENU_FINISHED) && (RobotControl_B.currentHeading == 400U))
+      {
         /* Transition: '<S138>:314' */
         /* Transition: '<S138>:316' */
         RobotControl_B.headingRequest = (uint16_T)RobotControl_B.ROB_NORTH;
@@ -1066,8 +1049,7 @@ static void RobotControl_UturnRight(void)
 
       /* End of Constant: '<S127>/ENU_ROB_NONE' */
       /* Transition: '<S138>:333' */
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_TURN_RIGHT)
-    {
+    } else if (RobotControl_B.moveRequest == 21) {
       /* Transition: '<S138>:227' */
       /* Exit Internal 'UturnRight': '<S138>:29' */
       /* Exit Internal 'TurnRight': '<S138>:95' */
@@ -1081,10 +1063,9 @@ static void RobotControl_UturnRight(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:226' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_TURN_LEFT)
-    {
+    } else if (RobotControl_B.moveRequest == 20) {
       /* Transition: '<S138>:229' */
       /* Exit Internal 'UturnRight': '<S138>:29' */
       /* Exit Internal 'TurnRight': '<S138>:95' */
@@ -1098,7 +1079,7 @@ static void RobotControl_UturnRight(void)
 
       /* Constant: '<S127>/ENU_CCW' */
       /* Entry 'start': '<S138>:239' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+      RobotControl_B.turnRequest = 4U;
       RobotControl_DW.turnActive = true;
     } else {
       guard1 = true;
@@ -1122,7 +1103,7 @@ static void RobotControl_UturnRight(void)
         /* Constant: '<S127>/ENU_FORWARD' */
         /* Entry 'forwardStep': '<S138>:125' */
         /* counter = 0; */
-        RobotControl_B.turnRequest = RobotControl_P.ENU_FORWARD;
+        RobotControl_B.turnRequest = 1U;
       } else if (RobotControl_DW.uTurnCounter == RobotContro_CONST_UTURN_CNT_THD)
       {
         /* Transition: '<S138>:123' */
@@ -1198,7 +1179,7 @@ static void RobotControl_UturnRight(void)
 
         /* Constant: '<S127>/ENU_CW' */
         /* Entry 'start': '<S138>:106' */
-        RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+        RobotControl_B.turnRequest = 3U;
         RobotControl_DW.turnActive = true;
       } else if (RobotControl_DW.sfEvent_p == RobotControl_event_stopEvent) {
         /* Transition: '<S138>:303' */
@@ -1210,7 +1191,7 @@ static void RobotControl_UturnRight(void)
 
         /* Constant: '<S127>/ENU_CW' */
         /* Entry 'start': '<S138>:106' */
-        RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+        RobotControl_B.turnRequest = 3U;
         RobotControl_DW.turnActive = true;
       } else {
         /* counter++; */
@@ -1231,26 +1212,25 @@ static void RobotControl_forward(void)
   guard2 = false;
   if (RobotControl_DW.moveRequest_prev != RobotControl_DW.moveRequest_start) {
     /* Transition: '<S138>:10' */
-    if (RobotControl_B.moveRequest == RobotControl_P.ENU_FORWARD) {
+    if (RobotControl_B.moveRequest == 1) {
       /* Constant: '<S127>/ENU_FORWARD' */
       /* Transition: '<S138>:8' */
       /* Exit Internal 'forward': '<S138>:4' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_FORWARD;
+      RobotControl_B.turnRequest = 1U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_forward;
 
       /* Entry Internal 'forward': '<S138>:4' */
       /* Transition: '<S138>:248' */
       RobotControl_DW.is_forward = RobotControl_IN_Idle;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_BACKWARD) {
+    } else if (RobotControl_B.moveRequest == 2) {
       /* Transition: '<S138>:11' */
       /* Exit Internal 'forward': '<S138>:4' */
       RobotControl_DW.is_forward = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
       /* Constant: '<S127>/ENU_BACKWARD' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_BACKWARD;
+      RobotControl_B.turnRequest = 2U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_backward;
-    } else if (RobotControl_B.moveRequest ==
-               RobotControl_P.ENU_MOVE_U_TURN_RIGHT) {
+    } else if (RobotControl_B.moveRequest == 22) {
       /* Transition: '<S138>:31' */
       /* Exit Internal 'forward': '<S138>:4' */
       RobotControl_DW.is_forward = RobotContr_IN_NO_ACTIVE_CHILD_g;
@@ -1269,9 +1249,9 @@ static void RobotControl_forward(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:106' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_U_TURN) {
+    } else if (RobotControl_B.moveRequest == 24) {
       /* Transition: '<S138>:33' */
       /* Exit Internal 'forward': '<S138>:4' */
       RobotControl_DW.is_forward = RobotContr_IN_NO_ACTIVE_CHILD_g;
@@ -1290,10 +1270,9 @@ static void RobotControl_forward(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:195' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_U_TURN_LEFT)
-    {
+    } else if (RobotControl_B.moveRequest == 23) {
       /* Transition: '<S138>:35' */
       /* Exit Internal 'forward': '<S138>:4' */
       RobotControl_DW.is_forward = RobotContr_IN_NO_ACTIVE_CHILD_g;
@@ -1312,23 +1291,23 @@ static void RobotControl_forward(void)
 
       /* Constant: '<S127>/ENU_CCW' */
       /* Entry 'start': '<S138>:90' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+      RobotControl_B.turnRequest = 4U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_STOP) {
+    } else if (RobotControl_B.moveRequest == 5) {
       /* Transition: '<S138>:39' */
       /* Exit Internal 'forward': '<S138>:4' */
       RobotControl_DW.is_forward = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
       /* Constant: '<S127>/ENU_STOP' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_STOP;
+      RobotControl_B.turnRequest = 5U;
       RobotControl_DW.is_c37_MOVH = RobotControl_IN_Stop;
 
       /* Constant: '<S127>/ENU_ROB_NONE' */
       /* Entry Internal 'Stop': '<S138>:37' */
       /* Transition: '<S138>:309' */
       if ((RobotControl_B.OutportBufferForangleCalibStatu ==
-           RobotControl_ENU_FINISHED) && (RobotControl_B.currentHeading ==
-           RobotControl_P.ENU_ROB_NONE)) {
+           RobotControl_ENU_FINISHED) && (RobotControl_B.currentHeading == 400U))
+      {
         /* Transition: '<S138>:314' */
         /* Transition: '<S138>:316' */
         RobotControl_B.headingRequest = (uint16_T)RobotControl_B.ROB_NORTH;
@@ -1340,8 +1319,7 @@ static void RobotControl_forward(void)
 
       /* End of Constant: '<S127>/ENU_ROB_NONE' */
       /* Transition: '<S138>:333' */
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_TURN_RIGHT)
-    {
+    } else if (RobotControl_B.moveRequest == 21) {
       /* Transition: '<S138>:227' */
       /* Exit Internal 'forward': '<S138>:4' */
       RobotControl_DW.is_forward = RobotContr_IN_NO_ACTIVE_CHILD_g;
@@ -1353,10 +1331,9 @@ static void RobotControl_forward(void)
 
       /* Constant: '<S127>/ENU_CW' */
       /* Entry 'start': '<S138>:226' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+      RobotControl_B.turnRequest = 3U;
       RobotControl_DW.turnActive = true;
-    } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_TURN_LEFT)
-    {
+    } else if (RobotControl_B.moveRequest == 20) {
       /* Transition: '<S138>:229' */
       /* Exit Internal 'forward': '<S138>:4' */
       RobotControl_DW.is_forward = RobotContr_IN_NO_ACTIVE_CHILD_g;
@@ -1368,7 +1345,7 @@ static void RobotControl_forward(void)
 
       /* Constant: '<S127>/ENU_CCW' */
       /* Entry 'start': '<S138>:239' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+      RobotControl_B.turnRequest = 4U;
       RobotControl_DW.turnActive = true;
     } else {
       guard2 = true;
@@ -1395,12 +1372,12 @@ static void RobotControl_forward(void)
                RobotControl_B.ROB_NORTH * RobotControl_CAL_thetaGain)) {
             /* Constant: '<S127>/ENU_CCW' */
             /* Transition: '<S138>:261' */
-            RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+            RobotControl_B.turnRequest = 4U;
             RobotControl_DW.is_forward = RobotControl_IN_fixingHeading;
           } else {
             /* Constant: '<S127>/ENU_CW' */
             /* Transition: '<S138>:263' */
-            RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+            RobotControl_B.turnRequest = 3U;
             RobotControl_DW.is_forward = RobotControl_IN_fixingHeading;
           }
         } else if (RobotControl_B.headingRequest == (uint16_T)
@@ -1411,12 +1388,12 @@ static void RobotControl_forward(void)
                RobotControl_B.ROB_NORTH * RobotControl_CAL_thetaGain)) {
             /* Constant: '<S127>/ENU_CW' */
             /* Transition: '<S138>:264' */
-            RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+            RobotControl_B.turnRequest = 3U;
             RobotControl_DW.is_forward = RobotControl_IN_fixingHeading;
           } else {
             /* Constant: '<S127>/ENU_CCW' */
             /* Transition: '<S138>:265' */
-            RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+            RobotControl_B.turnRequest = 4U;
             RobotControl_DW.is_forward = RobotControl_IN_fixingHeading;
           }
         } else if (RobotControl_B.headingRequest == (uint16_T)
@@ -1426,12 +1403,12 @@ static void RobotControl_forward(void)
               RobotControl_CAL_thetaGain) {
             /* Constant: '<S127>/ENU_CW' */
             /* Transition: '<S138>:266' */
-            RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+            RobotControl_B.turnRequest = 3U;
             RobotControl_DW.is_forward = RobotControl_IN_fixingHeading;
           } else {
             /* Constant: '<S127>/ENU_CCW' */
             /* Transition: '<S138>:267' */
-            RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+            RobotControl_B.turnRequest = 4U;
             RobotControl_DW.is_forward = RobotControl_IN_fixingHeading;
           }
         } else if (RobotControl_B.headingRequest == (uint16_T)
@@ -1441,12 +1418,12 @@ static void RobotControl_forward(void)
               RobotControl_CAL_thetaGain) {
             /* Constant: '<S127>/ENU_CCW' */
             /* Transition: '<S138>:268' */
-            RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+            RobotControl_B.turnRequest = 4U;
             RobotControl_DW.is_forward = RobotControl_IN_fixingHeading;
           } else {
             /* Constant: '<S127>/ENU_CW' */
             /* Transition: '<S138>:269' */
-            RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+            RobotControl_B.turnRequest = 3U;
             RobotControl_DW.is_forward = RobotControl_IN_fixingHeading;
           }
         } else {
@@ -1471,7 +1448,7 @@ static void RobotControl_forward(void)
          RobotControl_B.headingRequest * RobotControl_CAL_thetaGain + 500U)) {
       /* Constant: '<S127>/ENU_FORWARD' */
       /* Transition: '<S138>:272' */
-      RobotControl_B.turnRequest = RobotControl_P.ENU_FORWARD;
+      RobotControl_B.turnRequest = 1U;
       RobotControl_DW.is_forward = RobotControl_IN_Idle;
     }
   }
@@ -1504,10 +1481,10 @@ static void RobotControl_chartstep_c37_MOVH(void)
     RobotControl_DW.stableCounter = 0U;
 
     /* Constant: '<S127>/ENU_STOP' */
-    RobotControl_B.turnRequest = RobotControl_P.ENU_STOP;
+    RobotControl_B.turnRequest = 5U;
 
     /* Constant: '<S127>/ENU_ROB_NONE' */
-    RobotControl_B.headingRequest = RobotControl_P.ENU_ROB_NONE;
+    RobotControl_B.headingRequest = 400U;
   } else {
     guard1 = false;
     switch (RobotControl_DW.is_c37_MOVH) {
@@ -1524,28 +1501,27 @@ static void RobotControl_chartstep_c37_MOVH(void)
       if ((RobotControl_DW.moveRequest_prev != RobotControl_DW.moveRequest_start)
           || (!RobotControl_DW.turnActive)) {
         /* Transition: '<S138>:228' */
-        if (RobotControl_B.moveRequest == RobotControl_P.ENU_FORWARD) {
+        if (RobotControl_B.moveRequest == 1) {
           /* Transition: '<S138>:8' */
           /* Exit Internal 'TurnRight': '<S138>:217' */
           RobotControl_DW.is_TurnRight_c = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
           /* Constant: '<S127>/ENU_FORWARD' */
-          RobotControl_B.turnRequest = RobotControl_P.ENU_FORWARD;
+          RobotControl_B.turnRequest = 1U;
           RobotControl_DW.is_c37_MOVH = RobotControl_IN_forward;
 
           /* Entry Internal 'forward': '<S138>:4' */
           /* Transition: '<S138>:248' */
           RobotControl_DW.is_forward = RobotControl_IN_Idle;
-        } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_BACKWARD) {
+        } else if (RobotControl_B.moveRequest == 2) {
           /* Transition: '<S138>:11' */
           /* Exit Internal 'TurnRight': '<S138>:217' */
           RobotControl_DW.is_TurnRight_c = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
           /* Constant: '<S127>/ENU_BACKWARD' */
-          RobotControl_B.turnRequest = RobotControl_P.ENU_BACKWARD;
+          RobotControl_B.turnRequest = 2U;
           RobotControl_DW.is_c37_MOVH = RobotControl_IN_backward;
-        } else if (RobotControl_B.moveRequest ==
-                   RobotControl_P.ENU_MOVE_U_TURN_RIGHT) {
+        } else if (RobotControl_B.moveRequest == 22) {
           /* Transition: '<S138>:31' */
           /* Exit Internal 'TurnRight': '<S138>:217' */
           RobotControl_DW.is_TurnRight_c = RobotContr_IN_NO_ACTIVE_CHILD_g;
@@ -1564,10 +1540,9 @@ static void RobotControl_chartstep_c37_MOVH(void)
 
           /* Constant: '<S127>/ENU_CW' */
           /* Entry 'start': '<S138>:106' */
-          RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+          RobotControl_B.turnRequest = 3U;
           RobotControl_DW.turnActive = true;
-        } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_U_TURN)
-        {
+        } else if (RobotControl_B.moveRequest == 24) {
           /* Transition: '<S138>:33' */
           /* Exit Internal 'TurnRight': '<S138>:217' */
           RobotControl_DW.is_TurnRight_c = RobotContr_IN_NO_ACTIVE_CHILD_g;
@@ -1586,10 +1561,9 @@ static void RobotControl_chartstep_c37_MOVH(void)
 
           /* Constant: '<S127>/ENU_CW' */
           /* Entry 'start': '<S138>:195' */
-          RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+          RobotControl_B.turnRequest = 3U;
           RobotControl_DW.turnActive = true;
-        } else if (RobotControl_B.moveRequest ==
-                   RobotControl_P.ENU_MOVE_U_TURN_LEFT) {
+        } else if (RobotControl_B.moveRequest == 23) {
           /* Transition: '<S138>:35' */
           /* Exit Internal 'TurnRight': '<S138>:217' */
           RobotControl_DW.is_TurnRight_c = RobotContr_IN_NO_ACTIVE_CHILD_g;
@@ -1608,15 +1582,15 @@ static void RobotControl_chartstep_c37_MOVH(void)
 
           /* Constant: '<S127>/ENU_CCW' */
           /* Entry 'start': '<S138>:90' */
-          RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+          RobotControl_B.turnRequest = 4U;
           RobotControl_DW.turnActive = true;
-        } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_STOP) {
+        } else if (RobotControl_B.moveRequest == 5) {
           /* Transition: '<S138>:39' */
           /* Exit Internal 'TurnRight': '<S138>:217' */
           RobotControl_DW.is_TurnRight_c = RobotContr_IN_NO_ACTIVE_CHILD_g;
 
           /* Constant: '<S127>/ENU_STOP' */
-          RobotControl_B.turnRequest = RobotControl_P.ENU_STOP;
+          RobotControl_B.turnRequest = 5U;
           RobotControl_DW.is_c37_MOVH = RobotControl_IN_Stop;
 
           /* Constant: '<S127>/ENU_ROB_NONE' */
@@ -1624,7 +1598,7 @@ static void RobotControl_chartstep_c37_MOVH(void)
           /* Transition: '<S138>:309' */
           if ((RobotControl_B.OutportBufferForangleCalibStatu ==
                RobotControl_ENU_FINISHED) && (RobotControl_B.currentHeading ==
-               RobotControl_P.ENU_ROB_NONE)) {
+               400U)) {
             /* Transition: '<S138>:314' */
             /* Transition: '<S138>:316' */
             RobotControl_B.headingRequest = (uint16_T)RobotControl_B.ROB_NORTH;
@@ -1635,8 +1609,7 @@ static void RobotControl_chartstep_c37_MOVH(void)
           }
 
           /* Transition: '<S138>:333' */
-        } else if (RobotControl_B.moveRequest ==
-                   RobotControl_P.ENU_MOVE_TURN_RIGHT) {
+        } else if (RobotControl_B.moveRequest == 21) {
           /* Transition: '<S138>:227' */
           /* Exit Internal 'TurnRight': '<S138>:217' */
           RobotControl_DW.is_c37_MOVH = RobotControl_IN_TurnRight;
@@ -1647,10 +1620,9 @@ static void RobotControl_chartstep_c37_MOVH(void)
 
           /* Constant: '<S127>/ENU_CW' */
           /* Entry 'start': '<S138>:226' */
-          RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+          RobotControl_B.turnRequest = 3U;
           RobotControl_DW.turnActive = true;
-        } else if (RobotControl_B.moveRequest ==
-                   RobotControl_P.ENU_MOVE_TURN_LEFT) {
+        } else if (RobotControl_B.moveRequest == 20) {
           /* Transition: '<S138>:229' */
           /* Exit Internal 'TurnRight': '<S138>:217' */
           RobotControl_DW.is_TurnRight_c = RobotContr_IN_NO_ACTIVE_CHILD_g;
@@ -1662,7 +1634,7 @@ static void RobotControl_chartstep_c37_MOVH(void)
 
           /* Constant: '<S127>/ENU_CCW' */
           /* Entry 'start': '<S138>:239' */
-          RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+          RobotControl_B.turnRequest = 4U;
           RobotControl_DW.turnActive = true;
         } else {
           guard1 = true;
@@ -1698,21 +1670,20 @@ static void RobotControl_chartstep_c37_MOVH(void)
          *  Constant: '<S127>/ENU_STOP'
          */
         /* Transition: '<S138>:12' */
-        if (RobotControl_B.moveRequest == RobotControl_P.ENU_FORWARD) {
+        if (RobotControl_B.moveRequest == 1) {
           /* Transition: '<S138>:8' */
-          RobotControl_B.turnRequest = RobotControl_P.ENU_FORWARD;
+          RobotControl_B.turnRequest = 1U;
           RobotControl_DW.is_c37_MOVH = RobotControl_IN_forward;
 
           /* Entry Internal 'forward': '<S138>:4' */
           /* Transition: '<S138>:248' */
           RobotControl_DW.is_forward = RobotControl_IN_Idle;
-        } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_BACKWARD) {
+        } else if (RobotControl_B.moveRequest == 2) {
           /* Constant: '<S127>/ENU_BACKWARD' */
           /* Transition: '<S138>:11' */
-          RobotControl_B.turnRequest = RobotControl_P.ENU_BACKWARD;
+          RobotControl_B.turnRequest = 2U;
           RobotControl_DW.is_c37_MOVH = RobotControl_IN_backward;
-        } else if (RobotControl_B.moveRequest ==
-                   RobotControl_P.ENU_MOVE_U_TURN_RIGHT) {
+        } else if (RobotControl_B.moveRequest == 22) {
           /* Transition: '<S138>:31' */
           RobotControl_DW.is_c37_MOVH = RobotControl_IN_UturnRight;
 
@@ -1729,10 +1700,9 @@ static void RobotControl_chartstep_c37_MOVH(void)
 
           /* Constant: '<S127>/ENU_CW' */
           /* Entry 'start': '<S138>:106' */
-          RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+          RobotControl_B.turnRequest = 3U;
           RobotControl_DW.turnActive = true;
-        } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_U_TURN)
-        {
+        } else if (RobotControl_B.moveRequest == 24) {
           /* Transition: '<S138>:33' */
           RobotControl_DW.is_c37_MOVH = RobotControl_IN_Uturn;
 
@@ -1749,10 +1719,9 @@ static void RobotControl_chartstep_c37_MOVH(void)
 
           /* Constant: '<S127>/ENU_CW' */
           /* Entry 'start': '<S138>:195' */
-          RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+          RobotControl_B.turnRequest = 3U;
           RobotControl_DW.turnActive = true;
-        } else if (RobotControl_B.moveRequest ==
-                   RobotControl_P.ENU_MOVE_U_TURN_LEFT) {
+        } else if (RobotControl_B.moveRequest == 23) {
           /* Transition: '<S138>:35' */
           RobotControl_DW.is_c37_MOVH = RobotControl_IN_UturnLeft;
 
@@ -1769,12 +1738,12 @@ static void RobotControl_chartstep_c37_MOVH(void)
 
           /* Constant: '<S127>/ENU_CCW' */
           /* Entry 'start': '<S138>:90' */
-          RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+          RobotControl_B.turnRequest = 4U;
           RobotControl_DW.turnActive = true;
-        } else if (RobotControl_B.moveRequest == RobotControl_P.ENU_STOP) {
+        } else if (RobotControl_B.moveRequest == 5) {
           /* Constant: '<S127>/ENU_STOP' */
           /* Transition: '<S138>:39' */
-          RobotControl_B.turnRequest = RobotControl_P.ENU_STOP;
+          RobotControl_B.turnRequest = 5U;
           RobotControl_DW.is_c37_MOVH = RobotControl_IN_Stop;
 
           /* Constant: '<S127>/ENU_ROB_NONE' */
@@ -1782,7 +1751,7 @@ static void RobotControl_chartstep_c37_MOVH(void)
           /* Transition: '<S138>:309' */
           if ((RobotControl_B.OutportBufferForangleCalibStatu ==
                RobotControl_ENU_FINISHED) && (RobotControl_B.currentHeading ==
-               RobotControl_P.ENU_ROB_NONE)) {
+               400U)) {
             /* Transition: '<S138>:314' */
             /* Transition: '<S138>:316' */
             RobotControl_B.headingRequest = (uint16_T)RobotControl_B.ROB_NORTH;
@@ -1793,8 +1762,7 @@ static void RobotControl_chartstep_c37_MOVH(void)
           }
 
           /* Transition: '<S138>:333' */
-        } else if (RobotControl_B.moveRequest ==
-                   RobotControl_P.ENU_MOVE_TURN_RIGHT) {
+        } else if (RobotControl_B.moveRequest == 21) {
           /* Transition: '<S138>:227' */
           RobotControl_DW.is_c37_MOVH = RobotControl_IN_TurnRight;
 
@@ -1804,10 +1772,10 @@ static void RobotControl_chartstep_c37_MOVH(void)
 
           /* Constant: '<S127>/ENU_CW' */
           /* Entry 'start': '<S138>:226' */
-          RobotControl_B.turnRequest = RobotControl_P.ENU_CW;
+          RobotControl_B.turnRequest = 3U;
           RobotControl_DW.turnActive = true;
         } else {
-          if (RobotControl_B.moveRequest == RobotControl_P.ENU_MOVE_TURN_LEFT) {
+          if (RobotControl_B.moveRequest == 20) {
             /* Transition: '<S138>:229' */
             RobotControl_DW.is_c37_MOVH = RobotControl_IN_TurnLeft;
 
@@ -1817,7 +1785,7 @@ static void RobotControl_chartstep_c37_MOVH(void)
 
             /* Constant: '<S127>/ENU_CCW' */
             /* Entry 'start': '<S138>:239' */
-            RobotControl_B.turnRequest = RobotControl_P.ENU_CCW;
+            RobotControl_B.turnRequest = 4U;
             RobotControl_DW.turnActive = true;
           }
         }
@@ -1840,7 +1808,7 @@ static void RobotControl_chartstep_c37_MOVH(void)
         /* Transition: '<S138>:309' */
         if ((RobotControl_B.OutportBufferForangleCalibStatu ==
              RobotControl_ENU_FINISHED) && (RobotControl_B.currentHeading ==
-             RobotControl_P.ENU_ROB_NONE)) {
+             400U)) {
           /* Transition: '<S138>:314' */
           /* Transition: '<S138>:316' */
           RobotControl_B.headingRequest = (uint16_T)RobotControl_B.ROB_NORTH;
@@ -1937,7 +1905,7 @@ void RobotContr_MovementHandler_Init(void)
   RobotControl_DW.Unit_Delay3_DSTATE_c = false;
 
   /* InitializeConditions for UnitDelay: '<S22>/Unit_Delay4' */
-  RobotControl_DW.Unit_Delay4_DSTATE = RobotControl_P.CAL_NO_ERROR;
+  RobotControl_DW.Unit_Delay4_DSTATE = 0.0F;
 
   /* SystemInitialize for Chart: '<S130>/singleStepCalc' */
   RobotControl_DW.is_active_c36_MOVH = 0U;
@@ -1991,10 +1959,10 @@ void RobotControl_MovementHandler(void)
 {
   /* local block i/o variables */
   real32_T rtb_errorLmited;
+  real32_T rtb_error_DEG;
   real32_T rtb_errorPID_Input;
   real32_T rtb_Error;
   real32_T rtb_DataTypeConversion_b;
-  real32_T rtb_error_DEG;
   uint16_T rtb_Gain4;
   boolean_T rtb_Relational_Operator3;
   boolean_T rtb_Relational_Operator2;
@@ -2006,26 +1974,21 @@ void RobotControl_MovementHandler(void)
   real32_T rtb_Divide_e;
   int32_T rtb_headingRequest;
   real32_T rtb_CCW;
-  real32_T rtb_Init_g;
-  real32_T rtb_Add_d3;
-  real32_T rtb_Add_c;
+  real32_T rtb_Add_d;
   boolean_T zcEvent_idx_1;
-  uint16_T tmp;
 
   /* RelationalOperator: '<S124>/Relational_Operator' incorporates:
    *  Constant: '<S124>/ENU_FORWARD'
    *  UnitDelay: '<S22>/Unit_Delay5'
    */
-  rtb_Relational_Operator = (RobotControl_DW.Unit_Delay5_DSTATE_n ==
-    RobotControl_P.ENU_FORWARD);
+  rtb_Relational_Operator = (RobotControl_DW.Unit_Delay5_DSTATE_n == 1);
 
   /* Product: '<S124>/Divide' incorporates:
    *  Constant: '<S124>/CONST_TWO_F32'
    *  Sum: '<S124>/Add'
    */
   rtb_Divide_e = (RobotControl_B.Data_Type_Conversion_m +
-                  RobotControl_B.Data_Type_Conversion) /
-    RobotControl_P.CONST_TWO_F32;
+                  RobotControl_B.Data_Type_Conversion) / 2.0F;
 
   /* Chart: '<S130>/singleStepCalc' */
   /* Gateway: MovementHandler/EcoderTicksCalc/EncoderHandler/singleStepCalc */
@@ -2133,14 +2096,12 @@ void RobotControl_MovementHandler(void)
   /* RelationalOperator: '<S22>/Relational_Operator2' incorporates:
    *  Constant: '<S22>/ENU_STOP'
    */
-  rtb_Relational_Operator2_m = (RobotControl_B.turnRequest ==
-    RobotControl_P.ENU_STOP);
+  rtb_Relational_Operator2_m = (RobotControl_B.turnRequest == 5);
 
   /* RelationalOperator: '<S22>/Relational_Operator4' incorporates:
    *  Constant: '<S22>/ENU_TEST_INIT'
    */
-  rtb_Relational_Operator4 = (RobotControl_B.comTstStatus !=
-    RobotControl_P.ENU_TEST_INIT);
+  rtb_Relational_Operator4 = (RobotControl_B.comTstStatus != 5);
 
   /* Logic: '<S22>/Logical Operator1' incorporates:
    *  Constant: '<S22>/ENU_SHIFT_HEADING'
@@ -2148,78 +2109,30 @@ void RobotControl_MovementHandler(void)
    *  RelationalOperator: '<S22>/Relational_Operator6'
    */
   rtb_LogicalOperator1 = (rtb_Relational_Operator2_m && rtb_Relational_Operator4
-    && (RobotControl_B.currentRoutine != RobotControl_P.ENU_SHIFT_HEADING));
+    && (RobotControl_B.currentRoutine != 29));
 
   /* Gain: '<S125>/Gain5' */
-  if (RobotControl_P.CAL_thetaGain > 127) {
-    tmp = MAX_uint16_T;
-  } else {
-    tmp = (uint16_T)RobotControl_P.CAL_thetaGain << 9;
-  }
-
-  rtb_headingRequest = (int32_T)((uint32_T)tmp * RobotControl_B.headingRequest >>
-    9);
-
-  /* End of Gain: '<S125>/Gain5' */
+  rtb_headingRequest = (int32_T)(100UL * RobotControl_B.headingRequest);
 
   /* Sum: '<S125>/Subtract' */
   rtb_Divide_e = RobotControl_B.theta_mDeg - (real32_T)rtb_headingRequest;
 
-  /* Gain: '<S125>/Gain' */
-  if (RobotControl_P.CAL_thetaGain > 127) {
-    tmp = MAX_uint16_T;
-  } else {
-    tmp = (uint16_T)RobotControl_P.CAL_thetaGain << 9;
-  }
-
   /* Sum: '<S125>/Subtract2' incorporates:
-   *  Constant: '<S125>/CAL_fullCircle_DEG'
-   *  Gain: '<S125>/Gain'
    *  Sum: '<S125>/Subtract1'
    */
-  rtb_CCW = ((real32_T)((uint32_T)tmp * RobotControl_P.CAL_fullCircle_DEG >> 9)
-             + RobotControl_B.theta_mDeg) - (real32_T)rtb_headingRequest;
-
-  /* Gain: '<S125>/Gain1' */
-  if (RobotControl_P.CAL_thetaGain > 127) {
-    tmp = MAX_uint16_T;
-  } else {
-    tmp = (uint16_T)RobotControl_P.CAL_thetaGain << 9;
-  }
-
-  /* DataTypeConversion: '<S125>/Data_Type_Conversion1' incorporates:
-   *  Constant: '<S125>/CAL_halfCircle_DEG1'
-   *  Gain: '<S125>/Gain1'
-   */
-  rtb_error_DEG = (int16_T)((uint32_T)tmp * RobotControl_P.CAL_halfCircle_DEG >>
-    9);
+  rtb_CCW = (RobotControl_B.theta_mDeg + 36000.0F) - (real32_T)
+    rtb_headingRequest;
 
   /* RelationalOperator: '<S125>/Relational_Operator3' */
-  rtb_Relational_Operator3 = (rtb_CCW > rtb_error_DEG);
+  rtb_Relational_Operator3 = (rtb_CCW > 18000.0F);
 
   /* RelationalOperator: '<S125>/Relational_Operator1' incorporates:
    *  Constant: '<S125>/CONST_ZERO_F32'
    */
-  rtb_Relational_Operator1_hl = (rtb_Divide_e < RobotControl_P.CONST_ZERO_F32);
-
-  /* Gain: '<S125>/Gain3' incorporates:
-   *  Constant: '<S125>/CAL_halfCircle_DEG'
-   */
-  if (RobotControl_P.CAL_thetaGain > 127) {
-    tmp = MAX_uint16_T;
-  } else {
-    tmp = (uint16_T)RobotControl_P.CAL_thetaGain << 9;
-  }
-
-  rtb_Gain4 = (uint16_T)((uint32_T)tmp * RobotControl_P.CAL_halfCircle_DEG >> 9);
-
-  /* End of Gain: '<S125>/Gain3' */
-
-  /* DataTypeConversion: '<S125>/Data_Type_Conversion' */
-  rtb_error_DEG = rtb_Gain4;
+  rtb_Relational_Operator1_hl = (rtb_Divide_e < 0.0F);
 
   /* RelationalOperator: '<S125>/Relational_Operator2' */
-  rtb_Relational_Operator2 = (rtb_Divide_e > rtb_error_DEG);
+  rtb_Relational_Operator2 = (rtb_Divide_e > 18000.0F);
 
   /* Switch: '<S125>/Switch' incorporates:
    *  Switch: '<S125>/Switch1'
@@ -2232,52 +2145,29 @@ void RobotControl_MovementHandler(void)
     if (rtb_Relational_Operator3) {
       rtb_error_DEG = (real32_T)fabs(rtb_Divide_e);
     } else {
-      rtb_error_DEG = (real32_T)RobotControl_P.CONST_NegOne * rtb_CCW;
+      rtb_error_DEG = -rtb_CCW;
     }
 
     /* End of Switch: '<S125>/Switch2' */
   } else if (rtb_Relational_Operator2) {
-    /* Gain: '<S125>/Gain2' incorporates:
-     *  Switch: '<S125>/Switch1'
-     */
-    if (RobotControl_P.CAL_thetaGain > 127) {
-      tmp = MAX_uint16_T;
-    } else {
-      tmp = (uint16_T)RobotControl_P.CAL_thetaGain << 9;
-    }
-
     /* Switch: '<S125>/Switch1' incorporates:
      *  Abs: '<S125>/Abs1'
-     *  Constant: '<S125>/CAL_fullCircle_DEG1'
-     *  Gain: '<S125>/Gain2'
      *  Sum: '<S125>/Subtract3'
      *  Sum: '<S125>/Subtract4'
      */
     rtb_error_DEG = (real32_T)fabs(RobotControl_B.theta_mDeg - (real32_T)
-      ((int32_T)((uint32_T)tmp * RobotControl_P.CAL_fullCircle_DEG >> 9) +
-       rtb_headingRequest));
+      (rtb_headingRequest + 36000L));
   } else {
     /* Switch: '<S125>/Switch1' incorporates:
      *  Gain: '<S125>/Gain7'
      */
-    rtb_error_DEG = (real32_T)RobotControl_P.CONST_NegOne * rtb_Divide_e;
+    rtb_error_DEG = -rtb_Divide_e;
   }
 
   /* End of Switch: '<S125>/Switch' */
 
-  /* Gain: '<S125>/Gain4' */
-  if (RobotControl_P.CAL_thetaGain > 127) {
-    tmp = MAX_uint16_T;
-  } else {
-    tmp = (uint16_T)RobotControl_P.CAL_thetaGain << 9;
-  }
-
-  /* Product: '<S125>/Divide' incorporates:
-   *  Constant: '<S125>/CAL_halfCircle_DEG2'
-   *  Gain: '<S125>/Gain4'
-   */
-  rtb_errorPID_Input = rtb_error_DEG / (real32_T)(int16_T)((uint32_T)tmp *
-    RobotControl_P.CAL_halfCircle_DEG >> 9);
+  /* Product: '<S125>/Divide' */
+  rtb_errorPID_Input = rtb_error_DEG / 18000.0F;
 
   /* Switch: '<S136>/Init' incorporates:
    *  Constant: '<S136>/Initial Condition'
@@ -2288,15 +2178,15 @@ void RobotControl_MovementHandler(void)
    */
   if (RobotControl_DW.Unit_Delay2_DSTATE_o ||
       (RobotControl_DW.FixPtUnitDelay2_DSTATE_j != 0)) {
-    rtb_Divide_e = 0.0F;
+    rtb_CCW = 0.0F;
   } else {
-    rtb_Divide_e = RobotControl_DW.FixPtUnitDelay1_DSTATE_p;
+    rtb_CCW = RobotControl_DW.FixPtUnitDelay1_DSTATE_p;
   }
 
   /* End of Switch: '<S136>/Init' */
 
   /* Sum: '<S132>/Add2' */
-  rtb_CCW = rtb_errorPID_Input - rtb_Divide_e;
+  rtb_Divide_e = rtb_errorPID_Input - rtb_CCW;
 
   /* Switch: '<S137>/Init' incorporates:
    *  Constant: '<S137>/Initial Condition'
@@ -2307,50 +2197,49 @@ void RobotControl_MovementHandler(void)
    */
   if (RobotControl_DW.Unit_Delay2_DSTATE_o ||
       (RobotControl_DW.FixPtUnitDelay2_DSTATE_jh != 0)) {
-    rtb_Init_g = 0.0F;
+    rtb_CCW = 0.0F;
   } else {
-    rtb_Init_g = RobotControl_DW.FixPtUnitDelay1_DSTATE_l;
+    rtb_CCW = RobotControl_DW.FixPtUnitDelay1_DSTATE_l;
   }
 
   /* End of Switch: '<S137>/Init' */
 
   /* Sum: '<S132>/Add' */
-  rtb_Add_d3 = rtb_errorPID_Input + rtb_Init_g;
+  rtb_CCW += rtb_errorPID_Input;
 
   /* Sum: '<S132>/Add1' incorporates:
    *  Gain: '<S132>/Kd'
    *  Gain: '<S132>/Ki'
    *  Gain: '<S132>/Kp'
    */
-  rtb_Error = (RobotControl_P.CAL_Kd * rtb_CCW + RobotControl_P.CAL_Kp *
-               rtb_errorPID_Input) + RobotControl_P.CAL_Ki * rtb_Add_d3;
+  rtb_Error = (0.005F * rtb_Divide_e + 3.0F * rtb_errorPID_Input) + 0.003F *
+    rtb_CCW;
 
   /* Sum: '<S133>/Add' incorporates:
    *  UnitDelay: '<S125>/Unit Delay'
    */
-  rtb_Add_c = rtb_Error - RobotControl_DW.UnitDelay_DSTATE;
+  rtb_Add_d = rtb_Error - RobotControl_DW.UnitDelay_DSTATE;
 
   /* Switch: '<S133>/Switch' incorporates:
    *  Constant: '<S133>/Constant'
    *  MinMax: '<S133>/MinMax1'
    *  RelationalOperator: '<S133>/Relational Operator'
    */
-  if (rtb_Add_c > 0.0F) {
+  if (rtb_Add_d > 0.0F) {
     /* MinMax: '<S133>/MinMax' */
-    if (2.5F <= rtb_Add_c) {
+    if (2.5F <= rtb_Add_d) {
       rtb_DataTypeConversion_b = 2.5F;
     } else {
-      rtb_DataTypeConversion_b = rtb_Add_c;
+      rtb_DataTypeConversion_b = rtb_Add_d;
     }
 
     /* End of MinMax: '<S133>/MinMax' */
-  } else if ((rtb_Add_c >= RobotControl_ConstB.Gain) || rtIsNaNF
-             (RobotControl_ConstB.Gain)) {
+  } else if (rtb_Add_d >= -2.5F) {
     /* MinMax: '<S133>/MinMax1' */
-    rtb_DataTypeConversion_b = rtb_Add_c;
+    rtb_DataTypeConversion_b = rtb_Add_d;
   } else {
     /* MinMax: '<S133>/MinMax1' */
-    rtb_DataTypeConversion_b = RobotControl_ConstB.Gain;
+    rtb_DataTypeConversion_b = -2.5F;
   }
 
   /* End of Switch: '<S133>/Switch' */
@@ -2370,13 +2259,13 @@ void RobotControl_MovementHandler(void)
    *  Switch: '<S22>/Switch1'
    */
   if (rtb_LogicalOperator1) {
-    RobotControl_B.thetaError = RobotControl_P.CAL_NO_ERROR;
-  } else if ((RobotControl_B.turnRequest == RobotControl_P.ENU_FORWARD) ||
-             (RobotControl_B.turnRequest == RobotControl_P.ENU_BACKWARD)) {
+    RobotControl_B.thetaError = 0.0F;
+  } else if ((RobotControl_B.turnRequest == 1) || (RobotControl_B.turnRequest ==
+              2)) {
     /* Switch: '<S22>/Switch1' incorporates:
      *  Constant: '<S22>/CAL_NO_ERROR1'
      */
-    RobotControl_B.thetaError = RobotControl_P.CAL_NO_ERROR;
+    RobotControl_B.thetaError = 0.0F;
   } else {
     RobotControl_B.thetaError = rtb_errorLmited;
   }
@@ -2424,36 +2313,24 @@ void RobotControl_MovementHandler(void)
    */
   if (RobotControl_DW.Unit_Delay3_DSTATE_c) {
     RobotControl_B.turnRequestFiltered = RobotControl_B.turnRequest;
-  } else if (RobotControl_DW.Unit_Delay4_DSTATE > RobotControl_P.CONST_ZERO_F32)
-  {
+  } else if (RobotControl_DW.Unit_Delay4_DSTATE > 0.0F) {
     /* Switch: '<S129>/Switch1' incorporates:
      *  Constant: '<S129>/ENU_CW'
      */
-    RobotControl_B.turnRequestFiltered = RobotControl_P.ENU_CW;
+    RobotControl_B.turnRequestFiltered = 3U;
   } else {
-    RobotControl_B.turnRequestFiltered = RobotControl_P.ENU_CCW;
+    RobotControl_B.turnRequestFiltered = 4U;
   }
 
   /* End of Switch: '<S129>/Switch' */
 
   /* Gain: '<S22>/Gain4' */
-  if (RobotControl_P.CAL_thetaGain > 127) {
-    tmp = MAX_uint16_T;
-  } else {
-    tmp = (uint16_T)RobotControl_P.CAL_thetaGain << 9;
-  }
-
-  rtb_Gain4 = (uint16_T)((uint32_T)tmp * RobotControl_B.headingRequest >> 9);
-
-  /* End of Gain: '<S22>/Gain4' */
+  rtb_Gain4 = 100U * RobotControl_B.headingRequest;
 
   /* DataTypeConversion: '<S125>/Data Type Conversion' */
   rtb_DataTypeConversion_b = (real32_T)rtb_headingRequest;
 
   /* Switch: '<S136>/Reset' incorporates:
-   *  Constant: '<S132>/CONST_EnableDelay1'
-   *  Switch: '<S134>/Enable'
-   *  Switch: '<S135>/Enable'
    *  Switch: '<S137>/Reset'
    *  UnitDelay: '<S22>/Unit_Delay2'
    */
@@ -2467,26 +2344,12 @@ void RobotControl_MovementHandler(void)
      *  Constant: '<S137>/Initial Condition'
      */
     RobotControl_DW.FixPtUnitDelay1_DSTATE_l = 0.0F;
-  } else if (RobotControl_P.CONST_EnableDelay) {
-    /* Switch: '<S134>/Enable' incorporates:
-     *  Update for UnitDelay: '<S136>/FixPt Unit Delay1'
-     */
-    RobotControl_DW.FixPtUnitDelay1_DSTATE_p = rtb_CCW;
-
-    /* Switch: '<S135>/Enable' incorporates:
-     *  Update for UnitDelay: '<S137>/FixPt Unit Delay1'
-     */
-    RobotControl_DW.FixPtUnitDelay1_DSTATE_l = rtb_Add_d3;
   } else {
-    /* Update for UnitDelay: '<S136>/FixPt Unit Delay1' incorporates:
-     *  Switch: '<S134>/Enable'
-     */
+    /* Update for UnitDelay: '<S136>/FixPt Unit Delay1' */
     RobotControl_DW.FixPtUnitDelay1_DSTATE_p = rtb_Divide_e;
 
-    /* Update for UnitDelay: '<S137>/FixPt Unit Delay1' incorporates:
-     *  Switch: '<S135>/Enable'
-     */
-    RobotControl_DW.FixPtUnitDelay1_DSTATE_l = rtb_Init_g;
+    /* Update for UnitDelay: '<S137>/FixPt Unit Delay1' */
+    RobotControl_DW.FixPtUnitDelay1_DSTATE_l = rtb_CCW;
   }
 
   /* End of Switch: '<S136>/Reset' */
@@ -2494,14 +2357,12 @@ void RobotControl_MovementHandler(void)
   /* RelationalOperator: '<S126>/Relational_Operator2' incorporates:
    *  Constant: '<S126>/ENU_FORWARD4'
    */
-  rtb_Relational_Operator = (RobotControl_B.turnRequestFiltered ==
-    RobotControl_P.ENU_FORWARD);
+  rtb_Relational_Operator = (RobotControl_B.turnRequestFiltered == 1);
 
   /* RelationalOperator: '<S126>/Relational_Operator3' incorporates:
    *  Constant: '<S126>/ENU_BACKWARD3'
    */
-  zcEvent_idx_1 = (RobotControl_B.turnRequestFiltered ==
-                   RobotControl_P.ENU_BACKWARD);
+  zcEvent_idx_1 = (RobotControl_B.turnRequestFiltered == 2);
 
   /* Switch: '<S126>/Switch' incorporates:
    *  Constant: '<S126>/ENU_BACKWARD'
@@ -2516,31 +2377,31 @@ void RobotControl_MovementHandler(void)
    *  Switch: '<S126>/Switch2'
    *  Switch: '<S126>/Switch3'
    */
-  if (RobotControl_B.turnRequestFiltered == RobotControl_P.ENU_CCW) {
-    RobotControl_B.rightMotorRequest = RobotControl_P.ENU_FORWARD;
-    RobotControl_B.leftMotorRequest = RobotControl_P.ENU_BACKWARD;
-  } else if (RobotControl_B.turnRequestFiltered == RobotControl_P.ENU_CW) {
+  if (RobotControl_B.turnRequestFiltered == 4) {
+    RobotControl_B.rightMotorRequest = 1U;
+    RobotControl_B.leftMotorRequest = 2U;
+  } else if (RobotControl_B.turnRequestFiltered == 3) {
     /* Switch: '<S126>/Switch1' incorporates:
      *  Constant: '<S126>/ENU_BACKWARD1'
      */
-    RobotControl_B.rightMotorRequest = RobotControl_P.ENU_BACKWARD;
+    RobotControl_B.rightMotorRequest = 2U;
 
     /* Switch: '<S126>/Switch1' incorporates:
      *  Constant: '<S126>/ENU_FORWARD1'
      */
-    RobotControl_B.leftMotorRequest = RobotControl_P.ENU_FORWARD;
+    RobotControl_B.leftMotorRequest = 1U;
   } else if (rtb_Relational_Operator) {
     /* Switch: '<S126>/Switch2' incorporates:
      *  Constant: '<S126>/ENU_FORWARD3'
      *  Switch: '<S126>/Switch1'
      */
-    RobotControl_B.rightMotorRequest = RobotControl_P.ENU_FORWARD;
+    RobotControl_B.rightMotorRequest = 1U;
 
     /* Switch: '<S126>/Switch2' incorporates:
      *  Constant: '<S126>/ENU_FORWARD2'
      *  Switch: '<S126>/Switch1'
      */
-    RobotControl_B.leftMotorRequest = RobotControl_P.ENU_FORWARD;
+    RobotControl_B.leftMotorRequest = 1U;
   } else {
     if (zcEvent_idx_1) {
       /* Switch: '<S126>/Switch3' incorporates:
@@ -2548,9 +2409,9 @@ void RobotControl_MovementHandler(void)
        *  Switch: '<S126>/Switch1'
        *  Switch: '<S126>/Switch2'
        */
-      RobotControl_B.rightMotorRequest = RobotControl_P.ENU_BACKWARD;
+      RobotControl_B.rightMotorRequest = 2U;
     } else {
-      RobotControl_B.rightMotorRequest = RobotControl_P.ENU_STOP;
+      RobotControl_B.rightMotorRequest = 5U;
     }
 
     /* Switch: '<S126>/Switch3' incorporates:
@@ -2562,9 +2423,9 @@ void RobotControl_MovementHandler(void)
      *  Switch: '<S126>/Switch3'
      */
     if (zcEvent_idx_1) {
-      RobotControl_B.leftMotorRequest = RobotControl_P.ENU_BACKWARD;
+      RobotControl_B.leftMotorRequest = 2U;
     } else {
-      RobotControl_B.leftMotorRequest = RobotControl_P.ENU_STOP;
+      RobotControl_B.leftMotorRequest = 5U;
     }
 
     /* End of Switch: '<S126>/Switch3' */

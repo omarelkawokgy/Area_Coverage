@@ -3,9 +3,9 @@
  *
  * Code generation for model "RobotControl".
  *
- * Model version              : 1.500
+ * Model version              : 1.509
  * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Mon Jul 27 18:15:17 2020
+ * C source code generated on : Thu Jul 30 11:39:58 2020
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -18,20 +18,6 @@
 #define RTW_HEADER_RobotControl_private_h_
 #include "rtwtypes.h"
 #include "multiword_types.h"
-
-/* Private macros used by the generated code to access rtModel */
-#ifndef rtmSetTFinal
-# define rtmSetTFinal(rtm, val)        ((rtm)->Timing.tFinal = (val))
-#endif
-
-#ifndef rtmGetTPtr
-# define rtmGetTPtr(rtm)               ((rtm)->Timing.t)
-#endif
-
-#ifndef rtmSetTPtr
-# define rtmSetTPtr(rtm, val)          ((rtm)->Timing.t = (val))
-#endif
-
 #ifndef UCHAR_MAX
 #include <limits.h>
 #endif
@@ -80,10 +66,10 @@ Verification pane for ERT based targets, which will disable the \
 preprocessor word size checks.
 #endif
 
+extern void CompassSFunc_Outputs_wrapper(int16_T *Temp_angle);
 extern void ULSL_Hndler_Outputs_wrapper(const uint8_T *ULSL_Pin,
   uint16_T *ULSL_cm);
 extern void ULSR_Hndler_Outputs_wrapper(const uint8_T *ULSR_Pin,
   uint16_T *ULSR_cm);
-extern void CompassSFunc(SimStruct *rts);
 
 #endif                                 /* RTW_HEADER_RobotControl_private_h_ */
