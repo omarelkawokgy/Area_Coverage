@@ -1,13 +1,16 @@
 /*
- * Code generation for system system '<S1>/COM_A4SCA_A5SCL'
+ * File: COM_A4SCA_A5SCL.c
  *
- * Model                      : RobotControl
- * Model version              : 1.509
- * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Thu Jul 30 11:39:58 2020
+ * Code generated for Simulink model 'RobotControl'.
  *
- * Note that the functions contained in this file are part of a Simulink
- * model, and are not self-contained algorithms.
+ * Model version                  : 1.553
+ * Simulink Coder version         : 8.11 (R2016b) 25-Aug-2016
+ * C/C++ source code generated on : Wed Aug 05 14:53:55 2020
+ *
+ * Target selection: ert.tlc
+ * Embedded hardware selection: Atmel->AVR
+ * Code generation objectives: Unspecified
+ * Validation result: Not run
  */
 
 #include "COM_A4SCA_A5SCL.h"
@@ -19,13 +22,24 @@
 /* System initialize for function-call system: '<S1>/COM_A4SCA_A5SCL' */
 void RobotContr_COM_A4SCA_A5SCL_Init(void)
 {
-  /* SystemInitialize for Outport: '<S5>/thetaCompass' */
-  RobotControl_B.COM_A4SCA_A5SCL = 0;
+  /* SystemInitialize for Chart: '<S5>/COM_A4SCA_A5SCL_Chart' */
+  RobotControl_B.rawCompassValue = 0;
 }
 
 /* Output and update for function-call system: '<S1>/COM_A4SCA_A5SCL' */
 void RobotControl_COM_A4SCA_A5SCL(void)
 {
-  /* S-Function (CompassSFunc): '<S5>/COM_A4SCA_A5SCL' */
-  CompassSFunc_Outputs_wrapper( &RobotControl_B.COM_A4SCA_A5SCL );
+  /* Chart: '<S5>/COM_A4SCA_A5SCL_Chart' */
+  /* Gateway: InputHandler/COM_A4SCA_A5SCL/COM_A4SCA_A5SCL_Chart */
+  /* During: InputHandler/COM_A4SCA_A5SCL/COM_A4SCA_A5SCL_Chart */
+  /* Entry Internal: InputHandler/COM_A4SCA_A5SCL/COM_A4SCA_A5SCL_Chart */
+  /* Transition: '<S10>:2' */
+  /* Transition: '<S10>:4' */
+  HMC5883L_CompassRead(&RobotControl_B.rawCompassValue);
 }
+
+/*
+ * File trailer for generated code.
+ *
+ * [EOF]
+ */

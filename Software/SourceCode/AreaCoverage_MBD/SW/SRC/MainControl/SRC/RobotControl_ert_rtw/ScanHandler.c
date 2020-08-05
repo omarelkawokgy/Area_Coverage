@@ -1,13 +1,16 @@
 /*
- * Code generation for system system '<S16>/ScanHandler'
+ * File: ScanHandler.c
  *
- * Model                      : RobotControl
- * Model version              : 1.509
- * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Thu Jul 30 11:39:58 2020
+ * Code generated for Simulink model 'RobotControl'.
  *
- * Note that the functions contained in this file are part of a Simulink
- * model, and are not self-contained algorithms.
+ * Model version                  : 1.553
+ * Simulink Coder version         : 8.11 (R2016b) 25-Aug-2016
+ * C/C++ source code generated on : Wed Aug 05 14:53:55 2020
+ *
+ * Target selection: ert.tlc
+ * Embedded hardware selection: Atmel->AVR
+ * Code generation objectives: Unspecified
+ * Validation result: Not run
  */
 
 #include "ScanHandler.h"
@@ -19,136 +22,106 @@
 /* System initialize for function-call system: '<S1>/ULS_AnalogIn' */
 void RobotControl_ULS_AnalogIn_Init(void)
 {
-  /* SystemInitialize for Outport: '<S9>/ULSL_cm' */
-  RobotControl_B.ULSL_D8R_D7L = 0U;
+  /* SystemInitialize for Chart: '<S9>/ULSL_D8R_D7L_Chart' */
+  RobotControl_B.ULSL_cm = 0U;
 
-  /* SystemInitialize for Outport: '<S9>/ULSR_cm' */
-  RobotControl_B.ULSR_D8R_D7L1 = 0U;
+  /* SystemInitialize for Chart: '<S9>/ULSR_D8R_D7L_Chart' */
+  RobotControl_B.ULSR_cm = 0U;
 }
 
 /* Output and update for function-call system: '<S1>/ULS_AnalogIn' */
 void RobotControl_ULS_AnalogIn(void)
 {
-  /* S-Function (ULSL_Hndler): '<S9>/ULSL_D8R_D7L' */
-  ULSL_Hndler_Outputs_wrapper(&RobotControl_ConstB.DataTypeConversion,
-    &RobotControl_B.ULSL_D8R_D7L );
+  /* Chart: '<S9>/ULSL_D8R_D7L_Chart' incorporates:
+   *  Constant: '<S9>/DigitalPin7'
+   */
+  /* Gateway: InputHandler/ULS_AnalogIn/ULSL_D8R_D7L_Chart */
+  /* During: InputHandler/ULS_AnalogIn/ULSL_D8R_D7L_Chart */
+  /* Entry Internal: InputHandler/ULS_AnalogIn/ULSL_D8R_D7L_Chart */
+  /* Transition: '<S13>:2' */
+  /* Transition: '<S13>:4' */
+  ULSL_Hndler_Outputs_wrapper(((uint8_T)PIN_D7), &RobotControl_B.ULSL_cm);
 
-  /* S-Function (ULSR_Hndler): '<S9>/ULSR_D8R_D7L1' */
-  ULSR_Hndler_Outputs_wrapper(&RobotControl_ConstB.DataTypeConversion1,
-    &RobotControl_B.ULSR_D8R_D7L1 );
+  /* Chart: '<S9>/ULSR_D8R_D7L_Chart' incorporates:
+   *  Constant: '<S9>/DigitalPin8'
+   */
+  /* Gateway: InputHandler/ULS_AnalogIn/ULSR_D8R_D7L_Chart */
+  /* During: InputHandler/ULS_AnalogIn/ULSR_D8R_D7L_Chart */
+  /* Entry Internal: InputHandler/ULS_AnalogIn/ULSR_D8R_D7L_Chart */
+  /* Transition: '<S14>:2' */
+  /* Transition: '<S14>:4' */
+  ULSR_Hndler_Outputs_wrapper(((uint8_T)PIN_D8), &RobotControl_B.ULSR_cm);
 }
 
-/* System initialize for function-call system: '<S16>/ScanHandler' */
-void RobotControl_ScanHandler_Init(void)
-{
-  /* InitializeConditions for Delay: '<S142>/Delay1' */
-  RobotControl_DW.Delay1_DSTATE_p = 0;
-
-  /* InitializeConditions for Delay: '<S142>/Delay' */
-  RobotControl_DW.Delay_DSTATE_k[0] = 0;
-
-  /* InitializeConditions for Delay: '<S141>/Delay' */
-  RobotControl_DW.Delay_DSTATE_f[0] = 0;
-
-  /* InitializeConditions for Delay: '<S142>/Delay' */
-  RobotControl_DW.Delay_DSTATE_k[1] = 0;
-
-  /* InitializeConditions for Delay: '<S141>/Delay' */
-  RobotControl_DW.Delay_DSTATE_f[1] = 0;
-
-  /* InitializeConditions for Delay: '<S142>/Delay' */
-  RobotControl_DW.Delay_DSTATE_k[2] = 0;
-
-  /* InitializeConditions for Delay: '<S141>/Delay' */
-  RobotControl_DW.Delay_DSTATE_f[2] = 0;
-
-  /* InitializeConditions for Delay: '<S142>/Delay' */
-  RobotControl_DW.Delay_DSTATE_k[3] = 0;
-
-  /* InitializeConditions for Delay: '<S141>/Delay' */
-  RobotControl_DW.Delay_DSTATE_f[3] = 0;
-
-  /* InitializeConditions for Delay: '<S141>/Delay1' */
-  RobotControl_DW.Delay1_DSTATE_pw = 0;
-
-  /* SystemInitialize for Outport: '<S23>/leftBlocks' */
-  RobotControl_B.leftBlocks = 0U;
-
-  /* SystemInitialize for Outport: '<S23>/rightBlocks' */
-  RobotControl_B.rightBlocks = 0U;
-}
-
-/* Output and update for function-call system: '<S16>/ScanHandler' */
+/* Output and update for function-call system: '<S21>/ScanHandler' */
 void RobotControl_ScanHandler(void)
 {
-  /* local block i/o variables */
-  real32_T rtb_Divide;
-  real32_T rtb_Data_Type_Conversion_c;
   int16_T rtb_DataTypeConversion1;
-  int16_T rtb_DataTypeConversion_l;
-  int16_T rtb_Add5;
-  int16_T rtb_Add5_a;
+  int16_T rtb_Add5_m;
+  int16_T rtb_DataTypeConversion_c;
+  int16_T rtb_Add5_c;
 
-  /* DataTypeConversion: '<S140>/Data Type Conversion1' */
-  rtb_DataTypeConversion1 = (int16_T)RobotControl_B.ULSL_D8R_D7L;
+  /* DataTypeConversion: '<S145>/Data Type Conversion1' */
+  rtb_DataTypeConversion1 = (int16_T)RobotControl_B.ULSL_cm;
 
-  /* Sum: '<S142>/Add5' incorporates:
-   *  Delay: '<S142>/Delay'
-   *  Delay: '<S142>/Delay1'
-   *  Sum: '<S142>/Add4'
+  /* Sum: '<S147>/Add5' incorporates:
+   *  Delay: '<S147>/Delay'
+   *  Delay: '<S147>/Delay1'
+   *  Sum: '<S147>/Add4'
    */
-  rtb_Add5 = (rtb_DataTypeConversion1 - RobotControl_DW.Delay_DSTATE_k[0]) +
+  rtb_Add5_m = (rtb_DataTypeConversion1 - RobotControl_DW.Delay_DSTATE_k[0]) +
     RobotControl_DW.Delay1_DSTATE_p;
 
-  /* DataTypeConversion: '<S142>/Data_Type_Conversion' incorporates:
-   *  Gain: '<S142>/Gain3'
+  /* DataTypeConversion: '<S145>/Data_Type_Conversion' incorporates:
+   *  Constant: '<S145>/CAL_ROBO_LENG1'
+   *  DataTypeConversion: '<S147>/Data_Type_Conversion'
+   *  Gain: '<S147>/Gain3'
+   *  Product: '<S145>/Divide1'
    */
-  rtb_Divide = (real32_T)((int32_T)rtb_Add5 << 14) * 1.52587891E-5F;
+  RobotControl_B.leftBlocks = (uint16_T)((real32_T)((int32_T)rtb_Add5_m << 14) *
+    1.52587891E-5F / (real32_T)((uint8_T)CAL_ROBO_LENG));
 
-  /* Product: '<S140>/Divide1' */
-  rtb_Data_Type_Conversion_c = rtb_Divide / 25.0F;
+  /* DataTypeConversion: '<S145>/Data Type Conversion' */
+  rtb_DataTypeConversion_c = (int16_T)RobotControl_B.ULSR_cm;
 
-  /* DataTypeConversion: '<S140>/Data_Type_Conversion' */
-  RobotControl_B.leftBlocks = (uint16_T)rtb_Data_Type_Conversion_c;
-
-  /* DataTypeConversion: '<S140>/Data Type Conversion' */
-  rtb_DataTypeConversion_l = (int16_T)RobotControl_B.ULSR_D8R_D7L1;
-
-  /* Sum: '<S141>/Add5' incorporates:
-   *  Delay: '<S141>/Delay'
-   *  Delay: '<S141>/Delay1'
-   *  Sum: '<S141>/Add4'
+  /* Sum: '<S146>/Add5' incorporates:
+   *  Delay: '<S146>/Delay'
+   *  Delay: '<S146>/Delay1'
+   *  Sum: '<S146>/Add4'
    */
-  rtb_Add5_a = (rtb_DataTypeConversion_l - RobotControl_DW.Delay_DSTATE_f[0]) +
+  rtb_Add5_c = (rtb_DataTypeConversion_c - RobotControl_DW.Delay_DSTATE_f[0]) +
     RobotControl_DW.Delay1_DSTATE_pw;
 
-  /* DataTypeConversion: '<S141>/Data_Type_Conversion' incorporates:
-   *  Gain: '<S141>/Gain3'
+  /* DataTypeConversion: '<S145>/Data_Type_Conversion1' incorporates:
+   *  Constant: '<S145>/CAL_ROBO_LENG'
+   *  DataTypeConversion: '<S146>/Data_Type_Conversion'
+   *  Gain: '<S146>/Gain3'
+   *  Product: '<S145>/Divide'
    */
-  rtb_Data_Type_Conversion_c = (real32_T)((int32_T)rtb_Add5_a << 14) *
-    1.52587891E-5F;
+  RobotControl_B.rightBlocks = (uint16_T)((real32_T)((int32_T)rtb_Add5_c << 14) *
+    1.52587891E-5F / (real32_T)((uint8_T)CAL_ROBO_LENG));
 
-  /* Product: '<S140>/Divide' */
-  rtb_Divide = rtb_Data_Type_Conversion_c / 25.0F;
-
-  /* DataTypeConversion: '<S140>/Data_Type_Conversion1' */
-  RobotControl_B.rightBlocks = (uint16_T)rtb_Divide;
-
-  /* Update for Delay: '<S142>/Delay' */
+  /* Update for Delay: '<S147>/Delay' */
   RobotControl_DW.Delay_DSTATE_k[0] = RobotControl_DW.Delay_DSTATE_k[1];
   RobotControl_DW.Delay_DSTATE_k[1] = RobotControl_DW.Delay_DSTATE_k[2];
   RobotControl_DW.Delay_DSTATE_k[2] = RobotControl_DW.Delay_DSTATE_k[3];
   RobotControl_DW.Delay_DSTATE_k[3] = rtb_DataTypeConversion1;
 
-  /* Update for Delay: '<S142>/Delay1' */
-  RobotControl_DW.Delay1_DSTATE_p = rtb_Add5;
+  /* Update for Delay: '<S147>/Delay1' */
+  RobotControl_DW.Delay1_DSTATE_p = rtb_Add5_m;
 
-  /* Update for Delay: '<S141>/Delay' */
+  /* Update for Delay: '<S146>/Delay' */
   RobotControl_DW.Delay_DSTATE_f[0] = RobotControl_DW.Delay_DSTATE_f[1];
   RobotControl_DW.Delay_DSTATE_f[1] = RobotControl_DW.Delay_DSTATE_f[2];
   RobotControl_DW.Delay_DSTATE_f[2] = RobotControl_DW.Delay_DSTATE_f[3];
-  RobotControl_DW.Delay_DSTATE_f[3] = rtb_DataTypeConversion_l;
+  RobotControl_DW.Delay_DSTATE_f[3] = rtb_DataTypeConversion_c;
 
-  /* Update for Delay: '<S141>/Delay1' */
-  RobotControl_DW.Delay1_DSTATE_pw = rtb_Add5_a;
+  /* Update for Delay: '<S146>/Delay1' */
+  RobotControl_DW.Delay1_DSTATE_pw = rtb_Add5_c;
 }
+
+/*
+ * File trailer for generated code.
+ *
+ * [EOF]
+ */

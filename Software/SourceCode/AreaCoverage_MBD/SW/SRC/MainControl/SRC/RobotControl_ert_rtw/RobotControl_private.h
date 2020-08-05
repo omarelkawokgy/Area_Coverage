@@ -1,14 +1,13 @@
 /*
- * RobotControl_private.h
+ * File: RobotControl_private.h
  *
- * Code generation for model "RobotControl".
+ * Code generated for Simulink model 'RobotControl'.
  *
- * Model version              : 1.509
- * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Thu Jul 30 11:39:58 2020
+ * Model version                  : 1.553
+ * Simulink Coder version         : 8.11 (R2016b) 25-Aug-2016
+ * C/C++ source code generated on : Wed Aug 05 14:53:55 2020
  *
  * Target selection: ert.tlc
- * Note: GRT includes extra infrastructure and instrumentation for prototyping
  * Embedded hardware selection: Atmel->AVR
  * Code generation objectives: Unspecified
  * Validation result: Not run
@@ -17,7 +16,8 @@
 #ifndef RTW_HEADER_RobotControl_private_h_
 #define RTW_HEADER_RobotControl_private_h_
 #include "rtwtypes.h"
-#include "multiword_types.h"
+#include "zero_crossing_types.h"
+#include "RobotControl.h"
 #ifndef UCHAR_MAX
 #include <limits.h>
 #endif
@@ -66,10 +66,13 @@ Verification pane for ERT based targets, which will disable the \
 preprocessor word size checks.
 #endif
 
-extern void CompassSFunc_Outputs_wrapper(int16_T *Temp_angle);
-extern void ULSL_Hndler_Outputs_wrapper(const uint8_T *ULSL_Pin,
-  uint16_T *ULSL_cm);
-extern void ULSR_Hndler_Outputs_wrapper(const uint8_T *ULSR_Pin,
-  uint16_T *ULSR_cm);
+extern void RobotControl_Digital_OUT_PWM(uint8_T rtu_pin, uint8_T rtu_value);
+extern void RobotControl_Digital_OUT_bool(uint8_T rtu_pin, boolean_T rtu_value);
 
 #endif                                 /* RTW_HEADER_RobotControl_private_h_ */
+
+/*
+ * File trailer for generated code.
+ *
+ * [EOF]
+ */

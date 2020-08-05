@@ -1,14 +1,13 @@
 /*
- * RobotControl_data.c
+ * File: RobotControl_data.c
  *
- * Code generation for model "RobotControl".
+ * Code generated for Simulink model 'RobotControl'.
  *
- * Model version              : 1.509
- * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Thu Jul 30 11:39:58 2020
+ * Model version                  : 1.553
+ * Simulink Coder version         : 8.11 (R2016b) 25-Aug-2016
+ * C/C++ source code generated on : Wed Aug 05 14:53:55 2020
  *
  * Target selection: ert.tlc
- * Note: GRT includes extra infrastructure and instrumentation for prototyping
  * Embedded hardware selection: Atmel->AVR
  * Code generation objectives: Unspecified
  * Validation result: Not run
@@ -19,6 +18,15 @@
 
 /* Invariant block signals (auto storage) */
 const ConstB_RobotControl_T RobotControl_ConstB = {
-  7U,                                  /* '<S9>/Data Type Conversion' */
-  8U                                   /* '<S9>/Data Type Conversion1' */
+  57.295779513082323,                  /* '<S38>/Divide' */
+  57.295779513082323,                  /* '<S63>/Divide' */
+  -2.5F,                               /* '<S138>/Gain' */
+  1,                                   /* '<S104>/Logical_Operator' */
+  1                                    /* '<S24>/Logical_Operator' */
 };
+
+/*
+ * File trailer for generated code.
+ *
+ * [EOF]
+ */

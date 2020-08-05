@@ -1,13 +1,16 @@
 /*
- * Code generation for system system '<S16>/motorHandler'
+ * File: motorHandler.c
  *
- * Model                      : RobotControl
- * Model version              : 1.509
- * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Thu Jul 30 11:39:58 2020
+ * Code generated for Simulink model 'RobotControl'.
  *
- * Note that the functions contained in this file are part of a Simulink
- * model, and are not self-contained algorithms.
+ * Model version                  : 1.553
+ * Simulink Coder version         : 8.11 (R2016b) 25-Aug-2016
+ * C/C++ source code generated on : Wed Aug 05 14:53:55 2020
+ *
+ * Target selection: ert.tlc
+ * Embedded hardware selection: Atmel->AVR
+ * Code generation objectives: Unspecified
+ * Validation result: Not run
  */
 
 #include "motorHandler.h"
@@ -16,57 +19,47 @@
 #include "RobotControl.h"
 #include "RobotControl_private.h"
 
-/* System initialize for function-call system: '<S16>/motorHandler' */
+/* System initialize for function-call system: '<S21>/motorHandler' */
 void RobotControl_motorHandler_Init(void)
 {
-  /* InitializeConditions for UnitDelay: '<S147>/FixPt Unit Delay2' */
+  /* InitializeConditions for UnitDelay: '<S152>/FixPt Unit Delay2' */
   RobotControl_DW.FixPtUnitDelay2_DSTATE = 1U;
 
-  /* InitializeConditions for UnitDelay: '<S147>/FixPt Unit Delay1' */
+  /* InitializeConditions for UnitDelay: '<S152>/FixPt Unit Delay1' */
   RobotControl_DW.FixPtUnitDelay1_DSTATE = 0.001F;
-
-  /* SystemInitialize for Outport: '<S25>/leftPosPin' */
-  RobotControl_B.leftPosPin = 0U;
-
-  /* SystemInitialize for Outport: '<S25>/leftNegPin' */
-  RobotControl_B.leftNegPin = 0U;
-
-  /* SystemInitialize for Outport: '<S25>/rightPosPin' */
-  RobotControl_B.rightPosPin = 0U;
-
-  /* SystemInitialize for Outport: '<S25>/rightNegPin' */
-  RobotControl_B.rightNegPin = 0U;
 }
 
-/* Output and update for function-call system: '<S16>/motorHandler' */
+/* Output and update for function-call system: '<S21>/motorHandler' */
 void RobotControl_motorHandler(void)
 {
   real32_T rtb_Abs_i;
-  boolean_T rtb_Relational_Operator;
+  boolean_T rtb_LogicalOperator_l;
   boolean_T rtb_Logical_Operator_pe;
   uint8_T rtb_Product;
+  uint8_T rtb_Switch4;
   real32_T rtb_Add_p;
 
-  /* Abs: '<S25>/Abs' */
+  /* Abs: '<S30>/Abs' */
   rtb_Abs_i = (real32_T)fabs(RobotControl_B.thetaError);
 
-  /* Logic: '<S25>/Logical Operator' incorporates:
-   *  Constant: '<S25>/ENU_FORWARD'
-   *  Constant: '<S25>/ENU_FORWARD1'
-   *  RelationalOperator: '<S25>/Relational_Operator'
-   *  RelationalOperator: '<S25>/Relational_Operator1'
+  /* Logic: '<S30>/Logical Operator' incorporates:
+   *  Constant: '<S30>/ENU_FORWARD'
+   *  Constant: '<S30>/ENU_FORWARD1'
+   *  RelationalOperator: '<S30>/Relational_Operator'
+   *  RelationalOperator: '<S30>/Relational_Operator1'
    */
-  rtb_Relational_Operator = ((RobotControl_B.turnRequestFiltered == 1) ||
-    (RobotControl_B.turnRequestFiltered == 2));
+  rtb_LogicalOperator_l = ((RobotControl_B.turnRequestFiltered == ((uint8_T)
+    ENU_FORWARD)) || (RobotControl_B.turnRequestFiltered == ((uint8_T)
+    ENU_BACKWARD)));
 
-  /* Logic: '<S25>/Logical_Operator' */
-  rtb_Logical_Operator_pe = !rtb_Relational_Operator;
+  /* Logic: '<S30>/Logical_Operator' */
+  rtb_Logical_Operator_pe = !rtb_LogicalOperator_l;
 
-  /* Switch: '<S147>/Init' incorporates:
-   *  Constant: '<S147>/Initial Condition'
-   *  Logic: '<S147>/FixPt Logical Operator'
-   *  UnitDelay: '<S147>/FixPt Unit Delay1'
-   *  UnitDelay: '<S147>/FixPt Unit Delay2'
+  /* Switch: '<S152>/Init' incorporates:
+   *  Constant: '<S152>/Initial Condition'
+   *  Logic: '<S152>/FixPt Logical Operator'
+   *  UnitDelay: '<S152>/FixPt Unit Delay1'
+   *  UnitDelay: '<S152>/FixPt Unit Delay2'
    */
   if (rtb_Logical_Operator_pe || (RobotControl_DW.FixPtUnitDelay2_DSTATE != 0))
   {
@@ -75,155 +68,197 @@ void RobotControl_motorHandler(void)
     rtb_Add_p = RobotControl_DW.FixPtUnitDelay1_DSTATE;
   }
 
-  /* End of Switch: '<S147>/Init' */
+  /* End of Switch: '<S152>/Init' */
 
-  /* Sum: '<S25>/Add' incorporates:
-   *  Constant: '<S25>/CAL_forwardStartIncr'
+  /* Sum: '<S30>/Add' incorporates:
+   *  Constant: '<S30>/CAL_forwardStartIncr'
    */
-  rtb_Add_p += 0.001F + rtb_Abs_i;
+  rtb_Add_p += CAL_forwardStartIncr + rtb_Abs_i;
 
-  /* Switch: '<S25>/Switch' incorporates:
-   *  Saturate: '<S25>/Saturation1'
+  /* Switch: '<S30>/Switch2' incorporates:
+   *  Constant: '<S30>/CAL_MOTOR_HIGH'
+   *  Constant: '<S30>/CONST_EndOfLineEnableFlg'
+   *  Product: '<S30>/Divide'
+   *  Saturate: '<S30>/Saturation1'
+   *  Switch: '<S30>/Switch'
+   *  Switch: '<S30>/Switch3'
    */
-  if (rtb_Relational_Operator) {
-    /* Saturate: '<S25>/Saturation' */
-    if (rtb_Add_p > 2.0F) {
-      rtb_Abs_i = 2.0F;
-    } else if (rtb_Add_p < 0.0F) {
-      rtb_Abs_i = 0.0F;
+  if (CONST_EndOfLineEnableFlg) {
+    rtb_Abs_i = RobotControl_B.EOL_pwm / (real32_T)((uint8_T)CAL_MOTOR_HIGH);
+    rtb_Switch4 = RobotControl_B.EOL_leftMoveReq;
+  } else {
+    if (rtb_LogicalOperator_l) {
+      /* Saturate: '<S30>/Saturation' incorporates:
+       *  Switch: '<S30>/Switch'
+       */
+      if (rtb_Add_p > CAL_ErrorUpperLimit) {
+        rtb_Abs_i = CAL_ErrorUpperLimit;
+      } else if (rtb_Add_p < 0.0F) {
+        rtb_Abs_i = 0.0F;
+      } else {
+        rtb_Abs_i = rtb_Add_p;
+      }
+
+      /* End of Saturate: '<S30>/Saturation' */
+    } else if (rtb_Abs_i > CAL_ErrorUpperLimit) {
+      /* Saturate: '<S30>/Saturation1' incorporates:
+       *  Switch: '<S30>/Switch'
+       */
+      rtb_Abs_i = CAL_ErrorUpperLimit;
     } else {
-      rtb_Abs_i = rtb_Add_p;
+      if (rtb_Abs_i < CAL_ErrorLowerLimit) {
+        /* Saturate: '<S30>/Saturation1' incorporates:
+         *  Switch: '<S30>/Switch'
+         */
+        rtb_Abs_i = CAL_ErrorLowerLimit;
+      }
     }
 
-    /* End of Saturate: '<S25>/Saturation' */
-  } else {
-    if (rtb_Abs_i > 2.0F) {
-      /* Saturate: '<S25>/Saturation1' */
-      rtb_Abs_i = 2.0F;
-    }
+    rtb_Switch4 = RobotControl_B.leftMotorRequest;
   }
 
-  /* End of Switch: '<S25>/Switch' */
+  /* End of Switch: '<S30>/Switch2' */
 
-  /* Product: '<S145>/Product' */
-  rtb_Product = (uint8_T)(rtb_Abs_i * 126.0F);
-
-  /* Switch: '<S145>/Switch' incorporates:
-   *  Constant: '<S145>/CAL_MOTOR_LOW1'
-   *  Constant: '<S145>/ENU_BACKWARD'
-   *  Constant: '<S145>/ENU_FORWARD'
-   *  Constant: '<S145>/ENU_STOP'
-   *  RelationalOperator: '<S145>/Relational_Operator'
-   *  RelationalOperator: '<S145>/Relational_Operator1'
-   *  RelationalOperator: '<S145>/Relational_Operator2'
-   *  Switch: '<S145>/Switch'
-   *  Switch: '<S145>/Switch1'
-   *  Switch: '<S145>/Switch2'
+  /* Product: '<S150>/Product' incorporates:
+   *  Constant: '<S150>/CAL_MOTOR_HIGH'
    */
-  if (RobotControl_B.leftMotorRequest == 2) {
-    RobotControl_B.leftPosPin = 0U;
+  rtb_Product = (uint8_T)(rtb_Abs_i * (real32_T)((uint8_T)CAL_MOTOR_HIGH));
+
+  /* Switch: '<S150>/Switch' incorporates:
+   *  Constant: '<S150>/CAL_MOTOR_LOW1'
+   *  Constant: '<S150>/ENU_BACKWARD'
+   *  Constant: '<S150>/ENU_FORWARD'
+   *  Constant: '<S150>/ENU_STOP'
+   *  RelationalOperator: '<S150>/Relational_Operator'
+   *  RelationalOperator: '<S150>/Relational_Operator1'
+   *  RelationalOperator: '<S150>/Relational_Operator2'
+   *  Switch: '<S150>/Switch'
+   *  Switch: '<S150>/Switch1'
+   *  Switch: '<S150>/Switch2'
+   */
+  if (rtb_Switch4 == ((uint8_T)ENU_BACKWARD)) {
+    RobotControl_B.leftPosPin = ((uint8_T)CAL_MOTOR_LOW);
     RobotControl_B.leftNegPin = rtb_Product;
-  } else if (RobotControl_B.leftMotorRequest == 1) {
-    /* Switch: '<S145>/Switch1' */
+  } else if (rtb_Switch4 == ((uint8_T)ENU_FORWARD)) {
+    /* Switch: '<S150>/Switch1' */
     RobotControl_B.leftPosPin = rtb_Product;
 
-    /* Switch: '<S145>/Switch1' incorporates:
-     *  Constant: '<S145>/CAL_MOTOR_LOW'
+    /* Switch: '<S150>/Switch1' incorporates:
+     *  Constant: '<S150>/CAL_MOTOR_LOW'
      */
-    RobotControl_B.leftNegPin = 0U;
-  } else if (RobotControl_B.leftMotorRequest == 5) {
-    /* Switch: '<S145>/Switch2' incorporates:
-     *  Constant: '<S145>/CAL_MOTOR_LOW2'
-     *  Switch: '<S145>/Switch1'
+    RobotControl_B.leftNegPin = ((uint8_T)CAL_MOTOR_LOW);
+  } else if (rtb_Switch4 == ((uint8_T)ENU_STOP)) {
+    /* Switch: '<S150>/Switch2' incorporates:
+     *  Constant: '<S150>/CAL_MOTOR_LOW2'
+     *  Switch: '<S150>/Switch1'
      */
-    RobotControl_B.leftPosPin = 0U;
+    RobotControl_B.leftPosPin = ((uint8_T)CAL_MOTOR_LOW);
 
-    /* Switch: '<S145>/Switch2' incorporates:
-     *  Constant: '<S145>/CAL_MOTOR_LOW3'
-     *  Switch: '<S145>/Switch1'
+    /* Switch: '<S150>/Switch2' incorporates:
+     *  Constant: '<S150>/CAL_MOTOR_LOW3'
+     *  Switch: '<S150>/Switch1'
      */
-    RobotControl_B.leftNegPin = 0U;
+    RobotControl_B.leftNegPin = ((uint8_T)CAL_MOTOR_LOW);
   } else {
-    /* Switch: '<S145>/Switch1' incorporates:
-     *  Switch: '<S145>/Switch2'
+    /* Switch: '<S150>/Switch1' incorporates:
+     *  Switch: '<S150>/Switch2'
      */
     RobotControl_B.leftPosPin = rtb_Product;
 
-    /* Switch: '<S145>/Switch1' incorporates:
-     *  Switch: '<S145>/Switch2'
+    /* Switch: '<S150>/Switch1' incorporates:
+     *  Switch: '<S150>/Switch2'
      */
     RobotControl_B.leftNegPin = rtb_Product;
   }
 
-  /* End of Switch: '<S145>/Switch' */
+  /* End of Switch: '<S150>/Switch' */
 
-  /* Product: '<S146>/Product' */
-  rtb_Product = (uint8_T)(rtb_Abs_i * 126.0F);
-
-  /* Switch: '<S146>/Switch' incorporates:
-   *  Constant: '<S146>/CAL_MOTOR_LOW1'
-   *  Constant: '<S146>/ENU_BACKWARD'
-   *  Constant: '<S146>/ENU_FORWARD'
-   *  Constant: '<S146>/ENU_STOP'
-   *  RelationalOperator: '<S146>/Relational_Operator'
-   *  RelationalOperator: '<S146>/Relational_Operator1'
-   *  RelationalOperator: '<S146>/Relational_Operator2'
-   *  Switch: '<S146>/Switch'
-   *  Switch: '<S146>/Switch1'
-   *  Switch: '<S146>/Switch2'
+  /* Product: '<S151>/Product' incorporates:
+   *  Constant: '<S151>/CAL_MOTOR_HIGH'
    */
-  if (RobotControl_B.rightMotorRequest == 2) {
-    RobotControl_B.rightPosPin = 0U;
-    RobotControl_B.rightNegPin = rtb_Product;
-  } else if (RobotControl_B.rightMotorRequest == 1) {
-    /* Switch: '<S146>/Switch1' */
-    RobotControl_B.rightPosPin = rtb_Product;
+  rtb_Product = (uint8_T)(rtb_Abs_i * (real32_T)((uint8_T)CAL_MOTOR_HIGH));
 
-    /* Switch: '<S146>/Switch1' incorporates:
-     *  Constant: '<S146>/CAL_MOTOR_LOW'
-     */
-    RobotControl_B.rightNegPin = 0U;
-  } else if (RobotControl_B.rightMotorRequest == 5) {
-    /* Switch: '<S146>/Switch2' incorporates:
-     *  Constant: '<S146>/CAL_MOTOR_LOW2'
-     *  Switch: '<S146>/Switch1'
-     */
-    RobotControl_B.rightPosPin = 0U;
-
-    /* Switch: '<S146>/Switch2' incorporates:
-     *  Constant: '<S146>/CAL_MOTOR_LOW3'
-     *  Switch: '<S146>/Switch1'
-     */
-    RobotControl_B.rightNegPin = 0U;
+  /* Switch: '<S30>/Switch4' incorporates:
+   *  Constant: '<S30>/CONST_EndOfLineEnableFlg2'
+   */
+  if (CONST_EndOfLineEnableFlg) {
+    rtb_Switch4 = RobotControl_B.EOL_rightMoveReq;
   } else {
-    /* Switch: '<S146>/Switch1' incorporates:
-     *  Switch: '<S146>/Switch2'
+    rtb_Switch4 = RobotControl_B.rightMotorRequest;
+  }
+
+  /* End of Switch: '<S30>/Switch4' */
+
+  /* Switch: '<S151>/Switch' incorporates:
+   *  Constant: '<S151>/CAL_MOTOR_LOW1'
+   *  Constant: '<S151>/ENU_BACKWARD'
+   *  Constant: '<S151>/ENU_FORWARD'
+   *  Constant: '<S151>/ENU_STOP'
+   *  RelationalOperator: '<S151>/Relational_Operator'
+   *  RelationalOperator: '<S151>/Relational_Operator1'
+   *  RelationalOperator: '<S151>/Relational_Operator2'
+   *  Switch: '<S151>/Switch'
+   *  Switch: '<S151>/Switch1'
+   *  Switch: '<S151>/Switch2'
+   */
+  if (rtb_Switch4 == ((uint8_T)ENU_BACKWARD)) {
+    RobotControl_B.rightPosPin = ((uint8_T)CAL_MOTOR_LOW);
+    RobotControl_B.rightNegPin = rtb_Product;
+  } else if (rtb_Switch4 == ((uint8_T)ENU_FORWARD)) {
+    /* Switch: '<S151>/Switch1' */
+    RobotControl_B.rightPosPin = rtb_Product;
+
+    /* Switch: '<S151>/Switch1' incorporates:
+     *  Constant: '<S151>/CAL_MOTOR_LOW'
+     */
+    RobotControl_B.rightNegPin = ((uint8_T)CAL_MOTOR_LOW);
+  } else if (rtb_Switch4 == ((uint8_T)ENU_STOP)) {
+    /* Switch: '<S151>/Switch2' incorporates:
+     *  Constant: '<S151>/CAL_MOTOR_LOW2'
+     *  Switch: '<S151>/Switch1'
+     */
+    RobotControl_B.rightPosPin = ((uint8_T)CAL_MOTOR_LOW);
+
+    /* Switch: '<S151>/Switch2' incorporates:
+     *  Constant: '<S151>/CAL_MOTOR_LOW3'
+     *  Switch: '<S151>/Switch1'
+     */
+    RobotControl_B.rightNegPin = ((uint8_T)CAL_MOTOR_LOW);
+  } else {
+    /* Switch: '<S151>/Switch1' incorporates:
+     *  Switch: '<S151>/Switch2'
      */
     RobotControl_B.rightPosPin = rtb_Product;
 
-    /* Switch: '<S146>/Switch1' incorporates:
-     *  Switch: '<S146>/Switch2'
+    /* Switch: '<S151>/Switch1' incorporates:
+     *  Switch: '<S151>/Switch2'
      */
     RobotControl_B.rightNegPin = rtb_Product;
   }
 
-  /* End of Switch: '<S146>/Switch' */
+  /* End of Switch: '<S151>/Switch' */
 
-  /* Update for UnitDelay: '<S147>/FixPt Unit Delay2' incorporates:
-   *  Constant: '<S147>/FixPt Constant'
+  /* Update for UnitDelay: '<S152>/FixPt Unit Delay2' incorporates:
+   *  Constant: '<S152>/FixPt Constant'
    */
   RobotControl_DW.FixPtUnitDelay2_DSTATE = 0U;
 
-  /* Switch: '<S147>/Reset' */
+  /* Switch: '<S152>/Reset' */
   if (rtb_Logical_Operator_pe) {
-    /* Update for UnitDelay: '<S147>/FixPt Unit Delay1' incorporates:
-     *  Constant: '<S147>/Initial Condition'
+    /* Update for UnitDelay: '<S152>/FixPt Unit Delay1' incorporates:
+     *  Constant: '<S152>/Initial Condition'
      */
     RobotControl_DW.FixPtUnitDelay1_DSTATE = 0.001F;
   } else {
-    /* Update for UnitDelay: '<S147>/FixPt Unit Delay1' */
+    /* Update for UnitDelay: '<S152>/FixPt Unit Delay1' */
     RobotControl_DW.FixPtUnitDelay1_DSTATE = rtb_Add_p;
   }
 
-  /* End of Switch: '<S147>/Reset' */
+  /* End of Switch: '<S152>/Reset' */
 }
+
+/*
+ * File trailer for generated code.
+ *
+ * [EOF]
+ */

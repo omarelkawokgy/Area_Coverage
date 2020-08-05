@@ -1,13 +1,16 @@
 /*
- * Code generation for system system '<S17>/HeadingCalculator'
+ * File: HeadingCalculator.c
  *
- * Model                      : RobotControl
- * Model version              : 1.509
- * Simulink Coder version : 8.11 (R2016b) 25-Aug-2016
- * C source code generated on : Thu Jul 30 11:39:58 2020
+ * Code generated for Simulink model 'RobotControl'.
  *
- * Note that the functions contained in this file are part of a Simulink
- * model, and are not self-contained algorithms.
+ * Model version                  : 1.553
+ * Simulink Coder version         : 8.11 (R2016b) 25-Aug-2016
+ * C/C++ source code generated on : Wed Aug 05 14:53:55 2020
+ *
+ * Target selection: ert.tlc
+ * Embedded hardware selection: Atmel->AVR
+ * Code generation objectives: Unspecified
+ * Validation result: Not run
  */
 
 #include "HeadingCalculator.h"
@@ -16,13 +19,13 @@
 #include "RobotControl.h"
 #include "RobotControl_private.h"
 
-/* Named constants for Chart: '<S26>/HeadingCalculation' */
+/* Named constants for Chart: '<S31>/HeadingCalculation' */
 #define RobotControl_CAL_fullCircle_DEG (360U)
 
 /* Forward declaration for local functions */
 static real_T RobotContro_thdOverflowRangeFlg(real_T direction, real_T theta);
 
-/* Function for Chart: '<S26>/HeadingCalculation' */
+/* Function for Chart: '<S31>/HeadingCalculation' */
 static real_T RobotContro_thdOverflowRangeFlg(real_T direction, real_T theta)
 {
   real_T rangeFlg;
@@ -30,39 +33,40 @@ static real_T RobotContro_thdOverflowRangeFlg(real_T direction, real_T theta)
   int16_T thdLower;
   boolean_T guard1 = false;
 
-  /* Constant: '<S26>/CAL_ROB_ERRVAL' */
-  /* Graphical Function 'thdOverflowRangeFlg': '<S28>:195' */
-  /* Transition: '<S28>:180' */
+  /* Constant: '<S31>/CAL_ROB_ERRVAL' */
+  /* Graphical Function 'thdOverflowRangeFlg': '<S33>:195' */
+  /* Transition: '<S33>:180' */
   guard1 = false;
-  if (direction - 5.0 < 0.0) {
-    /* Transition: '<S28>:196' */
-    /* Transition: '<S28>:189' */
-    thdUpper = (int16_T)(direction + 5.0);
-    thdLower = (int16_T)((direction - 5.0) + (real_T)
-                         RobotControl_CAL_fullCircle_DEG);
+  if (direction - (real_T)((uint8_T)CAL_ROB_ERRVAL) < 0.0) {
+    /* Transition: '<S33>:196' */
+    /* Transition: '<S33>:189' */
+    thdUpper = (int16_T)(direction + (real_T)((uint8_T)CAL_ROB_ERRVAL));
+    thdLower = (int16_T)((direction - (real_T)((uint8_T)CAL_ROB_ERRVAL)) +
+                         (real_T)RobotControl_CAL_fullCircle_DEG);
     guard1 = true;
   } else {
-    /* Transition: '<S28>:192' */
-    if (direction + 5.0 > RobotControl_CAL_fullCircle_DEG) {
-      /* Transition: '<S28>:197' */
-      /* Transition: '<S28>:200' */
-      thdUpper = (int16_T)((direction + 5.0) - (real_T)
-                           RobotControl_CAL_fullCircle_DEG);
-      thdLower = (int16_T)(direction - 5.0);
+    /* Transition: '<S33>:192' */
+    if (direction + (real_T)((uint8_T)CAL_ROB_ERRVAL) >
+        RobotControl_CAL_fullCircle_DEG) {
+      /* Transition: '<S33>:197' */
+      /* Transition: '<S33>:200' */
+      thdUpper = (int16_T)((direction + (real_T)((uint8_T)CAL_ROB_ERRVAL)) -
+                           (real_T)RobotControl_CAL_fullCircle_DEG);
+      thdLower = (int16_T)(direction - (real_T)((uint8_T)CAL_ROB_ERRVAL));
 
-      /* Transition: '<S28>:214' */
+      /* Transition: '<S33>:214' */
       guard1 = true;
     } else {
-      /* Transition: '<S28>:201' */
-      if ((theta >= (int16_T)(direction - 5.0)) && (theta <= (int16_T)(direction
-            + 5.0))) {
-        /* Transition: '<S28>:215' */
-        /* Transition: '<S28>:217' */
+      /* Transition: '<S33>:201' */
+      if ((theta >= (int16_T)(direction - (real_T)((uint8_T)CAL_ROB_ERRVAL))) &&
+          (theta <= (int16_T)(direction + (real_T)((uint8_T)CAL_ROB_ERRVAL)))) {
+        /* Transition: '<S33>:215' */
+        /* Transition: '<S33>:217' */
         rangeFlg = 1.0;
 
-        /* Transition: '<S28>:219' */
+        /* Transition: '<S33>:219' */
       } else {
-        /* Transition: '<S28>:218' */
+        /* Transition: '<S33>:218' */
         rangeFlg = 0.0;
       }
     }
@@ -70,86 +74,93 @@ static real_T RobotContro_thdOverflowRangeFlg(real_T direction, real_T theta)
 
   if (guard1) {
     if ((theta >= thdLower) || (theta <= thdUpper)) {
-      /* Transition: '<S28>:178' */
-      /* Transition: '<S28>:209' */
+      /* Transition: '<S33>:178' */
+      /* Transition: '<S33>:209' */
       rangeFlg = 1.0;
 
-      /* Transition: '<S28>:212' */
+      /* Transition: '<S33>:212' */
     } else {
-      /* Transition: '<S28>:211' */
+      /* Transition: '<S33>:211' */
       rangeFlg = 0.0;
     }
   }
 
-  /* End of Constant: '<S26>/CAL_ROB_ERRVAL' */
+  /* End of Constant: '<S31>/CAL_ROB_ERRVAL' */
   return rangeFlg;
 }
 
-/* System initialize for function-call system: '<S17>/HeadingCalculator' */
+/* System initialize for function-call system: '<S22>/HeadingCalculator' */
 void RobotCon_HeadingCalculator_Init(void)
 {
-  /* SystemInitialize for Chart: '<S26>/HeadingCalculation' */
+  /* SystemInitialize for Chart: '<S31>/HeadingCalculation' */
   RobotControl_B.currentHeading = 0U;
 }
 
-/* Output and update for function-call system: '<S17>/HeadingCalculator' */
+/* Output and update for function-call system: '<S22>/HeadingCalculator' */
 void RobotControl_HeadingCalculator(void)
 {
-  /* Chart: '<S26>/HeadingCalculation' incorporates:
-   *  Constant: '<S26>/ENU_ROB_NONE'
+  /* Chart: '<S31>/HeadingCalculation' incorporates:
+   *  Constant: '<S31>/ENU_ROB_NONE'
    */
   /* Gateway: Compass_Handler/HeadingCalculator/HeadingCalculation */
   /* During: Compass_Handler/HeadingCalculator/HeadingCalculation */
+  /* Chart for calculation of heading. Could be used as state but not used */
   /* Entry Internal: Compass_Handler/HeadingCalculator/HeadingCalculation */
-  /* Transition: '<S28>:173' */
+  /* Transition: '<S33>:173' */
   if (RobotContro_thdOverflowRangeFlg((real_T)RobotControl_B.ROB_NORTH, (real_T)
        RobotControl_B.theta_Deg) != 0.0) {
-    /* Transition: '<S28>:118' */
-    /* Transition: '<S28>:122' */
+    /* Transition: '<S33>:118' */
+    /* Transition: '<S33>:122' */
     RobotControl_B.currentHeading = (uint16_T)RobotControl_B.ROB_NORTH;
 
-    /* Transition: '<S28>:111' */
-    /* Transition: '<S28>:133' */
-    /* Transition: '<S28>:132' */
-    /* Transition: '<S28>:130' */
+    /* Transition: '<S33>:111' */
+    /* Transition: '<S33>:133' */
+    /* Transition: '<S33>:132' */
+    /* Transition: '<S33>:130' */
   } else {
-    /* Transition: '<S28>:121' */
+    /* Transition: '<S33>:121' */
     if (RobotContro_thdOverflowRangeFlg((real_T)RobotControl_B.ROB_SOUTH,
          (real_T)RobotControl_B.theta_Deg) != 0.0) {
-      /* Transition: '<S28>:131' */
-      /* Transition: '<S28>:112' */
+      /* Transition: '<S33>:131' */
+      /* Transition: '<S33>:112' */
       RobotControl_B.currentHeading = (uint16_T)RobotControl_B.ROB_SOUTH;
 
-      /* Transition: '<S28>:133' */
-      /* Transition: '<S28>:132' */
-      /* Transition: '<S28>:130' */
+      /* Transition: '<S33>:133' */
+      /* Transition: '<S33>:132' */
+      /* Transition: '<S33>:130' */
     } else {
-      /* Transition: '<S28>:123' */
+      /* Transition: '<S33>:123' */
       if (RobotContro_thdOverflowRangeFlg((real_T)RobotControl_B.ROB_EAST,
            (real_T)RobotControl_B.theta_Deg) != 0.0) {
-        /* Transition: '<S28>:124' */
-        /* Transition: '<S28>:126' */
+        /* Transition: '<S33>:124' */
+        /* Transition: '<S33>:126' */
         RobotControl_B.currentHeading = (uint16_T)RobotControl_B.ROB_EAST;
 
-        /* Transition: '<S28>:132' */
-        /* Transition: '<S28>:130' */
+        /* Transition: '<S33>:132' */
+        /* Transition: '<S33>:130' */
       } else {
-        /* Transition: '<S28>:125' */
+        /* Transition: '<S33>:125' */
         if (RobotContro_thdOverflowRangeFlg((real_T)RobotControl_B.ROB_WEST,
              (real_T)RobotControl_B.theta_Deg) != 0.0) {
-          /* Transition: '<S28>:127' */
-          /* Transition: '<S28>:129' */
+          /* Transition: '<S33>:127' */
+          /* Transition: '<S33>:129' */
           RobotControl_B.currentHeading = (uint16_T)RobotControl_B.ROB_WEST;
 
-          /* Transition: '<S28>:130' */
+          /* Transition: '<S33>:130' */
         } else {
-          /* Transition: '<S28>:128' */
-          RobotControl_B.currentHeading = 400U;
+          /* Transition: '<S33>:128' */
+          RobotControl_B.currentHeading = ENU_ROB_NONE;
         }
       }
     }
   }
 
-  /* End of Chart: '<S26>/HeadingCalculation' */
-  /* Transition: '<S28>:134' */
+  /* End of Chart: '<S31>/HeadingCalculation' */
+  /* Transition: '<S33>:134' */
 }
+
+/*
+ * File trailer for generated code.
+ *
+ * [EOF]
+ */

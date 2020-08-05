@@ -6,6 +6,9 @@
 
 #else
 #define	digitalWrite(x, y) 
+#define digitalRead(x, y)
+#define analogWrite(x, y)
+#define analogRead(x, y)
 
 #endif
 
