@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'RobotControl'.
  *
- * Model version                  : 1.555
+ * Model version                  : 1.559
  * Simulink Coder version         : 8.11 (R2016b) 25-Aug-2016
- * C/C++ source code generated on : Fri Aug 07 02:48:56 2020
+ * C/C++ source code generated on : Fri Aug 07 13:50:23 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Atmel->AVR
@@ -19,7 +19,7 @@
 #include "RobotControl.h"
 #include "RobotControl_private.h"
 
-/* Named constants for Chart: '<S148>/stopRoutine' */
+/* Named constants for Chart: '<S149>/stopRoutine' */
 #define Robo_CONST_TARGET_REACHED_BLIND (5U)
 #define RobotCo_CONST_CONFIRM_TIME_STOP ((uint8_T)5U)
 #define RobotCont_IN_NO_ACTIVE_CHILD_id ((uint8_T)0U)
@@ -46,10 +46,10 @@
 #define RobotControl_IN_turnRight      ((uint8_T)7U)
 #define RobotControl_STOP              ((uint8_T)5U)
 
-/* System initialize for function-call system: '<S21>/StopRoutine' */
+/* System initialize for function-call system: '<S22>/StopRoutine' */
 void RobotControl_StopRoutine_Init(void)
 {
-  /* SystemInitialize for Chart: '<S148>/stopRoutine' */
+  /* SystemInitialize for Chart: '<S149>/stopRoutine' */
   RobotControl_DW.is_stopRoutine = RobotCont_IN_NO_ACTIVE_CHILD_id;
   RobotControl_DW.temporalCounter_i1_a = 0U;
   RobotControl_DW.is_sideStuck = RobotCont_IN_NO_ACTIVE_CHILD_id;
@@ -68,12 +68,12 @@ void RobotControl_StopRoutine_Init(void)
   RobotControl_B.stopEvent = false;
 }
 
-/* Output and update for function-call system: '<S21>/StopRoutine' */
+/* Output and update for function-call system: '<S22>/StopRoutine' */
 void RobotControl_StopRoutine(void)
 {
   real32_T rtb_MinMax;
 
-  /* MinMax: '<S29>/MinMax' */
+  /* MinMax: '<S30>/MinMax' */
   if ((RobotControl_B.Data_Type_Conversion >=
        RobotControl_B.Data_Type_Conversion_m) || rtIsNaNF
       (RobotControl_B.Data_Type_Conversion_m)) {
@@ -82,10 +82,10 @@ void RobotControl_StopRoutine(void)
     rtb_MinMax = RobotControl_B.Data_Type_Conversion_m;
   }
 
-  /* End of MinMax: '<S29>/MinMax' */
+  /* End of MinMax: '<S30>/MinMax' */
 
-  /* Chart: '<S148>/stopRoutine' incorporates:
-   *  Constant: '<S29>/CAL_hitBackwardDist_mm1'
+  /* Chart: '<S149>/stopRoutine' incorporates:
+   *  Constant: '<S30>/CAL_hitBackwardDist_mm1'
    */
   /* Gateway: RobotControlLib/StopRoutine/stopRoutine/stopRoutine */
   if (RobotControl_DW.temporalCounter_i1_a < 1) {
@@ -107,104 +107,104 @@ void RobotControl_StopRoutine(void)
     RobotControl_DW.is_active_c19_RobotControlLib = 1U;
 
     /* Entry Internal: RobotControlLib/StopRoutine/stopRoutine/stopRoutine */
-    /* Transition: '<S149>:22' */
+    /* Transition: '<S150>:22' */
     RobotControl_DW.is_c19_RobotControlLib = RobotControl_IN_stopRoutine;
     RobotControl_DW.temporalCounter_i1_a = 0U;
 
-    /* Entry Internal 'stopRoutine': '<S149>:18' */
-    /* Transition: '<S149>:2' */
+    /* Entry Internal 'stopRoutine': '<S150>:18' */
+    /* Transition: '<S150>:2' */
     RobotControl_DW.is_stopRoutine = RobotControl_IN_Run;
   } else {
-    /* During 'stopRoutine': '<S149>:18' */
+    /* During 'stopRoutine': '<S150>:18' */
     if (RobotControl_DW.temporalCounter_i1_a == 1) {
-      /* Event: '<S149>:19' */
+      /* Event: '<S150>:19' */
       RobotControl_DW.refreshEventEventCounter++;
     }
 
     switch (RobotControl_DW.is_stopRoutine) {
      case RobotControl_IN_CompleteStuck:
-      /* During 'CompleteStuck': '<S149>:50' */
+      /* During 'CompleteStuck': '<S150>:50' */
       RobotControl_B.moveRequest_n = RobotControl_STOP;
       break;
 
      case RobotControl_IN_HitStop:
-      /* During 'HitStop': '<S149>:3' */
+      /* During 'HitStop': '<S150>:3' */
       if (RobotControl_DW.temporalCounter_i2 >= RobotCo_CONST_CONFIRM_TIME_STOP)
       {
-        /* Transition: '<S149>:7' */
+        /* Transition: '<S150>:7' */
         RobotControl_DW.is_stopRoutine = RobotControl_IN_backup;
 
-        /* Entry 'backup': '<S149>:4' */
+        /* Entry 'backup': '<S150>:4' */
         RobotControl_DW.hitDistance = rtb_MinMax;
         RobotControl_B.moveRequest_n = RobotControl_BACKWARD;
       }
       break;
 
      case RobotControl_IN_Run:
-      /* During 'Run': '<S149>:1' */
+      /* During 'Run': '<S150>:1' */
       if (RobotControl_B.value) {
-        /* Transition: '<S149>:6' */
+        /* Transition: '<S150>:6' */
         RobotControl_B.hitRoutineRun = true;
         RobotControl_DW.is_stopRoutine = RobotControl_IN_HitStop;
         RobotControl_DW.temporalCounter_i2 = 0U;
 
-        /* Entry 'HitStop': '<S149>:3' */
+        /* Entry 'HitStop': '<S150>:3' */
         RobotControl_B.moveRequest_n = RobotControl_STOP;
       }
       break;
 
      case RobotControl_IN_backup:
-      /* During 'backup': '<S149>:4' */
+      /* During 'backup': '<S150>:4' */
       if (RobotControl_DW.hitDistance - rtb_MinMax > CAL_hitBackwardDist_mm) {
-        /* Transition: '<S149>:8' */
+        /* Transition: '<S150>:8' */
         RobotControl_DW.is_stopRoutine = RobotControl_IN_hitFinish;
         RobotControl_DW.temporalCounter_i2 = 0U;
 
-        /* Entry 'hitFinish': '<S149>:5' */
+        /* Entry 'hitFinish': '<S150>:5' */
         RobotControl_B.moveRequest_n = RobotControl_STOP;
       }
       break;
 
      case RobotControl_IN_hitFinish:
-      /* During 'hitFinish': '<S149>:5' */
+      /* During 'hitFinish': '<S150>:5' */
       if (!RobotControl_B.value) {
-        /* Transition: '<S149>:12' */
+        /* Transition: '<S150>:12' */
         RobotControl_B.hitRoutineRun = false;
 
-        /* Event: '<S149>:20' */
+        /* Event: '<S150>:20' */
         RobotControl_DW.stopEventEventCounter++;
         RobotControl_DW.is_stopRoutine = RobotControl_IN_Run;
       } else {
         if (RobotControl_DW.temporalCounter_i2 >= RobotControl_CAL_hitBakTimeout)
         {
-          /* Transition: '<S149>:31' */
+          /* Transition: '<S150>:31' */
           /* 0.005*400 = 2sec */
           RobotControl_DW.escapeFlg = false;
           RobotControl_DW.is_stopRoutine = RobotControl_IN_sideStuck;
           RobotControl_DW.temporalCounter_i3 = 0U;
 
-          /* Entry Internal 'sideStuck': '<S149>:30' */
-          /* Transition: '<S149>:33' */
+          /* Entry Internal 'sideStuck': '<S150>:30' */
+          /* Transition: '<S150>:33' */
           if (RobotControl_B.leftBlocks < RobotControl_B.rightBlocks) {
-            /* Transition: '<S149>:36' */
+            /* Transition: '<S150>:36' */
             RobotControl_DW.is_sideStuck = RobotControl_IN_turnRight;
             RobotControl_DW.temporalCounter_i2 = 0U;
 
-            /* Entry 'turnRight': '<S149>:35' */
+            /* Entry 'turnRight': '<S150>:35' */
             RobotControl_B.moveRequest_n = RobotContro_ENU_MOVE_TURN_RIGHT;
           } else if (RobotControl_B.leftBlocks > RobotControl_B.rightBlocks) {
-            /* Transition: '<S149>:37' */
+            /* Transition: '<S150>:37' */
             RobotControl_DW.is_sideStuck = RobotControl_IN_turnLeft;
             RobotControl_DW.temporalCounter_i2 = 0U;
 
-            /* Entry 'turnLeft': '<S149>:32' */
+            /* Entry 'turnLeft': '<S150>:32' */
             RobotControl_B.moveRequest_n = RobotControl_ENU_MOVE_TURN_LEFT;
           } else {
-            /* Transition: '<S149>:58' */
+            /* Transition: '<S150>:58' */
             RobotControl_DW.is_sideStuck = RobotControl_IN_turnLeft;
             RobotControl_DW.temporalCounter_i2 = 0U;
 
-            /* Entry 'turnLeft': '<S149>:32' */
+            /* Entry 'turnLeft': '<S150>:32' */
             RobotControl_B.moveRequest_n = RobotControl_ENU_MOVE_TURN_LEFT;
           }
         }
@@ -212,110 +212,110 @@ void RobotControl_StopRoutine(void)
       break;
 
      default:
-      /* During 'sideStuck': '<S149>:30' */
+      /* During 'sideStuck': '<S150>:30' */
       if (RobotControl_DW.escapeFlg) {
-        /* Transition: '<S149>:49' */
-        /* Exit Internal 'sideStuck': '<S149>:30' */
+        /* Transition: '<S150>:49' */
+        /* Exit Internal 'sideStuck': '<S150>:30' */
         RobotControl_DW.is_sideStuck = RobotCont_IN_NO_ACTIVE_CHILD_id;
         RobotControl_B.hitRoutineRun = false;
 
-        /* Event: '<S149>:20' */
+        /* Event: '<S150>:20' */
         RobotControl_DW.stopEventEventCounter++;
         RobotControl_DW.is_stopRoutine = RobotControl_IN_Run;
       } else if (RobotControl_DW.temporalCounter_i3 >=
                  RobotContr_CAL_sideStuckTimeout) {
-        /* Transition: '<S149>:51' */
+        /* Transition: '<S150>:51' */
         /* 0.005*5000 = 25sec */
-        /* Exit Internal 'sideStuck': '<S149>:30' */
+        /* Exit Internal 'sideStuck': '<S150>:30' */
         RobotControl_DW.is_sideStuck = RobotCont_IN_NO_ACTIVE_CHILD_id;
         RobotControl_DW.is_stopRoutine = RobotControl_IN_CompleteStuck;
 
-        /* Entry 'CompleteStuck': '<S149>:50' */
+        /* Entry 'CompleteStuck': '<S150>:50' */
         RobotControl_B.moveRequest_n = RobotControl_STOP;
         RobotControl_B.stuckHitFlg = true;
       } else {
         switch (RobotControl_DW.is_sideStuck) {
          case RobotControl_IN_GetBakLeft:
-          /* During 'GetBakLeft': '<S149>:47' */
-          /* Transition: '<S149>:64' */
+          /* During 'GetBakLeft': '<S150>:47' */
+          /* Transition: '<S150>:64' */
           if (RobotControl_B.OutportBufferFortargetReached &&
               (RobotControl_DW.temporalCounter_i2 >= 5U)) {
-            /* Transition: '<S149>:65' */
+            /* Transition: '<S150>:65' */
             RobotControl_DW.is_sideStuck = RobotControl_IN_escapeComplete;
 
-            /* Entry 'escapeComplete': '<S149>:59' */
+            /* Entry 'escapeComplete': '<S150>:59' */
             RobotControl_B.moveRequest_n = RobotControl_STOP;
             RobotControl_DW.escapeFlg = true;
           }
           break;
 
          case RobotControl_IN_GetBakRight:
-          /* During 'GetBakRight': '<S149>:43' */
-          /* Transition: '<S149>:63' */
+          /* During 'GetBakRight': '<S150>:43' */
+          /* Transition: '<S150>:63' */
           if (RobotControl_B.OutportBufferFortargetReached &&
               (RobotControl_DW.temporalCounter_i2 >= 5U)) {
-            /* Transition: '<S149>:65' */
+            /* Transition: '<S150>:65' */
             RobotControl_DW.is_sideStuck = RobotControl_IN_escapeComplete;
 
-            /* Entry 'escapeComplete': '<S149>:59' */
+            /* Entry 'escapeComplete': '<S150>:59' */
             RobotControl_B.moveRequest_n = RobotControl_STOP;
             RobotControl_DW.escapeFlg = true;
           }
           break;
 
          case RobotControl_IN_escapeComplete:
-          /* During 'escapeComplete': '<S149>:59' */
+          /* During 'escapeComplete': '<S150>:59' */
           break;
 
          case RobotControl_IN_turnComplete:
-          /* During 'turnComplete': '<S149>:38' */
+          /* During 'turnComplete': '<S150>:38' */
           if (rtb_MinMax - RobotControl_DW.hitDistance >
               RobotContr_CAL_hitEscapeDist_mm) {
-            /* Transition: '<S149>:44' */
+            /* Transition: '<S150>:44' */
             RobotControl_DW.is_sideStuck = RobotControl_IN_GetBakRight;
             RobotControl_DW.temporalCounter_i2 = 0U;
 
-            /* Entry 'GetBakRight': '<S149>:43' */
+            /* Entry 'GetBakRight': '<S150>:43' */
             RobotControl_B.moveRequest_n = RobotContro_ENU_MOVE_TURN_RIGHT;
           }
           break;
 
          case RobotControl_IN_turnComplete1:
-          /* During 'turnComplete1': '<S149>:46' */
+          /* During 'turnComplete1': '<S150>:46' */
           if (rtb_MinMax - RobotControl_DW.hitDistance >
               RobotContr_CAL_hitEscapeDist_mm) {
-            /* Transition: '<S149>:48' */
+            /* Transition: '<S150>:48' */
             RobotControl_DW.is_sideStuck = RobotControl_IN_GetBakLeft;
             RobotControl_DW.temporalCounter_i2 = 0U;
 
-            /* Entry 'GetBakLeft': '<S149>:47' */
+            /* Entry 'GetBakLeft': '<S150>:47' */
             RobotControl_B.moveRequest_n = RobotControl_ENU_MOVE_TURN_LEFT;
           }
           break;
 
          case RobotControl_IN_turnLeft:
-          /* During 'turnLeft': '<S149>:32' */
+          /* During 'turnLeft': '<S150>:32' */
           if (RobotControl_B.OutportBufferFortargetReached &&
               (RobotControl_DW.temporalCounter_i2 >=
                Robo_CONST_TARGET_REACHED_BLIND)) {
-            /* Transition: '<S149>:42' */
+            /* Transition: '<S150>:42' */
             RobotControl_DW.is_sideStuck = RobotControl_IN_turnComplete;
 
-            /* Entry 'turnComplete': '<S149>:38' */
+            /* Entry 'turnComplete': '<S150>:38' */
             RobotControl_B.moveRequest_n = RobotControl_FORWARD;
             RobotControl_DW.hitDistance = rtb_MinMax;
           }
           break;
 
          default:
-          /* During 'turnRight': '<S149>:35' */
+          /* During 'turnRight': '<S150>:35' */
           if (RobotControl_B.OutportBufferFortargetReached &&
               (RobotControl_DW.temporalCounter_i2 >=
                Robo_CONST_TARGET_REACHED_BLIND)) {
-            /* Transition: '<S149>:40' */
+            /* Transition: '<S150>:40' */
             RobotControl_DW.is_sideStuck = RobotControl_IN_turnComplete1;
 
-            /* Entry 'turnComplete1': '<S149>:46' */
+            /* Entry 'turnComplete1': '<S150>:46' */
             RobotControl_B.moveRequest_n = RobotControl_FORWARD;
             RobotControl_DW.hitDistance = rtb_MinMax;
           }
@@ -340,7 +340,7 @@ void RobotControl_StopRoutine(void)
     RobotControl_DW.stopEventEventCounter--;
   }
 
-  /* End of Chart: '<S148>/stopRoutine' */
+  /* End of Chart: '<S149>/stopRoutine' */
 }
 
 /*

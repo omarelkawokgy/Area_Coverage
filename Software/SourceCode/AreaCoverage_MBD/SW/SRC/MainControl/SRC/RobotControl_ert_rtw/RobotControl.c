@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'RobotControl'.
  *
- * Model version                  : 1.555
+ * Model version                  : 1.559
  * Simulink Coder version         : 8.11 (R2016b) 25-Aug-2016
- * C/C++ source code generated on : Fri Aug 07 02:48:56 2020
+ * C/C++ source code generated on : Fri Aug 07 13:50:23 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Atmel->AVR
@@ -15,6 +15,10 @@
 
 #include "RobotControl.h"
 #include "RobotControl_private.h"
+
+/* Named constants for Chart: '<S7>/EEPROM_IO_Handler_Chart' */
+#define RobotControl_IN_ReadEEPROM     ((uint8_T)1U)
+#define RobotControl_IN_UpdateEEPROM   ((uint8_T)2U)
 
 /* Named constants for Chart: '<S4>/Scheduler' */
 #define RobotControl_CAL_APP_Ticks_Sec ((uint8_T)5U)
@@ -46,8 +50,8 @@ void RobotControl_Digital_OUT_PWM(uint8_T rtu_pin, uint8_T rtu_value)
   /* Gateway: OutputHandler/Digital_OUT_PWM */
   /* During: OutputHandler/Digital_OUT_PWM */
   /* Entry Internal: OutputHandler/Digital_OUT_PWM */
-  /* Transition: '<S15>:2' */
-  /* Transition: '<S15>:4' */
+  /* Transition: '<S16>:2' */
+  /* Transition: '<S16>:4' */
   digitalWrite(rtu_pin, rtu_value);
 }
 
@@ -61,8 +65,8 @@ void RobotControl_Digital_OUT_bool(uint8_T rtu_pin, boolean_T rtu_value)
   /* Gateway: OutputHandler/Digital_OUT_bool */
   /* During: OutputHandler/Digital_OUT_bool */
   /* Entry Internal: OutputHandler/Digital_OUT_bool */
-  /* Transition: '<S19>:2' */
-  /* Transition: '<S19>:4' */
+  /* Transition: '<S20>:2' */
+  /* Transition: '<S20>:4' */
   digitalWrite(rtu_pin, rtu_value);
 }
 
@@ -78,6 +82,21 @@ void RobotControl_step(void)
   /* Transition: '<S6>:2' */
   /* Transition: '<S6>:4' */
   RobotControl_B.value = (digitalRead(((uint8_T)PIN_D2)) != 0);
+
+  /* UnitDelay: '<S2>/Unit Delay' */
+  RobotControl_B.UnitDelay = RobotControl_DW.UnitDelay_DSTATE_p;
+
+  /* UnitDelay: '<S2>/Unit Delay1' */
+  RobotControl_B.UnitDelay1 = RobotControl_DW.UnitDelay1_DSTATE;
+
+  /* UnitDelay: '<S2>/Unit Delay2' */
+  RobotControl_B.UnitDelay2 = RobotControl_DW.UnitDelay2_DSTATE;
+
+  /* UnitDelay: '<S2>/Unit Delay3' */
+  RobotControl_B.UnitDelay3 = RobotControl_DW.UnitDelay3_DSTATE;
+
+  /* UnitDelay: '<S2>/Unit Delay4' */
+  RobotControl_B.UnitDelay4 = RobotControl_DW.UnitDelay4_DSTATE;
 
   /* Chart: '<S4>/Scheduler' */
   /* Gateway: Scheduler/Scheduler */
@@ -102,9 +121,9 @@ void RobotControl_step(void)
   } else {
     /* Outputs for Function Call SubSystem: '<S1>/EncoderAnalogIn' */
 
-    /* During 'Scheduler': '<S153>:4' */
+    /* During 'Scheduler': '<S154>:4' */
     /* every 1ms */
-    /* Event: '<S153>:10' */
+    /* Event: '<S154>:10' */
     RobotControl_EncoderAnalogIn();
 
     /* End of Outputs for SubSystem: '<S1>/EncoderAnalogIn' */
@@ -114,71 +133,127 @@ void RobotControl_step(void)
 
     /* End of Outputs for SubSystem: '<S1>/COM_A4SCA_A5SCL' */
 
-    /* Outputs for Function Call SubSystem: '<S21>/DSCA' */
+    /* Outputs for Function Call SubSystem: '<S22>/DSCA' */
     RobotControl_DSCA();
 
-    /* End of Outputs for SubSystem: '<S21>/DSCA' */
+    /* End of Outputs for SubSystem: '<S22>/DSCA' */
 
-    /* Outputs for Function Call SubSystem: '<S22>/thetaFilter' */
+    /* Outputs for Function Call SubSystem: '<S23>/thetaFilter' */
     RobotControl_thetaFilter();
 
-    /* End of Outputs for SubSystem: '<S22>/thetaFilter' */
+    /* End of Outputs for SubSystem: '<S23>/thetaFilter' */
 
     /* every 5ms */
     if (RobotControl_DW.temporalCounter_i1_k == RobotControl_CAL_APP_Ticks_Sec)
     {
-      /* Outputs for Function Call SubSystem: '<S21>/HeadingsDirectionHandler' */
+      /* Outputs for Function Call SubSystem: '<S22>/HeadingsDirectionHandler' */
 
-      /* Event: '<S153>:6' */
+      /* Event: '<S154>:6' */
       RobotC_HeadingsDirectionHandler();
 
-      /* End of Outputs for SubSystem: '<S21>/HeadingsDirectionHandler' */
+      /* End of Outputs for SubSystem: '<S22>/HeadingsDirectionHandler' */
 
-      /* Outputs for Function Call SubSystem: '<S22>/HeadingCalculator' */
+      /* Outputs for Function Call SubSystem: '<S23>/HeadingCalculator' */
       RobotControl_HeadingCalculator();
 
-      /* End of Outputs for SubSystem: '<S22>/HeadingCalculator' */
+      /* End of Outputs for SubSystem: '<S23>/HeadingCalculator' */
 
       /* Outputs for Function Call SubSystem: '<S1>/ULS_AnalogIn' */
       RobotControl_ULS_AnalogIn();
 
       /* End of Outputs for SubSystem: '<S1>/ULS_AnalogIn' */
 
-      /* Outputs for Function Call SubSystem: '<S21>/ScanHandler' */
+      /* Outputs for Function Call SubSystem: '<S22>/ScanHandler' */
       RobotControl_ScanHandler();
 
-      /* End of Outputs for SubSystem: '<S21>/ScanHandler' */
+      /* End of Outputs for SubSystem: '<S22>/ScanHandler' */
 
-      /* Outputs for Function Call SubSystem: '<S21>/StopRoutine' */
+      /* Outputs for Function Call SubSystem: '<S22>/StopRoutine' */
       RobotControl_StopRoutine();
 
-      /* End of Outputs for SubSystem: '<S21>/StopRoutine' */
+      /* End of Outputs for SubSystem: '<S22>/StopRoutine' */
 
-      /* Outputs for Function Call SubSystem: '<S21>/MovementHandler' */
+      /* Outputs for Function Call SubSystem: '<S22>/MovementHandler' */
       RobotControl_MovementHandler();
 
-      /* End of Outputs for SubSystem: '<S21>/MovementHandler' */
+      /* End of Outputs for SubSystem: '<S22>/MovementHandler' */
 
-      /* Outputs for Function Call SubSystem: '<S21>/HighLevelRoutines' */
+      /* Outputs for Function Call SubSystem: '<S22>/HighLevelRoutines' */
       RobotControl_HighLevelRoutines();
 
-      /* End of Outputs for SubSystem: '<S21>/HighLevelRoutines' */
+      /* End of Outputs for SubSystem: '<S22>/HighLevelRoutines' */
 
-      /* Outputs for Function Call SubSystem: '<S21>/motorHandler' */
+      /* Outputs for Function Call SubSystem: '<S22>/motorHandler' */
       RobotControl_motorHandler();
 
-      /* End of Outputs for SubSystem: '<S21>/motorHandler' */
+      /* End of Outputs for SubSystem: '<S22>/motorHandler' */
+
+      /* Outputs for Function Call SubSystem: '<S1>/EEPROM_IO_Handler' */
+      /* Chart: '<S7>/EEPROM_IO_Handler_Chart' */
+      /* Gateway: InputHandler/EEPROM_IO_Handler/EEPROM_IO_Handler_Chart */
+      /* During: InputHandler/EEPROM_IO_Handler/EEPROM_IO_Handler_Chart */
+      if (RobotControl_DW.is_active_c13_RobotControl == 0U) {
+        /* Entry: InputHandler/EEPROM_IO_Handler/EEPROM_IO_Handler_Chart */
+        RobotControl_DW.is_active_c13_RobotControl = 1U;
+
+        /* Entry Internal: InputHandler/EEPROM_IO_Handler/EEPROM_IO_Handler_Chart */
+        /* Transition: '<S11>:2' */
+        RobotControl_DW.is_c13_RobotControl = RobotControl_IN_ReadEEPROM;
+
+        /* Entry 'ReadEEPROM': '<S11>:1' */
+        EEPROM_Read_Wrapper(&RobotControl_B.NVM_AngleStoreFlg,
+                            &RobotControl_B.NVM_NORTH, &RobotControl_B.NVM_SOUTH,
+                            &RobotControl_B.NVM_EAST, &RobotControl_B.NVM_WEST);
+      } else if (RobotControl_DW.is_c13_RobotControl ==
+                 RobotControl_IN_ReadEEPROM) {
+        /* During 'ReadEEPROM': '<S11>:1' */
+        if (RobotControl_B.UnitDelay4 == ((uint8_T)ENU_FINISHED)) {
+          /* Transition: '<S11>:6' */
+          RobotControl_DW.is_c13_RobotControl = RobotControl_IN_UpdateEEPROM;
+
+          /* Entry 'UpdateEEPROM': '<S11>:5' */
+          EEPROM_Update_Wrapper(RobotControl_B.UnitDelay,
+                                RobotControl_B.UnitDelay1,
+                                RobotControl_B.UnitDelay2,
+                                RobotControl_B.UnitDelay3);
+        }
+      } else {
+        /* During 'UpdateEEPROM': '<S11>:5' */
+        /* Transition: '<S11>:7' */
+        RobotControl_DW.is_c13_RobotControl = RobotControl_IN_ReadEEPROM;
+
+        /* Entry 'ReadEEPROM': '<S11>:1' */
+        EEPROM_Read_Wrapper(&RobotControl_B.NVM_AngleStoreFlg,
+                            &RobotControl_B.NVM_NORTH, &RobotControl_B.NVM_SOUTH,
+                            &RobotControl_B.NVM_EAST, &RobotControl_B.NVM_WEST);
+      }
+
+      /* End of Chart: '<S7>/EEPROM_IO_Handler_Chart' */
+
+      /* DataTypeConversion: '<S7>/Data Type Conversion' */
+      RobotControl_B.DataTypeConversion_p = (int16_T)RobotControl_B.NVM_NORTH;
+
+      /* DataTypeConversion: '<S7>/Data Type Conversion1' */
+      RobotControl_B.DataTypeConversion1_b = (int16_T)RobotControl_B.NVM_SOUTH;
+
+      /* DataTypeConversion: '<S7>/Data Type Conversion2' */
+      RobotControl_B.DataTypeConversion2_g = (int16_T)RobotControl_B.NVM_EAST;
+
+      /* DataTypeConversion: '<S7>/Data Type Conversion3' */
+      RobotControl_B.DataTypeConversion3_j = (int16_T)RobotControl_B.NVM_WEST;
+
+      /* End of Outputs for SubSystem: '<S1>/EEPROM_IO_Handler' */
     }
 
     /* every 50ms */
     if (RobotControl_DW.temporalCounter_i2_p == RobotControl_CAL_DIAG_Ticks_Sec)
     {
-      /* Outputs for Function Call SubSystem: '<S21>/DIAG_Cont' */
+      /* Outputs for Function Call SubSystem: '<S22>/DIAG_Cont' */
 
-      /* Event: '<S153>:8' */
+      /* Event: '<S154>:8' */
       RobotControl_DIAG_Cont();
 
-      /* End of Outputs for SubSystem: '<S21>/DIAG_Cont' */
+      /* End of Outputs for SubSystem: '<S22>/DIAG_Cont' */
     }
   }
 
@@ -221,6 +296,26 @@ void RobotControl_step(void)
    *  Constant: '<S2>/DigitalPin11'
    */
   RobotControl_Digital_OUT_bool(((uint8_T)PIN_D11), RobotControl_B.greenLED_BOOL);
+
+  /* Update for UnitDelay: '<S2>/Unit Delay' */
+  RobotControl_DW.UnitDelay_DSTATE_p =
+    RobotControl_B.OutportBufferForangleCalib_NORT;
+
+  /* Update for UnitDelay: '<S2>/Unit Delay1' */
+  RobotControl_DW.UnitDelay1_DSTATE =
+    RobotControl_B.OutportBufferForangleCalib_SOUT;
+
+  /* Update for UnitDelay: '<S2>/Unit Delay2' */
+  RobotControl_DW.UnitDelay2_DSTATE =
+    RobotControl_B.OutportBufferForangleCalib_EAST;
+
+  /* Update for UnitDelay: '<S2>/Unit Delay3' */
+  RobotControl_DW.UnitDelay3_DSTATE =
+    RobotControl_B.OutportBufferForangleCalib_WEST;
+
+  /* Update for UnitDelay: '<S2>/Unit Delay4' */
+  RobotControl_DW.UnitDelay4_DSTATE =
+    RobotControl_B.OutportBufferForangleCalibStatu;
 }
 
 /* Model initialize function */
@@ -243,7 +338,7 @@ void RobotControl_initialize(void)
                 sizeof(DW_RobotControl_T));
 
   /* Start for Chart: '<S4>/Scheduler' incorporates:
-   *  Start for SubSystem: '<S21>/HighLevelRoutines'
+   *  Start for SubSystem: '<S22>/HighLevelRoutines'
    */
   RobotCo_HighLevelRoutines_Start();
   RobotControl_PrevZCX.Resettable_Delay_Reset_ZCE = POS_ZCSIG;
@@ -275,22 +370,22 @@ void RobotControl_initialize(void)
   RobotContr_COM_A4SCA_A5SCL_Init();
 
   /* SystemInitialize for Chart: '<S4>/Scheduler' incorporates:
-   *  SystemInitialize for SubSystem: '<S21>/DSCA'
+   *  SystemInitialize for SubSystem: '<S22>/DSCA'
    */
   RobotControl_DSCA_Init();
 
   /* SystemInitialize for Chart: '<S4>/Scheduler' incorporates:
-   *  SystemInitialize for SubSystem: '<S22>/thetaFilter'
+   *  SystemInitialize for SubSystem: '<S23>/thetaFilter'
    */
   RobotControl_thetaFilter_Init();
 
   /* SystemInitialize for Chart: '<S4>/Scheduler' incorporates:
-   *  SystemInitialize for SubSystem: '<S21>/HeadingsDirectionHandler'
+   *  SystemInitialize for SubSystem: '<S22>/HeadingsDirectionHandler'
    */
   R_HeadingsDirectionHandler_Init();
 
   /* SystemInitialize for Chart: '<S4>/Scheduler' incorporates:
-   *  SystemInitialize for SubSystem: '<S22>/HeadingCalculator'
+   *  SystemInitialize for SubSystem: '<S23>/HeadingCalculator'
    */
   RobotCon_HeadingCalculator_Init();
 
@@ -300,27 +395,39 @@ void RobotControl_initialize(void)
   RobotControl_ULS_AnalogIn_Init();
 
   /* SystemInitialize for Chart: '<S4>/Scheduler' incorporates:
-   *  SystemInitialize for SubSystem: '<S21>/StopRoutine'
+   *  SystemInitialize for SubSystem: '<S22>/StopRoutine'
    */
   RobotControl_StopRoutine_Init();
 
   /* SystemInitialize for Chart: '<S4>/Scheduler' incorporates:
-   *  SystemInitialize for SubSystem: '<S21>/MovementHandler'
+   *  SystemInitialize for SubSystem: '<S22>/MovementHandler'
    */
   RobotContr_MovementHandler_Init();
 
   /* SystemInitialize for Chart: '<S4>/Scheduler' incorporates:
-   *  SystemInitialize for SubSystem: '<S21>/HighLevelRoutines'
+   *  SystemInitialize for SubSystem: '<S22>/HighLevelRoutines'
    */
   RobotCon_HighLevelRoutines_Init();
 
   /* SystemInitialize for Chart: '<S4>/Scheduler' incorporates:
-   *  SystemInitialize for SubSystem: '<S21>/motorHandler'
+   *  SystemInitialize for SubSystem: '<S22>/motorHandler'
    */
   RobotControl_motorHandler_Init();
 
   /* SystemInitialize for Chart: '<S4>/Scheduler' incorporates:
-   *  SystemInitialize for SubSystem: '<S21>/DIAG_Cont'
+   *  SystemInitialize for SubSystem: '<S1>/EEPROM_IO_Handler'
+   */
+  /* SystemInitialize for Chart: '<S7>/EEPROM_IO_Handler_Chart' */
+  RobotControl_DW.is_active_c13_RobotControl = 0U;
+  RobotControl_DW.is_c13_RobotControl = 0U;
+  RobotControl_B.NVM_AngleStoreFlg = false;
+  RobotControl_B.NVM_NORTH = 0U;
+  RobotControl_B.NVM_SOUTH = 0U;
+  RobotControl_B.NVM_EAST = 0U;
+  RobotControl_B.NVM_WEST = 0U;
+
+  /* SystemInitialize for Chart: '<S4>/Scheduler' incorporates:
+   *  SystemInitialize for SubSystem: '<S22>/DIAG_Cont'
    */
   RobotControl_DIAG_Cont_Init();
 }

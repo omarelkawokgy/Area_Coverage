@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'RobotControl'.
  *
- * Model version                  : 1.555
+ * Model version                  : 1.559
  * Simulink Coder version         : 8.11 (R2016b) 25-Aug-2016
- * C/C++ source code generated on : Fri Aug 07 02:48:56 2020
+ * C/C++ source code generated on : Fri Aug 07 13:50:23 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Atmel->AVR
@@ -23,33 +23,33 @@
 
 #include "RobotControl_types.h"
 
-/* Block signals for system '<S7>/Analog_uint16_IN' */
+/* Block signals for system '<S8>/Analog_uint16_IN' */
 typedef struct {
-  uint16_T value;                      /* '<S7>/Analog_uint16_IN' */
+  uint16_T value;                      /* '<S8>/Analog_uint16_IN' */
 } B_Analog_uint16_IN_RobotContr_T;
 
-/* Block signals for system '<S57>/EncoderIncrement' */
+/* Block signals for system '<S58>/EncoderIncrement' */
 typedef struct {
-  int32_T distCounter;                 /* '<S61>/Add' */
+  int32_T distCounter;                 /* '<S62>/Add' */
 } B_EncoderIncrement_RobotContr_T;
 
-/* Zero-crossing (trigger) state for system '<S57>/EncoderIncrement' */
+/* Zero-crossing (trigger) state for system '<S58>/EncoderIncrement' */
 typedef struct {
-  ZCSigState EncoderIncrement_Trig_ZCE;/* '<S57>/EncoderIncrement' */
+  ZCSigState EncoderIncrement_Trig_ZCE;/* '<S58>/EncoderIncrement' */
 } ZCE_EncoderIncrement_RobotCon_T;
 
-/* Block signals for system '<S78>/SpdTickDetector' */
+/* Block signals for system '<S79>/SpdTickDetector' */
 typedef struct {
-  real32_T spd;                        /* '<S78>/SpdTickDetector' */
+  real32_T spd;                        /* '<S79>/SpdTickDetector' */
 } B_SpdTickDetector_RobotContro_T;
 
-/* Block states (auto storage) for system '<S78>/SpdTickDetector' */
+/* Block states (auto storage) for system '<S79>/SpdTickDetector' */
 typedef struct {
-  real32_T encoderTick_prev;           /* '<S78>/SpdTickDetector' */
-  real32_T encoderTick_start;          /* '<S78>/SpdTickDetector' */
-  uint8_T is_active_c9_DSCA;           /* '<S78>/SpdTickDetector' */
-  uint8_T is_c9_DSCA;                  /* '<S78>/SpdTickDetector' */
-  uint8_T cycleCnt;                    /* '<S78>/SpdTickDetector' */
+  real32_T encoderTick_prev;           /* '<S79>/SpdTickDetector' */
+  real32_T encoderTick_start;          /* '<S79>/SpdTickDetector' */
+  uint8_T is_active_c9_DSCA;           /* '<S79>/SpdTickDetector' */
+  uint8_T is_c9_DSCA;                  /* '<S79>/SpdTickDetector' */
+  uint8_T cycleCnt;                    /* '<S79>/SpdTickDetector' */
 } DW_SpdTickDetector_RobotContr_T;
 
 extern void RobotCont_Analog_uint16_IN_Init(B_Analog_uint16_IN_RobotContr_T
