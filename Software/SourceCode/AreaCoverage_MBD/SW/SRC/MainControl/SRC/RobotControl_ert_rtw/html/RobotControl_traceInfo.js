@@ -1,9 +1,5 @@
 function RTW_Sid2UrlHash() {
 	this.urlHashMap = new Array();
-	/* <Root>/From8 */
-	this.urlHashMap["RobotControl:896"] = "msg=&block=RobotControl:896";
-	/* <Root>/Goto5 */
-	this.urlHashMap["RobotControl:895"] = "msg=&block=RobotControl:895";
 	/* <S1>/COM_A4SCA_A5SCL */
 	this.urlHashMap["RobotControl:801"] = "RobotControl.c:112,115,273&COM_A4SCA_A5SCL.c:22,29";
 	/* <S1>/DigitalPin2 */
@@ -3257,8 +3253,6 @@ function RTW_rtwnameSIDMap() {
 	this.sidHashMap["RobotControl:771"] = {rtwname: "<Root>/Function_Call_Split"};
 	this.rtwnameHashMap["<Root>/Goto1"] = {sid: "RobotControl:806"};
 	this.sidHashMap["RobotControl:806"] = {rtwname: "<Root>/Goto1"};
-	this.rtwnameHashMap["<Root>/Goto2"] = {sid: "RobotControl:808"};
-	this.sidHashMap["RobotControl:808"] = {rtwname: "<Root>/Goto2"};
 	this.rtwnameHashMap["<Root>/Goto24"] = {sid: "RobotControl:814"};
 	this.sidHashMap["RobotControl:814"] = {rtwname: "<Root>/Goto24"};
 	this.rtwnameHashMap["<Root>/Goto3"] = {sid: "RobotControl:823"};
