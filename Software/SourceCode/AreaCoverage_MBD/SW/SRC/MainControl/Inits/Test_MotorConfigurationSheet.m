@@ -1,0 +1,15 @@
+deviation_H = 0.01;
+dev_flux = 0.05;
+dev_interia = 0.05;
+dev_resistance = 0;
+dev_B = 0;
+CAL_SimInduct_H_sim = CAL_SimInduct_H.Value * (1 + deviation_H); 
+CAL_flux_e_sim = CAL_flux_e.Value * (1 - dev_flux);
+CAL_flux_t_sim = CAL_flux_e_sim * (1 + dev_flux);
+CAL_Inertia_J_sim = CAL_Inertia_J.Value * (1 + dev_interia);
+CAL_Re_ohm_sim = CAL_Re_ohm.Value * (1 + dev_resistance);%0.6569;%0.5;
+CAL_B_NmPerW_sim = CAL_B_NmPerW.Value * (1 - dev_B);
+CAL_CurrentScaling_A_sim = CAL_CurrentScaling_A.Value;%1/48.9;
+CONST_MinDivision_sim = CONST_MinDivision.Value;
+CAL_PulseConstPeriod_sim = CAL_PulseConstPeriod.Value;
+CAL_DiscretDistScaling_sim = CAL_DiscretDistScaling.Value;

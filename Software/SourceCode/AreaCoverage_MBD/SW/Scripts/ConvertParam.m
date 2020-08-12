@@ -1,6 +1,7 @@
 all_WS = who;
 for i = 1:length(all_WS)
-    if ~isa(evalin('base', all_WS{i}),'Simulink.Signal')
+    if ~isa(evalin('base', all_WS{i}),'Simulink.Signal')...
+            && ~strcmp(all_WS{i}, 'answer')
         
     varName = all_WS{i};
     varValue = evalin('base', all_WS{i});
