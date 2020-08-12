@@ -1,5 +1,5 @@
-#define PROJECT_ROOT C:\Projects\myProject\CleanerRepo\Area_Coverage\Software\SourceCode\AreaCoverage_MBD\SW\SRC\MainControl\SRC\RobotControl_ert_rtw
-#define SOURCEFOLDER C:\Projects\myProject\CleanerRepo\Area_Coverage\Software\SourceCode\AreaCoverage_MBD\SW\SRC\MainControl\SRC
+#define PROJECT_ROOT C:\Projects\myProject\CleanerRepo\Area_Coverage\Software\SourceCode\AreaCoverage_MBD\SW\SRC\MainControl\Code\RobotControl_ert_rtw
+#define SOURCEFOLDER C:\Projects\myProject\CleanerRepo\Area_Coverage\Software\SourceCode\AreaCoverage_MBD\SW\SRC\MainControl\Code
 
 #define TO_STRING(s) #s
 #define ABSOLUTE_PATH(root, relative_path) TO_STRING(root\relative_path)
@@ -52,23 +52,66 @@
 #include RELATIVE_PATH(rtGetNaN.c)
 #include RELATIVE_PATH(rtGetNaN.h)
 
-#define COMPASS_DEBUG false
+//INPUTS
+#define COMPASS_DEBUG true
 #define ULSR_DEBUG true
-#define ULSL_DEBUG false
-#define PUMPER_DEBUG false
-#define R_ENCODER_DEBUG false
-#define L_ENCODER_DEBUG false
+#define ULSL_DEBUG true
+#define PUMPER_DEBUG true
+#define R_ENCODER_DEBUG true
+#define L_ENCODER_DEBUG true
+//OUTPUTS
+#define LEFT_MOTOR_POS true
+#define LEFT_MOTOR_NEG true
+#define RIGHT_MOTOR_POS true
+#define RIGHT_MOTOR_NEG true
+#define RED_LED true
+#define GREEN_LED true
+//NVM
+#define NVM_ANGLE_STORE_FLG true
+#define NVM_NORTH_DEBUG true
+#define NVM_SOUTH_DEBUG true
+#define NVM_EAST_DEBUG true
+#define NVM_WEST_DEBUG true
 
 unsigned long previousMillis = 0; 
 
-#if ((COMPASS_DEBUG) || (ULSR_DEBUG) || (ULSL_DEBUG) || (PUMPER_DEBUG) || (R_ENCODER_DEBUG) || (L_ENCODER_DEBUG))
+#if ((COMPASS_DEBUG) || (ULSR_DEBUG) || (ULSL_DEBUG) || (PUMPER_DEBUG)\
+|| (R_ENCODER_DEBUG) || (L_ENCODER_DEBUG)\
+|| (LEFT_MOTOR_POS) || (LEFT_MOTOR_NEG)\
+|| (RIGHT_MOTOR_POS) || (RIGHT_MOTOR_NEG)\
+|| (RED_LED) || (GREEN_LED)\
+|| (NVM_ANGLE_STORE_FLG)\
+|| (NVM_NORTH_DEBUG) || (NVM_SOUTH_DEBUG)\
+|| (NVM_EAST_DEBUG) || (NVM_WEST_DEBUG))
 uint16_t temp = 0;
 #endif
 
 void setup() {
 //  // put your setup code here, to run once:
+//Defining pin configurations
+//INPUTS
+pinMode(A0, INPUT); //rightEncoderTicks_uint16
+pinMode(A1, INPUT); //leftEncoderTicks_uint16
+pinMode(7, INPUT); //ULSL_cm
+pinMode(8, INPUT); //ULSR_cm
+pinMode(2, INPUT); //pumperHit_BOOL
+//OUTPUTS
+pinMode(5, OUTPUT); //leftPosPin
+pinMode(6, OUTPUT); //leftNegPin
+pinMode(9, OUTPUT); //rightPosPin
+pinMode(10, OUTPUT); //rightNegPin
+pinMode(3, OUTPUT); //redLED_BOOL
+pinMode(11, OUTPUT); //greenLED_BOOL
+
 RobotControl_initialize();
-#if (COMPASS_DEBUG) || (ULSR_DEBUG) || (ULSL_DEBUG) || (PUMPER_DEBUG) || (R_ENCODER_DEBUG) || (L_ENCODER_DEBUG)
+#if ((COMPASS_DEBUG) || (ULSR_DEBUG) || (ULSL_DEBUG) || (PUMPER_DEBUG)\
+|| (R_ENCODER_DEBUG) || (L_ENCODER_DEBUG)\
+|| (LEFT_MOTOR_POS) || (LEFT_MOTOR_NEG)\
+|| (RIGHT_MOTOR_POS) || (RIGHT_MOTOR_NEG)\
+|| (RED_LED) || (GREEN_LED)\
+|| (NVM_ANGLE_STORE_FLG)\
+|| (NVM_NORTH_DEBUG) || (NVM_SOUTH_DEBUG)\
+|| (NVM_EAST_DEBUG) || (NVM_WEST_DEBUG))
   Serial.begin(9600);
 #endif
 }
@@ -80,30 +123,76 @@ void loop() {
   {
     previousMillis = currentMillis;
     RobotControl_step();
-    
+
+    //INPUTS
     #ifdef COMPASS_DEBUG
-    Serial.println();
+    Serial.println(RobotControl_B.rawCompassValue);
     #endif
     
     #ifdef ULSR_DEBUG
-    ULSL_Hndler_Outputs_wrapper(PIN_D8, &temp);
-    Serial.println(temp);
+    Serial.println(RobotControl_B.ULSR_cm);
     #endif
     
     #ifdef ULSL_DEBUG
-    Serial.println();
+    Serial.println(RobotControl_B.ULSL_cm);
     #endif
     
     #ifdef PUMPER_DEBUG
-    Serial.println();
+    Serial.println(RobotControl_B.pumperHit_BOOL);
     #endif
     
     #ifdef R_ENCODER_DEBUG
-    Serial.println();
+    Serial.println(RobotControl_B.rightEncoderTicks_uint16);
     #endif
     
     #ifdef L_ENCODER_DEBUG
-    Serial.println();
-    #endif    
+    Serial.println(RobotControl_B.leftEncoderTicks_uint16);
+    #endif   
+
+    //OUTPUTS
+    #ifdef LEFT_MOTOR_POS
+    Serial.println(RobotControl_B.leftPosPin);
+    #endif
+    
+    #ifdef LEFT_MOTOR_NEG
+    Serial.println(RobotControl_B.leftNegPin);
+    #endif
+    
+    #ifdef RIGHT_MOTOR_POS
+    Serial.println(RobotControl_B.rightPosPin);
+    #endif
+    
+    #ifdef RIGHT_MOTOR_NEG
+    Serial.println(RobotControl_B.rightNegPin);
+    #endif
+    
+    #ifdef RED_LED
+    Serial.println(RobotControl_B.redLED_BOOL);
+    #endif
+    
+    #ifdef GREEN_LED
+    Serial.println(RobotControl_B.greenLED_BOOL);
+    #endif 
+
+    //NVM        
+    #ifdef NVM_ANGLE_STORE_FLG
+    Serial.println(RobotControl_B.NVM_AngleStoreFlg);
+    #endif
+    
+    #ifdef NVM_NORTH_DEBUG
+    Serial.println(RobotControl_B.NVM_NORTH);
+    #endif
+    
+    #ifdef NVM_SOUTH_DEBUG
+    Serial.println(RobotControl_B.NVM_SOUTH);
+    #endif
+    
+    #ifdef NVM_EAST_DEBUG
+    Serial.println(RobotControl_B.NVM_EAST);
+    #endif
+    
+    #ifdef NVM_WEST_DEBUG
+    Serial.println(RobotControl_B.NVM_WEST);
+    #endif  
   }
 }

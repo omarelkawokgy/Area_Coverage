@@ -34,6 +34,7 @@ pumperHit_BOOL.DataType = 'boolean';
 pumperHit_BOOL.Min = 0;
 pumperHit_BOOL.Max = 1;
 pumperHit_BOOL.Unit = '';
+pumperHit_BOOL.CoderInfo.StorageClass = 'SimulinkGlobal';
 
 ULSL_cm = Simulink.Signal;
 ULSL_cm.DataType = 'uint16';
@@ -52,12 +53,14 @@ rightEncoderTicks_uint16.DataType = 'uint16';
 rightEncoderTicks_uint16.Min = 0;
 rightEncoderTicks_uint16.Max = 200;
 rightEncoderTicks_uint16.Unit = '';
+rightEncoderTicks_uint16.CoderInfo.StorageClass = 'SimulinkGlobal';
 
 leftEncoderTicks_uint16 = Simulink.Signal;
 leftEncoderTicks_uint16.DataType = 'uint16';
 leftEncoderTicks_uint16.Min = 0;
 leftEncoderTicks_uint16.Max = 200;
 leftEncoderTicks_uint16.Unit = '';
+leftEncoderTicks_uint16.CoderInfo.StorageClass = 'SimulinkGlobal';
 
 leftPosPin = Simulink.Signal;
 leftPosPin.DataType = 'uint8';
