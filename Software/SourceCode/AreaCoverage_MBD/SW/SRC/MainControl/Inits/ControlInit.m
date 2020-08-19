@@ -20,7 +20,6 @@ ENU_MOVE_U_TURN = uint8(24);
 ENU_ROB_NONE = uint16(400);
 
 %% DIAG EOL Calibrations
-CONST_EndOfLineEnableFlg = boolean(false);
 CONST_EnDelay = uint16(10 * 1000);
 CONST_EOL_SlowPwm = uint8(100);
 CONST_EOL_MedPwm = uint8(150);
@@ -206,7 +205,7 @@ CONST_noVelocity = int16(0);
 CAL_risingStep_pwmPerSample = single(CAL_ErrorUpperLimit * 0.05);
 CAL_fallingStep_pwmPerSample = single(CAL_ErrorLowerLimit * 0.1);
 CAL_straightLineErrorAllowed_f32 = single(CAL_ErrorUpperLimit);
-gearRatio = 12;
+CAL_gearRatio = 12;
 
 %% General Calibration
 CAL_mmPerTickPerTs = CAL_mm_PER_tick/CAL_EncoderSampleTime;
@@ -216,3 +215,19 @@ CAL_hitEscapeDist_mm = uint16(CAL_hitBackwardDist_mm - 100);
 
 %% Motor estimators parameters
 MotorConfigurationSheet
+
+%% Variant Control
+VARIANT_LEFT_MOTOR_EOL_ENABLE = boolean(false);
+VARIANT_RIGHT_MOTOR_EOL_ENABLE = boolean(false);
+VARIANT_DEBUGGING_ENABLE = boolean(true);
+VARIANT_COMPASS_CONNECTED = boolean(true);
+
+CONST_NORTH_DISABLED = uint16(0);
+CONST_SOUTH_DISABLED = uint16(0);
+CONST_EAST_DISABLED = uint16(0);
+CONST_WEST_DISABLED = uint16(0);
+
+CONST_COMP_FLT_DISABLED = boolean(0);
+CONST_R_ENCOD_DISABLED = boolean(0);
+CONST_L_ENCOD_DISABLED = boolean(0);
+CONST_ENABLE_ANGLE_CALIB_DISABLED = boolean(1);

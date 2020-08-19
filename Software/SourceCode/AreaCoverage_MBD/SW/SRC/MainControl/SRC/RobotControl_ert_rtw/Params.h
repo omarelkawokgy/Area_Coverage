@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'RobotControl'.
  *
- * Model version                  : 1.568
+ * Model version                  : 1.581
  * Simulink Coder version         : 8.11 (R2016b) 25-Aug-2016
- * C/C++ source code generated on : Thu Aug 13 00:06:06 2020
+ * C/C++ source code generated on : Mon Aug 17 10:27:18 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Atmel->AVR
@@ -46,11 +46,15 @@
 #define CAL_SOUTH                      90
 #define CAL_ULS_UnconnectedBlks        10U
 #define CAL_WEST                       180
+#if MotorsEOL_DisabledVariant
 #define CAL_Wheel2WheelDist_mm         250U
+#endif                                 /* MotorsEOL_DisabledVariant */
+
 #define CAL_WheelDiameter_cm           12U
 #define CAL_ZgZgCounterThd             2U
 #define CAL_forwardStartIncr           0.001F
 #define CAL_fullCircle_DEG             360U
+#define CAL_gearRatio                  12.0
 #define CAL_halfCircle_DEG             180U
 #define CAL_hitBackwardDist_mm         150.0F
 #define CAL_mm_PER_tick                0.80211F

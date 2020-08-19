@@ -1,0 +1,80 @@
+#--------------------------- Tool Specifications -------------------------
+#
+# Modify the following macros to reflect the tools you wish to use for
+# compiling and linking your code.
+#
+CC = "C:\TOOLS\MATLAB\bin\win64\mex.exe"
+LD = $(CC)
+ 
+MODEL     = AreaCoverageTestHarness
+TARGET      = sfun
+MODULE_SRCS   = c7_AreaCoverageTestHarness.c
+MODEL_SRC  = AreaCoverageTestHarness_sfun.c
+MODEL_REG = AreaCoverageTestHarness_sfun_registry.c
+MAKEFILE    = AreaCoverageTestHarness_sfun.gmk
+MATLAB_ROOT  = c:\tools\matlab\toolbox\stateflow\stateflow\..\..\..
+BUILDARGS   = 
+#------------------------------ Include/Lib Path ------------------------------
+ 
+USER_INCLUDES = -I"C:\Projects\myproject\cleanerrepo\area_coverage\Software\sourcecode\areacoverage_mbd\SW\SRC\maincontrol\TESTING\slprj\_sfprj\areacoveragetestharness\_self\sfun\src" -I"C:\Projects\myproject\cleanerrepo\area_coverage\Software\sourcecode\areacoverage_mbd\SW\SRC\maincontrol\TESTING\.." -I"C:\Projects\myproject\cleanerrepo\area_coverage\Software\sourcecode\areacoverage_mbd\SW\SRC\maincontrol\TESTING" 
+AUX_INCLUDES = 
+MLSLSF_INCLUDES  = \
+    -I"C:\TOOLS\MATLAB\extern\include" \
+    -I"C:\TOOLS\MATLAB\simulink\include" \
+    -I"C:\TOOLS\MATLAB\simulink\include\sf_runtime" \
+    -I"C:\TOOLS\MATLAB\stateflow\c\mex\include" \
+    -I"C:\TOOLS\MATLAB\rtw\c\src" \
+    -I"C:\Projects\myProject\CleanerRepo\Area_Coverage\Software\SourceCode\AreaCoverage_MBD\SW\SRC\MainControl\TESTING\slprj\_sfprj\AreaCoverageTestHarness\_self\sfun\src" 
+
+THIRD_PARTY_INCLUDES = 
+
+INCLUDE_PATH = $(USER_INCLUDES) $(AUX_INCLUDES) $(MLSLSF_INCLUDES) $(COMPILER_INCLUDES) $(THIRD_PARTY_INCLUDES)
+ 
+#----------------- Compiler and Linker Options --------------------------------
+ 
+# Optimization Options
+ 
+CC_OPTS =  
+CPP_REQ_DEFINES = -DMATLAB_MEX_FILE
+ 
+# Uncomment this line to move warning level to W4
+# cflags = $(cflags:W3=W4)
+CFLAGS = $(CC_OPTS) $(CPP_REQ_DEFINES) $(INCLUDE_PATH)
+ 
+LDFLAGS =  
+ 
+AUXLDFLAGS = 
+#----------------------------- Source Files -----------------------------------
+ 
+THIRD_PARTY_SRCS =   
+REQ_SRCS  = $(MODEL_SRC) $(MODEL_REG) $(MODULE_SRCS) $(THIRD_PARTY_SRCS) 
+
+USER_ABS_OBJS    = \
+		I_O_Wrapper.obj \
+
+AUX_ABS_OBJS =
+
+REQ_OBJS = $(REQ_SRCS:.cpp=.obj)
+REQ_OBJS2 = $(REQ_OBJS:.c=.obj)
+OBJS = $(REQ_OBJS2) $(USER_ABS_OBJS) $(AUX_ABS_OBJS) $(THIRD_PARTY_OBJS)
+OBJLIST_FILE = AreaCoverageTestHarness_sfun.mol
+SFCLIB = 
+AUX_LNK_OBJS = 
+USER_LIBS = 
+PARLIB = 
+ 
+#--------------------------------- Rules --------------------------------------
+ 
+MEX_FILE_NAME = $(MODEL)_$(TARGET).mexw64
+ 
+ $(MEX_FILE_NAME): $(MAKEFILE) $(OBJS) $(SFCLIB) $(AUX_LNK_OBJS)
+	@echo ### Linking ...
+	$(LD) -silent LDFLAGS="$$LDFLAGS $(LDFLAGS) $(AUXLDFLAGS)" -output $(MEX_FILE_NAME) @$(OBJLIST_FILE) $(USER_LIBS) $(SFCLIB) $(PARLIB) $(IPPLIB) $(THIRD_PARTY_LIBS) 
+%.obj :    %.c
+	$(CC) -c $(CFLAGS) $<
+
+%.obj :    %.cpp
+	$(CC) -c $(CFLAGS) $<
+
+I_O_Wrapper.obj :	C:/Projects/MYPROJ~1/CLEANE~1/AREA_C~1/Software/SOURCE~1/AREACO~1/SW/SRC/MAINCO~1/TESTING/I_O_Wrapper.c
+	$(CC) -c $(CFLAGS) $<

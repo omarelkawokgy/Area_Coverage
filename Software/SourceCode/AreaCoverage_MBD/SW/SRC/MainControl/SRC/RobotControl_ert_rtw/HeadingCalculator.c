@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'RobotControl'.
  *
- * Model version                  : 1.568
+ * Model version                  : 1.581
  * Simulink Coder version         : 8.11 (R2016b) 25-Aug-2016
- * C/C++ source code generated on : Thu Aug 13 00:06:06 2020
+ * C/C++ source code generated on : Mon Aug 17 10:27:18 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Atmel->AVR
@@ -20,7 +20,7 @@
 #include "RobotControl_private.h"
 
 /* Named constants for Chart: '<S32>/HeadingCalculation' */
-#define RobotControl_CAL_fullCircle_DEG (360U)
+#define RobotContr_CAL_fullCircle_DEG_p (360U)
 
 /* Forward declaration for local functions */
 static real_T RobotContro_thdOverflowRangeFlg(real_T direction, real_T theta);
@@ -42,16 +42,16 @@ static real_T RobotContro_thdOverflowRangeFlg(real_T direction, real_T theta)
     /* Transition: '<S34>:189' */
     thdUpper = (int16_T)(direction + (real_T)((uint8_T)CAL_ROB_ERRVAL));
     thdLower = (int16_T)((direction - (real_T)((uint8_T)CAL_ROB_ERRVAL)) +
-                         (real_T)RobotControl_CAL_fullCircle_DEG);
+                         (real_T)RobotContr_CAL_fullCircle_DEG_p);
     guard1 = true;
   } else {
     /* Transition: '<S34>:192' */
     if (direction + (real_T)((uint8_T)CAL_ROB_ERRVAL) >
-        RobotControl_CAL_fullCircle_DEG) {
+        RobotContr_CAL_fullCircle_DEG_p) {
       /* Transition: '<S34>:197' */
       /* Transition: '<S34>:200' */
       thdUpper = (int16_T)((direction + (real_T)((uint8_T)CAL_ROB_ERRVAL)) -
-                           (real_T)RobotControl_CAL_fullCircle_DEG);
+                           (real_T)RobotContr_CAL_fullCircle_DEG_p);
       thdLower = (int16_T)(direction - (real_T)((uint8_T)CAL_ROB_ERRVAL));
 
       /* Transition: '<S34>:214' */
@@ -102,10 +102,10 @@ void RobotControl_HeadingCalculator(void)
   /* Chart: '<S32>/HeadingCalculation' incorporates:
    *  Constant: '<S32>/ENU_ROB_NONE'
    */
-  /* Gateway: Compass_Handler/HeadingCalculator/HeadingCalculation */
-  /* During: Compass_Handler/HeadingCalculator/HeadingCalculation */
+  /* Gateway: RobotControl/RobotControlLib/Compass_Handler/HeadingCalculator/HeadingCalculation */
+  /* During: RobotControl/RobotControlLib/Compass_Handler/HeadingCalculator/HeadingCalculation */
   /* Chart for calculation of heading. Could be used as state but not used */
-  /* Entry Internal: Compass_Handler/HeadingCalculator/HeadingCalculation */
+  /* Entry Internal: RobotControl/RobotControlLib/Compass_Handler/HeadingCalculator/HeadingCalculation */
   /* Transition: '<S34>:173' */
   if (RobotContro_thdOverflowRangeFlg((real_T)RobotControl_B.ROB_NORTH, (real_T)
        RobotControl_B.theta_Deg) != 0.0) {

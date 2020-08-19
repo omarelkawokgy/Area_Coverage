@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'RobotControl'.
  *
- * Model version                  : 1.568
+ * Model version                  : 1.581
  * Simulink Coder version         : 8.11 (R2016b) 25-Aug-2016
- * C/C++ source code generated on : Thu Aug 13 00:06:06 2020
+ * C/C++ source code generated on : Mon Aug 17 10:27:18 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Atmel->AVR
@@ -35,12 +35,12 @@ void RobotC_HeadingsDirectionHandler(void)
   int16_T rtb_Switch_m_idx_2;
   int16_T rtb_Switch_m_idx_3;
 
-  /* Switch: '<S95>/Switch2' incorporates:
-   *  Constant: '<S95>/ENU_SHIFT_HEADING'
-   *  Logic: '<S95>/Logical Operator'
-   *  RelationalOperator: '<S95>/Relational_Operator6'
+  /* Switch: '<S104>/Switch2' incorporates:
+   *  Constant: '<S104>/ENU_SHIFT_HEADING'
+   *  Logic: '<S104>/Logical Operator'
+   *  RelationalOperator: '<S104>/Relational_Operator6'
+   *  UnitDelay: '<S104>/Unit Delay'
    *  UnitDelay: '<S26>/Unit_Delay'
-   *  UnitDelay: '<S95>/Unit Delay'
    */
   rtb_Switch2 = ((RobotControl_DW.Unit_Delay_DSTATE_b == ((uint8_T)
     ENU_SHIFT_HEADING)) || RobotControl_DW.UnitDelay_DSTATE_d);
@@ -97,7 +97,7 @@ void RobotC_HeadingsDirectionHandler(void)
   /* Update for UnitDelay: '<S26>/Unit_Delay' */
   RobotControl_DW.Unit_Delay_DSTATE_b = RobotControl_B.currentRoutine;
 
-  /* Update for UnitDelay: '<S95>/Unit Delay' */
+  /* Update for UnitDelay: '<S104>/Unit Delay' */
   RobotControl_DW.UnitDelay_DSTATE_d = rtb_Switch2;
 }
 

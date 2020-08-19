@@ -21,11 +21,11 @@
 <tr name="5" id="5">
 <td><a id="l5" class='ln'>5</a></td><td><span class="ct"> *</span></td></tr>
 <tr name="6" id="6">
-<td><a id="l6" class='ln'>6</a></td><td><span class="ct"> * Model version                  : 1.568</span></td></tr>
+<td><a id="l6" class='ln'>6</a></td><td><span class="ct"> * Model version                  : 1.581</span></td></tr>
 <tr name="7" id="7">
 <td><a id="l7" class='ln'>7</a></td><td><span class="ct"> * Simulink Coder version         : 8.11 (R2016b) 25-Aug-2016</span></td></tr>
 <tr name="8" id="8">
-<td><a id="l8" class='ln'>8</a></td><td><span class="ct"> * C/C++ source code generated on : Thu Aug 13 00:06:06 2020</span></td></tr>
+<td><a id="l8" class='ln'>8</a></td><td><span class="ct"> * C/C++ source code generated on : Mon Aug 17 10:27:18 2020</span></td></tr>
 <tr name="9" id="9">
 <td><a id="l9" class='ln'>9</a></td><td><span class="ct"> *</span></td></tr>
 <tr name="10" id="10">
@@ -85,19 +85,19 @@
 <tr name="37" id="37">
 <td><a id="l37" class='ln'>37</a></td><td><span class="br">{</span></td></tr>
 <tr name="38" id="38">
-<td><a id="l38" class='ln'>38</a></td><td>  <a id="38c3" class="tk">boolean_T</a> <a id="38c13" class="tk">rtb_Relational_Operator_j</a>;</td></tr>
+<td><a id="l38" class='ln'>38</a></td><td>  <a id="38c3" class="tk">boolean_T</a> <a id="38c13" class="tk">rtb_Relational_Operator_e2</a>;</td></tr>
 <tr name="39" id="39">
 <td><a id="l39" class='ln'>39</a></td><td>  <a id="39c3" class="tk">int16_T</a> <a id="39c11" class="tk">rtb_Subtract</a>;</td></tr>
 <tr name="40" id="40">
 <td><a id="l40" class='ln'>40</a></td><td>  <a id="40c3" class="tk">real32_T</a> <a id="40c12" class="tk">rtb_PT_p</a>;</td></tr>
 <tr name="41" id="41">
-<td><a id="l41" class='ln'>41</a></td><td>  <a id="41c3" class="tk">real32_T</a> <a id="41c12" class="tk">rtb_Switch_d</a>;</td></tr>
+<td><a id="l41" class='ln'>41</a></td><td>  <a id="41c3" class="tk">real32_T</a> <a id="41c12" class="tk">rtb_Switch_f</a>;</td></tr>
 <tr name="42" id="42">
 <td><a id="l42" class='ln'>42</a></td><td>  <a id="42c3" class="tk">real32_T</a> <a id="42c12" class="tk">rtb_KT</a>;</td></tr>
 <tr name="43" id="43">
-<td><a id="l43" class='ln'>43</a></td><td>  <a id="43c3" class="tk">uint16_T</a> <a id="43c12" class="tk">rtb_Switch_le</a>;</td></tr>
+<td><a id="l43" class='ln'>43</a></td><td>  <a id="43c3" class="tk">uint16_T</a> <a id="43c12" class="tk">rtb_Switch_n</a>;</td></tr>
 <tr name="44" id="44">
-<td><a id="l44" class='ln'>44</a></td><td>  <a id="44c3" class="tk">real32_T</a> <a id="44c12" class="tk">rtb_XT</a>;</td></tr>
+<td><a id="l44" class='ln'>44</a></td><td>  <a id="44c3" class="tk">real32_T</a> <a id="44c12" class="tk">rtb_XT_b</a>;</td></tr>
 <tr name="45" id="45">
 <td><a id="l45" class='ln'>45</a></td><td>  <a id="45c3" class="tk">int16_T</a> <a id="45c11" class="tk">rtb_Subtract_0</a>;</td></tr>
 <tr name="46" id="46">
@@ -147,7 +147,7 @@
 <tr name="68" id="68">
 <td><a id="l68" class='ln'>68</a></td><td><span class="ct">   */</span></td></tr>
 <tr name="69" id="69">
-<td><a id="l69" class='ln'>69</a></td><td>  <a id="69c3" class="tk">rtb_Relational_Operator_j</a> = (<a id="69c32" class="tk">rtb_Subtract_0</a> <a id="69c47" class="tk">&gt;</a> <a id="69c49" class="tk">CAL_FilterResetThd</a>);</td></tr>
+<td><a id="l69" class='ln'>69</a></td><td>  <a id="69c3" class="tk">rtb_Relational_Operator_e2</a> = (<a id="69c33" class="tk">rtb_Subtract_0</a> <a id="69c48" class="tk">&gt;</a> <a id="69c50" class="tk">CAL_FilterResetThd</a>);</td></tr>
 <tr name="70" id="70">
 <td><a id="l70" class='ln'>70</a></td><td></td></tr>
 <tr name="71" id="71">
@@ -165,13 +165,13 @@
 <tr name="77" id="77">
 <td><a id="l77" class='ln'>77</a></td><td><span class="ct">   */</span></td></tr>
 <tr name="78" id="78">
-<td><a id="l78" class='ln'>78</a></td><td>  <span class="kw">if</span> (<a id="78c7" class="tk">rtb_Relational_Operator_j</a> <a id="78c33" class="tk">&amp;&amp;</a> (<a id="78c37" class="tk">rtb_Subtract</a> <a id="78c50" class="tk">&lt;</a> <a id="78c52" class="tk">CONST_ZeroDeg</a>)) <span class="br">{</span></td></tr>
+<td><a id="l78" class='ln'>78</a></td><td>  <span class="kw">if</span> (<a id="78c7" class="tk">rtb_Relational_Operator_e2</a> <a id="78c34" class="tk">&amp;&amp;</a> (<a id="78c38" class="tk">rtb_Subtract</a> <a id="78c51" class="tk">&lt;</a> <a id="78c53" class="tk">CONST_ZeroDeg</a>)) <span class="br">{</span></td></tr>
 <tr name="79" id="79">
-<td><a id="l79" class='ln'>79</a></td><td>    <a id="79c5" class="tk">rtb_Switch_le</a> = <a id="79c21" class="tk">CONST_ONE_UINT16</a>;</td></tr>
+<td><a id="l79" class='ln'>79</a></td><td>    <a id="79c5" class="tk">rtb_Switch_n</a> = <a id="79c20" class="tk">CONST_ONE_UINT16</a>;</td></tr>
 <tr name="80" id="80">
 <td><a id="l80" class='ln'>80</a></td><td>  <span class="br">}</span> <span class="kw">else</span> <span class="br">{</span></td></tr>
 <tr name="81" id="81">
-<td><a id="l81" class='ln'>81</a></td><td>    <a id="81c5" class="tk">rtb_Switch_le</a> = <a id="81c21" class="tk">CAL_fullCircle_DEG</a>;</td></tr>
+<td><a id="l81" class='ln'>81</a></td><td>    <a id="81c5" class="tk">rtb_Switch_n</a> = <a id="81c20" class="tk">CAL_fullCircle_DEG</a>;</td></tr>
 <tr name="82" id="82">
 <td><a id="l82" class='ln'>82</a></td><td>  <span class="br">}</span></td></tr>
 <tr name="83" id="83">
@@ -183,7 +183,7 @@
 <tr name="86" id="86">
 <td><a id="l86" class='ln'>86</a></td><td>  <span class="ct">/* Delay: '<a class="ct blk" blk_line="86">&lt;S37&gt;/Resettable_Delay</a>' */</span></td></tr>
 <tr name="87" id="87">
-<td><a id="l87" class='ln'>87</a></td><td>  <span class="kw">if</span> (<a id="87c7" class="tk">rtb_Relational_Operator_j</a> <a id="87c33" class="tk">&amp;&amp;</a></td></tr>
+<td><a id="l87" class='ln'>87</a></td><td>  <span class="kw">if</span> (<a id="87c7" class="tk">rtb_Relational_Operator_e2</a> <a id="87c34" class="tk">&amp;&amp;</a></td></tr>
 <tr name="88" id="88">
 <td><a id="l88" class='ln'>88</a></td><td>      (<a id="88c8" class="tk">RobotControl_PrevZCX</a>.<a id="88c29" class="tk">Resettable_Delay_Reset_ZCE</a> <a id="88c56" class="tk">!=</a> <a id="88c59" class="tk">POS_ZCSIG</a>)) <span class="br">{</span></td></tr>
 <tr name="89" id="89">
@@ -193,11 +193,11 @@
 <tr name="91" id="91">
 <td><a id="l91" class='ln'>91</a></td><td></td></tr>
 <tr name="92" id="92">
-<td><a id="l92" class='ln'>92</a></td><td>  <a id="92c3" class="tk">RobotControl_PrevZCX</a>.<a id="92c24" class="tk">Resettable_Delay_Reset_ZCE</a> = <a id="92c53" class="tk">rtb_Relational_Operator_j</a>;</td></tr>
+<td><a id="l92" class='ln'>92</a></td><td>  <a id="92c3" class="tk">RobotControl_PrevZCX</a>.<a id="92c24" class="tk">Resettable_Delay_Reset_ZCE</a> = <a id="92c53" class="tk">rtb_Relational_Operator_e2</a>;</td></tr>
 <tr name="93" id="93">
 <td><a id="l93" class='ln'>93</a></td><td>  <span class="kw">if</span> (<a id="93c7" class="tk">RobotControl_DW</a>.<a id="93c23" class="tk">icLoad</a> <a id="93c30" class="tk">!=</a> 0) <span class="br">{</span></td></tr>
 <tr name="94" id="94">
-<td><a id="l94" class='ln'>94</a></td><td>    <a id="94c5" class="tk">RobotControl_DW</a>.<a id="94c21" class="tk">Resettable_Delay_DSTATE</a> = <a id="94c47" class="tk">rtb_Switch_le</a>;</td></tr>
+<td><a id="l94" class='ln'>94</a></td><td>    <a id="94c5" class="tk">RobotControl_DW</a>.<a id="94c21" class="tk">Resettable_Delay_DSTATE</a> = <a id="94c47" class="tk">rtb_Switch_n</a>;</td></tr>
 <tr name="95" id="95">
 <td><a id="l95" class='ln'>95</a></td><td>  <span class="br">}</span></td></tr>
 <tr name="96" id="96">
@@ -221,7 +221,7 @@
 <tr name="105" id="105">
 <td><a id="l105" class='ln'>105</a></td><td><span class="ct">   */</span></td></tr>
 <tr name="106" id="106">
-<td><a id="l106" class='ln'>106</a></td><td>  <a id="106c3" class="tk">rtb_Switch_d</a> = (<a id="106c19" class="tk">real32_T</a>)((<a id="106c30" class="tk">RobotControl_B</a>.<a id="106c45" class="tk">leftVel1ms_mmPerSec</a> <a id="106c65" class="tk">-</a></td></tr>
+<td><a id="l106" class='ln'>106</a></td><td>  <a id="106c3" class="tk">rtb_Switch_f</a> = (<a id="106c19" class="tk">real32_T</a>)((<a id="106c30" class="tk">RobotControl_B</a>.<a id="106c45" class="tk">leftVel1ms_mmPerSec</a> <a id="106c65" class="tk">-</a></td></tr>
 <tr name="107" id="107">
 <td><a id="l107" class='ln'>107</a></td><td>    <a id="107c5" class="tk">RobotControl_B</a>.<a id="107c20" class="tk">rightVel1ms_mmPerSec</a>) <a id="107c42" class="tk">/</a> (<a id="107c45" class="tk">real32_T</a>)<a id="107c54" class="tk">CAL_ROBO_LENG_mm</a> <a id="107c71" class="tk">*</a></td></tr>
 <tr name="108" id="108">
@@ -237,7 +237,7 @@
 <tr name="113" id="113">
 <td><a id="l113" class='ln'>113</a></td><td><span class="ct">   */</span></td></tr>
 <tr name="114" id="114">
-<td><a id="l114" class='ln'>114</a></td><td>  <span class="kw">if</span> (<a id="114c7" class="tk">rtb_Relational_Operator_j</a> <a id="114c33" class="tk">&amp;&amp;</a></td></tr>
+<td><a id="l114" class='ln'>114</a></td><td>  <span class="kw">if</span> (<a id="114c7" class="tk">rtb_Relational_Operator_e2</a> <a id="114c34" class="tk">&amp;&amp;</a></td></tr>
 <tr name="115" id="115">
 <td><a id="l115" class='ln'>115</a></td><td>      (<a id="115c8" class="tk">RobotControl_PrevZCX</a>.<a id="115c29" class="tk">Resettable_Delay1_Reset_ZCE</a> <a id="115c57" class="tk">!=</a> <a id="115c60" class="tk">POS_ZCSIG</a>)) <span class="br">{</span></td></tr>
 <tr name="116" id="116">
@@ -247,11 +247,11 @@
 <tr name="118" id="118">
 <td><a id="l118" class='ln'>118</a></td><td></td></tr>
 <tr name="119" id="119">
-<td><a id="l119" class='ln'>119</a></td><td>  <a id="119c3" class="tk">RobotControl_PrevZCX</a>.<a id="119c24" class="tk">Resettable_Delay1_Reset_ZCE</a> = <a id="119c54" class="tk">rtb_Relational_Operator_j</a>;</td></tr>
+<td><a id="l119" class='ln'>119</a></td><td>  <a id="119c3" class="tk">RobotControl_PrevZCX</a>.<a id="119c24" class="tk">Resettable_Delay1_Reset_ZCE</a> = <a id="119c54" class="tk">rtb_Relational_Operator_e2</a>;</td></tr>
 <tr name="120" id="120">
 <td><a id="l120" class='ln'>120</a></td><td>  <span class="kw">if</span> (<a id="120c7" class="tk">RobotControl_DW</a>.<a id="120c23" class="tk">icLoad_o</a> <a id="120c32" class="tk">!=</a> 0) <span class="br">{</span></td></tr>
 <tr name="121" id="121">
-<td><a id="l121" class='ln'>121</a></td><td>    <a id="121c5" class="tk">RobotControl_DW</a>.<a id="121c21" class="tk">Resettable_Delay1_DSTATE</a> = <a id="121c48" class="tk">rtb_Switch_le</a>;</td></tr>
+<td><a id="l121" class='ln'>121</a></td><td>    <a id="121c5" class="tk">RobotControl_DW</a>.<a id="121c21" class="tk">Resettable_Delay1_DSTATE</a> = <a id="121c48" class="tk">rtb_Switch_n</a>;</td></tr>
 <tr name="122" id="122">
 <td><a id="l122" class='ln'>122</a></td><td>  <span class="br">}</span></td></tr>
 <tr name="123" id="123">
@@ -289,9 +289,9 @@
 <tr name="139" id="139">
 <td><a id="l139" class='ln'>139</a></td><td><span class="ct">   */</span></td></tr>
 <tr name="140" id="140">
-<td><a id="l140" class='ln'>140</a></td><td>  <a id="140c3" class="tk">rtb_XT</a> = ((<a id="140c14" class="tk">real32_T</a>)<a id="140c23" class="tk">RobotControl_B</a>.<a id="140c38" class="tk">rawCompassValue</a> <a id="140c54" class="tk">-</a> <a id="140c56" class="tk">rtb_Switch_d</a>) <a id="140c70" class="tk">*</a> <a id="140c72" class="tk">rtb_KT</a> <a id="140c79" class="tk">+</a></td></tr>
+<td><a id="l140" class='ln'>140</a></td><td>  <a id="140c3" class="tk">rtb_XT_b</a> = ((<a id="140c16" class="tk">real32_T</a>)<a id="140c25" class="tk">RobotControl_B</a>.<a id="140c40" class="tk">rawCompassValue</a> <a id="140c56" class="tk">-</a> <a id="140c58" class="tk">rtb_Switch_f</a>) <a id="140c72" class="tk">*</a> <a id="140c74" class="tk">rtb_KT</a></td></tr>
 <tr name="141" id="141">
-<td><a id="l141" class='ln'>141</a></td><td>    <a id="141c5" class="tk">rtb_Switch_d</a>;</td></tr>
+<td><a id="l141" class='ln'>141</a></td><td>    <a id="141c5" class="tk">+</a> <a id="141c7" class="tk">rtb_Switch_f</a>;</td></tr>
 <tr name="142" id="142">
 <td><a id="l142" class='ln'>142</a></td><td></td></tr>
 <tr name="143" id="143">
@@ -335,17 +335,17 @@
 <tr name="162" id="162">
 <td><a id="l162" class='ln'>162</a></td><td><span class="ct">   */</span></td></tr>
 <tr name="163" id="163">
-<td><a id="l163" class='ln'>163</a></td><td>  <span class="kw">if</span> ((<a id="163c8" class="tk">int16_T</a>)(<a id="163c17" class="tk">real32_T</a>)<a id="163c26" class="tk">floor</a>(<a id="163c32" class="tk">rtb_XT</a> <a id="163c39" class="tk">-</a> (<a id="163c42" class="tk">real32_T</a>)<a id="163c51" class="tk">CONST_OVERFLOW_THD_UINT16</a>) <a id="163c78" class="tk">&gt;</a></td></tr>
+<td><a id="l163" class='ln'>163</a></td><td>  <span class="kw">if</span> ((<a id="163c8" class="tk">int16_T</a>)(<a id="163c17" class="tk">real32_T</a>)<a id="163c26" class="tk">floor</a>(<a id="163c32" class="tk">rtb_XT_b</a> <a id="163c41" class="tk">-</a> (<a id="163c44" class="tk">real32_T</a>)<a id="163c53" class="tk">CONST_OVERFLOW_THD_UINT16</a>) <a id="163c80" class="tk">&gt;</a></td></tr>
 <tr name="164" id="164">
 <td><a id="l164" class='ln'>164</a></td><td>      <a id="164c7" class="tk">rtb_Subtract</a>) <span class="br">{</span></td></tr>
 <tr name="165" id="165">
-<td><a id="l165" class='ln'>165</a></td><td>    <a id="165c5" class="tk">rtb_XT</a> <a id="165c12" class="tk">-=</a> (<a id="165c16" class="tk">real32_T</a>)<a id="165c25" class="tk">CAL_fullCircle_DEG</a>;</td></tr>
+<td><a id="l165" class='ln'>165</a></td><td>    <a id="165c5" class="tk">rtb_XT_b</a> <a id="165c14" class="tk">-=</a> (<a id="165c18" class="tk">real32_T</a>)<a id="165c27" class="tk">CAL_fullCircle_DEG</a>;</td></tr>
 <tr name="166" id="166">
 <td><a id="l166" class='ln'>166</a></td><td>  <span class="br">}</span> <span class="kw">else</span> <span class="br">{</span></td></tr>
 <tr name="167" id="167">
-<td><a id="l167" class='ln'>167</a></td><td>    <span class="kw">if</span> ((<a id="167c10" class="tk">int16_T</a>)(<a id="167c19" class="tk">real32_T</a>)<a id="167c28" class="tk">floor</a>(<a id="167c34" class="tk">rtb_XT</a> <a id="167c41" class="tk">+</a> (<a id="167c44" class="tk">real32_T</a>)<a id="167c53" class="tk">CONST_OVERFLOW_THD_UINT16</a>) <a id="167c80" class="tk">&lt;</a></td></tr>
+<td><a id="l167" class='ln'>167</a></td><td>    <span class="kw">if</span> ((<a id="167c10" class="tk">int16_T</a>)(<a id="167c19" class="tk">real32_T</a>)<a id="167c28" class="tk">floor</a>(<a id="167c34" class="tk">rtb_XT_b</a> <a id="167c43" class="tk">+</a> (<a id="167c46" class="tk">real32_T</a>)<a id="167c55" class="tk">CONST_OVERFLOW_THD_UINT16</a>)</td></tr>
 <tr name="168" id="168">
-<td><a id="l168" class='ln'>168</a></td><td>        (<a id="168c10" class="tk">int16_T</a>)<a id="168c18" class="tk">CONST_ZERO_UINT16</a>) <span class="br">{</span></td></tr>
+<td><a id="l168" class='ln'>168</a></td><td>        <a id="168c9" class="tk">&lt;</a> (<a id="168c12" class="tk">int16_T</a>)<a id="168c20" class="tk">CONST_ZERO_UINT16</a>) <span class="br">{</span></td></tr>
 <tr name="169" id="169">
 <td><a id="l169" class='ln'>169</a></td><td>      <span class="ct">/* Switch: '<a class="ct blk" blk_line="169">&lt;S41&gt;/Switch1</a>' incorporates:</span></td></tr>
 <tr name="170" id="170">
@@ -353,7 +353,7 @@
 <tr name="171" id="171">
 <td><a id="l171" class='ln'>171</a></td><td><span class="ct">       */</span></td></tr>
 <tr name="172" id="172">
-<td><a id="l172" class='ln'>172</a></td><td>      <a id="172c7" class="tk">rtb_XT</a> <a id="172c14" class="tk">+=</a> (<a id="172c18" class="tk">real32_T</a>)<a id="172c27" class="tk">rtb_Subtract</a>;</td></tr>
+<td><a id="l172" class='ln'>172</a></td><td>      <a id="172c7" class="tk">rtb_XT_b</a> <a id="172c16" class="tk">+=</a> (<a id="172c20" class="tk">real32_T</a>)<a id="172c29" class="tk">rtb_Subtract</a>;</td></tr>
 <tr name="173" id="173">
 <td><a id="l173" class='ln'>173</a></td><td>    <span class="br">}</span></td></tr>
 <tr name="174" id="174">
@@ -375,25 +375,25 @@
 <tr name="182" id="182">
 <td><a id="l182" class='ln'>182</a></td><td>  <span class="kw">if</span> (<a id="182c7" class="tk">RobotControl_DW</a>.<a id="182c23" class="tk">Unit_Delay3_DSTATE_d</a>) <span class="br">{</span></td></tr>
 <tr name="183" id="183">
-<td><a id="l183" class='ln'>183</a></td><td>    <a id="183c5" class="tk">rtb_Switch_d</a> = <a id="183c20" class="tk">RobotControl_B</a>.<a id="183c35" class="tk">Data_Type_Conversion_a</a>;</td></tr>
+<td><a id="l183" class='ln'>183</a></td><td>    <a id="183c5" class="tk">rtb_Switch_f</a> = <a id="183c20" class="tk">RobotControl_B</a>.<a id="183c35" class="tk">Data_Type_Conversion_a</a>;</td></tr>
 <tr name="184" id="184">
-<td><a id="l184" class='ln'>184</a></td><td>  <span class="br">}</span> <span class="kw">else</span> <span class="kw">if</span> (<a id="184c14" class="tk">rtb_XT</a> <a id="184c21" class="tk">&gt;</a> 360.0F) <span class="br">{</span></td></tr>
+<td><a id="l184" class='ln'>184</a></td><td>  <span class="br">}</span> <span class="kw">else</span> <span class="kw">if</span> (<a id="184c14" class="tk">rtb_XT_b</a> <a id="184c23" class="tk">&gt;</a> 360.0F) <span class="br">{</span></td></tr>
 <tr name="185" id="185">
 <td><a id="l185" class='ln'>185</a></td><td>    <span class="ct">/* Saturate: '<a class="ct blk" blk_line="185">&lt;S37&gt;/Saturation</a>' */</span></td></tr>
 <tr name="186" id="186">
-<td><a id="l186" class='ln'>186</a></td><td>    <a id="186c5" class="tk">rtb_Switch_d</a> = 360.0F;</td></tr>
+<td><a id="l186" class='ln'>186</a></td><td>    <a id="186c5" class="tk">rtb_Switch_f</a> = 360.0F;</td></tr>
 <tr name="187" id="187">
-<td><a id="l187" class='ln'>187</a></td><td>  <span class="br">}</span> <span class="kw">else</span> <span class="kw">if</span> (<a id="187c14" class="tk">rtb_XT</a> <a id="187c21" class="tk">&lt;</a> 0.0F) <span class="br">{</span></td></tr>
+<td><a id="l187" class='ln'>187</a></td><td>  <span class="br">}</span> <span class="kw">else</span> <span class="kw">if</span> (<a id="187c14" class="tk">rtb_XT_b</a> <a id="187c23" class="tk">&lt;</a> 0.0F) <span class="br">{</span></td></tr>
 <tr name="188" id="188">
 <td><a id="l188" class='ln'>188</a></td><td>    <span class="ct">/* Saturate: '<a class="ct blk" blk_line="188">&lt;S37&gt;/Saturation</a>' */</span></td></tr>
 <tr name="189" id="189">
-<td><a id="l189" class='ln'>189</a></td><td>    <a id="189c5" class="tk">rtb_Switch_d</a> = 0.0F;</td></tr>
+<td><a id="l189" class='ln'>189</a></td><td>    <a id="189c5" class="tk">rtb_Switch_f</a> = 0.0F;</td></tr>
 <tr name="190" id="190">
 <td><a id="l190" class='ln'>190</a></td><td>  <span class="br">}</span> <span class="kw">else</span> <span class="br">{</span></td></tr>
 <tr name="191" id="191">
 <td><a id="l191" class='ln'>191</a></td><td>    <span class="ct">/* Saturate: '<a class="ct blk" blk_line="191">&lt;S37&gt;/Saturation</a>' */</span></td></tr>
 <tr name="192" id="192">
-<td><a id="l192" class='ln'>192</a></td><td>    <a id="192c5" class="tk">rtb_Switch_d</a> = <a id="192c20" class="tk">rtb_XT</a>;</td></tr>
+<td><a id="l192" class='ln'>192</a></td><td>    <a id="192c5" class="tk">rtb_Switch_f</a> = <a id="192c20" class="tk">rtb_XT_b</a>;</td></tr>
 <tr name="193" id="193">
 <td><a id="l193" class='ln'>193</a></td><td>  <span class="br">}</span></td></tr>
 <tr name="194" id="194">
@@ -405,17 +405,17 @@
 <tr name="197" id="197">
 <td><a id="l197" class='ln'>197</a></td><td>  <span class="ct">/* Saturate: '<a class="ct blk" blk_line="197">&lt;S36&gt;/Saturation</a>' */</span></td></tr>
 <tr name="198" id="198">
-<td><a id="l198" class='ln'>198</a></td><td>  <span class="kw">if</span> (<a id="198c7" class="tk">rtb_Switch_d</a> <a id="198c20" class="tk">&gt;</a> <a id="198c22" class="tk">CAL_fullCircle_DEG</a>) <span class="br">{</span></td></tr>
+<td><a id="l198" class='ln'>198</a></td><td>  <span class="kw">if</span> (<a id="198c7" class="tk">rtb_Switch_f</a> <a id="198c20" class="tk">&gt;</a> <a id="198c22" class="tk">CAL_fullCircle_DEG</a>) <span class="br">{</span></td></tr>
 <tr name="199" id="199">
 <td><a id="l199" class='ln'>199</a></td><td>    <a id="199c5" class="tk">RobotControl_B</a>.<a id="199c20" class="tk">theta_Deg</a> = <a id="199c32" class="tk">CAL_fullCircle_DEG</a>;</td></tr>
 <tr name="200" id="200">
-<td><a id="l200" class='ln'>200</a></td><td>  <span class="br">}</span> <span class="kw">else</span> <span class="kw">if</span> (<a id="200c14" class="tk">rtb_Switch_d</a> <a id="200c27" class="tk">&lt;</a> <a id="200c29" class="tk">CONST_ZERO_UINT16</a>) <span class="br">{</span></td></tr>
+<td><a id="l200" class='ln'>200</a></td><td>  <span class="br">}</span> <span class="kw">else</span> <span class="kw">if</span> (<a id="200c14" class="tk">rtb_Switch_f</a> <a id="200c27" class="tk">&lt;</a> <a id="200c29" class="tk">CONST_ZERO_UINT16</a>) <span class="br">{</span></td></tr>
 <tr name="201" id="201">
 <td><a id="l201" class='ln'>201</a></td><td>    <a id="201c5" class="tk">RobotControl_B</a>.<a id="201c20" class="tk">theta_Deg</a> = <a id="201c32" class="tk">CONST_ZERO_UINT16</a>;</td></tr>
 <tr name="202" id="202">
 <td><a id="l202" class='ln'>202</a></td><td>  <span class="br">}</span> <span class="kw">else</span> <span class="br">{</span></td></tr>
 <tr name="203" id="203">
-<td><a id="l203" class='ln'>203</a></td><td>    <a id="203c5" class="tk">RobotControl_B</a>.<a id="203c20" class="tk">theta_Deg</a> = <a id="203c32" class="tk">rtb_Switch_d</a>;</td></tr>
+<td><a id="l203" class='ln'>203</a></td><td>    <a id="203c5" class="tk">RobotControl_B</a>.<a id="203c20" class="tk">theta_Deg</a> = <a id="203c32" class="tk">rtb_Switch_f</a>;</td></tr>
 <tr name="204" id="204">
 <td><a id="l204" class='ln'>204</a></td><td>  <span class="br">}</span></td></tr>
 <tr name="205" id="205">
@@ -437,7 +437,7 @@
 <tr name="213" id="213">
 <td><a id="l213" class='ln'>213</a></td><td>  <a id="213c3" class="tk">RobotControl_DW</a>.<a id="213c19" class="tk">Unit_Delay3_DSTATE_d</a> =</td></tr>
 <tr name="214" id="214">
-<td><a id="l214" class='ln'>214</a></td><td>    <a id="214c5" class="tk">RobotControl_B</a>.<a id="214c20" class="tk">OutportBufferForenableAngleCali</a>;</td></tr>
+<td><a id="l214" class='ln'>214</a></td><td>    <a id="214c5" class="tk">RobotControl_B</a>.<a id="214c20" class="tk">VariantMergeForOutportenableAng</a>;</td></tr>
 <tr name="215" id="215">
 <td><a id="l215" class='ln'>215</a></td><td></td></tr>
 <tr name="216" id="216">
@@ -451,7 +451,7 @@
 <tr name="220" id="220">
 <td><a id="l220" class='ln'>220</a></td><td>  <a id="220c3" class="tk">RobotControl_DW</a>.<a id="220c19" class="tk">icLoad</a> = 0U;</td></tr>
 <tr name="221" id="221">
-<td><a id="l221" class='ln'>221</a></td><td>  <a id="221c3" class="tk">RobotControl_DW</a>.<a id="221c19" class="tk">Resettable_Delay_DSTATE</a> = <a id="221c45" class="tk">rtb_XT</a>;</td></tr>
+<td><a id="l221" class='ln'>221</a></td><td>  <a id="221c3" class="tk">RobotControl_DW</a>.<a id="221c19" class="tk">Resettable_Delay_DSTATE</a> = <a id="221c45" class="tk">rtb_XT_b</a>;</td></tr>
 <tr name="222" id="222">
 <td><a id="l222" class='ln'>222</a></td><td></td></tr>
 <tr name="223" id="223">

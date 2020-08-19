@@ -38,7 +38,7 @@ typedef unsigned char uint8_t;
 typedef unsigned char boolean_T;
 
 typedef struct EEPROM_S{
-	bool flagAddress1;
+	boolean_T flagAddress1;
 	uint16_t northAddress2;
     uint16_t southAddress3;
 	uint16_t eastAddress4;

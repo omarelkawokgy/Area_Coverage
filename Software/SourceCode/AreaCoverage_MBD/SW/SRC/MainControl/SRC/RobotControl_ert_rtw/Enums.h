@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'RobotControl'.
  *
- * Model version                  : 1.568
+ * Model version                  : 1.581
  * Simulink Coder version         : 8.11 (R2016b) 25-Aug-2016
- * C/C++ source code generated on : Thu Aug 13 00:06:06 2020
+ * C/C++ source code generated on : Mon Aug 17 10:27:18 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Atmel->AVR
@@ -27,7 +27,10 @@
 #define ENU_CW                         3U
 #define ENU_DIAG                       28U
 #define ENU_END                        27U
+#if MotorsEOL_DisabledVariant
 #define ENU_FAILED                     2U
+#endif                                 /* MotorsEOL_DisabledVariant */
+
 #define ENU_FINISHED                   4U
 #define ENU_FORWARD                    1U
 #define ENU_GTSP                       25U
@@ -45,12 +48,18 @@
 #define ENU_MOVE_U_TURN                24U
 #define ENU_MOVE_U_TURN_LEFT           23U
 #define ENU_MOVE_U_TURN_RIGHT          22U
+#if MotorsEOL_DisabledVariant
 #define ENU_PASSED                     1U
+#endif                                 /* MotorsEOL_DisabledVariant */
+
 #define ENU_ROB_NONE                   400U
 #define ENU_SHIFT_HEADING              29U
 #define ENU_STOP                       5U
 #define ENU_TEST_INIT                  5U
+#if (motorsHandleEOL_Variant) || (MotorsEOL_DisabledVariant)
 #define ENU_TEST_NOT_CONFIRMED         3U
+#endif                                 /* (motorsHandleEOL_Variant) || (MotorsEOL_DisabledVariant) */
+
 #define ENU_ZIGZAG                     26U
 #endif                                 /* RTW_HEADER_Enums_h_ */
 

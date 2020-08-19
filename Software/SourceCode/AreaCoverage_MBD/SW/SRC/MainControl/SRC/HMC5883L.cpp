@@ -127,12 +127,14 @@ void HMC5883L::Write(int address, int data)
 uint8_t* HMC5883L::Read(int address, int length)
 {
   Wire.beginTransmission(HMC5883L_Address);
+
   Wire.write(address);
+
   Wire.endTransmission();
   
   Wire.beginTransmission(HMC5883L_Address);
   Wire.requestFrom(HMC5883L_Address, length);
-
+  Serial.println("Check3");
   uint8_t buffer[length];
   if(Wire.available() == length)
   {

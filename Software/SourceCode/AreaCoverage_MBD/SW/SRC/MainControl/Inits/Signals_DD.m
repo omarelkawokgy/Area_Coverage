@@ -162,3 +162,67 @@ NVM_WEST.Min = -20;
 NVM_WEST.Max = 360;
 NVM_WEST.Unit = 'deg';
 NVM_WEST.Dimensions = 1;
+
+stuckHitFlg = Simulink.Signal;
+stuckHitFlg.DataType = 'boolean';
+stuckHitFlg.Min = 0;
+stuckHitFlg.Max = 1;
+stuckHitFlg.Unit = '';
+stuckHitFlg.Dimensions = 1;
+stuckHitFlg.Complexity = 'real';
+
+compFaultFlag = Simulink.Signal;
+compFaultFlag.DataType = 'boolean';
+compFaultFlag.Min = 0;
+compFaultFlag.Max = 1;
+compFaultFlag.Unit = '';
+compFaultFlag.Dimensions = 1;
+compFaultFlag.Complexity = 'real';
+
+leftMotorFaultFlag = Simulink.Signal;
+leftMotorFaultFlag.DataType = 'boolean';
+leftMotorFaultFlag.Min = 0;
+leftMotorFaultFlag.Max = 1;
+leftMotorFaultFlag.Unit = '';
+leftMotorFaultFlag.Dimensions = 1;
+leftMotorFaultFlag.Complexity = 'real';
+
+rightMotorFaultFlag = Simulink.Signal;
+rightMotorFaultFlag.DataType = 'boolean';
+rightMotorFaultFlag.Min = 0;
+rightMotorFaultFlag.Max = 1;
+rightMotorFaultFlag.Unit = '';
+rightMotorFaultFlag.Dimensions = 1;
+rightMotorFaultFlag.Complexity = 'real';
+
+ULSL_NotConnectedFlag_BOOL = Simulink.Signal;
+ULSL_NotConnectedFlag_BOOL.DataType = 'boolean';
+ULSL_NotConnectedFlag_BOOL.Min = 0;
+ULSL_NotConnectedFlag_BOOL.Max = 1;
+ULSL_NotConnectedFlag_BOOL.Unit = '';
+ULSL_NotConnectedFlag_BOOL.Dimensions = 1;
+ULSL_NotConnectedFlag_BOOL.Complexity = 'real';
+
+ULSR_NotConnectedFlag_BOOL = Simulink.Signal;
+ULSR_NotConnectedFlag_BOOL.DataType = 'boolean';
+ULSR_NotConnectedFlag_BOOL.Min = 0;
+ULSR_NotConnectedFlag_BOOL.Max = 1;
+ULSR_NotConnectedFlag_BOOL.Unit = '';
+ULSR_NotConnectedFlag_BOOL.Dimensions = 1;
+ULSR_NotConnectedFlag_BOOL.Complexity = 'real';
+
+rightEncoderDistErrorFlg = Simulink.Signal;
+rightEncoderDistErrorFlg.DataType = 'boolean';
+rightEncoderDistErrorFlg.Min = 0;
+rightEncoderDistErrorFlg.Max = 1;
+rightEncoderDistErrorFlg.Unit = '';
+rightEncoderDistErrorFlg.Dimensions = 1;
+rightEncoderDistErrorFlg.Complexity = 'real';
+
+leftEncoderDistErrorFlg = Simulink.Signal;
+leftEncoderDistErrorFlg.DataType = 'boolean';
+leftEncoderDistErrorFlg.Min = 0;
+leftEncoderDistErrorFlg.Max = 1;
+leftEncoderDistErrorFlg.Unit = '';
+leftEncoderDistErrorFlg.Dimensions = 1;
+leftEncoderDistErrorFlg.Complexity = 'real';

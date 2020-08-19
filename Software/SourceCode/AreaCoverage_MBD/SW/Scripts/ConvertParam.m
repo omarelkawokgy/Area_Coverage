@@ -23,8 +23,11 @@ for i = 1:length(all_WS)
         evalin('base', [varName '.CoderInfo.CustomAttributes.HeaderFile = ''Constant.h''']);
     elseif (length(varName) > 2 ) && strcmp(varName(1:3), 'ENU')
         evalin('base', [varName '.CoderInfo.CustomAttributes.HeaderFile = ''Enums.h''']);
-    else
-        evalin('base', [varName '.CoderInfo.CustomAttributes.HeaderFile = ''MISC.h''']);
+    elseif (length(varName) > 6 ) && strcmp(varName(1:7), 'VARIANT')
+        evalin('base', [varName '.CoderInfo.CustomAttributes.HeaderFile = ''../Variant.h''']);
+		evalin('base', [varName '.CoderInfo.CustomStorageClass = ''ImportedDefine''']);
+	else
+		evalin('base', [varName '.CoderInfo.CustomAttributes.HeaderFile = ''MISC.h''']);
     end
     
     end

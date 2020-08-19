@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'RobotControl'.
  *
- * Model version                  : 1.568
+ * Model version                  : 1.581
  * Simulink Coder version         : 8.11 (R2016b) 25-Aug-2016
- * C/C++ source code generated on : Thu Aug 13 00:06:06 2020
+ * C/C++ source code generated on : Mon Aug 17 10:27:18 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Atmel->AVR
@@ -92,9 +92,6 @@ int_T main(int_T argc, const char *argv[])
   }
 
   /* Disable rt_OneStep() here */
-
-  /* Terminate model */
-  RobotControl_terminate();
   return 0;
 }
 

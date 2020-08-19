@@ -1,0 +1,8 @@
+#ifndef VARIANT_H
+#define VARIANT_H
+
+#define VARIANT_LEFT_MOTOR_EOL_ENABLE false
+#define VARIANT_RIGHT_MOTOR_EOL_ENABLE false
+#define VARIANT_DEBUGGING_ENABLE true
+
+#endif
